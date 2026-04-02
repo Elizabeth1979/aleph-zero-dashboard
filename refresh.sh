@@ -97,6 +97,20 @@ STATUS_JS=$(echo "$STATUS_HTML" | python3 -c "import sys,json; print(json.dumps(
 CONFIG_JS=$(echo "$CONFIG_HTML" | python3 -c "import sys,json; print(json.dumps(sys.stdin.read()))")
 SKILLS_JS=$(echo "$SKILLS_HTML" | python3 -c "import sys,json; print(json.dumps(sys.stdin.read()))")
 
+# ChromaDB long-term memory
+CHROMA_DATA=$("$HERMES/hermes-agent/venv/bin/python" -c "
+import json, chromadb
+client = chromadb.PersistentClient(path='$HERMES/chroma_data')
+col = client.get_or_create_collection('hermes_memory')
+count = col.count()
+results = col.get(limit=100)
+memories = []
+for i, doc in enumerate(results.get('documents', [])):
+    meta = results['metadatas'][i] or {} if results.get('metadatas') else {}
+    memories.append({'id': results['ids'][i], 'text': doc, 'category': meta.get('category',''), 'timestamp': meta.get('timestamp','')})
+print(json.dumps({'count': count, 'memories': memories}))
+" 2>/dev/null || echo '{"count":0,"memories":[]}')
+
 # Write data file
 # Raw config files (redact secrets)
 CONFIG_RAW=$(cat "$HERMES/config.yaml" 2>/dev/null | python3 -c "import sys,json; print(json.dumps(sys.stdin.read()))")
@@ -118,7 +132,8 @@ window.__DASHBOARD_DATA__ = {
   skills: $SKILLS_JS,
   config_raw: $CONFIG_RAW,
   env_raw: $ENV_RAW,
-  skills_data: $SKILLS_DATA
+  skills_data: $SKILLS_DATA,
+  chroma: $CHROMA_DATA
 };
 JSEOF
 

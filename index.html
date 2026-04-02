@@ -435,6 +435,17 @@
     <div id="cron-jobs"></div>
   </details>
 
+  <!-- Long-Term Memory (ChromaDB) -->
+  <details class="glass mb-xl section-collapse">
+    <summary class="card-header">
+      <span class="icon">💾</span>
+      <h2>Long-Term Memory</h2>
+      <span id="chroma-count" class="tag tag-count"></span>
+      <svg class="chevron section-chevron" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+    </summary>
+    <div id="chroma-memories"></div>
+  </details>
+
   <!-- Config & Skills -->
   <div class="grid-2 mb-xl">
     <details class="glass section-collapse">
@@ -647,6 +658,31 @@ function showSkill(path, pill) {
   }
 }
 
+function renderChroma(data) {
+  const container = document.getElementById('chroma-memories');
+  const counter = document.getElementById('chroma-count');
+  if (!data || !data.memories || data.memories.length === 0) {
+    container.innerHTML = '<div class="empty">No memories stored</div>';
+    counter.textContent = '0';
+    return;
+  }
+  counter.textContent = data.count;
+  const cats = {};
+  data.memories.forEach(m => {
+    const cat = m.category || 'general';
+    if (!cats[cat]) cats[cat] = [];
+    cats[cat].push(m);
+  });
+  let html = '';
+  Object.keys(cats).sort().forEach(cat => {
+    html += `<div class="entry-label" style="margin-top:var(--space-md)">${cat.toUpperCase()}</div>`;
+    cats[cat].forEach(m => {
+      html += `<div class="entry-card"><div class="entry-text">${escapeHtml(m.text)}</div></div>`;
+    });
+  });
+  container.innerHTML = html;
+}
+
 function escapeHtml(str) {
   return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
@@ -663,6 +699,7 @@ function loadAll() {
   renderStatus(d.status);
   renderConfig(d.config);
   renderSkills();
+  renderChroma(d.chroma);
   if (d.config_raw) document.getElementById('config-raw').textContent = d.config_raw;
   if (d.env_raw) document.getElementById('config-env').textContent = d.env_raw;
 }
