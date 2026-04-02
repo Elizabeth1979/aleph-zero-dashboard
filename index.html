@@ -14,19 +14,23 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  body {
+  html, body {
     font-family: var(--font-family);
     font-size: var(--font-size-base);
     line-height: var(--line-height);
     color: var(--color-text);
     background: var(--color-bg);
     min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
   }
 
   .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: var(--space-2xl);
+    overflow-x: hidden;
+    word-break: break-word;
   }
 
   /* --- Header --- */
@@ -76,6 +80,11 @@
 
   @media (max-width: 768px) {
     .grid-2 { grid-template-columns: 1fr; }
+    .container { padding: var(--space-md); }
+    .header { flex-direction: column; align-items: flex-start; gap: var(--space-md); }
+    .status-bar { gap: var(--space-md); }
+    .collapsible-box { max-height: 200px; overflow-x: auto; }
+    .glass { padding: var(--space-md); }
   }
 
   /* --- Card Header --- */
