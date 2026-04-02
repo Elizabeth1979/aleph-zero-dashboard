@@ -21,16 +21,12 @@
     color: var(--color-text);
     background: var(--color-bg);
     min-height: 100vh;
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
   }
 
   .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: var(--space-2xl);
-    overflow-x: hidden;
-    word-break: break-word;
   }
 
   /* --- Header --- */
@@ -62,6 +58,7 @@
     border: 1px solid var(--color-border);
     border-radius: var(--radius-xl);
     padding: var(--space-xl);
+    min-width: 0;
   }
   .glass:hover {
     border-color: var(--color-border-hover);
@@ -82,9 +79,9 @@
     .grid-2 { grid-template-columns: 1fr; }
     .container { padding: var(--space-md); }
     .header { flex-direction: column; align-items: flex-start; gap: var(--space-md); }
-    .status-bar { gap: var(--space-md); }
-    .collapsible-box { max-height: 200px; overflow-x: auto; }
     .glass { padding: var(--space-md); }
+    .config-row { flex-direction: column; gap: var(--space-xs); }
+    .cron-header { flex-direction: column; align-items: flex-start; }
   }
 
   /* --- Card Header --- */
@@ -133,6 +130,8 @@
     font-size: var(--font-size-sm);
     color: var(--color-text);
     line-height: var(--line-height);
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 
   /* --- Usage Bar --- */
@@ -169,7 +168,7 @@
   .status-bar {
     display: flex;
     align-items: center;
-    gap: var(--space-3xl);
+    gap: var(--space-lg);
     flex-wrap: wrap;
   }
   .status-item {
@@ -256,6 +255,8 @@
     font-family: var(--font-mono);
     color: var(--color-text-muted);
     white-space: pre-wrap;
+    overflow-wrap: break-word;
+    word-break: break-word;
     max-height: 300px;
     overflow-y: auto;
   }
