@@ -59,7 +59,6 @@
     border-radius: var(--radius-xl);
     padding: var(--space-xl);
     min-width: 0;
-    text-align: left;
   }
   .glass:hover {
     border-color: var(--color-border-hover);
@@ -90,10 +89,8 @@
   .card-header {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
     gap: var(--space-sm);
     margin-bottom: var(--space-lg);
-    text-align: left;
   }
   .card-header .icon { font-size: var(--font-size-2xl); }
   .card-header h2 {
@@ -172,7 +169,6 @@
   .status-bar {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
     gap: var(--space-lg);
     flex-wrap: wrap;
   }
@@ -201,14 +197,14 @@
     padding: var(--space-lg);
     margin-bottom: var(--space-md);
     transition: all var(--transition-fast);
-    text-align: left;
   }
   .cron-card:hover { border-color: var(--color-border-hover); }
   .cron-card:last-child { margin-bottom: 0; }
   .cron-header {
     display: flex;
     align-items: flex-start;
-    gap: var(--space-md);
+    justify-content: flex-start;
+    gap: var(--space-sm);
     margin-bottom: var(--space-sm);
     flex-wrap: wrap;
   }
@@ -220,7 +216,6 @@
   .cron-meta {
     font-size: var(--font-size-xs);
     color: var(--color-text-muted);
-    text-align: left;
   }
 
   /* --- Tag Pill --- */
@@ -367,8 +362,7 @@
   }
 
   /* --- Collapsible Sections --- */
-  .section-collapse { text-align: left; }
-  .section-collapse > summary { cursor: pointer; list-style: none; margin-bottom: 0; justify-content: flex-start; }
+  .section-collapse > summary { cursor: pointer; list-style: none; margin-bottom: 0; }
   .section-collapse > summary::-webkit-details-marker { display: none; }
   .section-collapse[open] > summary { margin-bottom: var(--space-lg); }
   .section-collapse[open] > summary .section-chevron { transform: rotate(90deg); }
@@ -572,7 +566,7 @@ function renderCronJobs(jobs) {
         <span class="tag tag-muted">→ ${job.deliver || 'local'}</span>
         ${job.skills ? job.skills.map(s => `<span class="tag tag-muted">${s}</span>`).join('') : ''}
       </div>
-      <div class="cron-meta">Next run: ${nextRun}</div>
+      ${nextRun !== 'not scheduled' ? `<div class="cron-meta">Next run: ${nextRun}</div>` : ''}
       ${job.prompt ? `
       <details class="mt-md">
         <summary>${chevronSvg} View prompt</summary>
