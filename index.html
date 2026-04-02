@@ -359,6 +359,13 @@
     padding-bottom: var(--space-lg);
   }
 
+  /* --- Collapsible Sections --- */
+  .section-collapse > summary { cursor: pointer; list-style: none; margin-bottom: 0; }
+  .section-collapse > summary::-webkit-details-marker { display: none; }
+  .section-collapse[open] > summary { margin-bottom: var(--space-lg); }
+  .section-collapse[open] > summary .section-chevron { transform: rotate(90deg); }
+  .section-chevron { margin-left: auto; transition: transform var(--transition-fast); flex-shrink: 0; }
+
   /* --- Margin/Spacing Helpers --- */
   .mb-sm { margin-bottom: var(--space-sm); }
   .mb-md { margin-bottom: var(--space-md); }
@@ -394,44 +401,48 @@
 
   <!-- Memory Cards -->
   <div class="grid-2 mb-xl">
-    <div class="glass">
-      <div class="card-header">
+    <details class="glass section-collapse">
+      <summary class="card-header">
         <span class="icon">👤</span>
         <h2>Who You Are</h2>
         <span class="label">USER.md</span>
-      </div>
+        <svg class="chevron section-chevron" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </summary>
       <div id="user-usage"></div>
       <div id="user-memory"></div>
-    </div>
+    </details>
 
-    <div class="glass">
-      <div class="card-header">
+    <details class="glass section-collapse">
+      <summary class="card-header">
         <span class="icon">🧠</span>
         <h2>My Notes</h2>
         <span class="label">MEMORY.md</span>
-      </div>
+        <svg class="chevron section-chevron" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </summary>
       <div id="agent-usage"></div>
       <div id="agent-memory"></div>
-    </div>
+    </details>
   </div>
 
   <!-- Cron Jobs -->
-  <div class="glass mb-xl">
-    <div class="card-header">
+  <details class="glass mb-xl section-collapse">
+    <summary class="card-header">
       <span class="icon">⏰</span>
       <h2>Scheduled Jobs</h2>
       <span id="cron-count" class="tag tag-count"></span>
-    </div>
+      <svg class="chevron section-chevron" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+    </summary>
     <div id="cron-jobs"></div>
-  </div>
+  </details>
 
   <!-- Config & Skills -->
   <div class="grid-2 mb-xl">
-    <div class="glass">
-      <div class="card-header">
+    <details class="glass section-collapse">
+      <summary class="card-header">
         <span class="icon">⚙️</span>
         <h2>Config</h2>
-      </div>
+        <svg class="chevron section-chevron" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </summary>
       <div id="config"></div>
       <details class="mt-lg">
         <summary>
@@ -447,19 +458,20 @@
         </summary>
         <div class="collapsible-box" id="config-env"></div>
       </details>
-    </div>
+    </details>
 
-    <div class="glass">
-      <div class="card-header">
+    <details class="glass section-collapse">
+      <summary class="card-header">
         <span class="icon">🛠</span>
         <h2>Skills</h2>
         <span id="skill-count" class="tag tag-count"></span>
-      </div>
+        <svg class="chevron section-chevron" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </summary>
       <div id="skills"></div>
       <div id="skill-detail" class="skill-detail hidden">
         <div class="collapsible-box" style="max-height:400px" id="skill-content"></div>
       </div>
-    </div>
+    </details>
   </div>
 
   <div class="footer" id="footer">Dashboard data from ~/.hermes</div>
@@ -506,6 +518,19 @@ function renderMemoryEntries(text, container) {
   }).join('');
 }
 
+function cronToHuman(cron) {
+  if (!cron) return '?';
+  const parts = cron.trim().split(/\s+/);
+  if (parts.length !== 5) return cron;
+  const [min, hour, dom, mon, dow] = parts;
+  const days = {'0':'Sun','1':'Mon','2':'Tue','3':'Wed','4':'Thu','5':'Fri','6':'Sat'};
+  const h = parseInt(hour), m = parseInt(min);
+  const time = `${h > 12 ? h - 12 : h}:${m.toString().padStart(2,'0')} ${h >= 12 ? 'PM' : 'AM'}`;
+  if (dom === '*' && mon === '*' && dow === '*') return `Every day at ${time}`;
+  if (dom === '*' && mon === '*' && dow !== '*') return `Every ${days[dow] || dow} at ${time}`;
+  return cron;
+}
+
 function renderCronJobs(jobs) {
   const container = document.getElementById('cron-jobs');
   const counter = document.getElementById('cron-count');
@@ -518,12 +543,13 @@ function renderCronJobs(jobs) {
   container.innerHTML = jobs.map(job => {
     const nextRun = job.next_run_at ? new Date(job.next_run_at).toLocaleString() : 'not scheduled';
     const enabled = job.enabled !== false;
+    const schedule = cronToHuman(job.schedule);
     return `
     <div class="cron-card">
       <div class="cron-header">
         <span class="status-dot ${enabled ? 'on' : 'off'}"></span>
         <span class="cron-name">${job.name || job.job_id || job.id || 'Unnamed'}</span>
-        <span class="tag tag-primary">${job.schedule || '?'}</span>
+        <span class="tag tag-primary">${schedule}</span>
         <span class="tag tag-muted">→ ${job.deliver || 'local'}</span>
         ${job.skills ? job.skills.map(s => `<span class="tag tag-muted">${s}</span>`).join('') : ''}
       </div>
