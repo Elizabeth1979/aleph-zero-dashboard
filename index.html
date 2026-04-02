@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes Dashboard</title>
+<link rel="stylesheet" href="theme.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ============================================
+     LAYOUT & COMPONENTS
+     All colors/fonts/sizes reference theme.css
+     ============================================ */
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height);
+    color: var(--color-text);
+    background: var(--color-bg);
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--space-2xl);
+  }
+
+  /* --- Header --- */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-3xl);
+  }
+  .header h1 {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+  .header .subtitle {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-base);
+    margin-top: var(--space-xs);
+  }
+
+  /* --- Glass Card --- */
+  .glass {
+    background: var(--color-surface);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-xl);
+  }
+  .glass:hover {
+    border-color: var(--color-border-hover);
+  }
+  .glass.glow {
+    box-shadow: 0 0 40px var(--color-glow);
+  }
+
+  /* --- Grid --- */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+  }
+  .full-width { grid-column: 1 / -1; }
+
+  @media (max-width: 768px) {
+    .grid-2 { grid-template-columns: 1fr; }
+  }
+
+  /* --- Card Header --- */
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+  }
+  .card-header .icon { font-size: var(--font-size-2xl); }
+  .card-header h2 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary);
+  }
+  .card-header .label {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    margin-left: auto;
+    font-family: var(--font-mono);
+  }
+
+  /* --- Entry Card (memory entries) --- */
+  .entry-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: var(--radius-md);
+    padding: var(--space-md) var(--space-lg);
+    margin-bottom: var(--space-sm);
+    transition: all var(--transition-fast);
+  }
+  .entry-card:hover {
+    background: var(--color-surface-hover);
+    border-color: var(--color-border-hover);
+  }
+  .entry-card:last-child { margin-bottom: 0; }
+  .entry-label {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: var(--space-xs);
+  }
+  .entry-text {
+    font-size: var(--font-size-sm);
+    color: var(--color-text);
+    line-height: var(--line-height);
+  }
+
+  /* --- Usage Bar --- */
+  .usage-wrap {
+    margin-bottom: var(--space-lg);
+  }
+  .usage-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--font-size-xs);
+    margin-bottom: var(--space-xs);
+  }
+  .usage-pct { font-weight: var(--font-weight-medium); }
+  .usage-pct.ok { color: var(--color-ok); }
+  .usage-pct.warn { color: var(--color-warn); }
+  .usage-pct.danger { color: var(--color-danger); }
+  .usage-chars { color: var(--color-text-muted); }
+  .usage-track {
+    background: rgba(255,255,255,0.05);
+    border-radius: var(--radius-pill);
+    height: 6px;
+    overflow: hidden;
+  }
+  .usage-fill {
+    height: 100%;
+    border-radius: var(--radius-pill);
+    transition: width var(--transition-slow);
+  }
+  .usage-fill.ok { background: var(--color-ok-gradient); }
+  .usage-fill.warn { background: var(--color-warn-gradient); }
+  .usage-fill.danger { background: var(--color-danger-gradient); }
+
+  /* --- Status Bar --- */
+  .status-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3xl);
+    flex-wrap: wrap;
+  }
+  .status-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: var(--font-size-sm);
+  }
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  .status-dot.on { background: var(--color-ok); }
+  .status-dot.off { background: var(--color-warn); }
+  .status-key { color: var(--color-text-muted); }
+  .status-val { color: var(--color-text-secondary); }
+  .status-val.on { color: var(--color-primary); }
+
+  /* --- Cron Job Card --- */
+  .cron-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-md);
+    transition: all var(--transition-fast);
+  }
+  .cron-card:hover { border-color: var(--color-border-hover); }
+  .cron-card:last-child { margin-bottom: 0; }
+  .cron-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-sm);
+    flex-wrap: wrap;
+  }
+  .cron-name {
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-lg);
+    color: var(--color-text);
+  }
+  .cron-meta {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+  }
+
+  /* --- Tag Pill --- */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 10px;
+    border-radius: var(--radius-pill);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+  }
+  .tag-primary { background: var(--color-primary-bg); color: var(--color-primary); }
+  .tag-muted { background: rgba(255,255,255,0.05); color: var(--color-text-muted); }
+  .tag-count { background: var(--color-primary-bg); color: var(--color-primary); margin-left: var(--space-sm); }
+
+  /* --- Collapsible (details/summary) --- */
+  details summary {
+    cursor: pointer;
+    list-style: none;
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    transition: color var(--transition-fast);
+  }
+  details summary::-webkit-details-marker { display: none; }
+  details summary:hover { color: var(--color-primary); }
+  details[open] summary .chevron { transform: rotate(90deg); }
+  .chevron { transition: transform var(--transition-fast); }
+
+  .collapsible-box {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: var(--radius-sm);
+    padding: var(--space-md);
+    margin-top: var(--space-sm);
+    font-size: var(--font-size-xs);
+    font-family: var(--font-mono);
+    color: var(--color-text-muted);
+    white-space: pre-wrap;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  .collapsible-box::-webkit-scrollbar { width: 4px; }
+  .collapsible-box::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+  /* --- Config --- */
+  .config-row {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--space-sm) 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: var(--font-size-sm);
+  }
+  .config-row:last-child { border-bottom: none; }
+  .config-key { color: var(--color-text-muted); }
+  .config-val { color: var(--color-primary); font-weight: var(--font-weight-medium); }
+
+  /* --- Skills --- */
+  .skill-category {
+    width: 100%;
+    margin-bottom: var(--space-md);
+  }
+  .skill-category-name {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: var(--space-sm);
+  }
+  .skill-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .skill-pill {
+    display: inline-flex;
+    padding: 2px 10px;
+    border-radius: var(--radius-pill);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    background: rgba(255,255,255,0.05);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+  .skill-pill:hover {
+    background: var(--color-primary-bg);
+    color: var(--color-primary);
+  }
+  .skill-pill.custom::after {
+    content: '★';
+    margin-left: 4px;
+    color: var(--color-primary);
+    font-size: 10px;
+  }
+  .skill-pill.active {
+    background: var(--color-primary-bg);
+    color: var(--color-primary);
+    border: 1px solid var(--color-border-hover);
+  }
+  .skill-detail {
+    margin-top: var(--space-lg);
+  }
+  .skill-detail.hidden { display: none; }
+
+  /* --- Buttons --- */
+  .btn-ghost {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-sm) var(--space-lg);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    transition: all var(--transition-fast);
+  }
+  .btn-ghost:hover {
+    color: var(--color-primary);
+    border-color: var(--color-primary-muted);
+  }
+
+  /* --- Empty State --- */
+  .empty {
+    color: var(--color-text-faint);
+    font-style: italic;
+    font-size: var(--font-size-sm);
+  }
+
+  /* --- Footer --- */
+  .footer {
+    text-align: center;
+    color: var(--color-text-faint);
+    font-size: var(--font-size-xs);
+    margin-top: var(--space-3xl);
+    padding-bottom: var(--space-lg);
+  }
+
+  /* --- Margin/Spacing Helpers --- */
+  .mb-sm { margin-bottom: var(--space-sm); }
+  .mb-md { margin-bottom: var(--space-md); }
+  .mb-lg { margin-bottom: var(--space-lg); }
+  .mb-xl { margin-bottom: var(--space-xl); }
+  .mt-md { margin-top: var(--space-md); }
+  .mt-lg { margin-top: var(--space-lg); }
+  .gap-sm { gap: var(--space-sm); }
+</style>
+</head>
+<body>
+
+<div class="container">
+  
+  <!-- Header -->
+  <div class="header">
+    <div>
+      <h1><img src="logo.png" alt="Hermes" style="height:44px;border-radius:var(--radius-sm);"> Hermes</h1>
+      <p class="subtitle">Behind the scenes</p>
+    </div>
+    <button class="btn-ghost" onclick="location.reload()">
+      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+      Refresh
+    </button>
+  </div>
+
+  <!-- Status Bar -->
+  <div class="glass glow mb-xl">
+    <div class="status-bar" id="status-bar">
+      <span class="empty">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Memory Cards -->
+  <div class="grid-2 mb-xl">
+    <div class="glass">
+      <div class="card-header">
+        <span class="icon">👤</span>
+        <h2>Who You Are</h2>
+        <span class="label">USER.md</span>
+      </div>
+      <div id="user-usage"></div>
+      <div id="user-memory"></div>
+    </div>
+
+    <div class="glass">
+      <div class="card-header">
+        <span class="icon">🧠</span>
+        <h2>My Notes</h2>
+        <span class="label">MEMORY.md</span>
+      </div>
+      <div id="agent-usage"></div>
+      <div id="agent-memory"></div>
+    </div>
+  </div>
+
+  <!-- Cron Jobs -->
+  <div class="glass mb-xl">
+    <div class="card-header">
+      <span class="icon">⏰</span>
+      <h2>Scheduled Jobs</h2>
+      <span id="cron-count" class="tag tag-count"></span>
+    </div>
+    <div id="cron-jobs"></div>
+  </div>
+
+  <!-- Config & Skills -->
+  <div class="grid-2 mb-xl">
+    <div class="glass">
+      <div class="card-header">
+        <span class="icon">⚙️</span>
+        <h2>Config</h2>
+      </div>
+      <div id="config"></div>
+      <details class="mt-lg">
+        <summary>
+          <svg class="chevron" width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          View config.yaml
+        </summary>
+        <div class="collapsible-box" id="config-raw"></div>
+      </details>
+      <details class="mt-md">
+        <summary>
+          <svg class="chevron" width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          View .env
+        </summary>
+        <div class="collapsible-box" id="config-env"></div>
+      </details>
+    </div>
+
+    <div class="glass">
+      <div class="card-header">
+        <span class="icon">🛠</span>
+        <h2>Skills</h2>
+        <span id="skill-count" class="tag tag-count"></span>
+      </div>
+      <div id="skills"></div>
+      <div id="skill-detail" class="skill-detail hidden">
+        <div class="collapsible-box" style="max-height:400px" id="skill-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer" id="footer">Dashboard data from ~/.hermes</div>
+</div>
+
+<script src="data.js"></script>
+<script>
+
+const chevronSvg = '<svg class="chevron" width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>';
+
+function renderUsageBar(id, chars, limit, pct) {
+  const el = document.getElementById(id);
+  if (!el || !chars) return;
+  const cls = pct < 60 ? 'ok' : pct < 85 ? 'warn' : 'danger';
+  el.innerHTML = `
+    <div class="usage-wrap">
+      <div class="usage-labels">
+        <span class="usage-pct ${cls}">${pct}% used</span>
+        <span class="usage-chars">${chars} / ${limit} chars</span>
+      </div>
+      <div class="usage-track">
+        <div class="usage-fill ${cls}" style="width:${Math.min(pct,100)}%"></div>
+      </div>
+    </div>`;
+}
+
+function renderMemoryEntries(text, container) {
+  if (!text || !text.trim()) {
+    container.innerHTML = '<div class="empty">No entries yet</div>';
+    return;
+  }
+  const entries = text.split('\n§\n').filter(e => e.trim());
+  container.innerHTML = entries.map(entry => {
+    const lines = entry.trim().split('\n');
+    const firstLine = lines[0];
+    const match = firstLine.match(/^\*\*(.+?):\*\*\s*(.*)/);
+    if (match) {
+      return `<div class="entry-card">
+        <div class="entry-label">${match[1]}</div>
+        <div class="entry-text">${match[2]}${lines.length > 1 ? '<br>' + lines.slice(1).join('<br>') : ''}</div>
+      </div>`;
+    }
+    return `<div class="entry-card"><div class="entry-text">${entry.trim()}</div></div>`;
+  }).join('');
+}
+
+function renderCronJobs(jobs) {
+  const container = document.getElementById('cron-jobs');
+  const counter = document.getElementById('cron-count');
+  if (!jobs || jobs.length === 0) {
+    container.innerHTML = '<div class="empty">No scheduled jobs</div>';
+    counter.textContent = '0';
+    return;
+  }
+  counter.textContent = jobs.length;
+  container.innerHTML = jobs.map(job => {
+    const nextRun = job.next_run_at ? new Date(job.next_run_at).toLocaleString() : 'not scheduled';
+    const enabled = job.enabled !== false;
+    return `
+    <div class="cron-card">
+      <div class="cron-header">
+        <span class="status-dot ${enabled ? 'on' : 'off'}"></span>
+        <span class="cron-name">${job.name || job.job_id || job.id || 'Unnamed'}</span>
+        <span class="tag tag-primary">${job.schedule || '?'}</span>
+        <span class="tag tag-muted">→ ${job.deliver || 'local'}</span>
+        ${job.skills ? job.skills.map(s => `<span class="tag tag-muted">${s}</span>`).join('') : ''}
+      </div>
+      <div class="cron-meta">Next run: ${nextRun}</div>
+      ${job.prompt ? `
+      <details class="mt-md">
+        <summary>${chevronSvg} View prompt</summary>
+        <div class="collapsible-box">${escapeHtml(job.prompt)}</div>
+      </details>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function renderStatus(html) {
+  const el = document.getElementById('status-bar');
+  if (!html) return;
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+  const items = doc.querySelectorAll('.config-item');
+  let out = '';
+  items.forEach(item => {
+    const key = item.querySelector('.config-key')?.textContent || '';
+    const val = item.querySelector('.config-val')?.textContent || '';
+    const isOn = val.includes('Online') || val.includes('✓');
+    out += `<div class="status-item">
+      <span class="status-dot ${isOn ? 'on' : 'off'}"></span>
+      <span class="status-key">${key}</span>
+      <span class="status-val ${isOn ? 'on' : ''}">${val}</span>
+    </div>`;
+  });
+  el.innerHTML = out;
+}
+
+function renderConfig(html) {
+  const el = document.getElementById('config');
+  if (!html) return;
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+  const items = doc.querySelectorAll('.config-item');
+  let out = '';
+  items.forEach(item => {
+    const key = item.querySelector('.config-key')?.textContent || '';
+    const val = item.querySelector('.config-val')?.textContent || '';
+    out += `<div class="config-row"><span class="config-key">${key}</span><span class="config-val">${val}</span></div>`;
+  });
+  el.innerHTML = out;
+}
+
+function renderSkills() {
+  const el = document.getElementById('skills');
+  const counter = document.getElementById('skill-count');
+  const d = window.__DASHBOARD_DATA__;
+  
+  if (d && d.skills_data && d.skills_data.length > 0) {
+    const skills = d.skills_data;
+    counter.textContent = skills.length;
+    
+    const cats = {};
+    skills.forEach(s => {
+      if (!cats[s.category]) cats[s.category] = [];
+      cats[s.category].push(s);
+    });
+    
+    let out = '';
+    Object.keys(cats).sort().forEach(cat => {
+      out += `<div class="skill-category"><div class="skill-category-name">${cat}</div><div class="skill-pills">`;
+      cats[cat].forEach(s => {
+        const cls = s.custom ? 'skill-pill custom' : 'skill-pill';
+        out += `<span class="${cls}" onclick="showSkill('${s.path}', this)">${s.name}</span>`;
+      });
+      out += `</div></div>`;
+    });
+    el.innerHTML = out;
+  } else {
+    el.innerHTML = '<div class="empty">No skills installed</div>';
+    counter.textContent = '0';
+  }
+}
+
+function showSkill(path, pill) {
+  const d = window.__DASHBOARD_DATA__;
+  if (!d || !d.skills_data) return;
+  const skill = d.skills_data.find(s => s.path === path);
+  const detail = document.getElementById('skill-detail');
+  const content = document.getElementById('skill-content');
+  
+  // Remove active from all pills
+  document.querySelectorAll('.skill-pill').forEach(p => p.classList.remove('active'));
+  
+  if (skill) {
+    if (pill) pill.classList.add('active');
+    content.textContent = skill.content;
+    detail.classList.remove('hidden');
+    detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+function escapeHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function loadAll() {
+  if (!window.__DASHBOARD_DATA__) return;
+  const d = window.__DASHBOARD_DATA__;
+  
+  renderMemoryEntries(d.user_memory, document.getElementById('user-memory'));
+  renderMemoryEntries(d.agent_memory, document.getElementById('agent-memory'));
+  renderUsageBar('user-usage', d.user_chars, d.user_limit, d.user_pct);
+  renderUsageBar('agent-usage', d.agent_chars, d.agent_limit, d.agent_pct);
+  renderCronJobs(d.cron_jobs);
+  renderStatus(d.status);
+  renderConfig(d.config);
+  renderSkills();
+  if (d.config_raw) document.getElementById('config-raw').textContent = d.config_raw;
+  if (d.env_raw) document.getElementById('config-env').textContent = d.env_raw;
+}
+
+document.addEventListener('DOMContentLoaded', loadAll);
+</script>
+</body>
+</html>
