@@ -82,6 +82,7 @@
     .glass { padding: var(--space-md); }
     .config-row { flex-direction: column; gap: var(--space-xs); }
     .cron-header { flex-direction: column; align-items: flex-start; }
+    .cron-card .tag { align-self: flex-start; }
   }
 
   /* --- Card Header --- */
@@ -196,12 +197,13 @@
     padding: var(--space-lg);
     margin-bottom: var(--space-md);
     transition: all var(--transition-fast);
+    text-align: left;
   }
   .cron-card:hover { border-color: var(--color-border-hover); }
   .cron-card:last-child { margin-bottom: 0; }
   .cron-header {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: var(--space-md);
     margin-bottom: var(--space-sm);
     flex-wrap: wrap;
@@ -214,6 +216,7 @@
   .cron-meta {
     font-size: var(--font-size-xs);
     color: var(--color-text-muted);
+    text-align: left;
   }
 
   /* --- Tag Pill --- */
