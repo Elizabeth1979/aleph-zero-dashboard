@@ -116,8 +116,13 @@ print(json.dumps({'count': count, 'memories': memories}))
 
 # Quick commands
 COMMANDS='[
-  {"cmd":"dashboard","desc":"Refresh & open this dashboard"},
-  {"cmd":"gw","desc":"Check if Discord gateway is alive or dead"}
+  {"cmd":"dashboard","desc":"Refreshes all dashboard data and opens it in your browser"},
+  {"cmd":"gw","desc":"Prints whether the Discord bot gateway is running or not"},
+  {"cmd":"hermes chat","desc":"Start a conversation with me in the terminal"},
+  {"cmd":"hermes status","desc":"Show status of all components (gateway, cron, etc)"},
+  {"cmd":"hermes gateway restart","desc":"Restart the Discord bot if it stops responding"},
+  {"cmd":"hermes cron list","desc":"List all scheduled cron jobs"},
+  {"cmd":"hermes sessions","desc":"Browse past conversation sessions"}
 ]'
 
 # Write data file
