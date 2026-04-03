@@ -522,27 +522,14 @@ html.a11y-dyslexia-font th {
 
 /* ------------------------------------------------------------
    2e. Increase Font Size
+   Scale at the root so everything inherits — no compounding.
    ------------------------------------------------------------ */
-html.a11y-font-lg body,
-html.a11y-font-lg p,
-html.a11y-font-lg span,
-html.a11y-font-lg li,
-html.a11y-font-lg a,
-html.a11y-font-lg td,
-html.a11y-font-lg th,
-html.a11y-font-lg label {
-  font-size: calc(1em + 2px) !important;
+html.a11y-font-lg {
+  font-size: 120% !important;
 }
 
-html.a11y-font-xl body,
-html.a11y-font-xl p,
-html.a11y-font-xl span,
-html.a11y-font-xl li,
-html.a11y-font-xl a,
-html.a11y-font-xl td,
-html.a11y-font-xl th,
-html.a11y-font-xl label {
-  font-size: calc(1em + 4px) !important;
+html.a11y-font-xl {
+  font-size: 140% !important;
 }
 
 /* ------------------------------------------------------------
