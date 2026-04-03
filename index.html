@@ -17,12 +17,17 @@
     background: var(--bg);
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
+    height: 100%;
+    overflow: hidden;
   }
 
   .wrap {
     max-width: 1100px;
     margin: 0 auto;
-    padding: var(--s8) var(--s6);
+    padding: var(--s6) var(--s6) var(--s4);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
 
   /* --- Header --- */
@@ -30,7 +35,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: var(--s8);
+    margin-bottom: var(--s5);
+    flex-shrink: 0;
   }
   .header-left {
     display: flex;
@@ -38,11 +44,11 @@
     gap: var(--s4);
   }
   .header-left img {
-    height: 36px;
+    height: 32px;
     border-radius: var(--r1);
   }
   .header-left h1 {
-    font-size: var(--fs-2xl);
+    font-size: var(--fs-xl);
     font-weight: 700;
     color: var(--text);
     letter-spacing: -0.5px;
@@ -68,22 +74,20 @@
   .dot.on { background: var(--ok); }
   .dot.off { background: var(--text-3); }
 
-  /* --- Bento Grid --- */
+  /* --- Bento Grid (3x3) --- */
   .bento {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--s4);
+    flex: 1;
+    min-height: 0;
   }
-  .col-1 { grid-column: span 1; }
-  .col-2 { grid-column: span 2; }
-  .col-3 { grid-column: span 3; }
-  .col-4 { grid-column: span 4; }
 
   @media (max-width: 800px) {
-    .bento { grid-template-columns: 1fr; }
-    .col-1, .col-2, .col-3, .col-4 { grid-column: span 1; }
-    .wrap { padding: var(--s6) var(--s4); }
-    .header { flex-direction: column; align-items: flex-start; gap: var(--s4); }
+    .bento { grid-template-columns: 1fr; overflow-y: auto; }
+    .wrap { padding: var(--s4) var(--s3); overflow: auto; }
+    html, body { overflow: auto; }
+    .header { flex-direction: column; align-items: flex-start; gap: var(--s3); }
   }
 
   /* --- Card --- */
@@ -91,32 +95,38 @@
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--r3);
-    padding: var(--s6);
+    padding: var(--s5);
+    cursor: pointer;
     transition: border-color var(--transition), transform var(--transition);
     animation: fadeIn 0.4s ease both;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
   }
   .card:hover {
-    border-color: var(--border-hover);
+    border-color: var(--accent);
+    transform: translateY(-2px);
   }
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
   }
   .card:nth-child(1) { animation-delay: 0s; }
-  .card:nth-child(2) { animation-delay: 0.04s; }
-  .card:nth-child(3) { animation-delay: 0.08s; }
-  .card:nth-child(4) { animation-delay: 0.12s; }
-  .card:nth-child(5) { animation-delay: 0.16s; }
-  .card:nth-child(6) { animation-delay: 0.20s; }
-  .card:nth-child(7) { animation-delay: 0.24s; }
-  .card:nth-child(8) { animation-delay: 0.28s; }
+  .card:nth-child(2) { animation-delay: 0.03s; }
+  .card:nth-child(3) { animation-delay: 0.06s; }
+  .card:nth-child(4) { animation-delay: 0.09s; }
+  .card:nth-child(5) { animation-delay: 0.12s; }
+  .card:nth-child(6) { animation-delay: 0.15s; }
+  .card:nth-child(7) { animation-delay: 0.18s; }
+  .card:nth-child(8) { animation-delay: 0.21s; }
+  .card:nth-child(9) { animation-delay: 0.24s; }
 
   /* --- Card Header --- */
   .card-h {
     display: flex;
     align-items: center;
     gap: var(--s3);
-    margin-bottom: var(--s5);
+    margin-bottom: var(--s3);
   }
   .card-h svg {
     width: 18px;
@@ -127,11 +137,10 @@
   .card-h h2 {
     font-size: var(--fs-sm);
     font-weight: 600;
-    color: var(--text-2);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    color: var(--text);
+    letter-spacing: -0.01em;
   }
-  .card-h .count {
+  .card-h .badge {
     margin-left: auto;
     font-size: var(--fs-xs);
     font-family: var(--mono);
@@ -142,24 +151,32 @@
     border-radius: var(--pill);
   }
 
-  /* --- Stat Card --- */
-  .stat-val {
-    font-size: var(--fs-3xl);
-    font-weight: 700;
-    font-family: var(--mono);
-    color: var(--text);
-    line-height: 1;
-  }
-  .stat-label {
+  /* --- Card Description --- */
+  .card-desc {
     font-size: var(--fs-xs);
     color: var(--text-3);
-    margin-top: var(--s2);
+    line-height: 1.5;
+    flex: 1;
   }
+
+  /* --- Card Footer / Preview --- */
+  .card-preview {
+    margin-top: auto;
+    padding-top: var(--s3);
+    font-size: var(--fs-xs);
+    color: var(--text-2);
+    font-family: var(--mono);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  /* --- Usage bar (for memory cards) --- */
   .usage-bar {
     height: 4px;
     background: rgba(255,255,255,0.04);
     border-radius: var(--pill);
-    margin-top: var(--s4);
+    margin-top: var(--s3);
     overflow: hidden;
   }
   .usage-fill {
@@ -171,7 +188,141 @@
   .usage-fill.warn { background: var(--warn); }
   .usage-fill.danger { background: var(--danger); }
 
-  /* --- Task Item --- */
+  /* --- Status dot for gateway card --- */
+  .gw-status {
+    display: flex;
+    align-items: center;
+    gap: var(--s2);
+    margin-top: auto;
+    padding-top: var(--s3);
+    font-size: var(--fs-xs);
+    font-weight: 500;
+  }
+  .gw-status.online { color: var(--ok); }
+  .gw-status.offline { color: var(--text-3); }
+
+  /* --- Footer --- */
+  .footer {
+    text-align: left;
+    font-size: var(--fs-xs);
+    color: var(--text-3);
+    padding: var(--s3) 0 0;
+    flex-shrink: 0;
+  }
+
+  /* --- Modal --- */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(4px);
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    width: 92vw;
+    max-width: 900px;
+    height: 85vh;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--r3);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--s4) var(--s6);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .modal-title {
+    font-size: var(--fs-lg);
+    font-weight: 600;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: var(--s3);
+  }
+  .modal-title svg {
+    width: 20px;
+    height: 20px;
+    color: var(--accent);
+  }
+  .modal-close {
+    background: none;
+    border: none;
+    color: var(--text-3);
+    cursor: pointer;
+    padding: var(--s2);
+    border-radius: var(--r1);
+    transition: all var(--transition);
+  }
+  .modal-close:hover { color: var(--text); background: rgba(255,255,255,0.06); }
+  .modal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--s6);
+  }
+
+  /* --- Modal Content Styles --- */
+  .modal-meta {
+    font-size: var(--fs-xs);
+    color: var(--text-3);
+    margin-bottom: var(--s4);
+  }
+  .modal-editor {
+    width: 100%;
+    min-height: 300px;
+    background: var(--bg-inset);
+    border: 1px solid var(--border);
+    border-radius: var(--r2);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: var(--fs-sm);
+    padding: var(--s4);
+    resize: vertical;
+    line-height: 1.7;
+    outline: none;
+    transition: border-color var(--transition);
+  }
+  .modal-editor:focus { border-color: var(--accent); }
+  .modal-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--s3);
+    margin-top: var(--s4);
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s2);
+    padding: var(--s2) var(--s4);
+    border-radius: var(--r2);
+    border: 1px solid var(--border);
+    font-family: var(--sans);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition);
+  }
+  .btn-save {
+    background: var(--accent-muted);
+    color: var(--accent);
+    border-color: rgba(93,228,212,0.2);
+  }
+  .btn-save:hover { background: rgba(93,228,212,0.2); }
+  .modal-hint {
+    font-size: var(--fs-xs);
+    color: var(--text-3);
+  }
+
+  /* Task in modal */
   .task {
     display: flex;
     align-items: center;
@@ -196,7 +347,6 @@
     border-color: var(--accent-dim);
     background: var(--accent-muted);
   }
-  .task.done .task-check svg { display: block; }
   .task-text {
     font-size: var(--fs-sm);
     color: var(--text);
@@ -217,26 +367,19 @@
     color: var(--text-3);
   }
 
-  /* --- Memory Entry --- */
-  .mem-entry {
+  /* Config row in modal */
+  .cfg-row {
+    display: flex;
+    justify-content: space-between;
     padding: var(--s3) 0;
-    border-bottom: 1px solid var(--border);
     font-size: var(--fs-sm);
-    line-height: 1.6;
-    color: var(--text);
-    overflow-wrap: break-word;
+    border-bottom: 1px solid var(--border);
   }
-  .mem-entry:last-child { border-bottom: none; }
-  .mem-label {
-    font-size: var(--fs-xs);
-    font-weight: 600;
-    color: var(--accent-dim);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    margin-bottom: var(--s1);
-  }
+  .cfg-row:last-child { border-bottom: none; }
+  .cfg-key { color: var(--text-3); }
+  .cfg-val { color: var(--accent); font-weight: 500; }
 
-  /* --- Cron Job --- */
+  /* Cron in modal */
   .cron {
     padding: var(--s4) 0;
     border-bottom: 1px solid var(--border);
@@ -294,22 +437,95 @@
     overflow-y: auto;
   }
 
-  /* --- Config Row --- */
-  .cfg-row {
+  /* Command row in modal */
+  .cmd-row {
     display: flex;
-    justify-content: space-between;
-    padding: var(--s2) 0;
-    font-size: var(--fs-sm);
+    align-items: center;
+    gap: var(--s3);
+    padding: var(--s3) 0;
     border-bottom: 1px solid var(--border);
   }
-  .cfg-row:last-child { border-bottom: none; }
-  .cfg-key { color: var(--text-3); }
-  .cfg-val { color: var(--accent); font-weight: 500; }
-
-  /* --- Skills --- */
-  .skill-cat {
-    margin-bottom: var(--s4);
+  .cmd-row:last-child { border-bottom: none; }
+  .cmd-name {
+    font-family: var(--mono);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--accent);
+    min-width: 100px;
   }
+  .cmd-desc {
+    font-size: var(--fs-sm);
+    color: var(--text-2);
+  }
+
+  /* Raw config in modal */
+  .raw-toggle {
+    font-size: var(--fs-xs);
+    color: var(--text-3);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: var(--s2);
+    margin-top: var(--s4);
+    transition: color var(--transition);
+  }
+  .raw-toggle:hover { color: var(--text-2); }
+  .raw-box {
+    margin-top: var(--s3);
+    padding: var(--s4);
+    background: var(--bg-inset);
+    border-radius: var(--r1);
+    font-family: var(--mono);
+    font-size: var(--fs-xs);
+    color: var(--text-3);
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+
+  /* Memory entry in modal */
+  .mem-entry {
+    padding: var(--s3) 0;
+    border-bottom: 1px solid var(--border);
+    font-size: var(--fs-sm);
+    line-height: 1.6;
+    color: var(--text);
+    overflow-wrap: break-word;
+  }
+  .mem-entry:last-child { border-bottom: none; }
+  .mem-label {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--accent-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: var(--s1);
+  }
+
+  /* Chroma in modal */
+  .modal-chroma-cat {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--accent-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-top: var(--s5);
+    margin-bottom: var(--s3);
+  }
+  .modal-chroma-cat:first-child { margin-top: 0; }
+  .modal-chroma-entry {
+    padding: var(--s3) var(--s4);
+    margin-bottom: var(--s2);
+    background: var(--bg-inset);
+    border-radius: var(--r1);
+    font-size: var(--fs-sm);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* Skills in modal */
+  .skill-cat { margin-bottom: var(--s4); }
   .skill-cat-name {
     font-size: var(--fs-xs);
     font-weight: 600;
@@ -364,245 +580,10 @@
   }
   .skill-detail.show { display: block; }
 
-  /* --- Collapsible Raw --- */
-  .raw-toggle {
-    font-size: var(--fs-xs);
-    color: var(--text-3);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: var(--s2);
-    margin-top: var(--s4);
-    transition: color var(--transition);
-  }
-  .raw-toggle:hover { color: var(--text-2); }
-  .raw-box {
-    margin-top: var(--s3);
-    padding: var(--s4);
-    background: var(--bg-inset);
-    border-radius: var(--r1);
-    font-family: var(--mono);
-    font-size: var(--fs-xs);
-    color: var(--text-3);
-    white-space: pre-wrap;
-    word-break: break-word;
-    max-height: 300px;
-    overflow-y: auto;
-  }
-
-  /* --- Chroma Memory --- */
-  .chroma-cat {
-    font-size: var(--fs-xs);
-    font-weight: 600;
-    color: var(--text-3);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    margin-top: var(--s4);
-    margin-bottom: var(--s2);
-  }
-  .chroma-entry {
-    padding: var(--s3) 0;
-    border-bottom: 1px solid var(--border);
-    font-size: var(--fs-sm);
-    color: var(--text);
-    overflow-wrap: break-word;
-  }
-  .chroma-entry:last-child { border-bottom: none; }
-
-  /* --- Command Card --- */
-  .cmd-row {
-    display: flex;
-    align-items: center;
-    gap: var(--s3);
-    padding: var(--s3) 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .cmd-row:last-child { border-bottom: none; }
-  .cmd-name {
-    font-family: var(--mono);
-    font-size: var(--fs-sm);
-    font-weight: 600;
-    color: var(--accent);
-    min-width: 100px;
-  }
-  .cmd-desc {
-    font-size: var(--fs-sm);
-    color: var(--text-2);
-  }
-
-  /* --- Clickable Card --- */
-  .clickable { cursor: pointer; }
-  .clickable:hover {
-    border-color: var(--accent);
-    transform: translateY(-2px);
-  }
-
-  /* --- Modal --- */
-  .modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.8);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-    backdrop-filter: blur(4px);
-  }
-  .modal-overlay.open { display: flex; }
-  .modal {
-    width: 92vw;
-    height: 90vh;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: var(--r3);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-  .modal-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--s4) var(--s6);
-    border-bottom: 1px solid var(--border);
-    flex-shrink: 0;
-  }
-  .modal-tabs {
-    display: flex;
-    gap: var(--s2);
-  }
-  .modal-tab {
-    display: flex;
-    align-items: center;
-    gap: var(--s2);
-    padding: var(--s2) var(--s4);
-    border: 1px solid transparent;
-    border-radius: var(--r2);
-    background: none;
-    color: var(--text-3);
-    font-family: var(--sans);
-    font-size: var(--fs-sm);
-    font-weight: 500;
-    cursor: pointer;
-    transition: all var(--transition);
-  }
-  .modal-tab:hover { color: var(--text); background: rgba(255,255,255,0.04); }
-  .modal-tab.active {
-    color: var(--accent);
-    background: var(--accent-muted);
-    border-color: rgba(93,228,212,0.2);
-  }
-  .modal-title {
-    font-size: var(--fs-lg);
-    font-weight: 600;
-    color: var(--text);
-  }
-  .modal-close {
-    background: none;
-    border: none;
-    color: var(--text-3);
-    cursor: pointer;
-    padding: var(--s2);
-    border-radius: var(--r1);
-    transition: all var(--transition);
-  }
-  .modal-close:hover { color: var(--text); background: rgba(255,255,255,0.06); }
-  .modal-body {
-    flex: 1;
-    overflow-y: auto;
-    padding: var(--s6);
-  }
-  .modal-pane { height: 100%; display: flex; flex-direction: column; }
-  .modal-meta {
-    font-size: var(--fs-xs);
-    color: var(--text-3);
-    margin-bottom: var(--s4);
-  }
-  .modal-editor {
-    flex: 1;
-    width: 100%;
-    background: var(--bg-inset);
-    border: 1px solid var(--border);
-    border-radius: var(--r2);
-    color: var(--text);
-    font-family: var(--mono);
-    font-size: var(--fs-sm);
-    padding: var(--s4);
-    resize: none;
-    line-height: 1.7;
-    outline: none;
-    transition: border-color var(--transition);
-  }
-  .modal-editor:focus { border-color: var(--accent); }
-  .modal-actions {
-    display: flex;
-    align-items: center;
-    gap: var(--s3);
-    margin-top: var(--s4);
-    flex-shrink: 0;
-  }
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--s2);
-    padding: var(--s2) var(--s4);
-    border-radius: var(--r2);
-    border: 1px solid var(--border);
-    font-family: var(--sans);
-    font-size: var(--fs-sm);
-    font-weight: 500;
-    cursor: pointer;
-    transition: all var(--transition);
-  }
-  .btn-save {
-    background: var(--accent-muted);
-    color: var(--accent);
-    border-color: rgba(93,228,212,0.2);
-  }
-  .btn-save:hover {
-    background: rgba(93,228,212,0.2);
-  }
-  .modal-hint {
-    font-size: var(--fs-xs);
-    color: var(--text-3);
-  }
-
-  /* Long-term memory in modal */
-  .modal-chroma-cat {
-    font-size: var(--fs-sm);
-    font-weight: 600;
-    color: var(--accent-dim);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    margin-top: var(--s5);
-    margin-bottom: var(--s3);
-  }
-  .modal-chroma-cat:first-child { margin-top: 0; }
-  .modal-chroma-entry {
-    padding: var(--s3) var(--s4);
-    margin-bottom: var(--s2);
-    background: var(--bg-inset);
-    border-radius: var(--r1);
-    font-size: var(--fs-sm);
-    color: var(--text);
-    line-height: 1.6;
-  }
-
-  /* --- Empty --- */
   .empty {
     font-size: var(--fs-sm);
     color: var(--text-3);
     font-style: italic;
-  }
-
-  /* --- Footer --- */
-  .footer {
-    text-align: left;
-    font-size: var(--fs-xs);
-    color: var(--text-3);
-    margin-top: var(--s8);
-    padding: var(--s4) 0;
-    border-top: 1px solid var(--border);
   }
 
   /* --- Scrollbar --- */
@@ -623,115 +604,106 @@
     <div class="status-row" id="status-bar"></div>
   </div>
 
-  <!-- Bento Grid -->
+  <!-- Bento Grid (3x3) -->
   <div class="bento">
 
-    <!-- Quick Commands -->
-    <div class="card col-2">
+    <!-- 1. Quick Commands -->
+    <div class="card" onclick="openModal('commands')">
       <div class="card-h">
         <i data-lucide="terminal"></i>
         <h2>Quick Commands</h2>
+        <span class="badge" id="cmd-badge">0</span>
       </div>
-      <div id="commands"></div>
+      <div class="card-desc">Shell aliases and shortcuts for common tasks</div>
+      <div class="card-preview" id="cmd-preview"></div>
     </div>
 
-    <!-- Config -->
-    <div class="card col-2">
+    <!-- 2. Config -->
+    <div class="card" onclick="openModal('config')">
       <div class="card-h">
         <i data-lucide="settings"></i>
         <h2>Config</h2>
       </div>
-      <div id="config"></div>
-      <details>
-        <summary class="raw-toggle">
-          <i data-lucide="chevron-right" style="width:14px;height:14px"></i>
-          config.yaml
-        </summary>
-        <div class="raw-box" id="config-raw"></div>
-      </details>
-      <details>
-        <summary class="raw-toggle">
-          <i data-lucide="chevron-right" style="width:14px;height:14px"></i>
-          .env
-        </summary>
-        <div class="raw-box" id="config-env"></div>
-      </details>
+      <div class="card-desc">Model assignments, provider settings, and raw config files</div>
+      <div class="card-preview" id="cfg-preview"></div>
     </div>
 
-    <!-- Tasks -->
-    <div class="card col-2">
+    <!-- 3. Tasks -->
+    <div class="card" onclick="openModal('tasks')">
       <div class="card-h">
         <i data-lucide="check-circle-2"></i>
         <h2>Tasks</h2>
-        <span class="count" id="task-count">0</span>
+        <span class="badge" id="task-badge">0</span>
       </div>
-      <div id="tasks"></div>
+      <div class="card-desc">Your personal to-do list</div>
+      <div class="card-preview" id="task-preview"></div>
     </div>
 
-    <!-- Memory Usage -->
-    <div class="card col-1 clickable" onclick="openMemoryModal('user')">
+    <!-- 4. User Profile -->
+    <div class="card" onclick="openModal('user')">
       <div class="card-h">
         <i data-lucide="user"></i>
-        <h2>User Memory</h2>
+        <h2>User Profile</h2>
+        <span class="badge" id="user-badge">0%</span>
       </div>
-      <div id="user-stat"></div>
+      <div class="card-desc">Who you are — preferences, timezone, communication style</div>
+      <div class="usage-bar"><div class="usage-fill" id="user-bar" style="width:0%"></div></div>
     </div>
 
-    <div class="card col-1 clickable" onclick="openMemoryModal('agent')">
+    <!-- 5. Agent Memory -->
+    <div class="card" onclick="openModal('agent')">
       <div class="card-h">
         <i data-lucide="brain"></i>
         <h2>Agent Memory</h2>
+        <span class="badge" id="agent-badge">0%</span>
       </div>
-      <div id="agent-stat"></div>
+      <div class="card-desc">My personal notes — environment facts, project conventions, lessons</div>
+      <div class="usage-bar"><div class="usage-fill" id="agent-bar" style="width:0%"></div></div>
     </div>
 
-    <!-- Cron Jobs -->
-    <div class="card col-2">
+    <!-- 6. Scheduled Jobs -->
+    <div class="card" onclick="openModal('cron')">
       <div class="card-h">
         <i data-lucide="clock"></i>
         <h2>Scheduled Jobs</h2>
-        <span class="count" id="cron-count">0</span>
+        <span class="badge" id="cron-badge">0</span>
       </div>
-      <div id="cron-jobs"></div>
+      <div class="card-desc">Cron jobs and automated tasks</div>
+      <div class="card-preview" id="cron-preview"></div>
     </div>
 
-    <!-- Who You Are -->
-    <div class="card col-1 clickable" onclick="openMemoryModal('user')">
-      <div class="card-h">
-        <i data-lucide="user-circle"></i>
-        <h2>Who You Are</h2>
-      </div>
-      <div id="user-memory"></div>
-    </div>
-
-    <!-- My Notes -->
-    <div class="card col-1 clickable" onclick="openMemoryModal('agent')">
-      <div class="card-h">
-        <i data-lucide="notebook-pen"></i>
-        <h2>My Notes</h2>
-      </div>
-      <div id="agent-memory"></div>
-    </div>
-
-    <!-- Long-Term Memory -->
-    <div class="card col-2 clickable" onclick="openMemoryModal('longterm')">
+    <!-- 7. Long-Term Memory -->
+    <div class="card" onclick="openModal('longterm')">
       <div class="card-h">
         <i data-lucide="database"></i>
         <h2>Long-Term Memory</h2>
-        <span class="count" id="chroma-count">0</span>
+        <span class="badge" id="chroma-badge">0</span>
       </div>
-      <div id="chroma-memories"></div>
+      <div class="card-desc">ChromaDB persistent store — unlimited facts and context</div>
+      <div class="card-preview" id="chroma-preview"></div>
     </div>
 
-    <!-- Skills -->
-    <div class="card col-2">
+    <!-- 8. Skills -->
+    <div class="card" onclick="openModal('skills')">
       <div class="card-h">
         <i data-lucide="puzzle"></i>
         <h2>Skills</h2>
-        <span class="count" id="skill-count">0</span>
+        <span class="badge" id="skill-badge">0</span>
       </div>
-      <div id="skills"></div>
-      <div class="skill-detail" id="skill-detail"></div>
+      <div class="card-desc">Procedural memory — reusable workflows and tool knowledge</div>
+      <div class="card-preview" id="skill-preview"></div>
+    </div>
+
+    <!-- 9. Gateway -->
+    <div class="card" onclick="openModal('gateway')">
+      <div class="card-h">
+        <i data-lucide="radio"></i>
+        <h2>Gateway</h2>
+      </div>
+      <div class="card-desc">Discord bot, platform connections, and service status</div>
+      <div class="gw-status" id="gw-status">
+        <span class="dot off"></span> Checking...
+      </div>
     </div>
 
   </div>
@@ -740,8 +712,8 @@
 
 </div>
 
-<!-- Memory Modal -->
-<div class="modal-overlay" id="memory-modal" onclick="if(event.target===this)closeModal()">
+<!-- Universal Modal -->
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <div class="modal-header">
       <h2 class="modal-title" id="modal-title"></h2>
@@ -749,38 +721,14 @@
         <i data-lucide="x" style="width:20px;height:20px"></i>
       </button>
     </div>
-    <div class="modal-body">
-      <div class="modal-pane" id="pane-user">
-        <div class="modal-meta" id="modal-user-meta"></div>
-        <textarea class="modal-editor" id="editor-user"></textarea>
-        <div class="modal-actions">
-          <button class="btn btn-save" onclick="saveMemory('user')">
-            <i data-lucide="download" style="width:14px;height:14px"></i> Save as file
-          </button>
-          <span class="modal-hint">Saves USER.md to your Downloads</span>
-        </div>
-      </div>
-      <div class="modal-pane" id="pane-agent" style="display:none">
-        <div class="modal-meta" id="modal-agent-meta"></div>
-        <textarea class="modal-editor" id="editor-agent"></textarea>
-        <div class="modal-actions">
-          <button class="btn btn-save" onclick="saveMemory('agent')">
-            <i data-lucide="download" style="width:14px;height:14px"></i> Save as file
-          </button>
-          <span class="modal-hint">Saves MEMORY.md to your Downloads</span>
-        </div>
-      </div>
-      <div class="modal-pane" id="pane-longterm" style="display:none">
-        <div id="modal-longterm-content"></div>
-      </div>
-    </div>
+    <div class="modal-body" id="modal-body"></div>
   </div>
 </div>
 
 <script src="data.js"></script>
 <script>
 function esc(s) {
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
 function cronHuman(c) {
@@ -794,6 +742,87 @@ function cronHuman(c) {
   if (p[2]==='*' && p[3]==='*' && p[4]==='*') return `Daily at ${t}`;
   if (p[2]==='*' && p[3]==='*' && p[4]!=='*') return `Every ${days[p[4]]||p[4]} at ${t}`;
   return c;
+}
+
+// --- Card previews (compact summaries) ---
+
+function loadCards() {
+  const d = window.__DASHBOARD_DATA__;
+  if (!d) return;
+
+  // Status bar
+  renderStatus(d.status);
+
+  // Commands
+  const cmds = d.commands || [];
+  document.getElementById('cmd-badge').textContent = cmds.length;
+  document.getElementById('cmd-preview').textContent = cmds.slice(0,3).map(c => c.cmd).join(', ') + (cmds.length > 3 ? '...' : '');
+
+  // Config
+  const model = extractConfig(d.config, 'Main Model') || extractConfig(d.config, 'Model') || '?';
+  document.getElementById('cfg-preview').textContent = model;
+
+  // Tasks
+  const tasks = d.tasks || [];
+  const openTasks = tasks.filter(t => !t.done);
+  document.getElementById('task-badge').textContent = openTasks.length;
+  if (openTasks.length) {
+    document.getElementById('task-preview').textContent = openTasks[0].task;
+  } else {
+    document.getElementById('task-preview').textContent = 'All clear';
+  }
+
+  // User memory
+  const uPct = d.user_pct || 0;
+  document.getElementById('user-badge').textContent = uPct + '%';
+  const uCls = uPct < 60 ? 'ok' : uPct < 85 ? 'warn' : 'danger';
+  const uBar = document.getElementById('user-bar');
+  uBar.style.width = Math.min(uPct, 100) + '%';
+  uBar.className = 'usage-fill ' + uCls;
+
+  // Agent memory
+  const aPct = d.agent_pct || 0;
+  document.getElementById('agent-badge').textContent = aPct + '%';
+  const aCls = aPct < 60 ? 'ok' : aPct < 85 ? 'warn' : 'danger';
+  const aBar = document.getElementById('agent-bar');
+  aBar.style.width = Math.min(aPct, 100) + '%';
+  aBar.className = 'usage-fill ' + aCls;
+
+  // Cron
+  const jobs = d.cron_jobs || [];
+  document.getElementById('cron-badge').textContent = jobs.length;
+  if (jobs.length) {
+    document.getElementById('cron-preview').textContent = jobs.map(j => j.name || j.job_id || 'Unnamed').slice(0,2).join(', ');
+  }
+
+  // Chroma
+  const chroma = d.chroma || {};
+  document.getElementById('chroma-badge').textContent = chroma.count || 0;
+  if (chroma.memories && chroma.memories.length) {
+    const cats = [...new Set(chroma.memories.map(m => m.category || 'general'))];
+    document.getElementById('chroma-preview').textContent = cats.length + ' categories, ' + chroma.count + ' entries';
+  }
+
+  // Skills
+  const skills = d.skills_data || [];
+  document.getElementById('skill-badge').textContent = skills.length;
+  const cats = [...new Set(skills.map(s => s.category))];
+  document.getElementById('skill-preview').textContent = cats.length + ' categories';
+
+  // Gateway
+  renderGateway(d.status);
+
+  lucide.createIcons();
+}
+
+function extractConfig(html, key) {
+  if (!html) return null;
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  for (const item of doc.querySelectorAll('.config-item')) {
+    const k = item.querySelector('.config-key')?.textContent || '';
+    if (k.trim() === key) return item.querySelector('.config-val')?.textContent || '';
+  }
+  return null;
 }
 
 function renderStatus(html) {
@@ -811,42 +840,102 @@ function renderStatus(html) {
   el.innerHTML = out;
 }
 
-function renderUsageStat(id, chars, limit, pct) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  const cls = pct < 60 ? 'ok' : pct < 85 ? 'warn' : 'danger';
-  el.innerHTML = `
-    <div class="stat-val">${pct}<span style="font-size:var(--fs-xl);color:var(--text-3)">%</span></div>
-    <div class="stat-label">${chars} / ${limit} chars</div>
-    <div class="usage-bar"><div class="usage-fill ${cls}" style="width:${Math.min(pct,100)}%"></div></div>`;
-}
-
-function renderMemory(text, id) {
-  const el = document.getElementById(id);
-  if (!text || !text.trim()) { el.innerHTML = '<div class="empty">No entries</div>'; return; }
-  const entries = text.split('\n\u00a7\n').filter(e => e.trim());
-  el.innerHTML = entries.map(e => {
-    const lines = e.trim().split('\n');
-    const m = lines[0].match(/^\*\*(.+?):\*\*\s*(.*)/);
-    if (m) {
-      return `<div class="mem-entry"><div class="mem-label">${m[1]}</div><div>${m[2]}${lines.length > 1 ? '<br>' + lines.slice(1).join('<br>') : ''}</div></div>`;
-    }
-    return `<div class="mem-entry">${e.trim()}</div>`;
-  }).join('');
-}
-
-function renderTasks(tasks) {
-  const el = document.getElementById('tasks');
-  const counter = document.getElementById('task-count');
-  if (!tasks || !tasks.length) {
-    el.innerHTML = '<div class="empty">All clear</div>';
-    counter.textContent = '0';
-    return;
+function renderGateway(html) {
+  const el = document.getElementById('gw-status');
+  if (!html) { el.innerHTML = '<span class="dot off"></span> Unknown'; return; }
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  const items = doc.querySelectorAll('.config-item');
+  let parts = [];
+  items.forEach(item => {
+    const k = item.querySelector('.config-key')?.textContent || '';
+    const v = item.querySelector('.config-val')?.textContent || '';
+    const on = v.includes('Online') || v.includes('\u2713');
+    parts.push({ k, v, on });
+  });
+  const gwItem = parts.find(p => p.k === 'Gateway');
+  if (gwItem && gwItem.on) {
+    el.className = 'gw-status online';
+    el.innerHTML = '<span class="dot on"></span> Online';
+  } else {
+    el.className = 'gw-status offline';
+    el.innerHTML = '<span class="dot off"></span> Offline';
   }
+}
+
+// --- Modal rendering ---
+
+function openModal(type) {
+  const d = window.__DASHBOARD_DATA__;
+  if (!d) return;
+  const body = document.getElementById('modal-body');
+  const title = document.getElementById('modal-title');
+
+  const icons = {
+    commands: 'terminal', config: 'settings', tasks: 'check-circle-2',
+    user: 'user', agent: 'brain', cron: 'clock',
+    longterm: 'database', skills: 'puzzle', gateway: 'radio'
+  };
+  const titles = {
+    commands: 'Quick Commands', config: 'Config', tasks: 'Tasks',
+    user: 'User Profile', agent: 'Agent Memory', cron: 'Scheduled Jobs',
+    longterm: 'Long-Term Memory', skills: 'Skills', gateway: 'Gateway'
+  };
+
+  title.innerHTML = `<i data-lucide="${icons[type]}"></i> ${titles[type]}`;
+
+  switch(type) {
+    case 'commands': body.innerHTML = renderCommandsModal(d); break;
+    case 'config': body.innerHTML = renderConfigModal(d); break;
+    case 'tasks': body.innerHTML = renderTasksModal(d); break;
+    case 'user': body.innerHTML = renderMemoryEditorModal('user', d); break;
+    case 'agent': body.innerHTML = renderMemoryEditorModal('agent', d); break;
+    case 'cron': body.innerHTML = renderCronModal(d); break;
+    case 'longterm': body.innerHTML = renderLongtermModal(d); break;
+    case 'skills': body.innerHTML = renderSkillsModal(d); break;
+    case 'gateway': body.innerHTML = renderGatewayModal(d); break;
+  }
+
+  document.getElementById('modal').classList.add('open');
+  lucide.createIcons();
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+}
+
+function renderCommandsModal(d) {
+  const cmds = d.commands || [];
+  if (!cmds.length) return '<div class="empty">No commands</div>';
+  return cmds.map(c =>
+    `<div class="cmd-row"><span class="cmd-name">${esc(c.cmd)}</span><span class="cmd-desc">${esc(c.desc)}</span></div>`
+  ).join('');
+}
+
+function renderConfigModal(d) {
+  let html = '';
+  if (d.config) {
+    const doc = new DOMParser().parseFromString(d.config, 'text/html');
+    doc.querySelectorAll('.config-item').forEach(item => {
+      const k = item.querySelector('.config-key')?.textContent || '';
+      const v = item.querySelector('.config-val')?.textContent || '';
+      html += `<div class="cfg-row"><span class="cfg-key">${k}</span><span class="cfg-val">${v}</span></div>`;
+    });
+  }
+  if (d.config_raw) {
+    html += `<details><summary class="raw-toggle"><i data-lucide="chevron-right" style="width:14px;height:14px"></i> config.yaml</summary><div class="raw-box">${esc(d.config_raw)}</div></details>`;
+  }
+  if (d.env_raw) {
+    html += `<details><summary class="raw-toggle"><i data-lucide="chevron-right" style="width:14px;height:14px"></i> .env</summary><div class="raw-box">${esc(d.env_raw)}</div></details>`;
+  }
+  return html || '<div class="empty">No config</div>';
+}
+
+function renderTasksModal(d) {
+  const tasks = d.tasks || [];
+  if (!tasks.length) return '<div class="empty">All clear</div>';
   const open = tasks.filter(t => !t.done);
   const done = tasks.filter(t => t.done);
-  counter.textContent = open.length;
-  el.innerHTML = [...open, ...done].map(t => {
+  return [...open, ...done].map(t => {
     const cls = t.done ? 'task done' : 'task';
     const check = t.done ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent-dim)"><polyline points="20 6 9 17 4 12"></polyline></svg>' : '';
     const pri = t.priority ? `<span class="task-pri ${t.priority}">${t.priority}</span>` : '';
@@ -859,16 +948,29 @@ function renderTasks(tasks) {
   }).join('');
 }
 
-function renderCron(jobs) {
-  const el = document.getElementById('cron-jobs');
-  const counter = document.getElementById('cron-count');
-  if (!jobs || !jobs.length) {
-    el.innerHTML = '<div class="empty">No jobs</div>';
-    counter.textContent = '0';
-    return;
-  }
-  counter.textContent = jobs.length;
-  el.innerHTML = jobs.map(j => {
+function renderMemoryEditorModal(type, d) {
+  const isUser = type === 'user';
+  const text = isUser ? (d.user_memory || '') : (d.agent_memory || '');
+  const chars = isUser ? d.user_chars : d.agent_chars;
+  const limit = isUser ? d.user_limit : d.agent_limit;
+  const pct = isUser ? d.user_pct : d.agent_pct;
+  const filename = isUser ? 'USER.md' : 'MEMORY.md';
+
+  return `
+    <div class="modal-meta">${filename} &bull; ${chars} / ${limit} chars (${pct}%)</div>
+    <textarea class="modal-editor" id="editor-${type}" style="flex:1;min-height:60vh">${esc(text)}</textarea>
+    <div class="modal-actions">
+      <button class="btn btn-save" onclick="saveMemory('${type}')">
+        <i data-lucide="download" style="width:14px;height:14px"></i> Save as file
+      </button>
+      <span class="modal-hint">Saves ${filename} to your Downloads</span>
+    </div>`;
+}
+
+function renderCronModal(d) {
+  const jobs = d.cron_jobs || [];
+  if (!jobs.length) return '<div class="empty">No jobs</div>';
+  return jobs.map(j => {
     const next = j.next_run_at ? new Date(j.next_run_at).toLocaleString() : '';
     const sched = cronHuman(j.schedule);
     const enabled = j.enabled !== false;
@@ -886,52 +988,51 @@ function renderCron(jobs) {
   }).join('');
 }
 
-function renderConfig(html) {
-  const el = document.getElementById('config');
-  if (!html) return;
-  const doc = new DOMParser().parseFromString(html, 'text/html');
-  const items = doc.querySelectorAll('.config-item');
-  let out = '';
-  items.forEach(item => {
-    const k = item.querySelector('.config-key')?.textContent || '';
-    const v = item.querySelector('.config-val')?.textContent || '';
-    out += `<div class="cfg-row"><span class="cfg-key">${k}</span><span class="cfg-val">${v}</span></div>`;
+function renderLongtermModal(d) {
+  const chroma = d.chroma || {};
+  if (!chroma.memories || !chroma.memories.length) return '<div class="empty">No long-term memories</div>';
+  const cats = {};
+  chroma.memories.forEach(m => {
+    const c = m.category || 'general';
+    if (!cats[c]) cats[c] = [];
+    cats[c].push(m);
   });
-  el.innerHTML = out;
+  let html = '';
+  Object.keys(cats).sort().forEach(cat => {
+    html += `<div class="modal-chroma-cat">${cat} (${cats[cat].length})</div>`;
+    cats[cat].forEach(m => {
+      html += `<div class="modal-chroma-entry">${esc(m.text)}</div>`;
+    });
+  });
+  return html;
 }
 
-function renderSkills() {
-  const el = document.getElementById('skills');
-  const counter = document.getElementById('skill-count');
-  const d = window.__DASHBOARD_DATA__;
-  if (!d || !d.skills_data || !d.skills_data.length) {
-    el.innerHTML = '<div class="empty">No skills</div>';
-    counter.textContent = '0';
-    return;
-  }
-  counter.textContent = d.skills_data.length;
+function renderSkillsModal(d) {
+  const skills = d.skills_data || [];
+  if (!skills.length) return '<div class="empty">No skills</div>';
   const cats = {};
-  d.skills_data.forEach(s => {
+  skills.forEach(s => {
     if (!cats[s.category]) cats[s.category] = [];
     cats[s.category].push(s);
   });
-  let out = '';
+  let html = '<div id="skills-container">';
   Object.keys(cats).sort().forEach(cat => {
-    out += `<div class="skill-cat"><div class="skill-cat-name">${cat}</div><div class="skill-pills">`;
+    html += `<div class="skill-cat"><div class="skill-cat-name">${cat}</div><div class="skill-pills">`;
     cats[cat].forEach(s => {
       const cls = s.custom ? 'pill custom' : 'pill';
-      out += `<span class="${cls}" onclick="showSkill('${s.path}',this)">${s.name}</span>`;
+      html += `<span class="${cls}" onclick="showSkillInModal('${s.path}',this)">${s.name}</span>`;
     });
-    out += '</div></div>';
+    html += '</div></div>';
   });
-  el.innerHTML = out;
+  html += '</div><div class="skill-detail" id="skill-detail-modal"></div>';
+  return html;
 }
 
-function showSkill(path, pill) {
+function showSkillInModal(path, pill) {
   const d = window.__DASHBOARD_DATA__;
   if (!d || !d.skills_data) return;
   const s = d.skills_data.find(x => x.path === path);
-  const detail = document.getElementById('skill-detail');
+  const detail = document.getElementById('skill-detail-modal');
   document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
   if (s) {
     if (pill) pill.classList.add('active');
@@ -940,85 +1041,19 @@ function showSkill(path, pill) {
   }
 }
 
-function renderChroma(data) {
-  const el = document.getElementById('chroma-memories');
-  const counter = document.getElementById('chroma-count');
-  if (!data || !data.memories || !data.memories.length) {
-    el.innerHTML = '<div class="empty">No memories</div>';
-    counter.textContent = '0';
-    return;
-  }
-  counter.textContent = data.count;
-  const cats = {};
-  data.memories.forEach(m => {
-    const c = m.category || 'general';
-    if (!cats[c]) cats[c] = [];
-    cats[c].push(m);
-  });
-  let html = '';
-  Object.keys(cats).sort().forEach(cat => {
-    html += `<div class="chroma-cat">${cat}</div>`;
-    cats[cat].forEach(m => {
-      html += `<div class="chroma-entry">${esc(m.text)}</div>`;
+function renderGatewayModal(d) {
+  let html = '<div style="margin-bottom:var(--s5)">';
+  if (d.status) {
+    const doc = new DOMParser().parseFromString(d.status, 'text/html');
+    doc.querySelectorAll('.config-item').forEach(item => {
+      const k = item.querySelector('.config-key')?.textContent || '';
+      const v = item.querySelector('.config-val')?.textContent || '';
+      const on = v.includes('Online') || v.includes('\u2713');
+      html += `<div class="cfg-row"><span class="cfg-key">${k}</span><span class="cfg-val" style="color:${on ? 'var(--ok)' : 'var(--text-3)'}">${v}</span></div>`;
     });
-  });
-  el.innerHTML = html;
-}
-
-function renderCommands(cmds) {
-  const el = document.getElementById('commands');
-  if (!cmds || !cmds.length) { el.innerHTML = '<div class="empty">No commands</div>'; return; }
-  el.innerHTML = cmds.map(c =>
-    `<div class="cmd-row"><span class="cmd-name">${esc(c.cmd)}</span><span class="cmd-desc">${esc(c.desc)}</span></div>`
-  ).join('');
-}
-
-function openMemoryModal(tab) {
-  const d = window.__DASHBOARD_DATA__;
-  if (!d) return;
-  const titles = { user: 'User Memory', agent: 'Agent Memory', longterm: 'Long-Term Memory' };
-  document.getElementById('modal-title').textContent = titles[tab] || '';
-  // Populate the relevant editor
-  if (tab === 'user') {
-    document.getElementById('editor-user').value = d.user_memory || '';
-    document.getElementById('modal-user-meta').textContent =
-      `USER.md \u2022 ${d.user_chars} / ${d.user_limit} chars (${d.user_pct}%)`;
-  } else if (tab === 'agent') {
-    document.getElementById('editor-agent').value = d.agent_memory || '';
-    document.getElementById('modal-agent-meta').textContent =
-      `MEMORY.md \u2022 ${d.agent_chars} / ${d.agent_limit} chars (${d.agent_pct}%)`;
-  } else {
-    const ltEl = document.getElementById('modal-longterm-content');
-    if (d.chroma && d.chroma.memories && d.chroma.memories.length) {
-      const cats = {};
-      d.chroma.memories.forEach(m => {
-        const c = m.category || 'general';
-        if (!cats[c]) cats[c] = [];
-        cats[c].push(m);
-      });
-      let html = '';
-      Object.keys(cats).sort().forEach(cat => {
-        html += `<div class="modal-chroma-cat">${cat} (${cats[cat].length})</div>`;
-        cats[cat].forEach(m => {
-          html += `<div class="modal-chroma-entry">${esc(m.text)}</div>`;
-        });
-      });
-      ltEl.innerHTML = html;
-    } else {
-      ltEl.innerHTML = '<div class="empty">No long-term memories</div>';
-    }
   }
-  // Show only the relevant pane
-  ['user','agent','longterm'].forEach(t => {
-    const pane = document.getElementById('pane-' + t);
-    pane.style.display = t === tab ? (t === 'longterm' ? 'block' : 'flex') : 'none';
-  });
-  document.getElementById('memory-modal').classList.add('open');
-  lucide.createIcons();
-}
-
-function closeModal() {
-  document.getElementById('memory-modal').classList.remove('open');
+  html += '</div>';
+  return html || '<div class="empty">No gateway info</div>';
 }
 
 function saveMemory(type) {
@@ -1032,31 +1067,12 @@ function saveMemory(type) {
   URL.revokeObjectURL(a.href);
 }
 
-// Close modal on Escape
+// Close on Escape
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeModal();
 });
 
-function loadAll() {
-  const d = window.__DASHBOARD_DATA__;
-  if (!d) return;
-  renderStatus(d.status);
-  renderTasks(d.tasks);
-  renderUsageStat('user-stat', d.user_chars, d.user_limit, d.user_pct);
-  renderUsageStat('agent-stat', d.agent_chars, d.agent_limit, d.agent_pct);
-  renderMemory(d.user_memory, 'user-memory');
-  renderMemory(d.agent_memory, 'agent-memory');
-  renderCron(d.cron_jobs);
-  renderCommands(d.commands);
-  renderConfig(d.config);
-  renderSkills();
-  renderChroma(d.chroma);
-  if (d.config_raw) document.getElementById('config-raw').textContent = d.config_raw;
-  if (d.env_raw) document.getElementById('config-env').textContent = d.env_raw;
-  lucide.createIcons();
-}
-
-document.addEventListener('DOMContentLoaded', loadAll);
+document.addEventListener('DOMContentLoaded', loadCards);
 </script>
 </body>
 </html>
