@@ -90,6 +90,24 @@
     .header { flex-direction: column; align-items: flex-start; gap: var(--s3); }
   }
 
+  /* --- Section Label --- */
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: var(--s2);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: var(--s4);
+    margin-top: var(--s6);
+    padding-bottom: var(--s2);
+    border-bottom: 1px solid var(--border);
+  }
+  .section-label:first-of-type { margin-top: 0; }
+  .section-label svg { color: var(--accent); }
+
   /* --- Card --- */
   .card {
     background: var(--bg-card);
@@ -604,31 +622,29 @@
     <div class="status-row" id="status-bar"></div>
   </div>
 
-  <!-- Bento Grid (3x3) -->
+  <!-- SECTION: Your Hermes -->
+  <div class="section-label"><i data-lucide="star" style="width:16px;height:16px"></i> Your Hermes</div>
   <div class="bento">
 
-    <!-- 1. Quick Commands -->
     <div class="card" onclick="openModal('commands')">
       <div class="card-h">
         <i data-lucide="terminal"></i>
         <h2>Quick Commands</h2>
         <span class="badge" id="cmd-badge">0</span>
       </div>
-      <div class="card-desc">Shell aliases and shortcuts for common tasks</div>
+      <div class="card-desc">Shell aliases and shortcuts</div>
       <div class="card-preview" id="cmd-preview"></div>
     </div>
 
-    <!-- 2. Config -->
     <div class="card" onclick="openModal('config')">
       <div class="card-h">
         <i data-lucide="settings"></i>
         <h2>Config</h2>
       </div>
-      <div class="card-desc">Model assignments, provider settings, and raw config files</div>
+      <div class="card-desc">Models, providers, and settings</div>
       <div class="card-preview" id="cfg-preview"></div>
     </div>
 
-    <!-- 3. Tasks -->
     <div class="card" onclick="openModal('tasks')">
       <div class="card-h">
         <i data-lucide="check-circle-2"></i>
@@ -639,71 +655,124 @@
       <div class="card-preview" id="task-preview"></div>
     </div>
 
-    <!-- 4. User Profile -->
     <div class="card" onclick="openModal('user')">
       <div class="card-h">
         <i data-lucide="user"></i>
         <h2>User Profile</h2>
         <span class="badge" id="user-badge">0%</span>
       </div>
-      <div class="card-desc">Who you are — preferences, timezone, communication style</div>
+      <div class="card-desc">Who you are — preferences, style</div>
       <div class="usage-bar"><div class="usage-fill" id="user-bar" style="width:0%"></div></div>
     </div>
 
-    <!-- 5. Agent Memory -->
     <div class="card" onclick="openModal('agent')">
       <div class="card-h">
         <i data-lucide="brain"></i>
         <h2>Agent Memory</h2>
         <span class="badge" id="agent-badge">0%</span>
       </div>
-      <div class="card-desc">My personal notes — environment facts, project conventions, lessons</div>
+      <div class="card-desc">My notes — environment, conventions</div>
       <div class="usage-bar"><div class="usage-fill" id="agent-bar" style="width:0%"></div></div>
     </div>
 
-    <!-- 6. Scheduled Jobs -->
-    <div class="card" onclick="openModal('cron')">
-      <div class="card-h">
-        <i data-lucide="clock"></i>
-        <h2>Scheduled Jobs</h2>
-        <span class="badge" id="cron-badge">0</span>
-      </div>
-      <div class="card-desc">Cron jobs and automated tasks</div>
-      <div class="card-preview" id="cron-preview"></div>
-    </div>
-
-    <!-- 7. Long-Term Memory -->
     <div class="card" onclick="openModal('longterm')">
       <div class="card-h">
         <i data-lucide="database"></i>
         <h2>Long-Term Memory</h2>
         <span class="badge" id="chroma-badge">0</span>
       </div>
-      <div class="card-desc">ChromaDB persistent store — unlimited facts and context</div>
+      <div class="card-desc">ChromaDB persistent store</div>
       <div class="card-preview" id="chroma-preview"></div>
     </div>
 
-    <!-- 8. Skills -->
+    <div class="card" onclick="openModal('cron')">
+      <div class="card-h">
+        <i data-lucide="clock"></i>
+        <h2>Scheduled Jobs</h2>
+        <span class="badge" id="cron-badge">0</span>
+      </div>
+      <div class="card-desc">Cron jobs and automations</div>
+      <div class="card-preview" id="cron-preview"></div>
+    </div>
+
     <div class="card" onclick="openModal('skills')">
       <div class="card-h">
         <i data-lucide="puzzle"></i>
         <h2>Skills</h2>
         <span class="badge" id="skill-badge">0</span>
       </div>
-      <div class="card-desc">Procedural memory — reusable workflows and tool knowledge</div>
+      <div class="card-desc">Reusable workflows and procedures</div>
       <div class="card-preview" id="skill-preview"></div>
     </div>
 
-    <!-- 9. Gateway -->
     <div class="card" onclick="openModal('gateway')">
       <div class="card-h">
         <i data-lucide="radio"></i>
         <h2>Gateway</h2>
       </div>
-      <div class="card-desc">Discord bot, platform connections, and service status</div>
+      <div class="card-desc">Discord bot and service status</div>
       <div class="gw-status" id="gw-status">
         <span class="dot off"></span> Checking...
       </div>
+    </div>
+
+  </div>
+
+  <!-- SECTION: Under the Hood -->
+  <div class="section-label"><i data-lucide="wrench" style="width:16px;height:16px"></i> Under the Hood</div>
+  <div class="bento">
+
+    <div class="card" onclick="openModal('soul')">
+      <div class="card-h">
+        <i data-lucide="heart"></i>
+        <h2>SOUL.md</h2>
+      </div>
+      <div class="card-desc">My personality and system prompt</div>
+    </div>
+
+    <div class="card" onclick="openModal('discord_channels')">
+      <div class="card-h">
+        <i data-lucide="hash"></i>
+        <h2>Discord Channels</h2>
+        <span class="badge" id="channel-badge">0</span>
+      </div>
+      <div class="card-desc">Channels the bot listens to</div>
+    </div>
+
+    <div class="card" onclick="openModal('auth')">
+      <div class="card-h">
+        <i data-lucide="key-round"></i>
+        <h2>Auth & Credentials</h2>
+      </div>
+      <div class="card-desc">API providers and tokens</div>
+      <div class="card-preview" id="auth-preview"></div>
+    </div>
+
+    <div class="card" onclick="openModal('google')">
+      <div class="card-h">
+        <i data-lucide="mail"></i>
+        <h2>Google Integration</h2>
+      </div>
+      <div class="card-desc">Gmail, Calendar, Drive</div>
+      <div class="card-preview" id="google-preview"></div>
+    </div>
+
+    <div class="card" onclick="openModal('sessions')">
+      <div class="card-h">
+        <i data-lucide="message-square"></i>
+        <h2>Sessions</h2>
+        <span class="badge" id="session-badge">0</span>
+      </div>
+      <div class="card-desc">Conversation history</div>
+      <div class="card-preview" id="session-preview"></div>
+    </div>
+
+    <div class="card" onclick="openModal('system')">
+      <div class="card-h">
+        <i data-lucide="laptop"></i>
+        <h2>System Settings</h2>
+      </div>
+      <div class="card-desc">Power, battery, and macOS config</div>
     </div>
 
   </div>
@@ -812,6 +881,31 @@ function loadCards() {
   // Gateway
   renderGateway(d.status);
 
+  // --- Under the Hood previews ---
+
+  // Discord channels
+  const channels = d.discord_channels || [];
+  document.getElementById('channel-badge').textContent = channels.length;
+
+  // Auth
+  const auth = d.auth_data || [];
+  const authEl = document.getElementById('auth-preview');
+  if (auth.length) {
+    authEl.textContent = auth.map(a => a.name).join(', ');
+  }
+
+  // Google
+  const googleEl = document.getElementById('google-preview');
+  googleEl.textContent = d.google_status === 'connected' ? '✓ Connected' : 'Not connected';
+
+  // Sessions
+  document.getElementById('session-badge').textContent = d.session_count || 0;
+  const recentSessions = d.recent_sessions || [];
+  const sessionEl = document.getElementById('session-preview');
+  if (recentSessions.length) {
+    sessionEl.textContent = recentSessions[0].title || recentSessions[0].file;
+  }
+
   lucide.createIcons();
 }
 
@@ -873,12 +967,16 @@ function openModal(type) {
   const icons = {
     commands: 'terminal', config: 'settings', tasks: 'check-circle-2',
     user: 'user', agent: 'brain', cron: 'clock',
-    longterm: 'database', skills: 'puzzle', gateway: 'radio'
+    longterm: 'database', skills: 'puzzle', gateway: 'radio',
+    soul: 'heart', discord_channels: 'hash', auth: 'key-round',
+    google: 'mail', sessions: 'message-square', system: 'laptop'
   };
   const titles = {
     commands: 'Quick Commands', config: 'Config', tasks: 'Tasks',
     user: 'User Profile', agent: 'Agent Memory', cron: 'Scheduled Jobs',
-    longterm: 'Long-Term Memory', skills: 'Skills', gateway: 'Gateway'
+    longterm: 'Long-Term Memory', skills: 'Skills', gateway: 'Gateway',
+    soul: 'SOUL.md', discord_channels: 'Discord Channels', auth: 'Auth & Credentials',
+    google: 'Google Integration', sessions: 'Sessions', system: 'System Settings'
   };
 
   title.innerHTML = `<i data-lucide="${icons[type]}"></i> ${titles[type]}`;
@@ -893,6 +991,12 @@ function openModal(type) {
     case 'longterm': body.innerHTML = renderLongtermModal(d); break;
     case 'skills': body.innerHTML = renderSkillsModal(d); break;
     case 'gateway': body.innerHTML = renderGatewayModal(d); break;
+    case 'soul': body.innerHTML = renderSoulModal(d); break;
+    case 'discord_channels': body.innerHTML = renderDiscordChannelsModal(d); break;
+    case 'auth': body.innerHTML = renderAuthModal(d); break;
+    case 'google': body.innerHTML = renderGoogleModal(d); break;
+    case 'sessions': body.innerHTML = renderSessionsModal(d); break;
+    case 'system': body.innerHTML = renderSystemModal(d); break;
   }
 
   document.getElementById('modal').classList.add('open');
@@ -1054,6 +1158,74 @@ function renderGatewayModal(d) {
   }
   html += '</div>';
   return html || '<div class="empty">No gateway info</div>';
+}
+
+function renderSoulModal(d) {
+  if (!d.soul_md) return '<div class="empty">No SOUL.md found</div>';
+  return `<div class="raw-box" style="max-height:none;white-space:pre-wrap">${esc(d.soul_md)}</div>`;
+}
+
+function renderDiscordChannelsModal(d) {
+  const channels = d.discord_channels || [];
+  if (!channels.length) return '<div class="empty">No channels</div>';
+  let html = '<div style="margin-bottom:var(--s5)"><strong style="color:var(--text-2)">Channels the bot can see and respond in:</strong></div>';
+  channels.forEach(ch => {
+    const icon = ch.type === 'channel' ? '#' : '🧵';
+    html += `<div class="cfg-row"><span class="cfg-key">${icon} ${ch.name}</span><span class="cfg-val" style="font-size:var(--fs-xs)">${ch.guild} &bull; ${ch.id}</span></div>`;
+  });
+
+  const threads = d.discord_threads || {};
+  const threadKeys = Object.keys(threads).filter(k => k !== 'updated_at');
+  if (threadKeys.length) {
+    html += '<div style="margin-top:var(--s6);margin-bottom:var(--s3)"><strong style="color:var(--text-2)">Active Threads:</strong></div>';
+    threadKeys.forEach(k => {
+      const t = threads[k];
+      html += `<div class="cfg-row"><span class="cfg-key">🧵 ${t.name || k}</span><span class="cfg-val" style="font-size:var(--fs-xs)">${k}</span></div>`;
+    });
+  }
+  return html;
+}
+
+function renderAuthModal(d) {
+  const auth = d.auth_data || [];
+  if (!auth.length) return '<div class="empty">No credentials configured</div>';
+  let html = '';
+  auth.forEach(a => {
+    html += `<div style="margin-bottom:var(--s5)">`;
+    html += `<div class="cfg-row"><span class="cfg-key" style="font-weight:600;color:var(--accent)">${a.name}</span><span class="cfg-val">${a.count} credential(s)</span></div>`;
+    a.labels.forEach(l => {
+      html += `<div class="cfg-row"><span class="cfg-key" style="padding-left:var(--s4)">→ ${l}</span><span class="cfg-val" style="color:var(--ok)">active</span></div>`;
+    });
+    html += '</div>';
+  });
+  return html;
+}
+
+function renderGoogleModal(d) {
+  let html = '';
+  html += `<div class="cfg-row"><span class="cfg-key">OAuth Token</span><span class="cfg-val" style="color:${d.google_status === 'connected' ? 'var(--ok)' : 'var(--text-3)'}">${d.google_status === 'connected' ? '✓ Connected' : '✗ Not connected'}</span></div>`;
+  html += `<div class="cfg-row"><span class="cfg-key">Client Secret</span><span class="cfg-val" style="color:${d.google_apis === 'configured' ? 'var(--ok)' : 'var(--text-3)'}">${d.google_apis === 'configured' ? '✓ Configured' : '✗ Not found'}</span></div>`;
+  html += `<div style="margin-top:var(--s5);color:var(--text-3);font-size:var(--fs-sm)">APIs: Gmail, Calendar, Drive, YouTube<br>Token: ~/.hermes/google_token.json</div>`;
+  return html;
+}
+
+function renderSessionsModal(d) {
+  let html = `<div class="cfg-row"><span class="cfg-key">Total Sessions</span><span class="cfg-val">${d.session_count || 0}</span></div>`;
+  const sessions = d.recent_sessions || [];
+  if (sessions.length) {
+    html += '<div style="margin-top:var(--s5);margin-bottom:var(--s3)"><strong style="color:var(--text-2)">Recent:</strong></div>';
+    sessions.forEach(s => {
+      const date = s.created ? new Date(s.created).toLocaleString() : '';
+      const platform = s.platform ? `<span class="tag" style="margin-left:var(--s2)">${s.platform}</span>` : '';
+      html += `<div class="cfg-row"><span class="cfg-key">${esc(s.title || s.file)}${platform}</span><span class="cfg-val" style="font-size:var(--fs-xs)">${date}</span></div>`;
+    });
+  }
+  return html;
+}
+
+function renderSystemModal(d) {
+  if (!d.system_settings) return '<div class="empty">No system settings documented</div>';
+  return `<div class="raw-box" style="max-height:none;white-space:pre-wrap">${esc(d.system_settings)}</div>`;
 }
 
 function saveMemory(type) {

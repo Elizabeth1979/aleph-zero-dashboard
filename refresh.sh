@@ -123,6 +123,90 @@ for i, doc in enumerate(results.get('documents', [])):
 print(json.dumps({'count': count, 'memories': memories}))
 " 2>/dev/null || echo '{"count":0,"memories":[]}')
 
+# === UNDER THE HOOD DATA ===
+
+# SOUL.md
+SOUL_MD=$(cat "$HERMES/SOUL.md" 2>/dev/null | python3 -c "import sys,json; print(json.dumps(sys.stdin.read()))")
+
+# Discord channels
+DISCORD_CHANNELS=$(python3 -c "
+import json, os
+f = '$HERMES/channel_directory.json'
+if os.path.exists(f):
+    with open(f) as fh:
+        data = json.load(fh)
+    channels = data.get('platforms', {}).get('discord', [])
+    print(json.dumps(channels))
+else:
+    print('[]')
+" 2>/dev/null || echo "[]")
+
+# Discord threads
+DISCORD_THREADS=$(cat "$HERMES/discord_threads.json" 2>/dev/null | python3 -c "import sys,json; print(json.dumps(json.load(sys.stdin)))" 2>/dev/null || echo "{}")
+
+# Auth/credentials
+AUTH_DATA=$(python3 -c "
+import json, os
+f = '$HERMES/auth.json'
+if os.path.exists(f):
+    with open(f) as fh:
+        data = json.load(fh)
+    pool = data.get('credential_pool', {})
+    providers = []
+    for name, creds in pool.items():
+        providers.append({'name': name, 'count': len(creds), 'labels': [c.get('label','') for c in creds]})
+    print(json.dumps(providers))
+else:
+    print('[]')
+" 2>/dev/null || echo "[]")
+
+# Google integration
+GOOGLE_STATUS="none"
+[ -f "$HERMES/google_token.json" ] && GOOGLE_STATUS="connected"
+GOOGLE_APIS=$(python3 -c "
+import json, os
+f = '$HERMES/google_client_secret.json'
+if os.path.exists(f):
+    print('configured')
+else:
+    print('none')
+" 2>/dev/null || echo "none")
+
+# Gateway state
+GATEWAY_STATE=$(cat "$HERMES/gateway_state.json" 2>/dev/null | python3 -c "
+import sys, json
+data = json.load(sys.stdin)
+print(json.dumps({
+    'pid': data.get('pid'),
+    'state': data.get('gateway_state'),
+    'exit_reason': data.get('exit_reason'),
+    'updated_at': data.get('updated_at')
+}))
+" 2>/dev/null || echo '{"pid":null,"state":"unknown","exit_reason":null,"updated_at":null}')
+
+# Session history
+SESSION_COUNT=$(ls "$HERMES/sessions"/session_2*.json 2>/dev/null | wc -l | tr -d ' ')
+RECENT_SESSIONS=$(python3 -c "
+import json, glob, os
+files = sorted(glob.glob('$HERMES/sessions/session_2*.json'), reverse=True)[:5]
+sessions = []
+for f in files:
+    try:
+        with open(f) as fh:
+            data = json.load(fh)
+        sessions.append({
+            'file': os.path.basename(f),
+            'title': data.get('title', data.get('name', os.path.basename(f))),
+            'platform': data.get('platform', 'cli'),
+            'created': data.get('created_at', data.get('started_at', ''))
+        })
+    except: pass
+print(json.dumps(sessions))
+" 2>/dev/null || echo "[]")
+
+# System settings
+SYSTEM_SETTINGS=$(cat "$DASH/SYSTEM_SETTINGS.md" 2>/dev/null | python3 -c "import sys,json; print(json.dumps(sys.stdin.read()))" 2>/dev/null || echo '""')
+
 # Quick commands
 COMMANDS='[
   {"cmd":"dashboard","desc":"Refreshes all dashboard data and opens it in your browser"},
@@ -159,7 +243,17 @@ window.__DASHBOARD_DATA__ = {
   skills_data: $SKILLS_DATA,
   chroma: $CHROMA_DATA,
   commands: $COMMANDS,
-  tasks: $TASKS_DATA
+  tasks: $TASKS_DATA,
+  soul_md: $SOUL_MD,
+  discord_channels: $DISCORD_CHANNELS,
+  discord_threads: $DISCORD_THREADS,
+  auth_data: $AUTH_DATA,
+  google_status: "$GOOGLE_STATUS",
+  google_apis: "$GOOGLE_APIS",
+  gateway_state: $GATEWAY_STATE,
+  session_count: $SESSION_COUNT,
+  recent_sessions: $RECENT_SESSIONS,
+  system_settings: $SYSTEM_SETTINGS
 };
 JSEOF
 
