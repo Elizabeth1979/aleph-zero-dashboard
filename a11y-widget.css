@@ -253,6 +253,8 @@
 .a11y-toggle-label {
   flex: 1;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .a11y-toggle-name {
