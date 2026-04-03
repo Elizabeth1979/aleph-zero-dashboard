@@ -232,6 +232,22 @@
   .usage-fill.warn { background: var(--warn); }
   .usage-fill.danger { background: var(--danger); }
   .empty { font-size: var(--fs-sm); color: var(--text-3); font-style: italic; }
+  .section-head {
+    display: flex;
+    align-items: center;
+    gap: var(--s2);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: var(--s6);
+    margin-bottom: var(--s3);
+    padding-bottom: var(--s2);
+    border-bottom: 1px solid var(--border);
+  }
+  .section-head:first-child { margin-top: 0; }
+  .section-head svg { width: 16px; height: 16px; color: var(--accent); }
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
 </style>
@@ -242,7 +258,7 @@
     <a href="../index.html" class="back-link">
       <i data-lucide="arrow-left" style="width:16px;height:16px"></i> Dashboard
     </a>
-    <h1 class="page-title"><i data-lucide="settings"></i> Config</h1>
+    <h1 class="page-title"><i data-lucide="settings"></i> Config & Setup</h1>
   </div>
   <div class="page-body" id="page-body"></div>
 </div>
@@ -268,6 +284,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const d = window.__DASHBOARD_DATA__;
   if (!d) return;
   let html = '';
+
+  // ── Models & Settings ──
+  html += '<div class="section-head"><i data-lucide="cpu"></i> Models & Settings</div>';
   if (d.config) {
     const doc = new DOMParser().parseFromString(d.config, 'text/html');
     doc.querySelectorAll('.config-item').forEach(item => {
@@ -276,13 +295,46 @@ document.addEventListener('DOMContentLoaded', () => {
       html += `<div class="cfg-row"><span class="cfg-key">${k}</span><span class="cfg-val">${v}</span></div>`;
     });
   }
-  if (d.config_raw) {
-    html += `<details><summary class="raw-toggle"><i data-lucide="chevron-right" style="width:14px;height:14px"></i> config.yaml</summary><div class="raw-box">${esc(d.config_raw)}</div></details>`;
+
+  // ── Quick Commands ──
+  const cmds = d.commands || [];
+  if (cmds.length) {
+    html += '<div class="section-head"><i data-lucide="terminal"></i> Quick Commands</div>';
+    cmds.forEach(c => {
+      html += `<div class="cmd-row"><span class="cmd-name">${esc(c.cmd)}</span><span class="cmd-desc">${esc(c.desc)}</span></div>`;
+    });
   }
-  if (d.env_raw) {
-    html += `<details><summary class="raw-toggle"><i data-lucide="chevron-right" style="width:14px;height:14px"></i> .env</summary><div class="raw-box">${esc(d.env_raw)}</div></details>`;
+
+  // ── Credentials ──
+  const auth = d.auth_data || [];
+  if (auth.length) {
+    html += '<div class="section-head"><i data-lucide="key-round"></i> Credentials</div>';
+    auth.forEach(a => {
+      html += `<div class="cfg-row"><span class="cfg-key" style="font-weight:600;color:var(--accent)">${a.name}</span><span class="cfg-val">${a.count} credential(s)</span></div>`;
+      a.labels.forEach(l => {
+        html += `<div class="cfg-row"><span class="cfg-key" style="padding-left:var(--s4)">&rarr; ${l}</span><span class="cfg-val" style="color:var(--ok)">active</span></div>`;
+      });
+    });
   }
-  document.getElementById('page-body').innerHTML = html || '<div class="empty">No config</div>';
+
+  // ── Google Integration ──
+  html += '<div class="section-head"><i data-lucide="mail"></i> Google Integration</div>';
+  html += `<div class="cfg-row"><span class="cfg-key">OAuth Token</span><span class="cfg-val" style="color:${d.google_status === 'connected' ? 'var(--ok)' : 'var(--text-3)'}">${d.google_status === 'connected' ? '\u2713 Connected' : '\u2717 Not connected'}</span></div>`;
+  html += `<div class="cfg-row"><span class="cfg-key">Client Secret</span><span class="cfg-val" style="color:${d.google_apis === 'configured' ? 'var(--ok)' : 'var(--text-3)'}">${d.google_apis === 'configured' ? '\u2713 Configured' : '\u2717 Not found'}</span></div>`;
+  html += `<div style="margin-top:var(--s2);color:var(--text-3);font-size:var(--fs-xs)">APIs: Gmail, Calendar, Drive, YouTube</div>`;
+
+  // ── Raw Files ──
+  if (d.config_raw || d.env_raw) {
+    html += '<div class="section-head"><i data-lucide="file-text"></i> Raw Files</div>';
+    if (d.config_raw) {
+      html += `<details><summary class="raw-toggle"><i data-lucide="chevron-right" style="width:14px;height:14px"></i> config.yaml</summary><div class="raw-box">${esc(d.config_raw)}</div></details>`;
+    }
+    if (d.env_raw) {
+      html += `<details><summary class="raw-toggle"><i data-lucide="chevron-right" style="width:14px;height:14px"></i> .env</summary><div class="raw-box">${esc(d.env_raw)}</div></details>`;
+    }
+  }
+
+  document.getElementById('page-body').innerHTML = html;
   // Accordion: only one details open at a time
   document.querySelectorAll('details').forEach(det => {
     det.addEventListener('toggle', () => {

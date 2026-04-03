@@ -294,22 +294,12 @@
   <div class="section-label"><i data-lucide="star" style="width:16px;height:16px"></i> Your Hermes</div>
   <div class="bento">
 
-    <a href="pages/commands.html" class="card">
-      <div class="card-h">
-        <i data-lucide="terminal"></i>
-        <h2>Quick Commands</h2>
-        <span class="badge" id="cmd-badge">0</span>
-      </div>
-      <div class="card-desc">Shell aliases and shortcuts</div>
-      <div class="card-preview" id="cmd-preview"></div>
-    </a>
-
     <a href="pages/config.html" class="card">
       <div class="card-h">
         <i data-lucide="settings"></i>
-        <h2>Config</h2>
+        <h2>Config & Setup</h2>
       </div>
-      <div class="card-desc">Models, providers, and settings</div>
+      <div class="card-desc">Models, commands, credentials, integrations</div>
       <div class="card-preview" id="cfg-preview"></div>
     </a>
 
@@ -373,17 +363,6 @@
       <div class="card-preview" id="skill-preview"></div>
     </a>
 
-    <a href="pages/gateway.html" class="card">
-      <div class="card-h">
-        <i data-lucide="radio"></i>
-        <h2>Gateway</h2>
-      </div>
-      <div class="card-desc">Discord bot and service status</div>
-      <div class="gw-status" id="gw-status">
-        <span class="dot off"></span> Checking...
-      </div>
-    </a>
-
   </div>
 
   <!-- SECTION: Under the Hood -->
@@ -396,43 +375,6 @@
         <h2>SOUL.md</h2>
       </div>
       <div class="card-desc">My personality, vibe, and core rules</div>
-    </a>
-
-    <a href="pages/discord_channels.html" class="card">
-      <div class="card-h">
-        <i data-lucide="hash"></i>
-        <h2>Discord Channels</h2>
-        <span class="badge" id="channel-badge">0</span>
-      </div>
-      <div class="card-desc">Channels the bot listens to</div>
-    </a>
-
-    <a href="pages/auth.html" class="card">
-      <div class="card-h">
-        <i data-lucide="key-round"></i>
-        <h2>Auth & Credentials</h2>
-      </div>
-      <div class="card-desc">API providers and tokens</div>
-      <div class="card-preview" id="auth-preview"></div>
-    </a>
-
-    <a href="pages/google.html" class="card">
-      <div class="card-h">
-        <i data-lucide="mail"></i>
-        <h2>Google Integration</h2>
-      </div>
-      <div class="card-desc">Gmail, Calendar, Drive</div>
-      <div class="card-preview" id="google-preview"></div>
-    </a>
-
-    <a href="pages/sessions.html" class="card">
-      <div class="card-h">
-        <i data-lucide="message-square"></i>
-        <h2>Sessions</h2>
-        <span class="badge" id="session-badge">0</span>
-      </div>
-      <div class="card-desc">Conversation history</div>
-      <div class="card-preview" id="session-preview"></div>
     </a>
 
     <a href="pages/system.html" class="card">
@@ -477,11 +419,6 @@ function loadCards() {
 
   // Status bar
   renderStatus(d.status);
-
-  // Commands
-  const cmds = d.commands || [];
-  document.getElementById('cmd-badge').textContent = cmds.length;
-  document.getElementById('cmd-preview').textContent = cmds.slice(0,3).map(c => c.cmd).join(', ') + (cmds.length > 3 ? '...' : '');
 
   // Config
   const model = extractConfig(d.config, 'Main Model') || extractConfig(d.config, 'Model') || '?';
@@ -534,34 +471,6 @@ function loadCards() {
   const cats = [...new Set(skills.map(s => s.category))];
   document.getElementById('skill-preview').textContent = cats.length + ' categories';
 
-  // Gateway
-  renderGateway(d.status);
-
-  // --- Under the Hood previews ---
-
-  // Discord channels
-  const channels = d.discord_channels || [];
-  document.getElementById('channel-badge').textContent = channels.length;
-
-  // Auth
-  const auth = d.auth_data || [];
-  const authEl = document.getElementById('auth-preview');
-  if (auth.length) {
-    authEl.textContent = auth.map(a => a.name).join(', ');
-  }
-
-  // Google
-  const googleEl = document.getElementById('google-preview');
-  googleEl.textContent = d.google_status === 'connected' ? '✓ Connected' : 'Not connected';
-
-  // Sessions
-  document.getElementById('session-badge').textContent = d.session_count || 0;
-  const recentSessions = d.recent_sessions || [];
-  const sessionEl = document.getElementById('session-preview');
-  if (recentSessions.length) {
-    sessionEl.textContent = recentSessions[0].title || recentSessions[0].file;
-  }
-
   lucide.createIcons();
 }
 
@@ -588,28 +497,6 @@ function renderStatus(html) {
     out += `<div class="status-item"><span class="dot ${on?'on':'off'}"></span>${k}</div>`;
   });
   el.innerHTML = out;
-}
-
-function renderGateway(html) {
-  const el = document.getElementById('gw-status');
-  if (!html) { el.innerHTML = '<span class="dot off"></span> Unknown'; return; }
-  const doc = new DOMParser().parseFromString(html, 'text/html');
-  const items = doc.querySelectorAll('.config-item');
-  let parts = [];
-  items.forEach(item => {
-    const k = item.querySelector('.config-key')?.textContent || '';
-    const v = item.querySelector('.config-val')?.textContent || '';
-    const on = v.includes('Online') || v.includes('\u2713');
-    parts.push({ k, v, on });
-  });
-  const gwItem = parts.find(p => p.k === 'Gateway');
-  if (gwItem && gwItem.on) {
-    el.className = 'gw-status online';
-    el.innerHTML = '<span class="dot on"></span> Online';
-  } else {
-    el.className = 'gw-status offline';
-    el.innerHTML = '<span class="dot off"></span> Offline';
-  }
 }
 
 // ── 3D Tilt & Mouse Glow ──
