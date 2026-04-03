@@ -28,18 +28,35 @@
   },
   {
     "id": "3",
-    "title": "Claude Code Source Leak: What's Worth Learning for AI Agents",
+    "title": "Claude Code Source Leak: What's Worth Learning for AI Agents (Blog)",
     "url": "https://thoughts.jock.pl/p/claude-code-source-leak-what-to-learn-ai-agents-2026",
     "category": "ai-tools",
     "status": "processed",
     "note": "Deep analysis of leaked Claude Code source. Three-layer memory, autoDream consolidation, skeptical memory, adversarial verification, frustration detection.",
     "takeaways": [
-      "Three-layer memory (index → topic files → raw search) — we already built this today!",
-      "Skeptical memory: treat memory as hint, verify against reality before acting — TODO: add to memory-management skill",
-      "autoDream nightly consolidation of memory files — TODO: create a cron job for this",
-      "Adversarial verification after tasks: separate check to try to break what was built — TODO: add to workflow",
-      "Frustration detection via regex patterns — TODO: add to behavior rules",
-      "Semantic memory merging catches contradictions, not just duplicates — TODO: improve memory-optimizer"
+      "Three-layer memory (index → topic files → raw search) — DONE: built today",
+      "Skeptical memory: treat memory as hint, verify before acting — DONE: added to behavior.md",
+      "autoDream nightly consolidation of memory files — DONE: expanded nightly cron job",
+      "Adversarial verification: post-task check step — DONE: added to behavior.md",
+      "Frustration detection with tiered response — DONE: added to behavior.md",
+      "Semantic memory merging catches contradictions — DONE: nightly cron now checks for contradictions"
+    ],
+    "added": "2026-04-03"
+  },
+  {
+    "id": "4",
+    "title": "Claude Code Source Leak: 12 Engineering Primitives (Video)",
+    "url": "https://youtu.be/FtCdYhspm7w",
+    "category": "ai-tools",
+    "status": "processed",
+    "note": "Nate Herk's analysis of Claude Code leak. 12 primitives in 3 tiers: tool registry, permissions, session persistence, workflow state, token budgets, streaming events, system logging, verification, tool pool assembly, compaction, permission audit trail, agent type system.",
+    "takeaways": [
+      "Tool registry with metadata-first design — Hermes handles this internally, not actionable for us",
+      "Session persistence that survives crashes — Hermes already does this",
+      "Workflow state ≠ conversation state — good principle, not directly implementable in Hermes",
+      "Token budget hard stops — Hermes has compression config, could investigate further",
+      "Agent type system (explore/plan/verify/guide) with constrained tools — interesting for future multi-agent work",
+      "Released a skill to evaluate agentic harnesses — TODO: could run against our Hermes setup for fun"
     ],
     "added": "2026-04-03"
   }
