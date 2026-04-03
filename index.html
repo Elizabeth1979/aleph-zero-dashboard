@@ -280,6 +280,64 @@
     flex-shrink: 0;
   }
 
+  /* --- Easter Egg --- */
+  .egg {
+    position: absolute;
+    width: 14px; height: 14px;
+    cursor: pointer;
+    opacity: 0.08;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 10;
+    font-size: 12px;
+    line-height: 14px;
+    text-align: center;
+    user-select: none;
+  }
+  .egg:hover { opacity: 0.5; transform: scale(1.8); }
+  .egg-popup {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    background: var(--bg-card);
+    border: 1px solid var(--accent);
+    border-radius: var(--r3);
+    padding: var(--s5) var(--s6);
+    max-width: 340px;
+    text-align: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 30px rgba(var(--accent-rgb), 0.15);
+  }
+  .egg-popup.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    pointer-events: auto;
+  }
+  .egg-popup .egg-icon { font-size: 32px; margin-bottom: var(--s3); }
+  .egg-popup .egg-text {
+    font-size: var(--fs-sm);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .egg-popup .egg-label {
+    font-size: var(--fs-xs);
+    color: var(--accent-dim);
+    margin-top: var(--s3);
+    font-family: var(--mono);
+  }
+  .egg-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+  .egg-overlay.show { opacity: 1; pointer-events: auto; }
+
   /* --- Scrollbar --- */
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
@@ -414,6 +472,12 @@
   </div>
 
   <div class="footer" id="footer">built with ❤️ by e11i</div>
+  <div class="egg-overlay" id="egg-overlay"></div>
+  <div class="egg-popup" id="egg-popup">
+    <div class="egg-icon" id="egg-popup-icon"></div>
+    <div class="egg-text" id="egg-popup-text"></div>
+    <div class="egg-label">daily surprise</div>
+  </div>
 
 </div>
 
@@ -590,9 +654,97 @@ function setupCardMagic() {
   });
 }
 
+// ── Daily Easter Egg ──
+function setupEasterEgg() {
+  const surprises = [
+    { icon: '🦊', text: 'A fox has no boss. Neither do you.' },
+    { icon: '🌊', text: 'The ocean is just a big bowl of soup that nobody ordered.' },
+    { icon: '🧠', text: 'Your brain uses 20% of your energy. The other 80% goes to worrying about stuff that never happens.' },
+    { icon: '🐙', text: 'An octopus has three hearts. You only need one, but you use it well.' },
+    { icon: '✨', text: 'You found me! That makes you officially more observant than 99% of humans.' },
+    { icon: '🎵', text: 'The song stuck in your head right now? That\'s your brain\'s screensaver.' },
+    { icon: '🌙', text: 'The moon is slowly drifting away from Earth. Relatable.' },
+    { icon: '🔮', text: 'Prediction: you will close this popup within 5 seconds.' },
+    { icon: '🐈', text: 'Cats sleep 70% of their lives. They figured it out before us.' },
+    { icon: '💡', text: 'A group of flamingos is called a "flamboyance." You\'re welcome.' },
+    { icon: '🧊', text: 'Hot water freezes faster than cold water. Nobody knows why. Science is wild.' },
+    { icon: '🎯', text: 'You found today\'s secret. Tomorrow it moves. Good luck.' },
+    { icon: '🦑', text: 'Squids have a donut-shaped brain. Their food passes through it. Literally brain food.' },
+    { icon: '🌿', text: 'Trees talk to each other through fungi. The original social network.' },
+    { icon: '🐝', text: 'Bees can recognize human faces. Somewhere, a bee remembers you.' },
+    { icon: '🎪', text: 'A jiffy is an actual unit of time: 1/100th of a second. Now you know.' },
+    { icon: '🦜', text: 'Parrots name their children. The parents choose a unique call for each chick.' },
+    { icon: '🌋', text: 'There are more possible chess games than atoms in the universe. Your move.' },
+    { icon: '🐋', text: 'Whale songs get a little different every year. They\'re composing.' },
+    { icon: '🍕', text: 'There\'s a mathematical theorem named after pizza cutting. Math is delicious.' },
+    { icon: '🦔', text: 'Hedgehogs are immune to most snake venom. Tiny tanks.' },
+    { icon: '🧲', text: 'The Earth\'s magnetic field flips every 200,000-300,000 years. We\'re overdue.' },
+    { icon: '🎭', text: 'The word "sarcasm" comes from Greek, meaning "to tear flesh." So yeah, it\'s always been intense.' },
+    { icon: '🌸', text: 'Cherry blossoms bloom for about one week. That\'s the point.' },
+    { icon: '🐢', text: 'Some turtles breathe through their butts. Evolution is... creative.' },
+    { icon: '🎹', text: 'A piano has more possible combinations of notes than there are particles in the observable universe.' },
+    { icon: '🦉', text: 'Owls can\'t move their eyeballs. That\'s why they rotate their heads. Commitment.' },
+    { icon: '🌀', text: 'Your DNA could stretch to Pluto and back. You\'re literally astronomical.' },
+    { icon: '🍯', text: 'Honey never spoils. Archaeologists found 3000-year-old honey in Egyptian tombs. Still good.' },
+    { icon: '🐧', text: 'Penguins propose with pebbles. The smoothest rock = the best partner. Simple.' },
+    { icon: '🎲', text: 'The odds of you existing are 1 in 10^2,685,000. You beat those odds. Today is a bonus round.' },
+  ];
+
+  const today = new Date();
+  const dayOfYear = Math.floor((today - new Date(today.getFullYear(),0,0)) / 86400000);
+  const seed = dayOfYear + today.getFullYear() * 367;
+  const surprise = surprises[seed % surprises.length];
+
+  // Pick which card to hide in (based on day)
+  const cards = document.querySelectorAll('.card');
+  if (!cards.length) return;
+  const cardIndex = seed % cards.length;
+  const card = cards[cardIndex];
+
+  // Pick position within card
+  const positions = [
+    { bottom: '8px', right: '8px' },
+    { top: '8px', right: '8px' },
+    { bottom: '8px', left: '8px' },
+    { top: '8px', left: '40px' },
+    { bottom: '12px', right: '40px' },
+    { top: '12px', right: '40px' },
+  ];
+  const pos = positions[(seed * 7) % positions.length];
+
+  // Pick a subtle icon for the hidden element
+  const hiddenIcons = ['·', '⋅', '∘', '◦', '•', '⊹', '✦', '⟡'];
+  const hiddenIcon = hiddenIcons[(seed * 13) % hiddenIcons.length];
+
+  const egg = document.createElement('div');
+  egg.className = 'egg';
+  egg.textContent = hiddenIcon;
+  Object.assign(egg.style, pos);
+
+  egg.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    document.getElementById('egg-popup-icon').textContent = surprise.icon;
+    document.getElementById('egg-popup-text').textContent = surprise.text;
+    document.getElementById('egg-overlay').classList.add('show');
+    document.getElementById('egg-popup').classList.add('show');
+  });
+
+  card.appendChild(egg);
+
+  // Close popup
+  const close = () => {
+    document.getElementById('egg-overlay').classList.remove('show');
+    document.getElementById('egg-popup').classList.remove('show');
+  };
+  document.getElementById('egg-overlay').addEventListener('click', close);
+  document.getElementById('egg-popup').addEventListener('click', close);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   loadCards();
-  setTimeout(setupCardMagic, 500); // after fade-in animations
+  setTimeout(setupCardMagic, 500);
+  setTimeout(setupEasterEgg, 800);
 });
 </script>
 </body>
