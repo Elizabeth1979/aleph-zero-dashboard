@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resources — Hermes</title>
+<link rel="stylesheet" href="../theme.css?v=3">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    font-family: var(--sans);
+    font-size: var(--fs-base);
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: var(--s6);
+    min-height: 100vh;
+  }
+  .page-header {
+    display: flex;
+    align-items: center;
+    gap: var(--s4);
+    margin-bottom: var(--s6);
+    padding-bottom: var(--s4);
+    border-bottom: 1px solid var(--border);
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s2);
+    color: var(--text-3);
+    text-decoration: none;
+    font-size: var(--fs-sm);
+    transition: color 0.2s ease;
+  }
+  .back-link:hover { color: var(--accent); }
+  .page-title {
+    font-size: var(--fs-xl);
+    font-weight: 600;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: var(--s3);
+    flex: 1;
+  }
+  .page-title svg { width: 22px; height: 22px; color: var(--accent); }
+  .page-body { animation: fadeIn 0.3s ease both; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Filters */
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: var(--s5);
+  }
+  .filter-pill {
+    font-size: var(--fs-xs); font-weight: 500; padding: 4px 12px;
+    border-radius: var(--pill); background: rgba(255,255,255,0.04);
+    color: var(--text-3); cursor: pointer; transition: all 0.2s ease;
+    border: 1px solid transparent; user-select: none;
+  }
+  .filter-pill:hover { background: var(--accent-muted); color: var(--accent); }
+  .filter-pill.active {
+    background: var(--accent-muted); color: var(--accent);
+    border-color: rgba(93,228,212,0.2);
+  }
+
+  /* Resource items */
+  .resource {
+    padding: var(--s4) 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .resource:last-child { border-bottom: none; }
+  .resource.status-skipped { opacity: 0.4; }
+  .resource.status-explored { opacity: 0.7; }
+  .resource-top {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--s3);
+    flex-wrap: wrap;
+  }
+  .resource-title {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    transition: color 0.2s ease;
+    flex: 1;
+    min-width: 200px;
+  }
+  .resource-title:hover { color: var(--text); }
+  .resource-tags {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .tag {
+    font-size: var(--fs-xs); font-weight: 500; padding: 2px 8px;
+    border-radius: var(--pill); background: rgba(255,255,255,0.04); color: var(--text-2);
+  }
+  .tag-cat.accessibility { color: #60a5fa; background: rgba(96,165,250,0.12); }
+  .tag-cat.ai-tools { color: #c084fc; background: rgba(192,132,252,0.12); }
+  .tag-cat.inspiration { color: #fbbf24; background: rgba(251,191,36,0.12); }
+  .tag-cat.to-install { color: #34d399; background: rgba(52,211,153,0.12); }
+  .tag-cat.to-read { color: #60a5fa; background: rgba(96,165,250,0.12); }
+  .tag-cat.blog-material { color: #f472b6; background: rgba(244,114,182,0.12); }
+  .tag-status { font-style: italic; }
+  .tag-status.new { color: var(--accent); background: var(--accent-muted); }
+  .tag-status.explored { color: var(--text-3); }
+  .tag-status.skipped { color: var(--text-3); opacity: 0.6; }
+  .tag-status.shared-with-work { color: #fbbf24; background: rgba(251,191,36,0.12); }
+  .resource-note {
+    font-size: var(--fs-xs);
+    color: var(--text-3);
+    margin-top: var(--s2);
+    line-height: 1.5;
+  }
+  .resource-date {
+    font-size: var(--fs-xs);
+    font-family: var(--mono);
+    color: var(--text-3);
+  }
+
+  /* Category sections */
+  .cat-section { margin-bottom: var(--s5); }
+  .cat-header {
+    font-size: var(--fs-xs); font-weight: 600; color: var(--text-3);
+    text-transform: uppercase; letter-spacing: 0.05em;
+    margin-bottom: var(--s2); padding-bottom: var(--s2);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: var(--s2);
+  }
+  .cat-header svg { width: 14px; height: 14px; }
+  .cat-count {
+    font-size: var(--fs-xs); color: var(--text-3);
+    font-family: var(--mono); margin-left: auto;
+  }
+  .empty { font-size: var(--fs-sm); color: var(--text-3); font-style: italic; }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <a href="../index.html" class="back-link">
+      <i data-lucide="arrow-left" style="width:16px;height:16px"></i> Dashboard
+    </a>
+    <h1 class="page-title"><i data-lucide="bookmark"></i> Resources</h1>
+  </div>
+  <div id="filters"></div>
+  <div class="page-body" id="page-body"></div>
+</div>
+<script>document.write('<script src="../data.js?v=' + Date.now() + '"><\/script>');</script>
+<script>
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+const catMeta = {
+  'accessibility':  { icon: 'eye', label: 'Accessibility' },
+  'ai-tools':       { icon: 'cpu', label: 'AI Tools' },
+  'inspiration':    { icon: 'sparkles', label: 'Inspiration' },
+  'to-install':     { icon: 'download', label: 'To Install' },
+  'to-read':        { icon: 'book-open', label: 'To Read' },
+  'blog-material':  { icon: 'pen-line', label: 'Blog Material' },
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  const d = window.__DASHBOARD_DATA__;
+  if (!d) return;
+  const resources = d.resources || [];
+  if (!resources.length) {
+    document.getElementById('page-body').innerHTML = '<div class="empty">No resources saved yet</div>';
+    return;
+  }
+
+  // Get unique categories + statuses
+  const cats = [...new Set(resources.map(r => r.category))];
+  const statuses = [...new Set(resources.map(r => r.status))];
+
+  // Build filter pills
+  let filterHtml = '<div class="filters">';
+  filterHtml += '<span class="filter-pill active" data-filter="all">All</span>';
+  cats.forEach(c => {
+    const meta = catMeta[c] || { label: c };
+    filterHtml += `<span class="filter-pill" data-filter="cat:${c}">${meta.label}</span>`;
+  });
+  statuses.forEach(s => {
+    filterHtml += `<span class="filter-pill" data-filter="status:${s}">${s}</span>`;
+  });
+  filterHtml += '</div>';
+  document.getElementById('filters').innerHTML = filterHtml;
+
+  function renderResources(filter) {
+    let filtered = resources;
+    if (filter && filter !== 'all') {
+      if (filter.startsWith('cat:')) {
+        filtered = resources.filter(r => r.category === filter.slice(4));
+      } else if (filter.startsWith('status:')) {
+        filtered = resources.filter(r => r.status === filter.slice(7));
+      }
+    }
+
+    // Group by category
+    const groups = {};
+    filtered.forEach(r => {
+      const cat = r.category || 'other';
+      if (!groups[cat]) groups[cat] = [];
+      groups[cat].push(r);
+    });
+
+    // Sort: new first, then explored, then skipped
+    const statusOrder = { 'new': 0, 'explored': 1, 'shared-with-work': 2, 'skipped': 3 };
+
+    let html = '';
+    const catOrder = Object.keys(catMeta);
+    const activeCats = catOrder.filter(c => groups[c]);
+    Object.keys(groups).forEach(c => { if (!catOrder.includes(c)) activeCats.push(c); });
+
+    activeCats.forEach(cat => {
+      const items = groups[cat].sort((a,b) => (statusOrder[a.status]||0) - (statusOrder[b.status]||0));
+      const meta = catMeta[cat] || { icon: 'link', label: cat };
+
+      html += `<div class="cat-section">
+        <div class="cat-header">
+          <i data-lucide="${meta.icon}"></i> ${meta.label}
+          <span class="cat-count">${items.length}</span>
+        </div>`;
+
+      items.forEach(r => {
+        const statusCls = 'status-' + (r.status || 'new');
+        html += `<div class="resource ${statusCls}">
+          <div class="resource-top">
+            <a href="${esc(r.url)}" target="_blank" rel="noopener" class="resource-title">${esc(r.title)}</a>
+            <div class="resource-tags">
+              <span class="tag tag-status ${r.status || 'new'}">${esc(r.status || 'new')}</span>
+              <span class="resource-date">${esc(r.added || '')}</span>
+            </div>
+          </div>
+          ${r.note ? `<div class="resource-note">${esc(r.note)}</div>` : ''}
+        </div>`;
+      });
+
+      html += '</div>';
+    });
+
+    document.getElementById('page-body').innerHTML = html;
+    lucide.createIcons();
+  }
+
+  // Filter click handlers
+  document.querySelectorAll('.filter-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      renderResources(pill.dataset.filter);
+    });
+  });
+
+  renderResources('all');
+});
+</script>
+</body>
+</html>

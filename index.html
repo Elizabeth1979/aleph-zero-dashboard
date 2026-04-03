@@ -312,6 +312,16 @@
       <div class="card-preview" id="task-preview"></div>
     </a>
 
+    <a href="pages/resources.html" class="card">
+      <div class="card-h">
+        <i data-lucide="bookmark"></i>
+        <h2>Resources</h2>
+        <span class="badge" id="resource-badge">0</span>
+      </div>
+      <div class="card-desc">Links, tools, articles, inspiration</div>
+      <div class="card-preview" id="resource-preview"></div>
+    </a>
+
     <a href="pages/cron.html" class="card">
       <div class="card-h">
         <i data-lucide="clock"></i>
@@ -448,6 +458,18 @@ function loadCards() {
     document.getElementById('task-preview').textContent = openTasks[0].task;
   } else {
     document.getElementById('task-preview').textContent = 'All clear';
+  }
+
+  // Resources
+  const resources = d.resources || [];
+  const newResources = resources.filter(r => r.status === 'new');
+  document.getElementById('resource-badge').textContent = resources.length;
+  if (newResources.length) {
+    document.getElementById('resource-preview').textContent = newResources.length + ' new to explore';
+  } else if (resources.length) {
+    document.getElementById('resource-preview').textContent = resources.length + ' saved';
+  } else {
+    document.getElementById('resource-preview').textContent = 'Drop links to save them';
   }
 
   // User memory
