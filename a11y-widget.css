@@ -398,28 +398,27 @@ html.a11y-underline-links a:visited {
 
 /* ------------------------------------------------------------
    2b. High Contrast
+   Designed for dark-themed dashboards: boost secondary/muted
+   text to full white, sharpen borders, brighten accents.
+   Does NOT underline links (that's a separate toggle).
    ------------------------------------------------------------ */
-html.a11y-high-contrast body,
-html.a11y-high-contrast main,
-html.a11y-high-contrast section,
-html.a11y-high-contrast article,
-html.a11y-high-contrast aside,
-html.a11y-high-contrast nav,
-html.a11y-high-contrast header,
-html.a11y-high-contrast footer {
-  background-color: #000000 !important;
+
+/* Boost muted/secondary text to full white */
+html.a11y-high-contrast {
+  --text-2: #ffffff !important;
+  --text-3: #b0b0b0 !important;
+  --border: rgba(255, 255, 255, 0.2) !important;
+  --border-hover: rgba(255, 255, 255, 0.35) !important;
 }
 
+/* All text elements: full white */
 html.a11y-high-contrast p,
 html.a11y-high-contrast span,
 html.a11y-high-contrast li,
 html.a11y-high-contrast td,
 html.a11y-high-contrast th,
 html.a11y-high-contrast label,
-html.a11y-high-contrast div {
-  color: #ffffff !important;
-}
-
+html.a11y-high-contrast div,
 html.a11y-high-contrast h1,
 html.a11y-high-contrast h2,
 html.a11y-high-contrast h3,
@@ -429,27 +428,41 @@ html.a11y-high-contrast h6 {
   color: #ffffff !important;
 }
 
+/* Links: brighter accent, no forced underline */
 html.a11y-high-contrast a {
-  color: #5de4d4 !important;
-  text-decoration: underline !important;
+  color: #7aeee0 !important;
 }
 
+/* Cards & containers: sharper borders */
+html.a11y-high-contrast [class*="card"],
+html.a11y-high-contrast [class*="bento"],
+html.a11y-high-contrast details,
+html.a11y-high-contrast [class*="panel"] {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Buttons: clearer borders */
 html.a11y-high-contrast button,
 html.a11y-high-contrast [role="button"] {
-  background-color: #1a1a1a !important;
-  color: #ffffff !important;
-  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
 }
 
+/* Inputs */
 html.a11y-high-contrast input,
 html.a11y-high-contrast textarea,
 html.a11y-high-contrast select {
-  background-color: #0d0d0d !important;
   color: #ffffff !important;
-  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
 }
 
-/* Keep the widget itself legible in high-contrast mode */
+/* Status dots / badges: boost opacity */
+html.a11y-high-contrast [class*="status"],
+html.a11y-high-contrast [class*="badge"],
+html.a11y-high-contrast [class*="tag"] {
+  opacity: 1 !important;
+}
+
+/* Keep the widget itself untouched */
 html.a11y-high-contrast #a11y-widget-btn,
 html.a11y-high-contrast #a11y-widget-panel,
 html.a11y-high-contrast #a11y-widget-panel * {
