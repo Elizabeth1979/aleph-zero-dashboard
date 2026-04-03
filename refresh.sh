@@ -239,9 +239,24 @@ COMMANDS=$(cat "$DASH/commands.json" 2>/dev/null || echo "[]")
 
 # Activity feed — merge recent sessions + cron outputs, sort, limit 10
 ACTIVITY_DATA=$(python3 -c "
-import json, os, glob
+import json, os, glob, re
 
 events = []
+
+def clean_chat_desc(d):
+    d = str(d)
+    # Remove "/ topic NUMBERS" suffix (Discord thread IDs)
+    d = re.sub(r'\s*/\s*topic\s+\d+\s*$', '', d).strip()
+    # Split on " / " and drop server-name prefix (e.g. "e11i's server")
+    parts = [p.strip() for p in d.split(' / ')]
+    if parts and re.search(r"'s\s+server$", parts[0], re.IGNORECASE):
+        parts = parts[1:]
+    # Take the deepest (last) component — the thread topic or channel name
+    d = parts[-1] if parts else d
+    # Strip trailing ellipsis Discord sometimes adds
+    d = d.rstrip('.')
+    # Truncate to 40 chars
+    return d[:40] if len(d) <= 40 else d[:37] + '...'
 
 # ── Sessions ──
 sess_file = os.path.expanduser('$HERMES/sessions/sessions.json')
@@ -254,17 +269,18 @@ if os.path.exists(sess_file):
             if not ts:
                 continue
             origin = s.get('origin') or {}
-            desc = (
+            raw_desc = (
                 s.get('display_name') or
                 origin.get('chat_topic') or
                 origin.get('chat_name') or
                 key
             )
+            desc = clean_chat_desc(raw_desc)
             channel = origin.get('chat_name') or s.get('platform') or 'unknown'
             events.append({
                 'timestamp': ts,
                 'type': 'chat',
-                'description': str(desc),
+                'description': desc,
                 'channel': str(channel)
             })
     except Exception as e:
@@ -305,10 +321,12 @@ if os.path.isdir(output_base):
             except Exception:
                 ts = fname.replace('.md','')
             name = job_names.get(job_id, job_id)
+            name_str = str(name)
+            name_str = name_str[:40] if len(name_str) <= 40 else name_str[:37] + '...'
             events.append({
                 'timestamp': ts,
                 'type': 'cron',
-                'description': str(name),
+                'description': name_str,
                 'channel': 'automated'
             })
 
