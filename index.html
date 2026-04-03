@@ -450,7 +450,7 @@
 </div>
 
 
-<script src="data.js"></script>
+<script>document.write('<script src="data.js?v=' + Date.now() + '"><\/script>');</script>
 <script>
 function esc(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -544,8 +544,8 @@ function loadCards() {
   document.getElementById('channel-badge').textContent = channels.length;
 
   // Auth
-  const auth=*** || [];
-  const authEl=docume...w');
+  const auth = d.auth_data || [];
+  const authEl = document.getElementById('auth-preview');
   if (auth.length) {
     authEl.textContent = auth.map(a => a.name).join(', ');
   }
