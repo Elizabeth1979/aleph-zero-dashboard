@@ -36,9 +36,9 @@ print(json.dumps(jobs))
 
 # Get gateway status
 GW_STATUS=$(hermes gateway status 2>&1)
-if echo "$GW_STATUS" | grep -q "is running"; then
+if echo "$GW_STATUS" | grep -q "PID"; then
   GW_ONLINE="true"
-  GW_PID=$(echo "$GW_STATUS" | grep -oP 'PID: \K\d+' || echo "?")
+  GW_PID=$(echo "$GW_STATUS" | grep -o '"PID" = [0-9]*' | grep -o '[0-9]*' || echo "?")
 else
   GW_ONLINE="false"
   GW_PID=""
@@ -82,7 +82,7 @@ done
 
 # Build status HTML
 STATUS_HTML="<div class=\"config-item\"><span class=\"config-key\">Gateway</span><span class=\"config-val\"><span class=\"status-dot $([ "$GW_ONLINE" = "true" ] && echo "status-on" || echo "status-off")\"></span>$([ "$GW_ONLINE" = "true" ] && echo "Online (PID $GW_PID)" || echo "Offline")</span></div>"
-STATUS_HTML="$STATUS_HTML<div class=\"config-item\"><span class=\"config-key\">Discord</span><span class=\"config-val\">Hermes agent #1264</span></div>"
+STATUS_HTML="$STATUS_HTML<div class=\"config-item\"><span class=\"config-key\">Discord</span><span class=\"config-val\">$([ "$GW_ONLINE" = "true" ] && echo "✓ Online" || echo "Offline")</span></div>"
 STATUS_HTML="$STATUS_HTML<div class=\"config-item\"><span class=\"config-key\">Google</span><span class=\"config-val\">$([ -f "$HERMES/google_token.json" ] && echo "✓ Connected" || echo "✗ Not connected")</span></div>"
 
 # Build config HTML
