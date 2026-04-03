@@ -125,6 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let meta = `<div class="skill-meta">`;
   meta += `<span class="tag tag-accent">${esc(s.category)}</span>`;
   if (s.custom) meta += `<span class="tag tag-custom">★ Custom</span>`;
+  if (s.in_use) meta += `<span class="tag tag-custom">In Use</span>`;
   meta += `</div>`;
 
   // Content

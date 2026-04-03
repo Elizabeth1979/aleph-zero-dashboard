@@ -201,9 +201,9 @@
     border: 1px solid transparent;
   }
   .pill:hover { background: var(--accent-muted); color: var(--accent); }
-  .pill.active {
-    background: var(--accent-muted); color: var(--accent);
-    border-color: rgba(93,228,212,0.2);
+  .pill.in-use {
+    background: rgba(93,228,212,0.08); color: var(--accent);
+    border-color: rgba(93,228,212,0.25);
   }
   .pill.custom::after { content: '\2605'; margin-left: 4px; font-size: 10px; color: var(--accent); }
   a.pill { text-decoration: none; }
@@ -288,7 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
     Object.keys(customCats).sort().forEach(cat => {
       html += `<div class="skill-cat"><div class="skill-cat-name">${cat}</div><div class="skill-pills">`;
       customCats[cat].forEach(s => {
-        html += `<a href="skill.html?name=${encodeURIComponent(s.name)}" class="pill custom">${s.name}</a>`;
+        html += `<a href="skill.html?name=${encodeURIComponent(s.name)}" class="pill custom in-use">${s.name}</a>`;
       });
       html += '</div></div>';
     });
@@ -303,9 +303,12 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   html += '<div>';
   Object.keys(cats).sort().forEach(cat => {
+    // Sort in-use skills first within each category
+    cats[cat].sort((a, b) => (b.in_use ? 1 : 0) - (a.in_use ? 1 : 0));
     html += `<div class="skill-cat"><div class="skill-cat-name">${cat}</div><div class="skill-pills">`;
     cats[cat].forEach(s => {
-      html += `<a href="skill.html?name=${encodeURIComponent(s.name)}" class="pill">${s.name}</a>`;
+      const cls = s.in_use ? 'pill in-use' : 'pill';
+      html += `<a href="skill.html?name=${encodeURIComponent(s.name)}" class="${cls}">${s.name}</a>`;
     });
     html += '</div></div>';
   });

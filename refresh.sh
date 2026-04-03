@@ -52,6 +52,17 @@ TZ=$(grep "^timezone:" "$HERMES/config.yaml" 2>/dev/null | head -1 | awk '{$1=""
 # Get skills list and contents
 SKILLS_DATA=$(python3 -c "
 import json, os, glob, re
+
+# Detect skills referenced in cron jobs
+cron_skills = set()
+try:
+    with open('$HERMES/cron/jobs.json') as f:
+        cron_data = json.load(f)
+    for j in cron_data.get('jobs', []):
+        if j.get('skill'): cron_skills.add(j['skill'])
+        for s in (j.get('skills') or []): cron_skills.add(s)
+except: pass
+
 skills = []
 base = '$HERMES/skills'
 for skill_md in sorted(glob.glob(base + '/*/*/SKILL.md')):
@@ -62,7 +73,9 @@ for skill_md in sorted(glob.glob(base + '/*/*/SKILL.md')):
         content = f.read()
     # Auto-detect custom skills from frontmatter (custom: true)
     custom = bool(re.search(r'^custom:\s*true', content, re.MULTILINE))
-    skills.append({'category': cat, 'name': name, 'path': cat + '/' + name, 'content': content, 'custom': custom})
+    # Mark as in_use if custom or referenced in cron jobs
+    in_use = custom or name in cron_skills
+    skills.append({'category': cat, 'name': name, 'path': cat + '/' + name, 'content': content, 'custom': custom, 'in_use': in_use})
 print(json.dumps(skills))
 " 2>/dev/null || echo "[]")
 
