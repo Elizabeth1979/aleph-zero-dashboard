@@ -237,6 +237,87 @@ SYSTEM_SETTINGS=$(cat "$DASH/SYSTEM_SETTINGS.md" 2>/dev/null | python3 -c "impor
 # Quick commands (read from file — no hardcoding)
 COMMANDS=$(cat "$DASH/commands.json" 2>/dev/null || echo "[]")
 
+# Activity feed — merge recent sessions + cron outputs, sort, limit 10
+ACTIVITY_DATA=$(python3 -c "
+import json, os, glob
+
+events = []
+
+# ── Sessions ──
+sess_file = os.path.expanduser('$HERMES/sessions/sessions.json')
+if os.path.exists(sess_file):
+    try:
+        with open(sess_file) as f:
+            sessions = json.load(f)
+        for key, s in sessions.items():
+            ts = s.get('updated_at') or s.get('created_at') or ''
+            if not ts:
+                continue
+            origin = s.get('origin') or {}
+            desc = (
+                s.get('display_name') or
+                origin.get('chat_topic') or
+                origin.get('chat_name') or
+                key
+            )
+            channel = origin.get('chat_name') or s.get('platform') or 'unknown'
+            events.append({
+                'timestamp': ts,
+                'type': 'chat',
+                'description': str(desc),
+                'channel': str(channel)
+            })
+    except Exception as e:
+        pass
+
+# ── Cron outputs ──
+jobs_file = os.path.expanduser('$HERMES/cron/jobs.json')
+job_names = {}
+if os.path.exists(jobs_file):
+    try:
+        with open(jobs_file) as f:
+            jdata = json.load(f)
+        jobs_list = jdata.get('jobs', jdata) if isinstance(jdata, dict) else jdata
+        for j in jobs_list:
+            jid = j.get('job_id') or j.get('id') or ''
+            if jid:
+                job_names[jid] = j.get('name') or j.get('job_id') or jid
+    except Exception:
+        pass
+
+output_base = os.path.expanduser('$HERMES/cron/output')
+if os.path.isdir(output_base):
+    for job_id in os.listdir(output_base):
+        job_dir = os.path.join(output_base, job_id)
+        if not os.path.isdir(job_dir):
+            continue
+        md_files = sorted(glob.glob(os.path.join(job_dir, '*.md')), reverse=True)
+        for md in md_files[:3]:
+            fname = os.path.basename(md)
+            # filename format: 2026-04-02_19-20-31.md
+            raw = fname.replace('.md', '').replace('_', 'T', 1).replace('-', ':', 2)
+            # build ISO: 2026-04-02T19:20:31
+            try:
+                parts = fname.replace('.md','').split('_')
+                date_part = parts[0]
+                time_part = parts[1].replace('-',':')
+                ts = date_part + 'T' + time_part
+            except Exception:
+                ts = fname.replace('.md','')
+            name = job_names.get(job_id, job_id)
+            events.append({
+                'timestamp': ts,
+                'type': 'cron',
+                'description': str(name),
+                'channel': 'automated'
+            })
+
+# Sort by timestamp descending, limit 10
+events.sort(key=lambda x: x.get('timestamp',''), reverse=True)
+events = events[:10]
+print(json.dumps(events))
+" 2>/dev/null || echo "[]")
+
 # Write data file
 # Raw config files (redact secrets)
 CONFIG_RAW=$(cat "$HERMES/config.yaml" 2>/dev/null | python3 -c "import sys,json; print(json.dumps(sys.stdin.read()))")
@@ -281,7 +362,8 @@ window.__DASHBOARD_DATA__ = {
     github: $MEM_GITHUB,
     behavior: $MEM_BEHAVIOR,
     accessibility: $MEM_ACCESSIBILITY
-  }
+  },
+  activity: $ACTIVITY_DATA
 };
 JSEOF
 

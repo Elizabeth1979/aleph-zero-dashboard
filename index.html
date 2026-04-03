@@ -338,6 +338,42 @@
   }
   .egg-overlay.show { opacity: 1; pointer-events: auto; }
 
+  /* --- Activity Feed --- */
+  .activity-feed {
+    margin-top: var(--s3);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .activity-item {
+    display: grid;
+    grid-template-columns: 14px 1fr auto;
+    align-items: start;
+    gap: var(--s2);
+    font-size: var(--fs-xs);
+    line-height: 1.4;
+  }
+  .activity-item svg {
+    width: 14px;
+    height: 14px;
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .activity-item-desc {
+    color: var(--text-2);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .activity-item-time {
+    color: var(--text-3);
+    font-family: var(--mono);
+    font-size: 11px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
   /* --- Scrollbar --- */
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
@@ -392,6 +428,16 @@
       <div class="card-desc">Cron jobs and automations</div>
       <div class="card-preview" id="cron-preview"></div>
     </a>
+
+    <div class="card">
+      <div class="card-h">
+        <i data-lucide="activity"></i>
+        <h2>Recent Activity</h2>
+        <span class="badge" id="activity-badge">0</span>
+      </div>
+      <div class="card-desc">Latest chats and automated runs</div>
+      <div id="activity-feed" class="activity-feed"></div>
+    </div>
 
   </div>
 
