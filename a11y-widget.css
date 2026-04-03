@@ -411,46 +411,28 @@ html.a11y-high-contrast {
   --border-hover: rgba(255, 255, 255, 0.35) !important;
 }
 
-/* All text elements: full white */
-html.a11y-high-contrast p,
-html.a11y-high-contrast span,
-html.a11y-high-contrast li,
-html.a11y-high-contrast td,
-html.a11y-high-contrast th,
-html.a11y-high-contrast label,
-html.a11y-high-contrast div,
-html.a11y-high-contrast h1,
-html.a11y-high-contrast h2,
-html.a11y-high-contrast h3,
-html.a11y-high-contrast h4,
-html.a11y-high-contrast h5,
-html.a11y-high-contrast h6 {
+/* All text elements: full white — scoped outside the a11y widget */
+html.a11y-high-contrast :not(#a11y-widget-panel):not(#a11y-widget-panel *):is(p, span, li, td, th, label, div, h1, h2, h3, h4, h5, h6) {
   color: #ffffff !important;
 }
 
-/* Links: brighter accent, no forced underline */
-html.a11y-high-contrast a {
+/* Links: brighter accent, no forced underline — outside widget only */
+html.a11y-high-contrast a:not(#a11y-widget-panel a) {
   color: #7aeee0 !important;
 }
 
-/* Cards & containers: sharper borders */
-html.a11y-high-contrast [class*="card"],
-html.a11y-high-contrast [class*="bento"],
-html.a11y-high-contrast details,
-html.a11y-high-contrast [class*="panel"] {
+/* Cards & containers: sharper borders — outside widget only */
+html.a11y-high-contrast :not(#a11y-widget-panel):not(#a11y-widget-panel *):is([class*="card"], [class*="bento"], details) {
   border-color: rgba(255, 255, 255, 0.2) !important;
 }
 
-/* Buttons: clearer borders */
-html.a11y-high-contrast button,
-html.a11y-high-contrast [role="button"] {
+/* Buttons: clearer borders — outside widget only */
+html.a11y-high-contrast :not(#a11y-widget-btn):not(#a11y-widget-panel):not(#a11y-widget-panel *):is(button, [role="button"]) {
   border: 1px solid rgba(255, 255, 255, 0.3) !important;
 }
 
-/* Inputs */
-html.a11y-high-contrast input,
-html.a11y-high-contrast textarea,
-html.a11y-high-contrast select {
+/* Inputs — outside widget only */
+html.a11y-high-contrast :not(#a11y-widget-panel *):is(input, textarea, select) {
   color: #ffffff !important;
   border: 1px solid rgba(255, 255, 255, 0.35) !important;
 }
@@ -460,15 +442,6 @@ html.a11y-high-contrast [class*="status"],
 html.a11y-high-contrast [class*="badge"],
 html.a11y-high-contrast [class*="tag"] {
   opacity: 1 !important;
-}
-
-/* Keep the widget itself untouched */
-html.a11y-high-contrast #a11y-widget-btn,
-html.a11y-high-contrast #a11y-widget-panel,
-html.a11y-high-contrast #a11y-widget-panel * {
-  color: revert !important;
-  background-color: revert !important;
-  border-color: revert !important;
 }
 
 /* ------------------------------------------------------------
@@ -539,9 +512,9 @@ html.a11y-dyslexia-font th {
 html.a11y-dyslexia-font #a11y-widget-panel,
 html.a11y-dyslexia-font #a11y-widget-panel * {
   font-family: 'Inter', system-ui, sans-serif !important;
-  letter-spacing: revert !important;
-  word-spacing: revert !important;
-  line-height: revert !important;
+  letter-spacing: normal !important;
+  word-spacing: normal !important;
+  line-height: 1.5 !important;
 }
 
 /* ------------------------------------------------------------
@@ -572,7 +545,7 @@ html.a11y-font-xl label {
 /* Keep widget font size unchanged */
 html.a11y-font-lg #a11y-widget-panel *,
 html.a11y-font-xl #a11y-widget-panel * {
-  font-size: revert !important;
+  font-size: inherit !important;
 }
 
 /* ------------------------------------------------------------
