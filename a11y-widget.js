@@ -427,25 +427,17 @@
 
     /* ----------------------------------------------------------
        CLOSE ON OUTSIDE CLICK
-       Uses a flag set by panel/btn pointer events so we
-       don't rely on DOM containment (which breaks after
-       innerHTML rebuilds orphan the original e.target).
+       Panel stops all event propagation so nothing inside it
+       can reach the document listener. Simple and bulletproof.
     ---------------------------------------------------------- */
-    let clickInsideWidget = false;
+    ['click', 'pointerdown', 'pointerup', 'touchstart', 'touchend', 'mousedown'].forEach(evt => {
+      panel.addEventListener(evt, (e) => e.stopPropagation());
+    });
 
-    panel.addEventListener('pointerdown', () => { clickInsideWidget = true; });
-    btn.addEventListener('pointerdown', () => { clickInsideWidget = true; });
-
-    document.addEventListener('pointerdown', () => {
-      /* Reset on next tick — after panel/btn handlers have set the flag */
-      requestAnimationFrame(() => {
-        if (!isOpen) { clickInsideWidget = false; return; }
-        if (clickInsideWidget) {
-          clickInsideWidget = false;
-          return;
-        }
-        closePanel();
-      });
+    document.addEventListener('pointerdown', (e) => {
+      if (!isOpen) return;
+      if (btn.contains(e.target)) return;
+      closePanel();
     });
 
     /* ----------------------------------------------------------
