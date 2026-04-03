@@ -5,5 +5,12 @@
     "added": "2026-04-03",
     "priority": "high",
     "done": false
+  },
+  {
+    "id": 2,
+    "task": "Pay company annual fee",
+    "added": "2026-04-03",
+    "priority": "high",
+    "done": false
   }
 ]
