@@ -255,6 +255,32 @@
   .usage-fill.warn { background: var(--warn); }
   .usage-fill.danger { background: var(--danger); }
   .empty { font-size: var(--fs-sm); color: var(--text-3); font-style: italic; }
+  .rules-panel {
+    margin-top: var(--s6); padding-top: var(--s5);
+    border-top: 1px solid var(--border);
+  }
+  .rules-toggle {
+    font-size: var(--fs-sm); color: var(--text-3); cursor: pointer;
+    display: flex; align-items: center; gap: var(--s2);
+    transition: color 0.2s ease; user-select: none;
+  }
+  .rules-toggle:hover { color: var(--accent); }
+  .rules-toggle svg { width: 14px; height: 14px; }
+  .rules-content { display: none; margin-top: var(--s4); }
+  .rules-content.show { display: block; }
+  .rules-group { margin-bottom: var(--s4); }
+  .rules-group-title {
+    font-size: var(--fs-xs); font-weight: 600; color: var(--accent-dim);
+    text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: var(--s2);
+  }
+  .rules-item {
+    font-size: var(--fs-sm); color: var(--text-2); padding: var(--s1) 0;
+    display: flex; align-items: center; gap: var(--s2);
+  }
+  .rules-item svg { width: 14px; height: 14px; flex-shrink: 0; color: var(--text-3); }
+  .rules-cat-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
 </style>
@@ -366,6 +392,45 @@ document.addEventListener('DOMContentLoaded', () => {
       ${[...open, ...done].map(renderTask).join('')}
     </div>`;
   });
+
+  // Capture rules panel
+  const rules = d.capture_rules || {};
+  if (rules.categories || rules.auto_high) {
+    const catColors = {
+      task: 'var(--text-2)', idea: '#c084fc', read: '#60a5fa',
+      write: '#34d399', share: '#fbbf24', remember: '#a78bfa'
+    };
+
+    let rulesHtml = '<div class="rules-group"><div class="rules-group-title">Categories</div>';
+    if (rules.categories) {
+      Object.entries(rules.categories).forEach(([key, desc]) => {
+        const color = catColors[key] || 'var(--text-3)';
+        rulesHtml += `<div class="rules-item"><span class="rules-cat-dot" style="background:${color}"></span> <strong>${key}</strong> — ${esc(desc)}</div>`;
+      });
+    }
+    rulesHtml += '</div>';
+
+    rulesHtml += '<div class="rules-group"><div class="rules-group-title">Auto High Priority</div>';
+    if (rules.auto_high) {
+      rules.auto_high.forEach(r => {
+        rulesHtml += `<div class="rules-item"><i data-lucide="alert-triangle" style="color:var(--danger)"></i> ${esc(r)}</div>`;
+      });
+    }
+    rulesHtml += '</div>';
+
+    rulesHtml += `<div class="rules-group">
+      <div class="rules-item"><i data-lucide="minus-circle"></i> <strong>Default:</strong> ${esc(rules.default_priority || 'medium')}</div>
+      <div class="rules-item"><i data-lucide="arrow-down-circle"></i> <strong>Low:</strong> ${esc(rules.low_trigger || '')}</div>
+      <div class="rules-item"><i data-lucide="help-circle"></i> <strong>Ask when:</strong> ${esc(rules.ask_when || '')}</div>
+    </div>`;
+
+    html += `<div class="rules-panel">
+      <div class="rules-toggle" onclick="document.getElementById('rules-body').classList.toggle('show'); this.querySelector('[data-lucide]').setAttribute('data-lucide', document.getElementById('rules-body').classList.contains('show') ? 'chevron-down' : 'chevron-right'); lucide.createIcons();">
+        <i data-lucide="chevron-right"></i> Capture Rules — how items get categorized
+      </div>
+      <div class="rules-content" id="rules-body">${rulesHtml}</div>
+    </div>`;
+  }
 
   document.getElementById('page-body').innerHTML = html;
   lucide.createIcons();

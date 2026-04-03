@@ -1,0 +1,19 @@
+{
+  "categories": {
+    "task": "Day-to-day action items, errands, chores",
+    "idea": "App improvements, feature requests, project ideas",
+    "read": "Articles, books, resources, links to check out",
+    "write": "Blog posts, content to create, docs to draft",
+    "share": "Things to send or forward to someone",
+    "remember": "Anything else worth not forgetting"
+  },
+  "auto_high": [
+    "Money — payments, bills, subscriptions, fees",
+    "Health — doctor, dentist, medical appointments",
+    "Deadlines — anything with an explicit date or time pressure",
+    "Work obligations — meetings, deliverables, boss requests"
+  ],
+  "default_priority": "medium",
+  "low_trigger": "Only if Elli says 'no rush' or 'someday'",
+  "ask_when": "Genuinely ambiguous — could be casual or critical"
+}
