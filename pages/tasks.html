@@ -136,14 +136,13 @@
     font-size: var(--fs-xs); color: var(--text-3); margin-bottom: var(--s4);
   }
   .modal-editor {
-    width: 100%; min-height: 60vh;
+    width: 100%;
     background: var(--bg-inset); border: 1px solid var(--border);
     border-radius: var(--r2); color: var(--text);
     font-family: var(--mono); font-size: var(--fs-sm);
-    padding: var(--s4); resize: vertical; line-height: 1.7; outline: none;
-    transition: border-color 0.2s ease;
+    padding: var(--s4); line-height: 1.7;
+    white-space: pre-wrap; word-break: break-word;
   }
-  .modal-editor:focus { border-color: var(--accent); }
   .modal-actions {
     display: flex; align-items: center; gap: var(--s3); margin-top: var(--s4);
   }

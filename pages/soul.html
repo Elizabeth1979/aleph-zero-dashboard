@@ -113,14 +113,13 @@
     font-size: var(--fs-xs); color: var(--text-3); margin-bottom: var(--s4);
   }
   .modal-editor {
-    width: 100%; min-height: 60vh;
+    width: 100%;
     background: var(--bg-inset); border: 1px solid var(--border);
     border-radius: var(--r2); color: var(--text);
     font-family: var(--mono); font-size: var(--fs-sm);
-    padding: var(--s4); resize: vertical; line-height: 1.7; outline: none;
-    transition: border-color 0.2s ease;
+    padding: var(--s4); line-height: 1.7;
+    white-space: pre-wrap; word-break: break-word;
   }
-  .modal-editor:focus { border-color: var(--accent); }
   .modal-actions {
     display: flex; align-items: center; gap: var(--s3); margin-top: var(--s4);
   }
@@ -283,11 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const chars = d.soul_md.length;
   document.getElementById('page-body').innerHTML = `
     <div class="modal-meta">SOUL.md &bull; ${chars} chars &bull; My personality, vibe, and core rules</div>
-    <textarea class="modal-editor" id="editor-soul">${esc(d.soul_md)}</textarea>
-    <div class="modal-actions">
-      <button class="btn btn-save" onclick="saveMemory('soul')"><i data-lucide="download" style="width:14px;height:14px"></i> Save as file</button>
-      <span class="modal-hint">Saves SOUL.md to your Downloads</span>
-    </div>
+    <div class="modal-editor" id="editor-soul">${esc(d.soul_md)}</div>
   `;
   lucide.createIcons();
 });
