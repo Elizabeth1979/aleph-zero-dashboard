@@ -14,13 +14,5 @@
     "category": "task",
     "priority": "high",
     "done": false
-  },
-  {
-    "id": 3,
-    "task": "Test task \u2014 delete me",
-    "added": "2026-04-03",
-    "category": "idea",
-    "priority": "low",
-    "done": false
   }
 ]
