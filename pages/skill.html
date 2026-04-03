@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skill — Hermes</title>
+<link rel="stylesheet" href="../theme.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    font-family: var(--sans);
+    font-size: var(--fs-base);
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: var(--s6);
+    min-height: 100vh;
+  }
+  .page-header {
+    display: flex;
+    align-items: center;
+    gap: var(--s4);
+    margin-bottom: var(--s6);
+    padding-bottom: var(--s4);
+    border-bottom: 1px solid var(--border);
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s2);
+    color: var(--text-3);
+    text-decoration: none;
+    font-size: var(--fs-sm);
+    transition: color 0.2s ease;
+  }
+  .back-link:hover { color: var(--accent); }
+  .page-title {
+    font-size: var(--fs-xl);
+    font-weight: 600;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: var(--s3);
+    flex: 1;
+  }
+  .page-title svg { width: 22px; height: 22px; color: var(--accent); }
+  .page-body { animation: fadeIn 0.3s ease both; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .skill-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--s3);
+    margin-bottom: var(--s5);
+    flex-wrap: wrap;
+  }
+  .tag {
+    font-size: var(--fs-xs); font-weight: 500; padding: 2px 8px;
+    border-radius: 999px; background: rgba(255,255,255,0.04); color: var(--text-2);
+  }
+  .tag-accent { background: var(--accent-muted); color: var(--accent); }
+  .tag-custom {
+    background: var(--accent-muted); color: var(--accent);
+    border: 1px solid rgba(93,228,212,0.2);
+  }
+  .skill-content {
+    padding: var(--s5);
+    background: var(--bg-inset);
+    border: 1px solid var(--border);
+    border-radius: var(--r2);
+    font-family: var(--mono);
+    font-size: var(--fs-sm);
+    color: var(--text-2);
+    white-space: pre-wrap;
+    word-break: break-word;
+    line-height: 1.7;
+    overflow-y: auto;
+  }
+  .empty { font-size: var(--fs-sm); color: var(--text-3); font-style: italic; }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <a href="skills.html" class="back-link">
+      <i data-lucide="arrow-left" style="width:16px;height:16px"></i> Skills
+    </a>
+    <h1 class="page-title" id="page-title"><i data-lucide="puzzle"></i> Skill</h1>
+  </div>
+  <div class="page-body" id="page-body"></div>
+</div>
+<script src="../data.js"></script>
+<script>
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const d = window.__DASHBOARD_DATA__;
+  if (!d) return;
+  const params = new URLSearchParams(window.location.search);
+  const name = params.get('name');
+  if (!name) { document.getElementById('page-body').innerHTML = '<div class="empty">No skill specified</div>'; return; }
+
+  const skills = d.skills_data || [];
+  const s = skills.find(x => x.name === name);
+  if (!s) { document.getElementById('page-body').innerHTML = `<div class="empty">Skill "${esc(name)}" not found</div>`; return; }
+
+  // Update page title
+  document.title = `${s.name} — Hermes`;
+  document.getElementById('page-title').innerHTML = `<i data-lucide="puzzle"></i> ${esc(s.name)}`;
+
+  // Build meta tags
+  let meta = `<div class="skill-meta">`;
+  meta += `<span class="tag tag-accent">${esc(s.category)}</span>`;
+  if (s.custom) meta += `<span class="tag tag-custom">★ Custom</span>`;
+  meta += `</div>`;
+
+  // Content
+  const html = meta + `<div class="skill-content">${esc(s.content)}</div>`;
+  document.getElementById('page-body').innerHTML = html;
+  lucide.createIcons();
+});
+</script>
+</body>
+</html>

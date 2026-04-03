@@ -205,7 +205,8 @@
     background: var(--accent-muted); color: var(--accent);
     border-color: rgba(93,228,212,0.2);
   }
-  .pill.custom::after { content: '\2605'; margin-left: 4px; font-size: 10px; }
+  .pill.custom::after { content: '\2605'; margin-left: 4px; font-size: 10px; color: var(--accent); }
+  a.pill { text-decoration: none; }
   .skill-detail {
     margin-top: var(--s5); padding: var(--s4); background: var(--bg-inset);
     border-radius: var(--r1); font-family: var(--mono); font-size: var(--fs-xs);
@@ -269,36 +270,50 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!d) return;
   const skills = d.skills_data || [];
   if (!skills.length) { document.getElementById('page-body').innerHTML = '<div class="empty">No skills</div>'; return; }
+
+  // Separate custom vs built-in, sort custom first
+  const customSkills = skills.filter(s => s.custom);
+  const builtinSkills = skills.filter(s => !s.custom);
+
+  let html = '';
+
+  // Custom skills section on top
+  if (customSkills.length) {
+    const customCats = {};
+    customSkills.forEach(s => {
+      if (!customCats[s.category]) customCats[s.category] = [];
+      customCats[s.category].push(s);
+    });
+    html += '<div style="margin-bottom:var(--s6)"><div class="skill-cat-name" style="color:var(--accent);margin-bottom:var(--s3)">My Custom Skills</div>';
+    Object.keys(customCats).sort().forEach(cat => {
+      html += `<div class="skill-cat"><div class="skill-cat-name">${cat}</div><div class="skill-pills">`;
+      customCats[cat].forEach(s => {
+        html += `<a href="skill.html?name=${encodeURIComponent(s.name)}" class="pill custom">${s.name}</a>`;
+      });
+      html += '</div></div>';
+    });
+    html += '</div>';
+  }
+
+  // Built-in skills
   const cats = {};
-  skills.forEach(s => {
+  builtinSkills.forEach(s => {
     if (!cats[s.category]) cats[s.category] = [];
     cats[s.category].push(s);
   });
-  let html = '<div id="skills-container">';
+  html += '<div>';
   Object.keys(cats).sort().forEach(cat => {
     html += `<div class="skill-cat"><div class="skill-cat-name">${cat}</div><div class="skill-pills">`;
     cats[cat].forEach(s => {
-      const cls = s.custom ? 'pill custom' : 'pill';
-      html += `<span class="${cls}" onclick="showSkill('${s.path}',this)">${s.name}</span>`;
+      html += `<a href="skill.html?name=${encodeURIComponent(s.name)}" class="pill">${s.name}</a>`;
     });
     html += '</div></div>';
   });
-  html += '</div><div class="skill-detail" id="skill-detail"></div>';
+  html += '</div>';
+
   document.getElementById('page-body').innerHTML = html;
   lucide.createIcons();
 });
-function showSkill(path, pill) {
-  const d = window.__DASHBOARD_DATA__;
-  if (!d || !d.skills_data) return;
-  const s = d.skills_data.find(x => x.path === path);
-  const detail = document.getElementById('skill-detail');
-  document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
-  if (s) {
-    if (pill) pill.classList.add('active');
-    detail.textContent = s.content;
-    detail.classList.add('show');
-  }
-}
 
 </script>
 </body>
