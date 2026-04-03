@@ -1,0 +1,7 @@
+[
+  {"id": "1", "task": "Run refresh.sh (pulls memory, crons, skills, tasks, config, gateway, sessions)", "auto": true},
+  {"id": "2", "task": "Update custom_skills.json when creating/deleting a custom skill", "auto": false},
+  {"id": "3", "task": "Git commit + push after all changes", "auto": false},
+  {"id": "4", "task": "Add new aliases to Quick Commands in refresh.sh", "auto": false},
+  {"id": "5", "task": "Update dashboard HTML if new cards/sections are needed", "auto": false}
+]
