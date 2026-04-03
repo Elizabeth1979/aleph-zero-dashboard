@@ -427,8 +427,10 @@
 
     /* ----------------------------------------------------------
        CLOSE ON OUTSIDE CLICK
+       Uses mousedown so it fires before innerHTML rebuild
+       (which orphans the old e.target from the panel DOM).
     ---------------------------------------------------------- */
-    document.addEventListener('click', (e) => {
+    document.addEventListener('mousedown', (e) => {
       if (!isOpen) return;
       if (panel.contains(e.target) || btn.contains(e.target)) return;
       closePanel();
