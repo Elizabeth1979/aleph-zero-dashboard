@@ -116,7 +116,7 @@
     animation: fadeIn 0.4s ease both;
     display: flex;
     flex-direction: column;
-    min-height: 0;
+    min-height: 120px;
     position: relative;
     transform-style: preserve-3d;
     overflow: hidden;
@@ -290,18 +290,9 @@
     <div class="status-row" id="status-bar"></div>
   </div>
 
-  <!-- SECTION: Your Hermes -->
-  <div class="section-label"><i data-lucide="star" style="width:16px;height:16px"></i> Your Hermes</div>
+  <!-- SECTION: Action Items -->
+  <div class="section-label"><i data-lucide="zap" style="width:16px;height:16px"></i> Action Items</div>
   <div class="bento">
-
-    <a href="pages/config.html" class="card">
-      <div class="card-h">
-        <i data-lucide="settings"></i>
-        <h2>Config & Setup</h2>
-      </div>
-      <div class="card-desc">Models, commands, credentials, integrations</div>
-      <div class="card-preview" id="cfg-preview"></div>
-    </a>
 
     <a href="pages/tasks.html" class="card">
       <div class="card-h">
@@ -312,6 +303,22 @@
       <div class="card-desc">Your personal to-do list</div>
       <div class="card-preview" id="task-preview"></div>
     </a>
+
+    <a href="pages/cron.html" class="card">
+      <div class="card-h">
+        <i data-lucide="clock"></i>
+        <h2>Scheduled Jobs</h2>
+        <span class="badge" id="cron-badge">0</span>
+      </div>
+      <div class="card-desc">Cron jobs and automations</div>
+      <div class="card-preview" id="cron-preview"></div>
+    </a>
+
+  </div>
+
+  <!-- SECTION: Memory -->
+  <div class="section-label"><i data-lucide="brain" style="width:16px;height:16px"></i> Memory</div>
+  <div class="bento">
 
     <a href="pages/user.html" class="card">
       <div class="card-h">
@@ -325,7 +332,7 @@
 
     <a href="pages/agent.html" class="card">
       <div class="card-h">
-        <i data-lucide="brain"></i>
+        <i data-lucide="cpu"></i>
         <h2>Agent Memory</h2>
         <span class="badge" id="agent-badge">0%</span>
       </div>
@@ -343,14 +350,28 @@
       <div class="card-preview" id="chroma-preview"></div>
     </a>
 
-    <a href="pages/cron.html" class="card">
+    <a href="pages/soul.html" class="card">
       <div class="card-h">
-        <i data-lucide="clock"></i>
-        <h2>Scheduled Jobs</h2>
-        <span class="badge" id="cron-badge">0</span>
+        <i data-lucide="heart"></i>
+        <h2>SOUL.md</h2>
       </div>
-      <div class="card-desc">Cron jobs and automations</div>
-      <div class="card-preview" id="cron-preview"></div>
+      <div class="card-desc">Personality, vibe, and core rules</div>
+      <div class="card-preview" id="soul-preview"></div>
+    </a>
+
+  </div>
+
+  <!-- SECTION: Settings -->
+  <div class="section-label"><i data-lucide="settings" style="width:16px;height:16px"></i> Settings</div>
+  <div class="bento">
+
+    <a href="pages/config.html" class="card">
+      <div class="card-h">
+        <i data-lucide="sliders-horizontal"></i>
+        <h2>Config & Setup</h2>
+      </div>
+      <div class="card-desc">Models, commands, credentials, integrations</div>
+      <div class="card-preview" id="cfg-preview"></div>
     </a>
 
     <a href="pages/skills.html" class="card">
@@ -363,26 +384,13 @@
       <div class="card-preview" id="skill-preview"></div>
     </a>
 
-  </div>
-
-  <!-- SECTION: Under the Hood -->
-  <div class="section-label"><i data-lucide="wrench" style="width:16px;height:16px"></i> Under the Hood</div>
-  <div class="bento">
-
-    <a href="pages/soul.html" class="card">
-      <div class="card-h">
-        <i data-lucide="heart"></i>
-        <h2>SOUL.md</h2>
-      </div>
-      <div class="card-desc">My personality, vibe, and core rules</div>
-    </a>
-
     <a href="pages/system.html" class="card">
       <div class="card-h">
         <i data-lucide="laptop"></i>
         <h2>System Settings</h2>
       </div>
       <div class="card-desc">Power, battery, and macOS config</div>
+      <div class="card-preview" id="system-preview"></div>
     </a>
 
   </div>
@@ -470,6 +478,20 @@ function loadCards() {
   document.getElementById('skill-badge').textContent = skills.length;
   const cats = [...new Set(skills.map(s => s.category))];
   document.getElementById('skill-preview').textContent = cats.length + ' categories';
+
+  // SOUL.md preview
+  const soulEl = document.getElementById('soul-preview');
+  if (d.soul_md) {
+    const firstLine = d.soul_md.split('\n').find(l => l.trim() && !l.startsWith('#')) || '';
+    soulEl.textContent = firstLine.trim().slice(0, 60) || 'Core identity and rules';
+  }
+
+  // System preview
+  const sysEl = document.getElementById('system-preview');
+  if (d.system_settings) {
+    const firstLine = d.system_settings.split('\n').find(l => l.trim() && !l.startsWith('#')) || '';
+    sysEl.textContent = firstLine.trim().slice(0, 60) || 'macOS configuration';
+  }
 
   lucide.createIcons();
 }
