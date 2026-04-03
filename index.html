@@ -537,6 +537,22 @@ function esc(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
+function timeAgo(dateStr) {
+  if (!dateStr) return '';
+  const then = new Date(dateStr);
+  if (isNaN(then)) return '';
+  const diffMs = Date.now() - then.getTime();
+  const diffSec = Math.floor(diffMs / 1000);
+  if (diffSec < 60) return diffSec + 's ago';
+  const diffMin = Math.floor(diffSec / 60);
+  if (diffMin < 60) return diffMin + 'm ago';
+  const diffHr = Math.floor(diffMin / 60);
+  if (diffHr < 24) return diffHr + 'h ago';
+  const diffDay = Math.floor(diffHr / 24);
+  if (diffDay < 30) return diffDay + 'd ago';
+  return Math.floor(diffDay / 30) + 'mo ago';
+}
+
 function cronHuman(c) {
   if (!c) return '?';
   const p = c.trim().split(/\s+/);
@@ -607,6 +623,27 @@ function loadCards() {
   document.getElementById('cron-badge').textContent = jobs.length;
   if (jobs.length) {
     document.getElementById('cron-preview').textContent = jobs.map(j => j.name || j.job_id || 'Unnamed').slice(0,2).join(', ');
+  }
+
+  // Activity feed
+  const activity = d.activity || [];
+  document.getElementById('activity-badge').textContent = activity.length;
+  const feedEl = document.getElementById('activity-feed');
+  if (feedEl) {
+    const shown = activity.slice(0, 5);
+    if (shown.length) {
+      feedEl.innerHTML = shown.map(item => {
+        const icon = item.type === 'cron' ? 'clock' : 'message-square';
+        const ago = timeAgo(item.timestamp);
+        return `<div class="activity-item">
+          <i data-lucide="${icon}"></i>
+          <span class="activity-item-desc">${esc(item.description)}</span>
+          <span class="activity-item-time">${ago}</span>
+        </div>`;
+      }).join('');
+    } else {
+      feedEl.innerHTML = '<div style="font-size:var(--fs-xs);color:var(--text-3)">No recent activity</div>';
+    }
   }
 
   // Chroma
