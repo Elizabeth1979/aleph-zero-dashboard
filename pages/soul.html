@@ -264,11 +264,31 @@ function cronHuman(c) {
   return c;
 }
 
+function saveMemory(type) {
+  const text = document.getElementById('editor-' + type).value;
+  const filename = 'SOUL.md';
+  const blob = new Blob([text], { type: 'text/markdown' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const d = window.__DASHBOARD_DATA__;
   if (!d) return;
   if (!d.soul_md) { document.getElementById('page-body').innerHTML = '<div class="empty">No SOUL.md found</div>'; return; }
-  document.getElementById('page-body').innerHTML = `<div class="raw-box">${esc(d.soul_md)}</div>`;
+
+  const chars = d.soul_md.length;
+  document.getElementById('page-body').innerHTML = `
+    <div class="modal-meta">SOUL.md &bull; ${chars} chars &bull; My personality, vibe, and core rules</div>
+    <textarea class="modal-editor" id="editor-soul">${esc(d.soul_md)}</textarea>
+    <div class="modal-actions">
+      <button class="btn btn-save" onclick="saveMemory('soul')"><i data-lucide="download" style="width:14px;height:14px"></i> Save as file</button>
+      <span class="modal-hint">Saves SOUL.md to your Downloads</span>
+    </div>
+  `;
   lucide.createIcons();
 });
 
