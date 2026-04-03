@@ -468,6 +468,38 @@
   <!-- Bento Grid -->
   <div class="bento">
 
+    <!-- Quick Commands -->
+    <div class="card col-2">
+      <div class="card-h">
+        <i data-lucide="terminal"></i>
+        <h2>Quick Commands</h2>
+      </div>
+      <div id="commands"></div>
+    </div>
+
+    <!-- Config -->
+    <div class="card col-2">
+      <div class="card-h">
+        <i data-lucide="settings"></i>
+        <h2>Config</h2>
+      </div>
+      <div id="config"></div>
+      <details>
+        <summary class="raw-toggle">
+          <i data-lucide="chevron-right" style="width:14px;height:14px"></i>
+          config.yaml
+        </summary>
+        <div class="raw-box" id="config-raw"></div>
+      </details>
+      <details>
+        <summary class="raw-toggle">
+          <i data-lucide="chevron-right" style="width:14px;height:14px"></i>
+          .env
+        </summary>
+        <div class="raw-box" id="config-env"></div>
+      </details>
+    </div>
+
     <!-- Tasks -->
     <div class="card col-2">
       <div class="card-h">
@@ -533,38 +565,6 @@
         <span class="count" id="agent-label">MEMORY.md</span>
       </div>
       <div id="agent-memory"></div>
-    </div>
-
-    <!-- Quick Commands -->
-    <div class="card col-2">
-      <div class="card-h">
-        <i data-lucide="terminal"></i>
-        <h2>Quick Commands</h2>
-      </div>
-      <div id="commands"></div>
-    </div>
-
-    <!-- Config -->
-    <div class="card col-2">
-      <div class="card-h">
-        <i data-lucide="settings"></i>
-        <h2>Config</h2>
-      </div>
-      <div id="config"></div>
-      <details>
-        <summary class="raw-toggle">
-          <i data-lucide="chevron-right" style="width:14px;height:14px"></i>
-          config.yaml
-        </summary>
-        <div class="raw-box" id="config-raw"></div>
-      </details>
-      <details>
-        <summary class="raw-toggle">
-          <i data-lucide="chevron-right" style="width:14px;height:14px"></i>
-          .env
-        </summary>
-        <div class="raw-box" id="config-env"></div>
-      </details>
     </div>
 
     <!-- Skills -->
