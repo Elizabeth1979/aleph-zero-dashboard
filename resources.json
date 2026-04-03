@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1",
+    "title": "50 Days of OpenClaw — Real Use Cases",
+    "url": "https://www.youtube.com/watch?v=NZ1mKAWJPr4",
+    "category": "inspiration",
+    "status": "explored",
+    "note": "Channel architecture, per-channel model routing, markdown-first workflows. Relevant when Hermes adds model routing.",
+    "added": "2026-04-03"
+  },
+  {
+    "id": "2",
+    "title": "oh-my-codex — Multi-agent orchestration for Codex CLI",
+    "url": "https://yeachan-heo.github.io/oh-my-codex-website/",
+    "category": "ai-tools",
+    "status": "skipped",
+    "note": "Codex CLI only, not relevant for Claude Code + Hermes setup.",
+    "added": "2026-04-03"
+  }
+]

@@ -129,6 +129,9 @@ SKILLS_JS=$(echo "$SKILLS_HTML" | python3 -c "import sys,json; print(json.dumps(
 # Tasks
 TASKS_DATA=$(cat "$DASH/tasks.json" 2>/dev/null || echo "[]")
 
+# Resources
+RESOURCES_DATA=$(cat "$DASH/resources.json" 2>/dev/null || echo "[]")
+
 # Capture rules
 CAPTURE_RULES=$(cat "$DASH/capture_rules.json" 2>/dev/null || echo "{}")
 
@@ -258,6 +261,7 @@ window.__DASHBOARD_DATA__ = {
   chroma: $CHROMA_DATA,
   commands: $COMMANDS,
   tasks: $TASKS_DATA,
+  resources: $RESOURCES_DATA,
   capture_rules: $CAPTURE_RULES,
   soul_md: $SOUL_MD,
   discord_channels: $DISCORD_CHANNELS,
