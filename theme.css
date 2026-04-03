@@ -1,78 +1,61 @@
 /* ============================================
    HERMES DASHBOARD — GLOBAL THEME
-   Edit colors, fonts, spacing here.
+   Minimal. Clean. Teal accents on dark.
    ============================================ */
 
 :root {
-  /* --- Colors --- */
-  --color-bg:           #0a0a0a;
-  --color-surface:      rgba(255, 255, 255, 0.03);
-  --color-surface-hover:rgba(255, 255, 255, 0.04);
-  --color-border:       rgba(255, 255, 255, 0.06);
-  --color-border-hover: rgba(20, 184, 166, 0.2);
-  --color-glow:         rgba(20, 184, 166, 0.08);
+  /* --- Background --- */
+  --bg:              #0b0e11;
+  --bg-card:         #13171c;
+  --bg-card-hover:   #181d24;
+  --bg-inset:        #0e1116;
 
-  /* Primary (teal/sea) */
-  --color-primary:      #4ecdc4;
-  --color-primary-dim:  #0d9488;
-  --color-primary-muted:#115e59;
-  --color-primary-bg:   rgba(20, 184, 166, 0.08);
+  /* --- Borders --- */
+  --border:          rgba(255, 255, 255, 0.06);
+  --border-hover:    rgba(255, 255, 255, 0.12);
 
-  /* Secondary (light blue) */
-  --color-secondary:    #5bc0be;
-  --color-secondary-bg: rgba(91, 192, 190, 0.1);
+  /* --- Accent (teal) --- */
+  --accent:          #5de4d4;
+  --accent-dim:      #2fb4a6;
+  --accent-muted:    rgba(93, 228, 212, 0.12);
 
-  /* Status */
-  --color-ok:           #4ecdc4;
-  --color-warn:         #e8a87c;
-  --color-danger:       #e06c75;
-  --color-ok-gradient:  linear-gradient(90deg, #0d9488, #4ecdc4);
-  --color-warn-gradient:linear-gradient(90deg, #e8a87c, #f0c27f);
-  --color-danger-gradient:linear-gradient(90deg, #e06c75, #ff6b6b);
+  /* --- Status --- */
+  --ok:              #5de4d4;
+  --warn:            #f0b866;
+  --danger:          #e06c75;
 
-  /* Text */
-  --color-text:         #e0e0e0;
-  --color-text-secondary:#a0a0a0;
-  --color-text-muted:   #666666;
-  --color-text-faint:   #444444;
+  /* --- Text --- */
+  --text:            #e8eaed;
+  --text-2:          #9aa0a6;
+  --text-3:          #5f6368;
 
   /* --- Typography --- */
-  --font-family:        'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-mono:          'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
-
-  --font-size-xs:       14px;   /* minimum size — nothing smaller */
-  --font-size-sm:       15px;
-  --font-size-base:     16px;
-  --font-size-lg:       18px;
-  --font-size-xl:       20px;
-  --font-size-2xl:      24px;
-  --font-size-3xl:      36px;
-
-  --font-weight-normal: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold:600;
-  --font-weight-bold:   700;
-
-  --line-height:        1.6;
+  --sans:            'Inter', -apple-system, system-ui, sans-serif;
+  --mono:            'JetBrains Mono', 'SF Mono', monospace;
+  --fs-xs:           13px;
+  --fs-sm:           14px;
+  --fs-base:         15px;
+  --fs-lg:           17px;
+  --fs-xl:           20px;
+  --fs-2xl:          28px;
+  --fs-3xl:          40px;
 
   /* --- Spacing --- */
-  --space-xs:           4px;
-  --space-sm:           8px;
-  --space-md:           12px;
-  --space-lg:           16px;
-  --space-xl:           20px;
-  --space-2xl:          24px;
-  --space-3xl:          32px;
+  --s1:  4px;
+  --s2:  8px;
+  --s3:  12px;
+  --s4:  16px;
+  --s5:  20px;
+  --s6:  24px;
+  --s7:  32px;
+  --s8:  48px;
 
-  /* --- Border radius --- */
-  --radius-sm:          8px;
-  --radius-md:          12px;
-  --radius-lg:          16px;
-  --radius-xl:          20px;
-  --radius-pill:        999px;
+  /* --- Radius --- */
+  --r1:  8px;
+  --r2:  12px;
+  --r3:  16px;
+  --pill: 999px;
 
-  /* --- Transitions --- */
-  --transition-fast:    0.2s ease;
-  --transition-smooth:  0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow:    0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  /* --- Misc --- */
+  --transition: 0.2s ease;
 }
