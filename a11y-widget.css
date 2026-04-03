@@ -524,14 +524,29 @@ html.a11y-dyslexia-font th {
 
 /* ------------------------------------------------------------
    2e. Increase Font Size
-   Scale at the root so everything inherits — no compounding.
+   Override both the root font-size AND the px-based CSS
+   variables so all text scales (cards use --fs-* vars).
    ------------------------------------------------------------ */
 html.a11y-font-lg {
   font-size: 120% !important;
+  --fs-xs:   15.5px !important;
+  --fs-sm:   17px !important;
+  --fs-base: 18px !important;
+  --fs-lg:   20px !important;
+  --fs-xl:   24px !important;
+  --fs-2xl:  34px !important;
+  --fs-3xl:  48px !important;
 }
 
 html.a11y-font-xl {
   font-size: 140% !important;
+  --fs-xs:   18px !important;
+  --fs-sm:   20px !important;
+  --fs-base: 21px !important;
+  --fs-lg:   24px !important;
+  --fs-xl:   28px !important;
+  --fs-2xl:  39px !important;
+  --fs-3xl:  56px !important;
 }
 
 /* ------------------------------------------------------------
