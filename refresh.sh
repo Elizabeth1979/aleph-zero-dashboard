@@ -97,6 +97,9 @@ STATUS_JS=$(echo "$STATUS_HTML" | python3 -c "import sys,json; print(json.dumps(
 CONFIG_JS=$(echo "$CONFIG_HTML" | python3 -c "import sys,json; print(json.dumps(sys.stdin.read()))")
 SKILLS_JS=$(echo "$SKILLS_HTML" | python3 -c "import sys,json; print(json.dumps(sys.stdin.read()))")
 
+# Tasks
+TASKS_DATA=$(cat "$DASH/tasks.json" 2>/dev/null || echo "[]")
+
 # ChromaDB long-term memory
 CHROMA_DATA=$("$HERMES/hermes-agent/venv/bin/python" -c "
 import json, chromadb
@@ -133,7 +136,8 @@ window.__DASHBOARD_DATA__ = {
   config_raw: $CONFIG_RAW,
   env_raw: $ENV_RAW,
   skills_data: $SKILLS_DATA,
-  chroma: $CHROMA_DATA
+  chroma: $CHROMA_DATA,
+  tasks: $TASKS_DATA
 };
 JSEOF
 
