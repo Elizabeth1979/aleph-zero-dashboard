@@ -131,7 +131,8 @@ COMMANDS='[
   {"cmd":"hermes status","desc":"Show status of all components (gateway, cron, etc)"},
   {"cmd":"hermes gateway restart","desc":"Restart the Discord bot if it stops responding"},
   {"cmd":"hermes cron list","desc":"List all scheduled cron jobs"},
-  {"cmd":"hermes sessions","desc":"Browse past conversation sessions"}
+  {"cmd":"hermes sessions","desc":"Browse past conversation sessions"},
+  {"cmd":"cat ~/.hermes/dashboard/SYSTEM_SETTINGS.md","desc":"View all system/power/battery settings we configured"}
 ]'
 
 # Write data file
