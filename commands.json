@@ -1,6 +1,6 @@
 [
   {"cmd": "dashboard", "desc": "Refreshes all dashboard data and opens it in your browser"},
-  {"cmd": "gw", "desc": "Prints whether the Discord bot gateway is running or not"},
+  {"cmd": "gw", "desc": "Checks gateway status — auto-restarts if it's down"},
   {"cmd": "hermes chat", "desc": "Start a conversation with me in the terminal"},
   {"cmd": "hermes status", "desc": "Show status of all components (gateway, cron, etc)"},
   {"cmd": "hermes gateway restart", "desc": "Restart the Discord bot if it stops responding"},
