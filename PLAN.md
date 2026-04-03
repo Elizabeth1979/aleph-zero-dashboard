@@ -1,6 +1,15 @@
-# Hermes Dashboard — React Rewrite Plan
+# Hermes Dashboard
 
-## Goal
+## Purpose
+The dashboard is a visual representation of everything in the Hermes config/code.
+If it exists in the code, config, or data files — it should be visible on the dashboard.
+Elli should never need to read raw files or run terminal commands to understand what's going on.
+
+**Rule: Every time we change config, add a feature, or modify settings — update the dashboard to reflect it.**
+
+## React Rewrite Plan
+
+### Goal
 Replace the current single HTML file dashboard with a proper React app (Vite + Tailwind).
 
 ## Current State
