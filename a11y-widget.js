@@ -427,13 +427,25 @@
 
     /* ----------------------------------------------------------
        CLOSE ON OUTSIDE CLICK
-       Uses mousedown so it fires before innerHTML rebuild
-       (which orphans the old e.target from the panel DOM).
+       Uses a flag set by panel/btn pointer events so we
+       don't rely on DOM containment (which breaks after
+       innerHTML rebuilds orphan the original e.target).
     ---------------------------------------------------------- */
-    document.addEventListener('mousedown', (e) => {
-      if (!isOpen) return;
-      if (panel.contains(e.target) || btn.contains(e.target)) return;
-      closePanel();
+    let clickInsideWidget = false;
+
+    panel.addEventListener('pointerdown', () => { clickInsideWidget = true; });
+    btn.addEventListener('pointerdown', () => { clickInsideWidget = true; });
+
+    document.addEventListener('pointerdown', () => {
+      /* Reset on next tick — after panel/btn handlers have set the flag */
+      requestAnimationFrame(() => {
+        if (!isOpen) { clickInsideWidget = false; return; }
+        if (clickInsideWidget) {
+          clickInsideWidget = false;
+          return;
+        }
+        closePanel();
+      });
     });
 
     /* ----------------------------------------------------------
