@@ -323,14 +323,36 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>`;
   }
 
+  // Pull urgent (high priority, not done) to the top
+  const urgent = tasks.filter(t => !t.done && t.priority === 'high');
+  const rest = tasks.filter(t => !(t.priority === 'high' && !t.done));
+
   let html = '';
-  // Show categories in order, only if they have items
-  const activeCats = catOrder.filter(c => groups[c] && groups[c].length);
-  // Also catch any unknown categories
-  Object.keys(groups).forEach(c => { if (!catOrder.includes(c)) activeCats.push(c); });
+
+  // Urgent section
+  if (urgent.length) {
+    html += `<div class="cat-section">
+      <div class="cat-header" style="color:var(--danger)">
+        <i data-lucide="alert-triangle"></i> Urgent
+        <span class="cat-count">${urgent.length}</span>
+      </div>
+      ${urgent.map(renderTask).join('')}
+    </div>`;
+  }
+
+  // Group remaining by category
+  const groups2 = {};
+  rest.forEach(t => {
+    const cat = t.category || 'task';
+    if (!groups2[cat]) groups2[cat] = [];
+    groups2[cat].push(t);
+  });
+
+  const activeCats = catOrder.filter(c => groups2[c] && groups2[c].length);
+  Object.keys(groups2).forEach(c => { if (!catOrder.includes(c)) activeCats.push(c); });
 
   activeCats.forEach(cat => {
-    const items = groups[cat];
+    const items = groups2[cat];
     const open = items.filter(t => !t.done);
     const done = items.filter(t => t.done);
     const meta = catMeta[cat] || { icon: 'circle', label: cat };
