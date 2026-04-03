@@ -338,49 +338,13 @@
   }
   .egg-overlay.show { opacity: 1; pointer-events: auto; }
 
-  /* --- Activity Feed --- */
-  .activity-feed {
-    margin-top: var(--s3);
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-  .activity-item {
-    display: grid;
-    grid-template-columns: 14px 1fr auto;
-    align-items: start;
-    gap: var(--s2);
-    font-size: var(--fs-xs);
-    line-height: 1.4;
-  }
-  .activity-item svg {
-    width: 14px;
-    height: 14px;
-    color: var(--accent);
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
-  .activity-item-desc {
-    color: var(--text-2);
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-  .activity-item-time {
-    color: var(--text-3);
-    font-family: var(--mono);
-    font-size: 11px;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-
   /* --- Scrollbar --- */
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
 
 
 </style>
-<link rel="stylesheet" href="a11y-widget.css">
+
 </head>
 <body>
 
@@ -409,16 +373,6 @@
       <div class="card-preview" id="task-preview"></div>
     </a>
 
-    <a href="pages/resources.html" class="card">
-      <div class="card-h">
-        <i data-lucide="bookmark"></i>
-        <h2>Resources</h2>
-        <span class="badge" id="resource-badge">0</span>
-      </div>
-      <div class="card-desc">Links, tools, articles, inspiration</div>
-      <div class="card-preview" id="resource-preview"></div>
-    </a>
-
     <a href="pages/cron.html" class="card">
       <div class="card-h">
         <i data-lucide="clock"></i>
@@ -427,16 +381,6 @@
       </div>
       <div class="card-desc">Cron jobs and automations</div>
       <div class="card-preview" id="cron-preview"></div>
-    </a>
-
-    <a href="pages/sessions.html" class="card">
-      <div class="card-h">
-        <i data-lucide="activity"></i>
-        <h2>Recent Activity</h2>
-        <span class="badge" id="activity-badge">0</span>
-      </div>
-      <div class="card-desc">Latest chats and automated runs</div>
-      <div id="activity-feed" class="activity-feed"></div>
     </a>
 
   </div>
@@ -531,26 +475,10 @@
 </div>
 
 
-<script>document.write('<script src="data.js?v=' + Date.now() + '"><\/script>');</script>
+<script src="data.js"></script>
 <script>
 function esc(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-
-function timeAgo(dateStr) {
-  if (!dateStr) return '';
-  const then = new Date(dateStr);
-  if (isNaN(then)) return '';
-  const diffMs = Date.now() - then.getTime();
-  const diffSec = Math.floor(diffMs / 1000);
-  if (diffSec < 60) return diffSec + 's ago';
-  const diffMin = Math.floor(diffSec / 60);
-  if (diffMin < 60) return diffMin + 'm ago';
-  const diffHr = Math.floor(diffMin / 60);
-  if (diffHr < 24) return diffHr + 'h ago';
-  const diffDay = Math.floor(diffHr / 24);
-  if (diffDay < 30) return diffDay + 'd ago';
-  return Math.floor(diffDay / 30) + 'mo ago';
 }
 
 function cronHuman(c) {
@@ -589,19 +517,6 @@ function loadCards() {
     document.getElementById('task-preview').textContent = 'All clear';
   }
 
-  // Resources
-  const resources = d.resources || [];
-  const newRes = resources.filter(r => r.status === 'new');
-  const processedRes = resources.filter(r => r.status === 'processed');
-  document.getElementById('resource-badge').textContent = resources.length;
-  if (newRes.length) {
-    document.getElementById('resource-preview').textContent = newRes.length + ' to process';
-  } else if (processedRes.length) {
-    document.getElementById('resource-preview').textContent = processedRes.length + ' processed, ' + (resources.length - processedRes.length) + ' archived';
-  } else {
-    document.getElementById('resource-preview').textContent = 'Drop links to save them';
-  }
-
   // User memory
   const uPct = d.user_pct || 0;
   document.getElementById('user-badge').textContent = uPct + '%';
@@ -623,27 +538,6 @@ function loadCards() {
   document.getElementById('cron-badge').textContent = jobs.length;
   if (jobs.length) {
     document.getElementById('cron-preview').textContent = jobs.map(j => j.name || j.job_id || 'Unnamed').slice(0,2).join(', ');
-  }
-
-  // Activity feed
-  const activity = d.activity || [];
-  document.getElementById('activity-badge').textContent = activity.length;
-  const feedEl = document.getElementById('activity-feed');
-  if (feedEl) {
-    const shown = activity.slice(0, 5);
-    if (shown.length) {
-      feedEl.innerHTML = shown.map(item => {
-        const icon = item.type === 'cron' ? 'clock' : 'message-square';
-        const ago = timeAgo(item.timestamp);
-        return `<div class="activity-item">
-          <i data-lucide="${icon}"></i>
-          <span class="activity-item-desc">${esc(item.description)}</span>
-          <span class="activity-item-time">${ago}</span>
-        </div>`;
-      }).join('');
-    } else {
-      feedEl.innerHTML = '<div style="font-size:var(--fs-xs);color:var(--text-3)">No recent activity</div>';
-    }
   }
 
   // Chroma
@@ -833,6 +727,6 @@ document.addEventListener('DOMContentLoaded', () => {
   setTimeout(setupEasterEgg, 800);
 });
 </script>
-<script src="a11y-widget.js"></script>
+
 </body>
 </html>
