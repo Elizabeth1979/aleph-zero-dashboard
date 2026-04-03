@@ -430,6 +430,159 @@
     color: var(--text-2);
   }
 
+  /* --- Clickable Card --- */
+  .clickable { cursor: pointer; }
+  .clickable:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  /* --- Modal --- */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(4px);
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    width: 92vw;
+    height: 90vh;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--r3);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--s4) var(--s6);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .modal-tabs {
+    display: flex;
+    gap: var(--s2);
+  }
+  .modal-tab {
+    display: flex;
+    align-items: center;
+    gap: var(--s2);
+    padding: var(--s2) var(--s4);
+    border: 1px solid transparent;
+    border-radius: var(--r2);
+    background: none;
+    color: var(--text-3);
+    font-family: var(--sans);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition);
+  }
+  .modal-tab:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+  .modal-tab.active {
+    color: var(--accent);
+    background: var(--accent-muted);
+    border-color: rgba(93,228,212,0.2);
+  }
+  .modal-close {
+    background: none;
+    border: none;
+    color: var(--text-3);
+    cursor: pointer;
+    padding: var(--s2);
+    border-radius: var(--r1);
+    transition: all var(--transition);
+  }
+  .modal-close:hover { color: var(--text); background: rgba(255,255,255,0.06); }
+  .modal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--s6);
+  }
+  .modal-pane { height: 100%; display: flex; flex-direction: column; }
+  .modal-meta {
+    font-size: var(--fs-xs);
+    color: var(--text-3);
+    margin-bottom: var(--s4);
+  }
+  .modal-editor {
+    flex: 1;
+    width: 100%;
+    background: var(--bg-inset);
+    border: 1px solid var(--border);
+    border-radius: var(--r2);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: var(--fs-sm);
+    padding: var(--s4);
+    resize: none;
+    line-height: 1.7;
+    outline: none;
+    transition: border-color var(--transition);
+  }
+  .modal-editor:focus { border-color: var(--accent); }
+  .modal-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--s3);
+    margin-top: var(--s4);
+    flex-shrink: 0;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s2);
+    padding: var(--s2) var(--s4);
+    border-radius: var(--r2);
+    border: 1px solid var(--border);
+    font-family: var(--sans);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition);
+  }
+  .btn-save {
+    background: var(--accent-muted);
+    color: var(--accent);
+    border-color: rgba(93,228,212,0.2);
+  }
+  .btn-save:hover {
+    background: rgba(93,228,212,0.2);
+  }
+  .modal-hint {
+    font-size: var(--fs-xs);
+    color: var(--text-3);
+  }
+
+  /* Long-term memory in modal */
+  .modal-chroma-cat {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--accent-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-top: var(--s5);
+    margin-bottom: var(--s3);
+  }
+  .modal-chroma-cat:first-child { margin-top: 0; }
+  .modal-chroma-entry {
+    padding: var(--s3) var(--s4);
+    margin-bottom: var(--s2);
+    background: var(--bg-inset);
+    border-radius: var(--r1);
+    font-size: var(--fs-sm);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
   /* --- Empty --- */
   .empty {
     font-size: var(--fs-sm);
@@ -511,7 +664,7 @@
     </div>
 
     <!-- Memory Usage -->
-    <div class="card col-1">
+    <div class="card col-1 clickable" onclick="openMemoryModal('user')">
       <div class="card-h">
         <i data-lucide="user"></i>
         <h2>User Memory</h2>
@@ -519,7 +672,7 @@
       <div id="user-stat"></div>
     </div>
 
-    <div class="card col-1">
+    <div class="card col-1 clickable" onclick="openMemoryModal('agent')">
       <div class="card-h">
         <i data-lucide="brain"></i>
         <h2>Agent Memory</h2>
@@ -537,34 +690,14 @@
       <div id="cron-jobs"></div>
     </div>
 
-    <!-- Long-Term Memory -->
-    <div class="card col-2">
-      <div class="card-h">
-        <i data-lucide="database"></i>
-        <h2>Long-Term Memory</h2>
-        <span class="count" id="chroma-count">0</span>
-      </div>
+    <!-- Hidden containers for data (rendered in modal) -->
+    <div style="display:none">
       <div id="chroma-memories"></div>
-    </div>
-
-    <!-- Who You Are -->
-    <div class="card col-2">
-      <div class="card-h">
-        <i data-lucide="user-circle"></i>
-        <h2>Who You Are</h2>
-        <span class="count" id="user-label">USER.md</span>
-      </div>
+      <span id="chroma-count"></span>
       <div id="user-memory"></div>
-    </div>
-
-    <!-- My Notes -->
-    <div class="card col-2">
-      <div class="card-h">
-        <i data-lucide="notebook-pen"></i>
-        <h2>My Notes</h2>
-        <span class="count" id="agent-label">MEMORY.md</span>
-      </div>
+      <span id="user-label"></span>
       <div id="agent-memory"></div>
+      <span id="agent-label"></span>
     </div>
 
     <!-- Skills -->
@@ -582,6 +715,53 @@
 
   <div class="footer" id="footer">~/.hermes</div>
 
+</div>
+
+<!-- Memory Modal -->
+<div class="modal-overlay" id="memory-modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-tabs">
+        <button class="modal-tab active" onclick="switchTab('user')" id="tab-user">
+          <i data-lucide="user-circle" style="width:16px;height:16px"></i> User Memory
+        </button>
+        <button class="modal-tab" onclick="switchTab('agent')" id="tab-agent">
+          <i data-lucide="notebook-pen" style="width:16px;height:16px"></i> Agent Memory
+        </button>
+        <button class="modal-tab" onclick="switchTab('longterm')" id="tab-longterm">
+          <i data-lucide="database" style="width:16px;height:16px"></i> Long-Term Memory
+        </button>
+      </div>
+      <button class="modal-close" onclick="closeModal()">
+        <i data-lucide="x" style="width:20px;height:20px"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-pane" id="pane-user">
+        <div class="modal-meta" id="modal-user-meta"></div>
+        <textarea class="modal-editor" id="editor-user"></textarea>
+        <div class="modal-actions">
+          <button class="btn btn-save" onclick="saveMemory('user')">
+            <i data-lucide="download" style="width:14px;height:14px"></i> Save as file
+          </button>
+          <span class="modal-hint">Saves USER.md to your Downloads</span>
+        </div>
+      </div>
+      <div class="modal-pane" id="pane-agent" style="display:none">
+        <div class="modal-meta" id="modal-agent-meta"></div>
+        <textarea class="modal-editor" id="editor-agent"></textarea>
+        <div class="modal-actions">
+          <button class="btn btn-save" onclick="saveMemory('agent')">
+            <i data-lucide="download" style="width:14px;height:14px"></i> Save as file
+          </button>
+          <span class="modal-hint">Saves MEMORY.md to your Downloads</span>
+        </div>
+      </div>
+      <div class="modal-pane" id="pane-longterm" style="display:none">
+        <div id="modal-longterm-content"></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script src="data.js"></script>
@@ -779,6 +959,74 @@ function renderCommands(cmds) {
     `<div class="cmd-row"><span class="cmd-name">${esc(c.cmd)}</span><span class="cmd-desc">${esc(c.desc)}</span></div>`
   ).join('');
 }
+
+function openMemoryModal(tab) {
+  const d = window.__DASHBOARD_DATA__;
+  if (!d) return;
+  // Populate editors with raw markdown
+  document.getElementById('editor-user').value = d.user_memory || '';
+  document.getElementById('editor-agent').value = d.agent_memory || '';
+  // Meta info
+  document.getElementById('modal-user-meta').textContent =
+    `USER.md \u2022 ${d.user_chars} / ${d.user_limit} chars (${d.user_pct}%)`;
+  document.getElementById('modal-agent-meta').textContent =
+    `MEMORY.md \u2022 ${d.agent_chars} / ${d.agent_limit} chars (${d.agent_pct}%)`;
+  // Long-term memory
+  const ltEl = document.getElementById('modal-longterm-content');
+  if (d.chroma && d.chroma.memories && d.chroma.memories.length) {
+    const cats = {};
+    d.chroma.memories.forEach(m => {
+      const c = m.category || 'general';
+      if (!cats[c]) cats[c] = [];
+      cats[c].push(m);
+    });
+    let html = '';
+    Object.keys(cats).sort().forEach(cat => {
+      html += `<div class="modal-chroma-cat">${cat} (${cats[cat].length})</div>`;
+      cats[cat].forEach(m => {
+        html += `<div class="modal-chroma-entry">${esc(m.text)}</div>`;
+      });
+    });
+    ltEl.innerHTML = html;
+  } else {
+    ltEl.innerHTML = '<div class="empty">No long-term memories</div>';
+  }
+  // Open modal and switch to requested tab
+  document.getElementById('memory-modal').classList.add('open');
+  switchTab(tab);
+  lucide.createIcons();
+}
+
+function closeModal() {
+  document.getElementById('memory-modal').classList.remove('open');
+}
+
+function switchTab(tab) {
+  ['user','agent','longterm'].forEach(t => {
+    document.getElementById('tab-' + t).classList.toggle('active', t === tab);
+    document.getElementById('pane-' + t).style.display = t === tab ? 'flex' : 'none';
+  });
+  // longterm pane is not flex column
+  if (tab === 'longterm') {
+    document.getElementById('pane-longterm').style.display = 'block';
+  }
+}
+
+function saveMemory(type) {
+  const text = document.getElementById('editor-' + type).value;
+  const filename = type === 'user' ? 'USER.md' : 'MEMORY.md';
+  const blob = new Blob([text], { type: 'text/markdown' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+// Close modal on Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
 
 function loadAll() {
   const d = window.__DASHBOARD_DATA__;
