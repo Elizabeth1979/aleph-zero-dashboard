@@ -411,28 +411,45 @@ html.a11y-high-contrast {
   --border-hover: rgba(255, 255, 255, 0.35) !important;
 }
 
-/* All text elements: full white — scoped outside the a11y widget */
-html.a11y-high-contrast :not(#a11y-widget-panel):not(#a11y-widget-panel *):is(p, span, li, td, th, label, div, h1, h2, h3, h4, h5, h6) {
+/* All text elements: full white */
+html.a11y-high-contrast p,
+html.a11y-high-contrast span,
+html.a11y-high-contrast li,
+html.a11y-high-contrast td,
+html.a11y-high-contrast th,
+html.a11y-high-contrast label,
+html.a11y-high-contrast div,
+html.a11y-high-contrast h1,
+html.a11y-high-contrast h2,
+html.a11y-high-contrast h3,
+html.a11y-high-contrast h4,
+html.a11y-high-contrast h5,
+html.a11y-high-contrast h6 {
   color: #ffffff !important;
 }
 
-/* Links: brighter accent, no forced underline — outside widget only */
-html.a11y-high-contrast a:not(#a11y-widget-panel a) {
+/* Links: brighter accent, no forced underline */
+html.a11y-high-contrast a {
   color: #7aeee0 !important;
 }
 
-/* Cards & containers: sharper borders — outside widget only */
-html.a11y-high-contrast :not(#a11y-widget-panel):not(#a11y-widget-panel *):is([class*="card"], [class*="bento"], details) {
+/* Cards & containers: sharper borders */
+html.a11y-high-contrast [class*="card"],
+html.a11y-high-contrast [class*="bento"],
+html.a11y-high-contrast details {
   border-color: rgba(255, 255, 255, 0.2) !important;
 }
 
-/* Buttons: clearer borders — outside widget only */
-html.a11y-high-contrast :not(#a11y-widget-btn):not(#a11y-widget-panel):not(#a11y-widget-panel *):is(button, [role="button"]) {
+/* Buttons: clearer borders */
+html.a11y-high-contrast button,
+html.a11y-high-contrast [role="button"] {
   border: 1px solid rgba(255, 255, 255, 0.3) !important;
 }
 
-/* Inputs — outside widget only */
-html.a11y-high-contrast :not(#a11y-widget-panel *):is(input, textarea, select) {
+/* Inputs */
+html.a11y-high-contrast input,
+html.a11y-high-contrast textarea,
+html.a11y-high-contrast select {
   color: #ffffff !important;
   border: 1px solid rgba(255, 255, 255, 0.35) !important;
 }
@@ -450,12 +467,6 @@ html.a11y-high-contrast [class*="tag"] {
    ------------------------------------------------------------ */
 html.a11y-colorblind {
   filter: url(#a11y-deuteranopia-filter);
-}
-
-/* Preserve widget rendering under the filter */
-html.a11y-colorblind #a11y-widget-btn,
-html.a11y-colorblind #a11y-widget-panel {
-  filter: url(#a11y-deuteranopia-filter-inverse);
 }
 
 /* SVG filter injected by JS — selector targets the hidden SVG container */
@@ -508,15 +519,6 @@ html.a11y-dyslexia-font th {
   line-height: 1.65 !important;
 }
 
-/* Keep widget font as Inter */
-html.a11y-dyslexia-font #a11y-widget-panel,
-html.a11y-dyslexia-font #a11y-widget-panel * {
-  font-family: 'Inter', system-ui, sans-serif !important;
-  letter-spacing: normal !important;
-  word-spacing: normal !important;
-  line-height: 1.5 !important;
-}
-
 /* ------------------------------------------------------------
    2e. Increase Font Size
    ------------------------------------------------------------ */
@@ -540,12 +542,6 @@ html.a11y-font-xl td,
 html.a11y-font-xl th,
 html.a11y-font-xl label {
   font-size: calc(1em + 4px) !important;
-}
-
-/* Keep widget font size unchanged */
-html.a11y-font-lg #a11y-widget-panel *,
-html.a11y-font-xl #a11y-widget-panel * {
-  font-size: inherit !important;
 }
 
 /* ------------------------------------------------------------
