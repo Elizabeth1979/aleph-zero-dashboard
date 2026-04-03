@@ -431,9 +431,9 @@
     /* ----------------------------------------------------------
        CLOSE ON OUTSIDE CLICK
     ---------------------------------------------------------- */
-    document.addEventListener('click', (e) => {
+    document.addEventListener('mousedown', (e) => {
       if (!isOpen) return;
-      if (panel.contains(e.target) || btn.contains(e.target)) return;
+      if (e.target.closest('#a11y-widget-panel') || e.target.closest('#a11y-widget-btn')) return;
       closePanel();
     });
 
