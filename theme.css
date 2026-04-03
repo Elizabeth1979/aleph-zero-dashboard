@@ -64,10 +64,10 @@
 
 /* Selection highlight */
 ::selection {
-  background: rgba(93, 228, 212, 0.30);
-  color: #e8eaed;
+  background: rgba(93, 228, 212, 0.35);
+  color: #fff;
 }
 ::-moz-selection {
-  background: rgba(93, 228, 212, 0.30);
-  color: #e8eaed;
+  background: rgba(93, 228, 212, 0.35);
+  color: #fff;
 }
