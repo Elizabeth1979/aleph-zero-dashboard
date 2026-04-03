@@ -89,6 +89,15 @@ STATUS_HTML="$STATUS_HTML<div class=\"config-item\"><span class=\"config-key\">G
 CONFIG_HTML="<div class=\"config-item\"><span class=\"config-key\">Model</span><span class=\"config-val\">${MODEL:-default}</span></div>"
 CONFIG_HTML="$CONFIG_HTML<div class=\"config-item\"><span class=\"config-key\">Provider</span><span class=\"config-val\">${PROVIDER:-default}</span></div>"
 CONFIG_HTML="$CONFIG_HTML<div class=\"config-item\"><span class=\"config-key\">Timezone</span><span class=\"config-val\">${TZ:-Asia/Jerusalem}</span></div>"
+
+# Model assignments
+SUMMARY_MODEL=$(grep "summary_model:" "$HERMES/config.yaml" 2>/dev/null | head -1 | awk '{print $2}')
+DELEGATION_MODEL=$(grep -A1 "^delegation:" "$HERMES/config.yaml" 2>/dev/null | grep "model:" | awk '{print $2}')
+VISION_MODEL=$(grep -A2 "vision:" "$HERMES/config.yaml" 2>/dev/null | grep "model:" | head -1 | awk '{print $2}' | tr -d "'")
+CONFIG_HTML="$CONFIG_HTML<div class=\"config-item\"><span class=\"config-key\">Main Model</span><span class=\"config-val\">${MODEL:-default}</span></div>"
+CONFIG_HTML="$CONFIG_HTML<div class=\"config-item\"><span class=\"config-key\">Delegation</span><span class=\"config-val\">${DELEGATION_MODEL:-default}</span></div>"
+CONFIG_HTML="$CONFIG_HTML<div class=\"config-item\"><span class=\"config-key\">Summarization</span><span class=\"config-val\">${SUMMARY_MODEL:-default}</span></div>"
+CONFIG_HTML="$CONFIG_HTML<div class=\"config-item\"><span class=\"config-key\">Auxiliary</span><span class=\"config-val\">${VISION_MODEL:-auto}</span></div>"
 CONFIG_HTML="$CONFIG_HTML<div class=\"config-item\"><span class=\"config-key\">Memories Dir</span><span class=\"config-val\">~/.hermes/memories/</span></div>"
 CONFIG_HTML="$CONFIG_HTML<div class=\"config-item\"><span class=\"config-key\">Config</span><span class=\"config-val\">~/.hermes/config.yaml</span></div>"
 
