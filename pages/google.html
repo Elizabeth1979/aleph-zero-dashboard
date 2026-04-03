@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google Integration — Hermes</title>
+<link rel="stylesheet" href="../theme.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    font-family: var(--sans);
+    font-size: var(--fs-base);
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: var(--s6);
+    min-height: 100vh;
+  }
+  .page-header {
+    display: flex;
+    align-items: center;
+    gap: var(--s4);
+    margin-bottom: var(--s6);
+    padding-bottom: var(--s4);
+    border-bottom: 1px solid var(--border);
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s2);
+    color: var(--text-3);
+    text-decoration: none;
+    font-size: var(--fs-sm);
+    transition: color 0.2s ease;
+  }
+  .back-link:hover { color: var(--accent); }
+  .page-title {
+    font-size: var(--fs-xl);
+    font-weight: 600;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: var(--s3);
+    flex: 1;
+  }
+  .page-title svg { width: 22px; height: 22px; color: var(--accent); }
+  .page-body { animation: fadeIn 0.3s ease both; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Reuse card-inner styles */
+  .cfg-row {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--s3) 0;
+    font-size: var(--fs-sm);
+    border-bottom: 1px solid var(--border);
+  }
+  .cfg-row:last-child { border-bottom: none; }
+  .cfg-key { color: var(--text-3); }
+  .cfg-val { color: var(--accent); font-weight: 500; }
+  .cmd-row {
+    display: flex;
+    align-items: center;
+    gap: var(--s3);
+    padding: var(--s3) 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .cmd-row:last-child { border-bottom: none; }
+  .cmd-name {
+    font-family: var(--mono);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--accent);
+    min-width: 100px;
+  }
+  .cmd-desc { font-size: var(--fs-sm); color: var(--text-2); }
+  .task {
+    display: flex;
+    align-items: center;
+    gap: var(--s3);
+    padding: var(--s3) 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .task:last-child { border-bottom: none; }
+  .task.done { opacity: 0.35; }
+  .task.done .task-text { text-decoration: line-through; }
+  .task-check {
+    width: 18px; height: 18px; border-radius: 4px;
+    border: 1.5px solid var(--text-3); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .task.done .task-check { border-color: var(--accent-dim); background: var(--accent-muted); }
+  .task-text { font-size: var(--fs-sm); color: var(--text); flex: 1; }
+  .task-pri {
+    font-size: var(--fs-xs); font-weight: 600;
+    padding: 1px 8px; border-radius: var(--pill);
+  }
+  .task-pri.high { color: var(--danger); background: rgba(224,108,117,0.12); }
+  .task-pri.medium { color: var(--warn); background: rgba(240,184,102,0.12); }
+  .task-pri.low { color: var(--accent); background: var(--accent-muted); }
+  .task-date { font-size: var(--fs-xs); font-family: var(--mono); color: var(--text-3); }
+  .modal-meta {
+    font-size: var(--fs-xs); color: var(--text-3); margin-bottom: var(--s4);
+  }
+  .modal-editor {
+    width: 100%; min-height: 60vh;
+    background: var(--bg-inset); border: 1px solid var(--border);
+    border-radius: var(--r2); color: var(--text);
+    font-family: var(--mono); font-size: var(--fs-sm);
+    padding: var(--s4); resize: vertical; line-height: 1.7; outline: none;
+    transition: border-color 0.2s ease;
+  }
+  .modal-editor:focus { border-color: var(--accent); }
+  .modal-actions {
+    display: flex; align-items: center; gap: var(--s3); margin-top: var(--s4);
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: var(--s2);
+    padding: var(--s2) var(--s4); border-radius: var(--r2);
+    border: 1px solid var(--border); font-family: var(--sans);
+    font-size: var(--fs-sm); font-weight: 500; cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .btn-save {
+    background: var(--accent-muted); color: var(--accent);
+    border-color: rgba(93,228,212,0.2);
+  }
+  .btn-save:hover { background: rgba(93,228,212,0.2); }
+  .modal-hint { font-size: var(--fs-xs); color: var(--text-3); }
+  .cron {
+    padding: var(--s4) 0; border-bottom: 1px solid var(--border);
+  }
+  .cron:last-child { border-bottom: none; }
+  .cron-top {
+    display: flex; align-items: center; gap: var(--s3); flex-wrap: wrap;
+  }
+  .cron-name { font-size: var(--fs-sm); font-weight: 600; color: var(--text); }
+  .tag {
+    font-size: var(--fs-xs); font-weight: 500; padding: 2px 8px;
+    border-radius: var(--pill); background: rgba(255,255,255,0.04); color: var(--text-2);
+  }
+  .tag-accent { background: var(--accent-muted); color: var(--accent); }
+  .cron-meta { font-size: var(--fs-xs); color: var(--text-3); margin-top: var(--s2); }
+  .cron-prompt {
+    margin-top: var(--s3); font-size: var(--fs-xs); color: var(--text-3);
+    cursor: pointer; display: flex; align-items: center; gap: var(--s2);
+  }
+  .cron-prompt:hover { color: var(--text-2); }
+  .cron-prompt-box {
+    margin-top: var(--s3); padding: var(--s4); background: var(--bg-inset);
+    border-radius: var(--r1); font-family: var(--mono); font-size: var(--fs-xs);
+    color: var(--text-3); white-space: pre-wrap; word-break: break-word;
+    max-height: 200px; overflow-y: auto;
+  }
+  .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .dot.on { background: var(--ok); }
+  .dot.off { background: var(--text-3); }
+  .raw-toggle {
+    font-size: var(--fs-xs); color: var(--text-3); cursor: pointer;
+    display: flex; align-items: center; gap: var(--s2);
+    margin-top: var(--s4); transition: color 0.2s ease;
+  }
+  .raw-toggle:hover { color: var(--text-2); }
+  .raw-box {
+    margin-top: var(--s3); padding: var(--s4); background: var(--bg-inset);
+    border-radius: var(--r1); font-family: var(--mono); font-size: var(--fs-xs);
+    color: var(--text-3); white-space: pre-wrap; word-break: break-word;
+    max-height: none; overflow-y: auto;
+  }
+  .modal-chroma-cat {
+    font-size: var(--fs-sm); font-weight: 600; color: var(--accent-dim);
+    text-transform: uppercase; letter-spacing: 0.04em;
+    margin-top: var(--s5); margin-bottom: var(--s3);
+  }
+  .modal-chroma-cat:first-child { margin-top: 0; }
+  .modal-chroma-entry {
+    padding: var(--s3) var(--s4); margin-bottom: var(--s2);
+    background: var(--bg-inset); border-radius: var(--r1);
+    font-size: var(--fs-sm); color: var(--text); line-height: 1.6;
+  }
+  .skill-cat { margin-bottom: var(--s4); }
+  .skill-cat-name {
+    font-size: var(--fs-xs); font-weight: 600; color: var(--text-3);
+    text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--s2);
+  }
+  .skill-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pill {
+    font-size: var(--fs-xs); font-weight: 500; padding: 3px 10px;
+    border-radius: var(--pill); background: rgba(255,255,255,0.04);
+    color: var(--text-2); cursor: pointer; transition: all 0.2s ease;
+    border: 1px solid transparent;
+  }
+  .pill:hover { background: var(--accent-muted); color: var(--accent); }
+  .pill.active {
+    background: var(--accent-muted); color: var(--accent);
+    border-color: rgba(93,228,212,0.2);
+  }
+  .pill.custom::after { content: '\2605'; margin-left: 4px; font-size: 10px; }
+  .skill-detail {
+    margin-top: var(--s5); padding: var(--s4); background: var(--bg-inset);
+    border-radius: var(--r1); font-family: var(--mono); font-size: var(--fs-xs);
+    color: var(--text-3); white-space: pre-wrap; word-break: break-word;
+    max-height: 400px; overflow-y: auto; display: none;
+  }
+  .skill-detail.show { display: block; }
+  .mem-entry {
+    padding: var(--s3) 0; border-bottom: 1px solid var(--border);
+    font-size: var(--fs-sm); line-height: 1.6; color: var(--text);
+    overflow-wrap: break-word;
+  }
+  .mem-entry:last-child { border-bottom: none; }
+  .mem-label {
+    font-size: var(--fs-xs); font-weight: 600; color: var(--accent-dim);
+    text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: var(--s1);
+  }
+  .usage-bar {
+    height: 4px; background: rgba(255,255,255,0.04);
+    border-radius: var(--pill); margin-top: var(--s3); overflow: hidden;
+  }
+  .usage-fill { height: 100%; border-radius: var(--pill); transition: width 0.8s ease; }
+  .usage-fill.ok { background: var(--ok); }
+  .usage-fill.warn { background: var(--warn); }
+  .usage-fill.danger { background: var(--danger); }
+  .empty { font-size: var(--fs-sm); color: var(--text-3); font-style: italic; }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <a href="../index.html" class="back-link">
+      <i data-lucide="arrow-left" style="width:16px;height:16px"></i> Dashboard
+    </a>
+    <h1 class="page-title"><i data-lucide="mail"></i> Google Integration</h1>
+  </div>
+  <div class="page-body" id="page-body"></div>
+</div>
+<script src="../data.js"></script>
+<script>
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function cronHuman(c) {
+  if (!c) return '?';
+  const p = c.trim().split(/\s+/);
+  if (p.length !== 5) return c;
+  const [min,hr] = p;
+  const days = {0:'Sun',1:'Mon',2:'Tue',3:'Wed',4:'Thu',5:'Fri',6:'Sat'};
+  const h = +hr, m = +min;
+  const t = `${h > 12 ? h-12 : h||12}:${String(m).padStart(2,'0')} ${h >= 12 ? 'PM' : 'AM'}`;
+  if (p[2]==='*' && p[3]==='*' && p[4]==='*') return `Daily at ${t}`;
+  if (p[2]==='*' && p[3]==='*' && p[4]!=='*') return `Every ${days[p[4]]||p[4]} at ${t}`;
+  return c;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const d = window.__DASHBOARD_DATA__;
+  if (!d) return;
+  let html = '';
+  html += `<div class="cfg-row"><span class="cfg-key">OAuth Token</span><span class="cfg-val" style="color:${d.google_status === 'connected' ? 'var(--ok)' : 'var(--text-3)'}">${d.google_status === 'connected' ? '\u2713 Connected' : '\u2717 Not connected'}</span></div>`;
+  html += `<div class="cfg-row"><span class="cfg-key">Client Secret</span><span class="cfg-val" style="color:${d.google_apis === 'configured' ? 'var(--ok)' : 'var(--text-3)'}">${d.google_apis === 'configured' ? '\u2713 Configured' : '\u2717 Not found'}</span></div>`;
+  html += `<div style="margin-top:var(--s5);color:var(--text-3);font-size:var(--fs-sm)">APIs: Gmail, Calendar, Drive, YouTube<br>Token: ~/.hermes/google_token.json</div>`;
+  document.getElementById('page-body').innerHTML = html;
+  lucide.createIcons();
+});
+
+</script>
+</body>
+</html>

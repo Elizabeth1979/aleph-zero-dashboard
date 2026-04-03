@@ -100,6 +100,7 @@
   .section-label svg { color: var(--accent); }
 
   /* --- Card --- */
+  a.card { text-decoration: none; color: inherit; }
   .card {
     background:
       linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 30%),
@@ -271,382 +272,6 @@
     flex-shrink: 0;
   }
 
-  /* --- Modal --- */
-  .modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.8);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-    backdrop-filter: blur(4px);
-  }
-  .modal-overlay.open { display: flex; }
-  .modal {
-    width: 92vw;
-    max-width: 900px;
-    height: 85vh;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: var(--r3);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-  .modal-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--s4) var(--s6);
-    border-bottom: 1px solid var(--border);
-    flex-shrink: 0;
-  }
-  .modal-title {
-    font-size: var(--fs-lg);
-    font-weight: 600;
-    color: var(--text);
-    display: flex;
-    align-items: center;
-    gap: var(--s3);
-  }
-  .modal-title svg {
-    width: 20px;
-    height: 20px;
-    color: var(--accent);
-  }
-  .modal-close {
-    background: none;
-    border: none;
-    color: var(--text-3);
-    cursor: pointer;
-    padding: var(--s2);
-    border-radius: var(--r1);
-    transition: all var(--transition);
-  }
-  .modal-close:hover { color: var(--text); background: rgba(255,255,255,0.06); }
-  .modal-body {
-    flex: 1;
-    overflow-y: auto;
-    padding: var(--s6);
-  }
-
-  /* --- Modal Content Styles --- */
-  .modal-meta {
-    font-size: var(--fs-xs);
-    color: var(--text-3);
-    margin-bottom: var(--s4);
-  }
-  .modal-editor {
-    width: 100%;
-    min-height: 300px;
-    background: var(--bg-inset);
-    border: 1px solid var(--border);
-    border-radius: var(--r2);
-    color: var(--text);
-    font-family: var(--mono);
-    font-size: var(--fs-sm);
-    padding: var(--s4);
-    resize: vertical;
-    line-height: 1.7;
-    outline: none;
-    transition: border-color var(--transition);
-  }
-  .modal-editor:focus { border-color: var(--accent); }
-  .modal-actions {
-    display: flex;
-    align-items: center;
-    gap: var(--s3);
-    margin-top: var(--s4);
-  }
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--s2);
-    padding: var(--s2) var(--s4);
-    border-radius: var(--r2);
-    border: 1px solid var(--border);
-    font-family: var(--sans);
-    font-size: var(--fs-sm);
-    font-weight: 500;
-    cursor: pointer;
-    transition: all var(--transition);
-  }
-  .btn-save {
-    background: var(--accent-muted);
-    color: var(--accent);
-    border-color: rgba(93,228,212,0.2);
-  }
-  .btn-save:hover { background: rgba(93,228,212,0.2); }
-  .modal-hint {
-    font-size: var(--fs-xs);
-    color: var(--text-3);
-  }
-
-  /* Task in modal */
-  .task {
-    display: flex;
-    align-items: center;
-    gap: var(--s3);
-    padding: var(--s3) 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .task:last-child { border-bottom: none; }
-  .task.done { opacity: 0.35; }
-  .task.done .task-text { text-decoration: line-through; }
-  .task-check {
-    width: 18px;
-    height: 18px;
-    border-radius: 4px;
-    border: 1.5px solid var(--text-3);
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .task.done .task-check {
-    border-color: var(--accent-dim);
-    background: var(--accent-muted);
-  }
-  .task-text {
-    font-size: var(--fs-sm);
-    color: var(--text);
-    flex: 1;
-  }
-  .task-pri {
-    font-size: var(--fs-xs);
-    font-weight: 600;
-    padding: 1px 8px;
-    border-radius: var(--pill);
-  }
-  .task-pri.high { color: var(--danger); background: rgba(224,108,117,0.12); }
-  .task-pri.medium { color: var(--warn); background: rgba(240,184,102,0.12); }
-  .task-pri.low { color: var(--accent); background: var(--accent-muted); }
-  .task-date {
-    font-size: var(--fs-xs);
-    font-family: var(--mono);
-    color: var(--text-3);
-  }
-
-  /* Config row in modal */
-  .cfg-row {
-    display: flex;
-    justify-content: space-between;
-    padding: var(--s3) 0;
-    font-size: var(--fs-sm);
-    border-bottom: 1px solid var(--border);
-  }
-  .cfg-row:last-child { border-bottom: none; }
-  .cfg-key { color: var(--text-3); }
-  .cfg-val { color: var(--accent); font-weight: 500; }
-
-  /* Cron in modal */
-  .cron {
-    padding: var(--s4) 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .cron:last-child { border-bottom: none; }
-  .cron-top {
-    display: flex;
-    align-items: center;
-    gap: var(--s3);
-    flex-wrap: wrap;
-  }
-  .cron-name {
-    font-size: var(--fs-sm);
-    font-weight: 600;
-    color: var(--text);
-  }
-  .tag {
-    font-size: var(--fs-xs);
-    font-weight: 500;
-    padding: 2px 8px;
-    border-radius: var(--pill);
-    background: rgba(255,255,255,0.04);
-    color: var(--text-2);
-  }
-  .tag-accent {
-    background: var(--accent-muted);
-    color: var(--accent);
-  }
-  .cron-meta {
-    font-size: var(--fs-xs);
-    color: var(--text-3);
-    margin-top: var(--s2);
-  }
-  .cron-prompt {
-    margin-top: var(--s3);
-    font-size: var(--fs-xs);
-    color: var(--text-3);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: var(--s2);
-  }
-  .cron-prompt:hover { color: var(--text-2); }
-  .cron-prompt-box {
-    margin-top: var(--s3);
-    padding: var(--s4);
-    background: var(--bg-inset);
-    border-radius: var(--r1);
-    font-family: var(--mono);
-    font-size: var(--fs-xs);
-    color: var(--text-3);
-    white-space: pre-wrap;
-    word-break: break-word;
-    max-height: 200px;
-    overflow-y: auto;
-  }
-
-  /* Command row in modal */
-  .cmd-row {
-    display: flex;
-    align-items: center;
-    gap: var(--s3);
-    padding: var(--s3) 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .cmd-row:last-child { border-bottom: none; }
-  .cmd-name {
-    font-family: var(--mono);
-    font-size: var(--fs-sm);
-    font-weight: 600;
-    color: var(--accent);
-    min-width: 100px;
-  }
-  .cmd-desc {
-    font-size: var(--fs-sm);
-    color: var(--text-2);
-  }
-
-  /* Raw config in modal */
-  .raw-toggle {
-    font-size: var(--fs-xs);
-    color: var(--text-3);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: var(--s2);
-    margin-top: var(--s4);
-    transition: color var(--transition);
-  }
-  .raw-toggle:hover { color: var(--text-2); }
-  .raw-box {
-    margin-top: var(--s3);
-    padding: var(--s4);
-    background: var(--bg-inset);
-    border-radius: var(--r1);
-    font-family: var(--mono);
-    font-size: var(--fs-xs);
-    color: var(--text-3);
-    white-space: pre-wrap;
-    word-break: break-word;
-    max-height: 400px;
-    overflow-y: auto;
-  }
-
-  /* Memory entry in modal */
-  .mem-entry {
-    padding: var(--s3) 0;
-    border-bottom: 1px solid var(--border);
-    font-size: var(--fs-sm);
-    line-height: 1.6;
-    color: var(--text);
-    overflow-wrap: break-word;
-  }
-  .mem-entry:last-child { border-bottom: none; }
-  .mem-label {
-    font-size: var(--fs-xs);
-    font-weight: 600;
-    color: var(--accent-dim);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    margin-bottom: var(--s1);
-  }
-
-  /* Chroma in modal */
-  .modal-chroma-cat {
-    font-size: var(--fs-sm);
-    font-weight: 600;
-    color: var(--accent-dim);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    margin-top: var(--s5);
-    margin-bottom: var(--s3);
-  }
-  .modal-chroma-cat:first-child { margin-top: 0; }
-  .modal-chroma-entry {
-    padding: var(--s3) var(--s4);
-    margin-bottom: var(--s2);
-    background: var(--bg-inset);
-    border-radius: var(--r1);
-    font-size: var(--fs-sm);
-    color: var(--text);
-    line-height: 1.6;
-  }
-
-  /* Skills in modal */
-  .skill-cat { margin-bottom: var(--s4); }
-  .skill-cat-name {
-    font-size: var(--fs-xs);
-    font-weight: 600;
-    color: var(--text-3);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: var(--s2);
-  }
-  .skill-pills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-  .pill {
-    font-size: var(--fs-xs);
-    font-weight: 500;
-    padding: 3px 10px;
-    border-radius: var(--pill);
-    background: rgba(255,255,255,0.04);
-    color: var(--text-2);
-    cursor: pointer;
-    transition: all var(--transition);
-    border: 1px solid transparent;
-  }
-  .pill:hover {
-    background: var(--accent-muted);
-    color: var(--accent);
-  }
-  .pill.active {
-    background: var(--accent-muted);
-    color: var(--accent);
-    border-color: rgba(93,228,212,0.2);
-  }
-  .pill.custom::after {
-    content: '\2605';
-    margin-left: 4px;
-    font-size: 10px;
-  }
-  .skill-detail {
-    margin-top: var(--s5);
-    padding: var(--s4);
-    background: var(--bg-inset);
-    border-radius: var(--r1);
-    font-family: var(--mono);
-    font-size: var(--fs-xs);
-    color: var(--text-3);
-    white-space: pre-wrap;
-    word-break: break-word;
-    max-height: 400px;
-    overflow-y: auto;
-    display: none;
-  }
-  .skill-detail.show { display: block; }
-
-  .empty {
-    font-size: var(--fs-sm);
-    color: var(--text-3);
-    font-style: italic;
-  }
-
   /* --- Scrollbar --- */
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
@@ -669,7 +294,7 @@
   <div class="section-label"><i data-lucide="star" style="width:16px;height:16px"></i> Your Hermes</div>
   <div class="bento">
 
-    <div class="card" onclick="openModal('commands')">
+    <a href="pages/commands.html" class="card">
       <div class="card-h">
         <i data-lucide="terminal"></i>
         <h2>Quick Commands</h2>
@@ -677,18 +302,18 @@
       </div>
       <div class="card-desc">Shell aliases and shortcuts</div>
       <div class="card-preview" id="cmd-preview"></div>
-    </div>
+    </a>
 
-    <div class="card" onclick="openModal('config')">
+    <a href="pages/config.html" class="card">
       <div class="card-h">
         <i data-lucide="settings"></i>
         <h2>Config</h2>
       </div>
       <div class="card-desc">Models, providers, and settings</div>
       <div class="card-preview" id="cfg-preview"></div>
-    </div>
+    </a>
 
-    <div class="card" onclick="openModal('tasks')">
+    <a href="pages/tasks.html" class="card">
       <div class="card-h">
         <i data-lucide="check-circle-2"></i>
         <h2>Tasks</h2>
@@ -696,9 +321,9 @@
       </div>
       <div class="card-desc">Your personal to-do list</div>
       <div class="card-preview" id="task-preview"></div>
-    </div>
+    </a>
 
-    <div class="card" onclick="openModal('user')">
+    <a href="pages/user.html" class="card">
       <div class="card-h">
         <i data-lucide="user"></i>
         <h2>User Profile</h2>
@@ -706,9 +331,9 @@
       </div>
       <div class="card-desc">Who you are — preferences, style</div>
       <div class="usage-bar"><div class="usage-fill" id="user-bar" style="width:0%"></div></div>
-    </div>
+    </a>
 
-    <div class="card" onclick="openModal('agent')">
+    <a href="pages/agent.html" class="card">
       <div class="card-h">
         <i data-lucide="brain"></i>
         <h2>Agent Memory</h2>
@@ -716,9 +341,9 @@
       </div>
       <div class="card-desc">My notes — environment, conventions</div>
       <div class="usage-bar"><div class="usage-fill" id="agent-bar" style="width:0%"></div></div>
-    </div>
+    </a>
 
-    <div class="card" onclick="openModal('longterm')">
+    <a href="pages/longterm.html" class="card">
       <div class="card-h">
         <i data-lucide="database"></i>
         <h2>Long-Term Memory</h2>
@@ -726,9 +351,9 @@
       </div>
       <div class="card-desc">ChromaDB persistent store</div>
       <div class="card-preview" id="chroma-preview"></div>
-    </div>
+    </a>
 
-    <div class="card" onclick="openModal('cron')">
+    <a href="pages/cron.html" class="card">
       <div class="card-h">
         <i data-lucide="clock"></i>
         <h2>Scheduled Jobs</h2>
@@ -736,9 +361,9 @@
       </div>
       <div class="card-desc">Cron jobs and automations</div>
       <div class="card-preview" id="cron-preview"></div>
-    </div>
+    </a>
 
-    <div class="card" onclick="openModal('skills')">
+    <a href="pages/skills.html" class="card">
       <div class="card-h">
         <i data-lucide="puzzle"></i>
         <h2>Skills</h2>
@@ -746,9 +371,9 @@
       </div>
       <div class="card-desc">Reusable workflows and procedures</div>
       <div class="card-preview" id="skill-preview"></div>
-    </div>
+    </a>
 
-    <div class="card" onclick="openModal('gateway')">
+    <a href="pages/gateway.html" class="card">
       <div class="card-h">
         <i data-lucide="radio"></i>
         <h2>Gateway</h2>
@@ -757,7 +382,7 @@
       <div class="gw-status" id="gw-status">
         <span class="dot off"></span> Checking...
       </div>
-    </div>
+    </a>
 
   </div>
 
@@ -765,42 +390,42 @@
   <div class="section-label"><i data-lucide="wrench" style="width:16px;height:16px"></i> Under the Hood</div>
   <div class="bento">
 
-    <div class="card" onclick="openModal('soul')">
+    <a href="pages/soul.html" class="card">
       <div class="card-h">
         <i data-lucide="heart"></i>
         <h2>SOUL.md</h2>
       </div>
       <div class="card-desc">My personality and system prompt</div>
-    </div>
+    </a>
 
-    <div class="card" onclick="openModal('discord_channels')">
+    <a href="pages/discord_channels.html" class="card">
       <div class="card-h">
         <i data-lucide="hash"></i>
         <h2>Discord Channels</h2>
         <span class="badge" id="channel-badge">0</span>
       </div>
       <div class="card-desc">Channels the bot listens to</div>
-    </div>
+    </a>
 
-    <div class="card" onclick="openModal('auth')">
+    <a href="pages/auth.html" class="card">
       <div class="card-h">
         <i data-lucide="key-round"></i>
         <h2>Auth & Credentials</h2>
       </div>
       <div class="card-desc">API providers and tokens</div>
       <div class="card-preview" id="auth-preview"></div>
-    </div>
+    </a>
 
-    <div class="card" onclick="openModal('google')">
+    <a href="pages/google.html" class="card">
       <div class="card-h">
         <i data-lucide="mail"></i>
         <h2>Google Integration</h2>
       </div>
       <div class="card-desc">Gmail, Calendar, Drive</div>
       <div class="card-preview" id="google-preview"></div>
-    </div>
+    </a>
 
-    <div class="card" onclick="openModal('sessions')">
+    <a href="pages/sessions.html" class="card">
       <div class="card-h">
         <i data-lucide="message-square"></i>
         <h2>Sessions</h2>
@@ -808,15 +433,15 @@
       </div>
       <div class="card-desc">Conversation history</div>
       <div class="card-preview" id="session-preview"></div>
-    </div>
+    </a>
 
-    <div class="card" onclick="openModal('system')">
+    <a href="pages/system.html" class="card">
       <div class="card-h">
         <i data-lucide="laptop"></i>
         <h2>System Settings</h2>
       </div>
       <div class="card-desc">Power, battery, and macOS config</div>
-    </div>
+    </a>
 
   </div>
 
@@ -824,18 +449,6 @@
 
 </div>
 
-<!-- Universal Modal -->
-<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
-  <div class="modal">
-    <div class="modal-header">
-      <h2 class="modal-title" id="modal-title"></h2>
-      <button class="modal-close" onclick="closeModal()">
-        <i data-lucide="x" style="width:20px;height:20px"></i>
-      </button>
-    </div>
-    <div class="modal-body" id="modal-body"></div>
-  </div>
-</div>
 
 <script src="data.js"></script>
 <script>
@@ -931,8 +544,8 @@ function loadCards() {
   document.getElementById('channel-badge').textContent = channels.length;
 
   // Auth
-  const auth = d.auth_data || [];
-  const authEl = document.getElementById('auth-preview');
+  const auth=*** || [];
+  const authEl=docume...w');
   if (auth.length) {
     authEl.textContent = auth.map(a => a.name).join(', ');
   }
@@ -998,296 +611,6 @@ function renderGateway(html) {
     el.innerHTML = '<span class="dot off"></span> Offline';
   }
 }
-
-// --- Modal rendering ---
-
-function openModal(type) {
-  const d = window.__DASHBOARD_DATA__;
-  if (!d) return;
-  const body = document.getElementById('modal-body');
-  const title = document.getElementById('modal-title');
-
-  const icons = {
-    commands: 'terminal', config: 'settings', tasks: 'check-circle-2',
-    user: 'user', agent: 'brain', cron: 'clock',
-    longterm: 'database', skills: 'puzzle', gateway: 'radio',
-    soul: 'heart', discord_channels: 'hash', auth: 'key-round',
-    google: 'mail', sessions: 'message-square', system: 'laptop'
-  };
-  const titles = {
-    commands: 'Quick Commands', config: 'Config', tasks: 'Tasks',
-    user: 'User Profile', agent: 'Agent Memory', cron: 'Scheduled Jobs',
-    longterm: 'Long-Term Memory', skills: 'Skills', gateway: 'Gateway',
-    soul: 'SOUL.md', discord_channels: 'Discord Channels', auth: 'Auth & Credentials',
-    google: 'Google Integration', sessions: 'Sessions', system: 'System Settings'
-  };
-
-  title.innerHTML = `<i data-lucide="${icons[type]}"></i> ${titles[type]}`;
-
-  switch(type) {
-    case 'commands': body.innerHTML = renderCommandsModal(d); break;
-    case 'config': body.innerHTML = renderConfigModal(d); break;
-    case 'tasks': body.innerHTML = renderTasksModal(d); break;
-    case 'user': body.innerHTML = renderMemoryEditorModal('user', d); break;
-    case 'agent': body.innerHTML = renderMemoryEditorModal('agent', d); break;
-    case 'cron': body.innerHTML = renderCronModal(d); break;
-    case 'longterm': body.innerHTML = renderLongtermModal(d); break;
-    case 'skills': body.innerHTML = renderSkillsModal(d); break;
-    case 'gateway': body.innerHTML = renderGatewayModal(d); break;
-    case 'soul': body.innerHTML = renderSoulModal(d); break;
-    case 'discord_channels': body.innerHTML = renderDiscordChannelsModal(d); break;
-    case 'auth': body.innerHTML = renderAuthModal(d); break;
-    case 'google': body.innerHTML = renderGoogleModal(d); break;
-    case 'sessions': body.innerHTML = renderSessionsModal(d); break;
-    case 'system': body.innerHTML = renderSystemModal(d); break;
-  }
-
-  document.getElementById('modal').classList.add('open');
-  lucide.createIcons();
-}
-
-function closeModal() {
-  document.getElementById('modal').classList.remove('open');
-}
-
-function renderCommandsModal(d) {
-  const cmds = d.commands || [];
-  if (!cmds.length) return '<div class="empty">No commands</div>';
-  return cmds.map(c =>
-    `<div class="cmd-row"><span class="cmd-name">${esc(c.cmd)}</span><span class="cmd-desc">${esc(c.desc)}</span></div>`
-  ).join('');
-}
-
-function renderConfigModal(d) {
-  let html = '';
-  if (d.config) {
-    const doc = new DOMParser().parseFromString(d.config, 'text/html');
-    doc.querySelectorAll('.config-item').forEach(item => {
-      const k = item.querySelector('.config-key')?.textContent || '';
-      const v = item.querySelector('.config-val')?.textContent || '';
-      html += `<div class="cfg-row"><span class="cfg-key">${k}</span><span class="cfg-val">${v}</span></div>`;
-    });
-  }
-  if (d.config_raw) {
-    html += `<details><summary class="raw-toggle"><i data-lucide="chevron-right" style="width:14px;height:14px"></i> config.yaml</summary><div class="raw-box">${esc(d.config_raw)}</div></details>`;
-  }
-  if (d.env_raw) {
-    html += `<details><summary class="raw-toggle"><i data-lucide="chevron-right" style="width:14px;height:14px"></i> .env</summary><div class="raw-box">${esc(d.env_raw)}</div></details>`;
-  }
-  return html || '<div class="empty">No config</div>';
-}
-
-function renderTasksModal(d) {
-  const tasks = d.tasks || [];
-  if (!tasks.length) return '<div class="empty">All clear</div>';
-  const open = tasks.filter(t => !t.done);
-  const done = tasks.filter(t => t.done);
-  return [...open, ...done].map(t => {
-    const cls = t.done ? 'task done' : 'task';
-    const check = t.done ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent-dim)"><polyline points="20 6 9 17 4 12"></polyline></svg>' : '';
-    const pri = t.priority ? `<span class="task-pri ${t.priority}">${t.priority}</span>` : '';
-    return `<div class="${cls}">
-      <div class="task-check">${check}</div>
-      <span class="task-text">${esc(t.task)}</span>
-      ${pri}
-      <span class="task-date">${t.added || ''}</span>
-    </div>`;
-  }).join('');
-}
-
-function renderMemoryEditorModal(type, d) {
-  const isUser = type === 'user';
-  const text = isUser ? (d.user_memory || '') : (d.agent_memory || '');
-  const chars = isUser ? d.user_chars : d.agent_chars;
-  const limit = isUser ? d.user_limit : d.agent_limit;
-  const pct = isUser ? d.user_pct : d.agent_pct;
-  const filename = isUser ? 'USER.md' : 'MEMORY.md';
-
-  return `
-    <div class="modal-meta">${filename} &bull; ${chars} / ${limit} chars (${pct}%)</div>
-    <textarea class="modal-editor" id="editor-${type}" style="flex:1;min-height:60vh">${esc(text)}</textarea>
-    <div class="modal-actions">
-      <button class="btn btn-save" onclick="saveMemory('${type}')">
-        <i data-lucide="download" style="width:14px;height:14px"></i> Save as file
-      </button>
-      <span class="modal-hint">Saves ${filename} to your Downloads</span>
-    </div>`;
-}
-
-function renderCronModal(d) {
-  const jobs = d.cron_jobs || [];
-  if (!jobs.length) return '<div class="empty">No jobs</div>';
-  return jobs.map(j => {
-    const next = j.next_run_at ? new Date(j.next_run_at).toLocaleString() : '';
-    const sched = cronHuman(j.schedule);
-    const enabled = j.enabled !== false;
-    return `<div class="cron">
-      <div class="cron-top">
-        <span class="dot ${enabled?'on':'off'}"></span>
-        <span class="cron-name">${j.name || j.job_id || j.id || 'Unnamed'}</span>
-        <span class="tag tag-accent">${sched}</span>
-        <span class="tag">${j.deliver || 'local'}</span>
-        ${j.skills ? j.skills.map(s => `<span class="tag">${s}</span>`).join('') : ''}
-      </div>
-      ${next ? `<div class="cron-meta">Next: ${next}</div>` : ''}
-      ${j.prompt ? `<details><summary class="cron-prompt"><i data-lucide="chevron-right" style="width:12px;height:12px"></i>Prompt</summary><div class="cron-prompt-box">${esc(j.prompt)}</div></details>` : ''}
-    </div>`;
-  }).join('');
-}
-
-function renderLongtermModal(d) {
-  const chroma = d.chroma || {};
-  if (!chroma.memories || !chroma.memories.length) return '<div class="empty">No long-term memories</div>';
-  const cats = {};
-  chroma.memories.forEach(m => {
-    const c = m.category || 'general';
-    if (!cats[c]) cats[c] = [];
-    cats[c].push(m);
-  });
-  let html = '';
-  Object.keys(cats).sort().forEach(cat => {
-    html += `<div class="modal-chroma-cat">${cat} (${cats[cat].length})</div>`;
-    cats[cat].forEach(m => {
-      html += `<div class="modal-chroma-entry">${esc(m.text)}</div>`;
-    });
-  });
-  return html;
-}
-
-function renderSkillsModal(d) {
-  const skills = d.skills_data || [];
-  if (!skills.length) return '<div class="empty">No skills</div>';
-  const cats = {};
-  skills.forEach(s => {
-    if (!cats[s.category]) cats[s.category] = [];
-    cats[s.category].push(s);
-  });
-  let html = '<div id="skills-container">';
-  Object.keys(cats).sort().forEach(cat => {
-    html += `<div class="skill-cat"><div class="skill-cat-name">${cat}</div><div class="skill-pills">`;
-    cats[cat].forEach(s => {
-      const cls = s.custom ? 'pill custom' : 'pill';
-      html += `<span class="${cls}" onclick="showSkillInModal('${s.path}',this)">${s.name}</span>`;
-    });
-    html += '</div></div>';
-  });
-  html += '</div><div class="skill-detail" id="skill-detail-modal"></div>';
-  return html;
-}
-
-function showSkillInModal(path, pill) {
-  const d = window.__DASHBOARD_DATA__;
-  if (!d || !d.skills_data) return;
-  const s = d.skills_data.find(x => x.path === path);
-  const detail = document.getElementById('skill-detail-modal');
-  document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
-  if (s) {
-    if (pill) pill.classList.add('active');
-    detail.textContent = s.content;
-    detail.classList.add('show');
-  }
-}
-
-function renderGatewayModal(d) {
-  let html = '<div style="margin-bottom:var(--s5)">';
-  if (d.status) {
-    const doc = new DOMParser().parseFromString(d.status, 'text/html');
-    doc.querySelectorAll('.config-item').forEach(item => {
-      const k = item.querySelector('.config-key')?.textContent || '';
-      const v = item.querySelector('.config-val')?.textContent || '';
-      const on = v.includes('Online') || v.includes('\u2713');
-      html += `<div class="cfg-row"><span class="cfg-key">${k}</span><span class="cfg-val" style="color:${on ? 'var(--ok)' : 'var(--text-3)'}">${v}</span></div>`;
-    });
-  }
-  html += '</div>';
-  return html || '<div class="empty">No gateway info</div>';
-}
-
-function renderSoulModal(d) {
-  if (!d.soul_md) return '<div class="empty">No SOUL.md found</div>';
-  return `<div class="raw-box" style="max-height:none;white-space:pre-wrap">${esc(d.soul_md)}</div>`;
-}
-
-function renderDiscordChannelsModal(d) {
-  const channels = d.discord_channels || [];
-  if (!channels.length) return '<div class="empty">No channels</div>';
-  let html = '<div style="margin-bottom:var(--s5)"><strong style="color:var(--text-2)">Channels the bot can see and respond in:</strong></div>';
-  channels.forEach(ch => {
-    const icon = ch.type === 'channel' ? '#' : '🧵';
-    html += `<div class="cfg-row"><span class="cfg-key">${icon} ${ch.name}</span><span class="cfg-val" style="font-size:var(--fs-xs)">${ch.guild} &bull; ${ch.id}</span></div>`;
-  });
-
-  const threads = d.discord_threads || {};
-  const threadKeys = Object.keys(threads).filter(k => k !== 'updated_at');
-  if (threadKeys.length) {
-    html += '<div style="margin-top:var(--s6);margin-bottom:var(--s3)"><strong style="color:var(--text-2)">Active Threads:</strong></div>';
-    threadKeys.forEach(k => {
-      const t = threads[k];
-      html += `<div class="cfg-row"><span class="cfg-key">🧵 ${t.name || k}</span><span class="cfg-val" style="font-size:var(--fs-xs)">${k}</span></div>`;
-    });
-  }
-  return html;
-}
-
-function renderAuthModal(d) {
-  const auth = d.auth_data || [];
-  if (!auth.length) return '<div class="empty">No credentials configured</div>';
-  let html = '';
-  auth.forEach(a => {
-    html += `<div style="margin-bottom:var(--s5)">`;
-    html += `<div class="cfg-row"><span class="cfg-key" style="font-weight:600;color:var(--accent)">${a.name}</span><span class="cfg-val">${a.count} credential(s)</span></div>`;
-    a.labels.forEach(l => {
-      html += `<div class="cfg-row"><span class="cfg-key" style="padding-left:var(--s4)">→ ${l}</span><span class="cfg-val" style="color:var(--ok)">active</span></div>`;
-    });
-    html += '</div>';
-  });
-  return html;
-}
-
-function renderGoogleModal(d) {
-  let html = '';
-  html += `<div class="cfg-row"><span class="cfg-key">OAuth Token</span><span class="cfg-val" style="color:${d.google_status === 'connected' ? 'var(--ok)' : 'var(--text-3)'}">${d.google_status === 'connected' ? '✓ Connected' : '✗ Not connected'}</span></div>`;
-  html += `<div class="cfg-row"><span class="cfg-key">Client Secret</span><span class="cfg-val" style="color:${d.google_apis === 'configured' ? 'var(--ok)' : 'var(--text-3)'}">${d.google_apis === 'configured' ? '✓ Configured' : '✗ Not found'}</span></div>`;
-  html += `<div style="margin-top:var(--s5);color:var(--text-3);font-size:var(--fs-sm)">APIs: Gmail, Calendar, Drive, YouTube<br>Token: ~/.hermes/google_token.json</div>`;
-  return html;
-}
-
-function renderSessionsModal(d) {
-  let html = `<div class="cfg-row"><span class="cfg-key">Total Sessions</span><span class="cfg-val">${d.session_count || 0}</span></div>`;
-  const sessions = d.recent_sessions || [];
-  if (sessions.length) {
-    html += '<div style="margin-top:var(--s5);margin-bottom:var(--s3)"><strong style="color:var(--text-2)">Recent:</strong></div>';
-    sessions.forEach(s => {
-      const date = s.created ? new Date(s.created).toLocaleString() : '';
-      const platform = s.platform ? `<span class="tag" style="margin-left:var(--s2)">${s.platform}</span>` : '';
-      html += `<div class="cfg-row"><span class="cfg-key">${esc(s.title || s.file)}${platform}</span><span class="cfg-val" style="font-size:var(--fs-xs)">${date}</span></div>`;
-    });
-  }
-  return html;
-}
-
-function renderSystemModal(d) {
-  if (!d.system_settings) return '<div class="empty">No system settings documented</div>';
-  return `<div class="raw-box" style="max-height:none;white-space:pre-wrap">${esc(d.system_settings)}</div>`;
-}
-
-function saveMemory(type) {
-  const text = document.getElementById('editor-' + type).value;
-  const filename = type === 'user' ? 'USER.md' : 'MEMORY.md';
-  const blob = new Blob([text], { type: 'text/markdown' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = filename;
-  a.click();
-  URL.revokeObjectURL(a.href);
-}
-
-// Close on Escape
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeModal();
-});
-
-document.addEventListener('DOMContentLoaded', loadCards);
 
 // ── 3D Tilt & Mouse Glow ──
 function setupCardMagic() {
