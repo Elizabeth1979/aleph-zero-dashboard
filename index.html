@@ -462,12 +462,13 @@ function loadCards() {
 
   // Resources
   const resources = d.resources || [];
-  const newResources = resources.filter(r => r.status === 'new');
+  const newRes = resources.filter(r => r.status === 'new');
+  const processedRes = resources.filter(r => r.status === 'processed');
   document.getElementById('resource-badge').textContent = resources.length;
-  if (newResources.length) {
-    document.getElementById('resource-preview').textContent = newResources.length + ' new to explore';
-  } else if (resources.length) {
-    document.getElementById('resource-preview').textContent = resources.length + ' saved';
+  if (newRes.length) {
+    document.getElementById('resource-preview').textContent = newRes.length + ' to process';
+  } else if (processedRes.length) {
+    document.getElementById('resource-preview').textContent = processedRes.length + ' processed, ' + (resources.length - processedRes.length) + ' archived';
   } else {
     document.getElementById('resource-preview').textContent = 'Drop links to save them';
   }

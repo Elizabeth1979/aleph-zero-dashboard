@@ -82,8 +82,7 @@
     border-bottom: 1px solid var(--border);
   }
   .resource:last-child { border-bottom: none; }
-  .resource.status-skipped { opacity: 0.4; }
-  .resource.status-explored { opacity: 0.7; }
+  .resource.status-archived { opacity: 0.4; }
   .resource-top {
     display: flex;
     align-items: flex-start;
@@ -118,9 +117,47 @@
   .tag-cat.blog-material { color: #f472b6; background: rgba(244,114,182,0.12); }
   .tag-status { font-style: italic; }
   .tag-status.new { color: var(--accent); background: var(--accent-muted); }
-  .tag-status.explored { color: var(--text-3); }
-  .tag-status.skipped { color: var(--text-3); opacity: 0.6; }
+  .tag-status.processed { color: #34d399; background: rgba(52,211,153,0.12); }
+  .tag-status.archived { color: var(--text-3); opacity: 0.6; }
   .tag-status.shared-with-work { color: #fbbf24; background: rgba(251,191,36,0.12); }
+  .takeaways {
+    margin-top: var(--s3);
+    padding: var(--s3) var(--s4);
+    background: var(--bg-inset);
+    border-radius: var(--r1);
+    border-left: 2px solid var(--accent-dim);
+  }
+  .takeaways-label {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--accent-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: var(--s2);
+  }
+  .takeaway {
+    font-size: var(--fs-xs);
+    color: var(--text-2);
+    padding: var(--s1) 0;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--s2);
+    line-height: 1.5;
+  }
+  .takeaway::before {
+    content: '→';
+    color: var(--accent-dim);
+    flex-shrink: 0;
+  }
+  .takeaway .todo-tag {
+    font-size: 10px;
+    font-weight: 600;
+    color: #fbbf24;
+    background: rgba(251,191,36,0.12);
+    padding: 0 5px;
+    border-radius: var(--pill);
+    flex-shrink: 0;
+  }
   .resource-note {
     font-size: var(--fs-xs);
     color: var(--text-3);
@@ -243,6 +280,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
       items.forEach(r => {
         const statusCls = 'status-' + (r.status || 'new');
+        let takeawaysHtml = '';
+        if (r.takeaways && r.takeaways.length) {
+          const items = r.takeaways.map(t => {
+            const hasTodo = t.includes('TODO:');
+            const text = hasTodo ? t.replace('TODO:', '<span class="todo-tag">TODO</span>') : esc(t);
+            return `<div class="takeaway">${hasTodo ? text : esc(t)}</div>`;
+          }).join('');
+          takeawaysHtml = `<div class="takeaways"><div class="takeaways-label">Takeaways</div>${items}</div>`;
+        }
         html += `<div class="resource ${statusCls}">
           <div class="resource-top">
             <a href="${esc(r.url)}" target="_blank" rel="noopener" class="resource-title">${esc(r.title)}</a>
@@ -252,6 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
           ${r.note ? `<div class="resource-note">${esc(r.note)}</div>` : ''}
+          ${takeawaysHtml}
         </div>`;
       });
 

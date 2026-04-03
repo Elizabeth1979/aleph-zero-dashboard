@@ -4,8 +4,14 @@
     "title": "50 Days of OpenClaw — Real Use Cases",
     "url": "https://www.youtube.com/watch?v=NZ1mKAWJPr4",
     "category": "inspiration",
-    "status": "explored",
-    "note": "Channel architecture, per-channel model routing, markdown-first workflows. Relevant when Hermes adds model routing.",
+    "status": "processed",
+    "note": "Power user walkthrough of always-on AI agent after 50 days. Discord channel architecture, per-channel model routing, markdown-first workflows.",
+    "takeaways": [
+      "Separate Discord channels per workflow for context isolation — not needed for us yet (no per-channel model routing in Hermes)",
+      "Markdown-first storage — we already do this with memory detail files",
+      "Match model to task for cost savings — revisit when Hermes adds channel routing",
+      "Weekly bookmark inbox channel that auto-enriches links — inspired our Resources system"
+    ],
     "added": "2026-04-03"
   },
   {
@@ -13,8 +19,28 @@
     "title": "oh-my-codex — Multi-agent orchestration for Codex CLI",
     "url": "https://yeachan-heo.github.io/oh-my-codex-website/",
     "category": "ai-tools",
-    "status": "skipped",
-    "note": "Codex CLI only, not relevant for Claude Code + Hermes setup.",
+    "status": "archived",
+    "note": "Orchestration layer for OpenAI Codex CLI. Team worktrees, staged pipelines, role prompts.",
+    "takeaways": [
+      "Not relevant — Codex CLI only, we use Claude Code + Hermes"
+    ],
+    "added": "2026-04-03"
+  },
+  {
+    "id": "3",
+    "title": "Claude Code Source Leak: What's Worth Learning for AI Agents",
+    "url": "https://thoughts.jock.pl/p/claude-code-source-leak-what-to-learn-ai-agents-2026",
+    "category": "ai-tools",
+    "status": "processed",
+    "note": "Deep analysis of leaked Claude Code source. Three-layer memory, autoDream consolidation, skeptical memory, adversarial verification, frustration detection.",
+    "takeaways": [
+      "Three-layer memory (index → topic files → raw search) — we already built this today!",
+      "Skeptical memory: treat memory as hint, verify against reality before acting — TODO: add to memory-management skill",
+      "autoDream nightly consolidation of memory files — TODO: create a cron job for this",
+      "Adversarial verification after tasks: separate check to try to break what was built — TODO: add to workflow",
+      "Frustration detection via regex patterns — TODO: add to behavior rules",
+      "Semantic memory merging catches contradictions, not just duplicates — TODO: improve memory-optimizer"
+    ],
     "added": "2026-04-03"
   }
 ]
