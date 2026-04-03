@@ -60,8 +60,8 @@ for skill_md in sorted(glob.glob(base + '/*/*/SKILL.md')):
     name = parts[1]
     with open(skill_md) as f:
         content = f.read()
-    custom_list = json.load(open('$DASH/custom_skills.json')) if os.path.exists('$DASH/custom_skills.json') else []
-    custom = (cat + '/' + name) in custom_list
+    # Auto-detect custom skills from frontmatter (custom: true)
+    custom = bool(re.search(r'^custom:\s*true', content, re.MULTILINE))
     skills.append({'category': cat, 'name': name, 'path': cat + '/' + name, 'content': content, 'custom': custom})
 print(json.dumps(skills))
 " 2>/dev/null || echo "[]")
@@ -207,17 +207,8 @@ print(json.dumps(sessions))
 # System settings
 SYSTEM_SETTINGS=$(cat "$DASH/SYSTEM_SETTINGS.md" 2>/dev/null | python3 -c "import sys,json; print(json.dumps(sys.stdin.read()))" 2>/dev/null || echo '""')
 
-# Quick commands
-COMMANDS='[
-  {"cmd":"dashboard","desc":"Refreshes all dashboard data and opens it in your browser"},
-  {"cmd":"gw","desc":"Prints whether the Discord bot gateway is running or not"},
-  {"cmd":"hermes chat","desc":"Start a conversation with me in the terminal"},
-  {"cmd":"hermes status","desc":"Show status of all components (gateway, cron, etc)"},
-  {"cmd":"hermes gateway restart","desc":"Restart the Discord bot if it stops responding"},
-  {"cmd":"hermes cron list","desc":"List all scheduled cron jobs"},
-  {"cmd":"hermes sessions","desc":"Browse past conversation sessions"},
-  {"cmd":"cat ~/.hermes/dashboard/SYSTEM_SETTINGS.md","desc":"View all system/power/battery settings we configured"}
-]'
+# Quick commands (read from file — no hardcoding)
+COMMANDS=$(cat "$DASH/commands.json" 2>/dev/null || echo "[]")
 
 # Write data file
 # Raw config files (redact secrets)
