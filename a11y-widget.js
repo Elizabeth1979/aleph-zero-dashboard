@@ -394,13 +394,13 @@
       /* Close button */
       const closeBtn = document.getElementById('a11y-close-btn');
       if (closeBtn) {
-        closeBtn.addEventListener('click', closePanel);
+        closeBtn.addEventListener('click', (e) => { e.stopPropagation(); closePanel(); });
       }
 
       /* Reset button */
       const resetBtn = document.getElementById('a11y-reset-btn');
       if (resetBtn) {
-        resetBtn.addEventListener('click', handleReset);
+        resetBtn.addEventListener('click', (e) => { e.stopPropagation(); handleReset(); });
       }
 
       /* Toggle buttons */
@@ -410,7 +410,10 @@
         const feat = FEATURES.find(f => f.id === featureId);
         if (!feat) return;
 
-        toggleBtn.addEventListener('click', () => handleToggle(feat));
+        toggleBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          handleToggle(feat);
+        });
       });
     }
 
@@ -427,16 +430,10 @@
 
     /* ----------------------------------------------------------
        CLOSE ON OUTSIDE CLICK
-       Panel stops all event propagation so nothing inside it
-       can reach the document listener. Simple and bulletproof.
     ---------------------------------------------------------- */
-    ['click', 'pointerdown', 'pointerup', 'touchstart', 'touchend', 'mousedown'].forEach(evt => {
-      panel.addEventListener(evt, (e) => e.stopPropagation());
-    });
-
-    document.addEventListener('pointerdown', (e) => {
+    document.addEventListener('click', (e) => {
       if (!isOpen) return;
-      if (btn.contains(e.target)) return;
+      if (panel.contains(e.target) || btn.contains(e.target)) return;
       closePanel();
     });
 
