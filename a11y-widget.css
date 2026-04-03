@@ -389,9 +389,10 @@
 
 /* ------------------------------------------------------------
    2a. Underline Links
+   Skips card-level links (a.card) — only inline text links.
    ------------------------------------------------------------ */
-html.a11y-underline-links a,
-html.a11y-underline-links a:visited {
+html.a11y-underline-links a:not(.card):not([class*="card"]):not([class*="bento"]),
+html.a11y-underline-links a:not(.card):not([class*="card"]):not([class*="bento"]):visited {
   text-decoration: underline !important;
   text-underline-offset: 3px !important;
 }
