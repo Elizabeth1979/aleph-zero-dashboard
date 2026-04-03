@@ -409,6 +409,27 @@
   }
   .chroma-entry:last-child { border-bottom: none; }
 
+  /* --- Command Card --- */
+  .cmd-row {
+    display: flex;
+    align-items: center;
+    gap: var(--s3);
+    padding: var(--s3) 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .cmd-row:last-child { border-bottom: none; }
+  .cmd-name {
+    font-family: var(--mono);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--accent);
+    min-width: 100px;
+  }
+  .cmd-desc {
+    font-size: var(--fs-sm);
+    color: var(--text-2);
+  }
+
   /* --- Empty --- */
   .empty {
     font-size: var(--fs-sm);
@@ -512,6 +533,15 @@
         <span class="count" id="agent-label">MEMORY.md</span>
       </div>
       <div id="agent-memory"></div>
+    </div>
+
+    <!-- Quick Commands -->
+    <div class="card col-2">
+      <div class="card-h">
+        <i data-lucide="terminal"></i>
+        <h2>Quick Commands</h2>
+      </div>
+      <div id="commands"></div>
     </div>
 
     <!-- Config -->
@@ -742,6 +772,14 @@ function renderChroma(data) {
   el.innerHTML = html;
 }
 
+function renderCommands(cmds) {
+  const el = document.getElementById('commands');
+  if (!cmds || !cmds.length) { el.innerHTML = '<div class="empty">No commands</div>'; return; }
+  el.innerHTML = cmds.map(c =>
+    `<div class="cmd-row"><span class="cmd-name">${esc(c.cmd)}</span><span class="cmd-desc">${esc(c.desc)}</span></div>`
+  ).join('');
+}
+
 function loadAll() {
   const d = window.__DASHBOARD_DATA__;
   if (!d) return;
@@ -752,6 +790,7 @@ function loadAll() {
   renderMemory(d.user_memory, 'user-memory');
   renderMemory(d.agent_memory, 'agent-memory');
   renderCron(d.cron_jobs);
+  renderCommands(d.commands);
   renderConfig(d.config);
   renderSkills();
   renderChroma(d.chroma);

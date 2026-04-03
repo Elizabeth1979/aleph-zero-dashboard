@@ -114,6 +114,12 @@ for i, doc in enumerate(results.get('documents', [])):
 print(json.dumps({'count': count, 'memories': memories}))
 " 2>/dev/null || echo '{"count":0,"memories":[]}')
 
+# Quick commands
+COMMANDS='[
+  {"cmd":"dashboard","desc":"Refresh & open this dashboard"},
+  {"cmd":"gw","desc":"Check if Discord gateway is alive or dead"}
+]'
+
 # Write data file
 # Raw config files (redact secrets)
 CONFIG_RAW=$(cat "$HERMES/config.yaml" 2>/dev/null | python3 -c "import sys,json; print(json.dumps(sys.stdin.read()))")
@@ -137,6 +143,7 @@ window.__DASHBOARD_DATA__ = {
   env_raw: $ENV_RAW,
   skills_data: $SKILLS_DATA,
   chroma: $CHROMA_DATA,
+  commands: $COMMANDS,
   tasks: $TASKS_DATA
 };
 JSEOF
