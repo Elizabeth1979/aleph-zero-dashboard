@@ -110,21 +110,69 @@
 
   /* --- Card --- */
   .card {
-    background: var(--bg-card);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 30%),
+      var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--r3);
     padding: var(--s5);
     cursor: pointer;
-    transition: border-color var(--transition), transform var(--transition);
+    transition:
+      border-color 0.3s ease,
+      transform 0.5s var(--ease-out-quint),
+      box-shadow 0.5s ease;
     animation: fadeIn 0.4s ease both;
     display: flex;
     flex-direction: column;
     min-height: 0;
+    position: relative;
+    transform-style: preserve-3d;
+    overflow: hidden;
   }
+
+  /* Radial glow that follows the mouse */
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: radial-gradient(
+      600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      rgba(var(--accent-rgb), 0.12),
+      transparent 40%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Top accent line on hover */
+  .card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-dim), var(--accent));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: var(--r3) var(--r3) 0 0;
+    z-index: 1;
+  }
+
   .card:hover {
-    border-color: var(--accent);
-    transform: translateY(-2px);
+    border-color: rgba(var(--accent-rgb), 0.4);
+    box-shadow:
+      0 20px 40px rgba(0, 0, 0, 0.3),
+      0 0 20px rgba(var(--accent-rgb), 0.08);
   }
+  .card:hover::before { opacity: 1; }
+  .card:hover::after { opacity: 1; }
+
+  /* Card contents stay above the glow */
+  .card > * { position: relative; z-index: 1; }
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
@@ -151,6 +199,10 @@
     height: 18px;
     color: var(--accent);
     flex-shrink: 0;
+    transition: transform 0.5s var(--ease-out-quint);
+  }
+  .card:hover .card-h svg {
+    transform: translateZ(40px) scale(1.15);
   }
   .card-h h2 {
     font-size: var(--fs-sm);
@@ -1245,6 +1297,48 @@ document.addEventListener('keydown', e => {
 });
 
 document.addEventListener('DOMContentLoaded', loadCards);
+
+// ── 3D Tilt & Mouse Glow ──
+function setupCardMagic() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  document.querySelectorAll('.card').forEach(card => {
+    let frameId = null;
+
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      // Mouse position for radial glow
+      const pctX = (x / rect.width) * 100;
+      const pctY = (y / rect.height) * 100;
+
+      // 3D rotation (max ±4 degrees)
+      const rotateX = ((y - centerY) / centerY) * -4;
+      const rotateY = ((x - centerX) / centerX) * 4;
+
+      if (frameId) cancelAnimationFrame(frameId);
+      frameId = requestAnimationFrame(() => {
+        card.style.setProperty('--mouse-x', pctX + '%');
+        card.style.setProperty('--mouse-y', pctY + '%');
+        card.style.transform =
+          `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+      });
+    });
+
+    card.addEventListener('mouseleave', () => {
+      if (frameId) { cancelAnimationFrame(frameId); frameId = null; }
+      card.style.transform = '';
+    });
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(setupCardMagic, 500); // after fade-in animations
+});
 </script>
 </body>
 </html>
