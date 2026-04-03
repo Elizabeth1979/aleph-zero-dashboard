@@ -234,6 +234,73 @@
   .empty { font-size: var(--fs-sm); color: var(--text-3); font-style: italic; }
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
+
+  /* Detail files */
+  .detail-section {
+    margin-top: var(--s6);
+    padding-top: var(--s5);
+    border-top: 1px solid var(--border);
+  }
+  .detail-title {
+    font-size: var(--fs-base);
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: var(--s4);
+    display: flex;
+    align-items: center;
+    gap: var(--s2);
+  }
+  .detail-title svg { width: 18px; height: 18px; color: var(--accent); }
+  .detail-file {
+    margin-bottom: var(--s3);
+    border: 1px solid var(--border);
+    border-radius: var(--r2);
+    overflow: hidden;
+    transition: border-color 0.2s ease;
+  }
+  .detail-file.open { border-color: rgba(93,228,212,0.2); }
+  .detail-header {
+    display: flex;
+    align-items: center;
+    gap: var(--s3);
+    padding: var(--s3) var(--s4);
+    cursor: pointer;
+    background: var(--bg-inset);
+    transition: background 0.2s ease;
+    user-select: none;
+  }
+  .detail-header:hover { background: rgba(255,255,255,0.04); }
+  .detail-chevron {
+    width: 14px; height: 14px; color: var(--text-3);
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+  .detail-file.open .detail-chevron { transform: rotate(90deg); }
+  .detail-name {
+    font-family: var(--mono);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--accent);
+    flex: 1;
+  }
+  .detail-size {
+    font-size: var(--fs-xs);
+    color: var(--text-3);
+    font-family: var(--mono);
+  }
+  .detail-content {
+    display: none;
+    padding: var(--s4);
+    font-family: var(--mono);
+    font-size: var(--fs-sm);
+    color: var(--text-2);
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  .detail-file.open .detail-content { display: block; }
 </style>
 </head>
 <body>
@@ -271,6 +338,27 @@ document.addEventListener('DOMContentLoaded', () => {
   const chars = d.agent_chars;
   const limit = d.agent_limit;
   const pct = d.agent_pct;
+  const mf = d.memory_files || {};
+  const detailFiles = [
+    { key: 'discord', name: 'discord.md', icon: 'message-circle', label: 'Discord' },
+    { key: 'dashboard', name: 'dashboard.md', icon: 'layout-dashboard', label: 'Dashboard' },
+    { key: 'google', name: 'google.md', icon: 'mail', label: 'Google Workspace' },
+    { key: 'github', name: 'github.md', icon: 'github', label: 'GitHub' },
+    { key: 'behavior', name: 'behavior.md', icon: 'shield', label: 'Behavior Rules' },
+  ];
+  const detailHtml = detailFiles.filter(f => mf[f.key]).map(f => {
+    const content = mf[f.key];
+    const bytes = new Blob([content]).size;
+    return `<div class="detail-file" data-file="${f.key}">
+      <div class="detail-header" onclick="this.parentElement.classList.toggle('open')">
+        <i data-lucide="chevron-right" class="detail-chevron"></i>
+        <span class="detail-name">${f.name}</span>
+        <span class="detail-size">${bytes} chars</span>
+      </div>
+      <div class="detail-content">${esc(content)}</div>
+    </div>`;
+  }).join('');
+
   document.getElementById('page-body').innerHTML = `
     <div class="modal-meta">MEMORY.md &bull; ${chars} / ${limit} chars (${pct}%)</div>
     <div class="usage-bar" style="margin-bottom:var(--s4)"><div class="usage-fill ${pct < 60 ? 'ok' : pct < 85 ? 'warn' : 'danger'}" style="width:${Math.min(pct,100)}%"></div></div>
@@ -280,6 +368,10 @@ document.addEventListener('DOMContentLoaded', () => {
         <i data-lucide="download" style="width:14px;height:14px"></i> Save as file
       </button>
       <span class="modal-hint">Saves MEMORY.md to your Downloads</span>
+    </div>
+    <div class="detail-section">
+      <div class="detail-title"><i data-lucide="folder-open"></i> Detail Files</div>
+      ${detailHtml || '<div class="empty">No detail files found</div>'}
     </div>`;
   lucide.createIcons();
 });

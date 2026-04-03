@@ -7,6 +7,13 @@ DASH="$HERMES/dashboard"
 USER_MEM=$(cat "$HERMES/memories/USER.md" 2>/dev/null | python3 -c "import sys,json; print(json.dumps(sys.stdin.read()))")
 AGENT_MEM=$(cat "$HERMES/memories/MEMORY.md" 2>/dev/null | python3 -c "import sys,json; print(json.dumps(sys.stdin.read()))")
 
+# Memory detail files
+MEM_DISCORD=$(cat "$HERMES/memory/discord.md" 2>/dev/null | python3 -c "import sys,json; print(json.dumps(sys.stdin.read()))" 2>/dev/null || echo '""')
+MEM_DASHBOARD=$(cat "$HERMES/memory/dashboard.md" 2>/dev/null | python3 -c "import sys,json; print(json.dumps(sys.stdin.read()))" 2>/dev/null || echo '""')
+MEM_GOOGLE=$(cat "$HERMES/memory/google.md" 2>/dev/null | python3 -c "import sys,json; print(json.dumps(sys.stdin.read()))" 2>/dev/null || echo '""')
+MEM_GITHUB=$(cat "$HERMES/memory/github.md" 2>/dev/null | python3 -c "import sys,json; print(json.dumps(sys.stdin.read()))" 2>/dev/null || echo '""')
+MEM_BEHAVIOR=$(cat "$HERMES/memory/behavior.md" 2>/dev/null | python3 -c "import sys,json; print(json.dumps(sys.stdin.read()))" 2>/dev/null || echo '""')
+
 # Memory usage stats
 USER_CHARS=$(wc -c < "$HERMES/memories/USER.md" 2>/dev/null || echo 0)
 USER_LIMIT=1375
@@ -257,7 +264,14 @@ window.__DASHBOARD_DATA__ = {
   gateway_state: $GATEWAY_STATE,
   session_count: $SESSION_COUNT,
   recent_sessions: $RECENT_SESSIONS,
-  system_settings: $SYSTEM_SETTINGS
+  system_settings: $SYSTEM_SETTINGS,
+  memory_files: {
+    discord: $MEM_DISCORD,
+    dashboard: $MEM_DASHBOARD,
+    google: $MEM_GOOGLE,
+    github: $MEM_GITHUB,
+    behavior: $MEM_BEHAVIOR
+  }
 };
 JSEOF
 
