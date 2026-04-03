@@ -341,6 +341,46 @@
   /* --- Scrollbar --- */
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
+
+  /* --- Quick Actions --- */
+  .quick-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s3);
+    margin-bottom: var(--s5);
+  }
+  .quick-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s, color 0.15s;
+    white-space: nowrap;
+  }
+  .quick-action-btn i {
+    width: 15px;
+    height: 15px;
+    color: var(--accent);
+    flex-shrink: 0;
+    transition: color 0.15s;
+  }
+  .quick-action-btn:hover {
+    border-color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 10%, var(--bg-card));
+    color: var(--accent);
+  }
+  .quick-action-btn:hover i {
+    color: var(--accent);
+  }
 </style>
 <link rel="stylesheet" href="a11y-widget.css">
 </head>
@@ -355,6 +395,22 @@
       <h1>Hermes <span>e11i's agent</span></h1>
     </div>
     <div class="status-row" id="status-bar"></div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="quick-actions">
+    <a class="quick-action-btn" href="https://discord.com/channels/1477354389298479214/1477354390036680880" target="_blank">
+      <i data-lucide="zap"></i> Morning Brief
+    </a>
+    <a class="quick-action-btn" href="https://discord.com/channels/1477354389298479214/1477354390036680880" target="_blank">
+      <i data-lucide="mail"></i> Check Emails
+    </a>
+    <a class="quick-action-btn" href="https://discord.com/channels/1477354389298479214/1489553133066653726" target="_blank">
+      <i data-lucide="refresh-cw"></i> Refresh
+    </a>
+    <a class="quick-action-btn" href="https://discord.com/channels/1477354389298479214/1477354390036680880" target="_blank">
+      <i data-lucide="clipboard-list"></i> New Task
+    </a>
   </div>
 
   <!-- SECTION: Action Items -->
