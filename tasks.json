@@ -28,7 +28,7 @@
     "task": "Build A11y Expert MCP — MVP without ChromaDB first, add ChromaDB later if needed. Plan in Obsidian vault: A11y App Research/08_mcp_product_plan.md",
     "added": "2026-04-04",
     "category": "project",
-    "priority": "high",
+    "priority": "medium",
     "done": false
   },
   {
