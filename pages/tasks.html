@@ -106,23 +106,58 @@
     background: var(--bg-inset);
   }
   .rules-section.open .rules-body { display: block; }
-  .rules-block { margin-bottom: var(--s4); }
+  .rules-block { margin-bottom: var(--s5); }
   .rules-block:last-child { margin-bottom: 0; }
   .rules-block-title {
-    font-size: var(--fs-xs); font-weight: 600; color: var(--text-2);
-    text-transform: uppercase; letter-spacing: 0.05em;
-    margin-bottom: var(--s2);
+    font-size: var(--fs-xs); font-weight: 600; color: var(--text-3);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: var(--s3);
   }
-  .rules-row {
-    display: flex; align-items: flex-start; gap: var(--s2);
+
+  /* Category chips — 2-col grid */
+  .cat-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: var(--s2);
+  }
+  .cat-chip {
+    display: flex; align-items: center; gap: var(--s2);
+    padding: var(--s2) var(--s3);
+    background: rgba(255,255,255,0.04);
+    border-radius: var(--r1);
+    border-left: 3px solid var(--chip-color, var(--text-3));
+  }
+  .cat-chip-name {
+    font-size: var(--fs-sm); font-weight: 600; color: var(--text);
+  }
+  .cat-chip-desc {
+    font-size: 12px; color: var(--text-3); margin-top: 1px;
+  }
+
+  /* Auto-high priority — compact callout */
+  .auto-high-box {
+    background: rgba(224, 108, 117, 0.08);
+    border: 1px solid rgba(224, 108, 117, 0.2);
+    border-radius: var(--r1);
+    padding: var(--s3);
+  }
+  .auto-high-row {
+    display: flex; align-items: baseline; gap: var(--s2);
     font-size: var(--fs-sm); color: var(--text);
-    padding: 3px 0;
+    padding: 2px 0;
   }
-  .rules-dot {
-    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
-    margin-top: 6px;
+  .auto-high-row::before {
+    content: ''; display: inline-block;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--danger); flex-shrink: 0;
+    position: relative; top: -1px;
   }
-  .rules-row strong { font-weight: 600; }
+  .auto-high-row strong { color: var(--danger); font-weight: 600; }
+
+  /* Priority defaults — inline */
+  .priority-defaults {
+    display: flex; flex-wrap: wrap; gap: var(--s2) var(--s4);
+    font-size: var(--fs-xs); color: var(--text-3);
+  }
+  .priority-defaults strong { color: var(--text-2); font-weight: 600; }
 </style>
 </head>
 <body>
@@ -236,28 +271,33 @@ document.addEventListener('DOMContentLoaded', () => {
       write: '#34d399', share: '#fbbf24', remember: '#a78bfa'
     };
 
-    let rulesHtml = '<div class="rules-block"><div class="rules-block-title">Categories</div>';
+    let rulesHtml = '<div class="rules-block"><div class="rules-block-title">Categories</div><div class="cat-grid">';
     if (rules.categories) {
       Object.entries(rules.categories).forEach(([key, desc]) => {
         const color = catColors[key] || 'var(--text-3)';
-        rulesHtml += `<div class="rules-row"><span class="rules-dot" style="background:${color}"></span> <strong>${key}</strong> — ${esc(desc)}</div>`;
+        rulesHtml += `<div class="cat-chip" style="--chip-color:${color}"><div><div class="cat-chip-name">${key}</div><div class="cat-chip-desc">${esc(desc)}</div></div></div>`;
       });
     }
-    rulesHtml += '</div>';
+    rulesHtml += '</div></div>';
 
-    rulesHtml += '<div class="rules-block"><div class="rules-block-title">Auto High Priority</div>';
+    rulesHtml += '<div class="rules-block"><div class="rules-block-title">Auto High Priority</div><div class="auto-high-box">';
     if (rules.auto_high) {
       rules.auto_high.forEach(r => {
-        rulesHtml += `<div class="rules-row"><span class="rules-dot" style="background:var(--danger)"></span> ${esc(r)}</div>`;
+        const parts = r.split(' — ');
+        if (parts.length === 2) {
+          rulesHtml += `<div class="auto-high-row"><strong>${esc(parts[0])}</strong> — ${esc(parts[1])}</div>`;
+        } else {
+          rulesHtml += `<div class="auto-high-row">${esc(r)}</div>`;
+        }
       });
     }
-    rulesHtml += '</div>';
+    rulesHtml += '</div></div>';
 
-    rulesHtml += `<div class="rules-block">
-      <div class="rules-row"><strong>Default:</strong> ${esc(rules.default_priority || 'medium')}</div>
-      <div class="rules-row"><strong>Low trigger:</strong> ${esc(rules.low_trigger || '')}</div>
-      <div class="rules-row"><strong>Ask when:</strong> ${esc(rules.ask_when || '')}</div>
-    </div>`;
+    rulesHtml += `<div class="rules-block"><div class="priority-defaults">
+      <span><strong>Default:</strong> ${esc(rules.default_priority || 'medium')}</span>
+      <span><strong>Low:</strong> ${esc(rules.low_trigger || '')}</span>
+      <span><strong>Ask:</strong> ${esc(rules.ask_when || '')}</span>
+    </div></div>`;
 
     html += `<div class="rules-section" onclick="toggleSection(this)">
       <div class="rules-header">
