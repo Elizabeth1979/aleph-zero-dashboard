@@ -285,26 +285,32 @@
     font-size: var(--fs-sm); color: var(--text); line-height: 1.6;
   }
   .chroma-filters {
-    display: flex; flex-wrap: wrap; gap: 6px;
-    margin-bottom: var(--s4);
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-bottom: var(--s6);
+    padding-bottom: var(--s4);
+    border-bottom: 1px solid var(--border);
   }
   .chroma-table-wrap {
-    overflow-x: auto; margin-top: var(--s4);
+    overflow-x: auto;
   }
   .chroma-table {
     width: 100%; border-collapse: collapse;
     font-size: var(--fs-sm);
+    table-layout: fixed;
   }
   .chroma-table th {
-    text-align: left; padding: var(--s3) var(--s3);
+    text-align: left; padding: var(--s3) var(--s4);
     font-size: var(--fs-xs); font-weight: 600;
     color: var(--accent-dim); text-transform: uppercase;
     letter-spacing: 0.04em;
     border-bottom: 2px solid var(--border);
     white-space: nowrap;
   }
+  .chroma-table th:nth-child(1) { width: 120px; }
+  .chroma-table th:nth-child(2) { width: 100px; }
+  .chroma-table th:nth-child(4) { width: 100px; }
   .chroma-table td {
-    padding: var(--s3) var(--s3);
+    padding: var(--s3) var(--s4);
     border-bottom: 1px solid var(--border);
     color: var(--text); line-height: 1.5;
     vertical-align: top;
@@ -313,6 +319,7 @@
   .chroma-td-id {
     font-family: var(--mono); font-size: var(--fs-xs);
     color: var(--text-3); white-space: nowrap;
+    overflow: hidden; text-overflow: ellipsis;
   }
   .chroma-td-cat {
     font-size: var(--fs-xs); font-weight: 500;

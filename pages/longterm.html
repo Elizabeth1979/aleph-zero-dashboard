@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="../a11y-widget.css">
 </head>
 <body>
-<div class="page-wrap">
+<div class="page-wrap" style="max-width:1100px">
   <div class="page-header">
     <a href="../index.html" class="back-link">
       <i data-lucide="arrow-left" style="width:16px;height:16px"></i> Dashboard
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
       html += `<div class="chroma-table-wrap"><table class="chroma-table">`;
       html += `<thead><tr><th>ID</th><th>Category</th><th>Text</th><th>Created</th></tr></thead><tbody>`;
       filtered.forEach(m => {
-        const ts = m.timestamp ? m.timestamp.replace('T', ' ').slice(0, 16) : '—';
+        const ts = m.timestamp ? m.timestamp.slice(0, 10) : '—';
         html += `<tr>`;
         html += `<td class="chroma-td-id">${esc(m.id)}</td>`;
         html += `<td class="chroma-td-cat">${esc(m.category || 'general')}</td>`;
