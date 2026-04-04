@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects — Hermes</title>
+<link rel="stylesheet" href="../theme.css?v=3">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    font-family: var(--sans);
+    font-size: var(--fs-base);
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: var(--s6);
+    min-height: 100vh;
+  }
+  .page-header {
+    display: flex;
+    align-items: center;
+    gap: var(--s4);
+    margin-bottom: var(--s6);
+    padding-bottom: var(--s4);
+    border-bottom: 1px solid var(--border);
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s2);
+    color: var(--text-3);
+    text-decoration: none;
+    font-size: var(--fs-sm);
+    transition: color 0.2s ease;
+  }
+  .back-link:hover { color: var(--accent); }
+  .page-title {
+    font-size: var(--fs-xl);
+    font-weight: 600;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: var(--s3);
+    flex: 1;
+  }
+  .page-title svg { width: 22px; height: 22px; color: var(--accent); }
+  .page-body { animation: fadeIn 0.3s ease both; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Project cards */
+  .project-card {
+    background: var(--bg-card, rgba(255,255,255,0.03));
+    border: 1px solid var(--border);
+    border-radius: var(--r2);
+    padding: var(--s5);
+    margin-bottom: var(--s4);
+  }
+  .project-card:last-child { margin-bottom: 0; }
+  .project-top {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--s3);
+    margin-bottom: var(--s3);
+  }
+  .project-name {
+    font-size: var(--fs-md, 1rem);
+    font-weight: 600;
+    color: var(--text);
+    flex: 1;
+  }
+  .status-badge {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: var(--pill);
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .status-badge.in_progress {
+    color: var(--accent);
+    background: var(--accent-muted);
+    border: 1px solid rgba(93,228,212,0.2);
+  }
+  .status-badge.done {
+    color: var(--text-3);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+  }
+  .status-badge.paused {
+    color: var(--warn, #f0b866);
+    background: rgba(240,184,102,0.12);
+    border: 1px solid rgba(240,184,102,0.2);
+  }
+  .project-desc {
+    font-size: var(--fs-sm);
+    color: var(--text-2);
+    margin-bottom: var(--s3);
+    line-height: 1.6;
+  }
+  .project-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s4);
+    margin-bottom: var(--s4);
+  }
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--s2);
+    font-size: var(--fs-xs);
+    color: var(--text-3);
+  }
+  .meta-item svg { width: 13px; height: 13px; flex-shrink: 0; }
+  .meta-val {
+    font-family: var(--mono);
+    color: var(--text-2);
+  }
+  /* Progress bar */
+  .progress-section { margin-bottom: var(--s4); }
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--s2);
+    font-size: var(--fs-xs);
+    color: var(--text-3);
+  }
+  .progress-pct {
+    font-family: var(--mono);
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .progress-bar {
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: var(--pill);
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: var(--pill);
+    background: var(--accent);
+    transition: width 0.8s ease;
+  }
+  .progress-fill.done-full { background: var(--text-3); }
+  /* Milestones */
+  .milestones-label {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--s2);
+  }
+  .milestone {
+    display: flex;
+    align-items: center;
+    gap: var(--s3);
+    padding: var(--s2) 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .milestone:last-child { border-bottom: none; }
+  .milestone.done-item { opacity: 0.4; }
+  .milestone.done-item .milestone-text { text-decoration: line-through; }
+  .milestone-check {
+    width: 16px; height: 16px; border-radius: 3px;
+    border: 1.5px solid var(--text-3); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .milestone.done-item .milestone-check {
+    border-color: var(--accent-dim);
+    background: var(--accent-muted);
+  }
+  .milestone-text {
+    font-size: var(--fs-sm);
+    color: var(--text);
+    flex: 1;
+  }
+  .empty { font-size: var(--fs-sm); color: var(--text-3); font-style: italic; }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
+</style>
+<link rel="stylesheet" href="../a11y-widget.css">
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <a href="../index.html" class="back-link">
+      <i data-lucide="arrow-left" style="width:16px;height:16px"></i> Dashboard
+    </a>
+    <h1 class="page-title"><i data-lucide="rocket"></i> Projects</h1>
+  </div>
+  <div class="page-body" id="page-body"></div>
+</div>
+<script src="../data.js"></script>
+<script>
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const d = window.__DASHBOARD_DATA__;
+  if (!d) return;
+  const projects = d.projects || [];
+  if (!projects.length) {
+    document.getElementById('page-body').innerHTML = '<div class="empty">No projects yet — get building!</div>';
+    return;
+  }
+
+  const statusLabel = { in_progress: 'In Progress', done: 'Done', paused: 'Paused' };
+  const checkSvg = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent-dim)"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+
+  function renderProject(p) {
+    const status = p.status || 'in_progress';
+    const badge = `<span class="status-badge ${status}">${statusLabel[status] || status}</span>`;
+
+    const desc = p.description ? `<div class="project-desc">${esc(p.description)}</div>` : '';
+
+    const metaItems = [];
+    if (p.started) {
+      metaItems.push(`<span class="meta-item"><i data-lucide="calendar" style="width:13px;height:13px"></i> <span class="meta-val">${esc(p.started)}</span></span>`);
+    }
+    if (p.repo) {
+      metaItems.push(`<span class="meta-item"><i data-lucide="git-branch" style="width:13px;height:13px"></i> <span class="meta-val">${esc(p.repo)}</span></span>`);
+    }
+    if (p.notes_path) {
+      metaItems.push(`<span class="meta-item"><i data-lucide="file-text" style="width:13px;height:13px"></i> <span class="meta-val">${esc(p.notes_path)}</span></span>`);
+    }
+    const metaHtml = metaItems.length ? `<div class="project-meta">${metaItems.join('')}</div>` : '';
+
+    const milestones = p.milestones || [];
+    let progressHtml = '';
+    let milestonesHtml = '';
+
+    if (milestones.length) {
+      const doneCount = milestones.filter(m => m.done).length;
+      const pct = Math.round((doneCount / milestones.length) * 100);
+      const fillClass = pct === 100 ? 'progress-fill done-full' : 'progress-fill';
+
+      progressHtml = `<div class="progress-section">
+        <div class="progress-label">
+          <span>Milestones</span>
+          <span class="progress-pct">${doneCount}/${milestones.length} — ${pct}%</span>
+        </div>
+        <div class="progress-bar"><div class="${fillClass}" style="width:${pct}%"></div></div>
+      </div>`;
+
+      const mItems = milestones.map(m => {
+        const cls = m.done ? 'milestone done-item' : 'milestone';
+        const check = m.done ? checkSvg : '';
+        return `<div class="${cls}">
+          <div class="milestone-check">${check}</div>
+          <span class="milestone-text">${esc(m.task)}</span>
+        </div>`;
+      }).join('');
+
+      milestonesHtml = `<div class="milestones-label">Milestones</div>${mItems}`;
+    }
+
+    return `<div class="project-card">
+      <div class="project-top">
+        <span class="project-name">${esc(p.name || p.id)}</span>
+        ${badge}
+      </div>
+      ${desc}
+      ${metaHtml}
+      ${progressHtml}
+      ${milestonesHtml}
+    </div>`;
+  }
+
+  // Sort: in_progress first, then paused, then done
+  const order = { in_progress: 0, paused: 1, done: 2 };
+  const sorted = [...projects].sort((a, b) => {
+    return (order[a.status] ?? 1) - (order[b.status] ?? 1);
+  });
+
+  document.getElementById('page-body').innerHTML = sorted.map(renderProject).join('');
+  lucide.createIcons();
+});
+</script>
+<script src="../a11y-widget.js"></script>
+</body>
+</html>

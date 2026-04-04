@@ -133,6 +133,9 @@ TASKS_DATA=$(cat "$DASH/tasks.json" 2>/dev/null || echo "[]")
 # Resources
 RESOURCES_DATA=$(cat "$DASH/resources.json" 2>/dev/null || echo "[]")
 
+# Projects
+PROJECTS_DATA=$(cat "$DASH/projects.json" 2>/dev/null || echo "[]")
+
 # Capture rules
 CAPTURE_RULES=$(cat "$DASH/capture_rules.json" 2>/dev/null || echo "{}")
 
@@ -300,6 +303,7 @@ window.__DASHBOARD_DATA__ = {
   commands: $COMMANDS,
   tasks: $TASKS_DATA,
   resources: $RESOURCES_DATA,
+  projects: $PROJECTS_DATA,
   capture_rules: $CAPTURE_RULES,
   soul_md: $SOUL_MD,
   discord_channels: $DISCORD_CHANNELS,
