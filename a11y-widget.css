@@ -406,29 +406,12 @@ html.a11y-underline-links a:not(.card):not([class*="card"]):not([class*="bento"]
    Does NOT underline links (that's a separate toggle).
    ------------------------------------------------------------ */
 
-/* Boost muted/secondary text to full white */
+/* Boost muted/secondary text — leave accent (teal) colors untouched */
 html.a11y-high-contrast {
-  --text-2: #ffffff !important;
-  --text-3: #b0b0b0 !important;
+  --text-2: #e0e0e0 !important;
+  --text-3: #d0d0d0 !important;
   --border: rgba(255, 255, 255, 0.2) !important;
   --border-hover: rgba(255, 255, 255, 0.35) !important;
-}
-
-/* All text elements: full white */
-html.a11y-high-contrast p,
-html.a11y-high-contrast span,
-html.a11y-high-contrast li,
-html.a11y-high-contrast td,
-html.a11y-high-contrast th,
-html.a11y-high-contrast label,
-html.a11y-high-contrast div,
-html.a11y-high-contrast h1,
-html.a11y-high-contrast h2,
-html.a11y-high-contrast h3,
-html.a11y-high-contrast h4,
-html.a11y-high-contrast h5,
-html.a11y-high-contrast h6 {
-  color: #ffffff !important;
 }
 
 /* Links: brighter accent, no forced underline */
