@@ -270,6 +270,20 @@
   }
   .gw-status.online { color: var(--ok); }
   .gw-status.offline { color: var(--text-3); }
+  .gw-restart-btn {
+    margin-top: var(--s3);
+    background: var(--accent-muted);
+    color: var(--accent);
+    border: 1px solid rgba(93,228,212,0.2);
+    padding: var(--s2) var(--s4);
+    border-radius: var(--r2);
+    font-family: var(--sans);
+    font-size: var(--fs-xs);
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .gw-restart-btn:hover { background: rgba(93,228,212,0.2); }
 
   /* --- Footer --- */
   .footer {
@@ -383,7 +397,7 @@
       <div class="card-preview" id="cron-preview"></div>
     </a>
 
-    <a href="pages/gateway.html" class="card">
+    <div class="card">
       <div class="card-h">
         <i data-lucide="radio"></i>
         <h2>Gateway</h2>
@@ -392,7 +406,9 @@
       <div class="gw-status" id="gw-status">
         <span class="dot off"></span> Checking...
       </div>
-    </a>
+      <button id="gw-restart-btn" onclick="restartGateway(event)" class="gw-restart-btn">Restart Gateway</button>
+      <span id="gw-restart-status" style="font-size:var(--fs-xs);color:var(--text-3);margin-top:4px"></span>
+    </div>
 
   </div>
 
@@ -805,6 +821,27 @@ document.addEventListener('DOMContentLoaded', () => {
   setTimeout(setupCardMagic, 500);
   setTimeout(setupEasterEgg, 800);
 });
+
+function restartGateway(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  const btn = document.getElementById('gw-restart-btn');
+  const status = document.getElementById('gw-restart-status');
+  btn.disabled = true;
+  btn.style.opacity = '0.5';
+  status.textContent = 'Restarting...';
+  fetch('http://localhost:7865/restart', { method: 'POST' })
+    .then(r => r.text())
+    .then(() => {
+      status.textContent = '✓ Restarted';
+      setTimeout(() => location.reload(), 2000);
+    })
+    .catch(() => {
+      status.textContent = 'Health server not running. Use terminal: gw';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    });
+}
 </script>
 <script src="a11y-widget.js"></script>
 
