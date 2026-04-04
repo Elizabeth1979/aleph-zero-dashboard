@@ -238,6 +238,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const metaHtml = metaItems.length ? `<div class="project-meta">${metaItems.join('')}</div>` : '';
 
+    const links = (p.links || []).filter(l => l.url);
+    const linksHtml = links.length ? `<div style="margin-bottom:var(--s4);display:flex;flex-wrap:wrap;gap:var(--s3)">${links.map(l =>
+      `<a href="${esc(l.url)}" target="_blank" rel="noopener" style="font-size:var(--fs-xs);color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;gap:4px"><i data-lucide="external-link" style="width:12px;height:12px"></i>${esc(l.label)}</a>`
+    ).join('')}</div>` : '';
+
     const milestones = p.milestones || [];
     let progressHtml = '';
     let milestonesHtml = '';
@@ -274,6 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
       ${desc}
       ${metaHtml}
+      ${linksHtml}
       ${progressHtml}
       ${milestonesHtml}
     </div>`;
