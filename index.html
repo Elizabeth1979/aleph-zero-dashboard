@@ -437,6 +437,16 @@
       <div class="card-preview" id="soul-preview"></div>
     </a>
 
+    <a href="pages/learnings.html" class="card">
+      <div class="card-h">
+        <i data-lucide="lightbulb"></i>
+        <h2>Learnings</h2>
+        <span class="badge" id="learnings-badge">0</span>
+      </div>
+      <div class="card-desc">Things we discovered along the way</div>
+      <div class="card-preview" id="learnings-preview"></div>
+    </a>
+
   </div>
 
   <!-- SECTION: Projects -->
@@ -582,6 +592,15 @@ function loadCards() {
   const aBar = document.getElementById('agent-bar');
   aBar.style.width = Math.min(aPct, 100) + '%';
   aBar.className = 'usage-fill ' + aCls;
+
+  // Learnings
+  const learningsRaw = (d.memory_files && d.memory_files.learnings) || '';
+  const learningEntries = learningsRaw.split(/^## /m).filter(e => e.trim() && !e.startsWith('#'));
+  document.getElementById('learnings-badge').textContent = learningEntries.length;
+  if (learningEntries.length) {
+    const latest = learningEntries[learningEntries.length - 1].split('\n')[0].trim();
+    document.getElementById('learnings-preview').textContent = latest;
+  }
 
   // Cron
   const jobs = d.cron_jobs || [];
