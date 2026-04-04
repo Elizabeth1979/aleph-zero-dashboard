@@ -227,7 +227,7 @@
     font-size: var(--fs-xs); font-weight: 500; padding: 3px 10px;
     border-radius: var(--pill); background: rgba(255,255,255,0.04);
     color: var(--text-2); cursor: pointer; transition: all 0.2s ease;
-    border: 1px solid transparent;
+    border: 1px solid transparent; text-decoration: none;
   }
   .pill:hover { background: var(--accent-muted); color: var(--accent); }
   .pill.active {
