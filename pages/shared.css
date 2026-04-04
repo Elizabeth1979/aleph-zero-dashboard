@@ -110,6 +110,23 @@
     padding: var(--s4); line-height: 1.7;
     white-space: pre-wrap; word-break: break-word;
   }
+  .modal-editor.rendered-md {
+    white-space: normal;
+    font-family: var(--sans); font-size: var(--fs-base);
+  }
+  .rendered-md h1 { font-size: 1.4em; font-weight: 700; color: var(--accent); margin: 0.8em 0 0.4em; }
+  .rendered-md h2 { font-size: 1.2em; font-weight: 600; color: var(--accent); margin: 0.7em 0 0.3em; }
+  .rendered-md h3 { font-size: 1.05em; font-weight: 600; color: var(--text); margin: 0.6em 0 0.2em; }
+  .rendered-md p { margin: 0.3em 0; line-height: 1.6; }
+  .rendered-md strong { color: var(--text); font-weight: 600; }
+  .rendered-md code {
+    background: rgba(93,228,212,0.1); color: var(--accent);
+    padding: 0.15em 0.4em; border-radius: 4px; font-family: var(--mono); font-size: 0.9em;
+  }
+  .rendered-md ul { margin: 0.4em 0; padding-left: 1.4em; list-style: disc; }
+  .rendered-md li { margin: 0.2em 0; line-height: 1.5; }
+  .rendered-md hr { border: none; border-top: 1px solid var(--border); margin: 0.8em 0; }
+  .rendered-md hr.section-sep { border-top: 1px dashed var(--border); margin: 0.6em 0; }
   .modal-actions {
     display: flex; align-items: center; gap: var(--s3); margin-top: var(--s4);
   }

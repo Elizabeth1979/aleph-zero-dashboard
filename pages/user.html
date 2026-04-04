@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('page-body').innerHTML = `
     <div class="modal-meta">USER.md &bull; ${chars} / ${limit} chars (${pct}%)</div>
     <div class="usage-bar" style="margin-bottom:var(--s4)"><div class="usage-fill ${pct < 60 ? 'ok' : pct < 85 ? 'warn' : 'danger'}" style="width:${Math.min(pct,100)}%"></div></div>
-    <div class="modal-editor" id="editor-user">${esc(text)}</div>`;
+    <div class="modal-editor rendered-md" id="editor-user">${renderMd(text)}</div>`;
   if (typeof lucide !== 'undefined') lucide.createIcons();
 });
 

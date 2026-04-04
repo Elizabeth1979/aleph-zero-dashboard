@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const chars = d.soul_md.length;
   document.getElementById('page-body').innerHTML = `
     <div class="modal-meta">SOUL.md &bull; ${chars} chars &bull; My personality, vibe, and core rules</div>
-    <div class="modal-editor" id="editor-soul">${esc(d.soul_md)}</div>
+    <div class="modal-editor rendered-md" id="editor-soul">${renderMd(d.soul_md)}</div>
   `;
   if (typeof lucide !== 'undefined') lucide.createIcons();
 });
