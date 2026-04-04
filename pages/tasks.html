@@ -132,32 +132,34 @@
     font-size: 12px; color: var(--text-3); margin-top: 1px;
   }
 
-  /* Auto-high priority — compact callout */
-  .auto-high-box {
+  /* Auto-high priority — grid of chips like categories */
+  .auto-high-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: var(--s2);
+  }
+  .auto-high-chip {
+    padding: var(--s2) var(--s3);
     background: rgba(224, 108, 117, 0.08);
-    border: 1px solid rgba(224, 108, 117, 0.2);
     border-radius: var(--r1);
-    padding: var(--s3);
+    border-left: 3px solid var(--danger);
   }
-  .auto-high-row {
-    display: flex; align-items: baseline; gap: var(--s2);
-    font-size: var(--fs-sm); color: var(--text);
-    padding: 2px 0;
+  .auto-high-chip-name {
+    font-size: var(--fs-sm); font-weight: 600; color: var(--danger);
   }
-  .auto-high-row::before {
-    content: ''; display: inline-block;
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--danger); flex-shrink: 0;
-    position: relative; top: -1px;
+  .auto-high-chip-desc {
+    font-size: 12px; color: var(--text-3); margin-top: 1px;
   }
-  .auto-high-row strong { color: var(--danger); font-weight: 600; }
 
-  /* Priority defaults — inline */
-  .priority-defaults {
-    display: flex; flex-wrap: wrap; gap: var(--s2) var(--s4);
-    font-size: var(--fs-xs); color: var(--text-3);
+  /* Priority defaults — chips row */
+  .priority-row {
+    display: flex; flex-wrap: wrap; gap: var(--s2);
   }
-  .priority-defaults strong { color: var(--text-2); font-weight: 600; }
+  .priority-tag {
+    font-size: 12px; color: var(--text-3);
+    padding: var(--s1) var(--s3);
+    background: rgba(255,255,255,0.04);
+    border-radius: var(--pill);
+  }
+  .priority-tag strong { color: var(--text-2); font-weight: 600; }
 </style>
 </head>
 <body>
@@ -280,23 +282,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     rulesHtml += '</div></div>';
 
-    rulesHtml += '<div class="rules-block"><div class="rules-block-title">Auto High Priority</div><div class="auto-high-box">';
+    rulesHtml += '<div class="rules-block"><div class="rules-block-title">Auto High Priority</div><div class="auto-high-grid">';
     if (rules.auto_high) {
       rules.auto_high.forEach(r => {
         const parts = r.split(' — ');
         if (parts.length === 2) {
-          rulesHtml += `<div class="auto-high-row"><strong>${esc(parts[0])}</strong> — ${esc(parts[1])}</div>`;
+          rulesHtml += `<div class="auto-high-chip"><div class="auto-high-chip-name">${esc(parts[0])}</div><div class="auto-high-chip-desc">${esc(parts[1])}</div></div>`;
         } else {
-          rulesHtml += `<div class="auto-high-row">${esc(r)}</div>`;
+          rulesHtml += `<div class="auto-high-chip"><div class="auto-high-chip-name">${esc(r)}</div></div>`;
         }
       });
     }
     rulesHtml += '</div></div>';
 
-    rulesHtml += `<div class="rules-block"><div class="priority-defaults">
-      <span><strong>Default:</strong> ${esc(rules.default_priority || 'medium')}</span>
-      <span><strong>Low:</strong> ${esc(rules.low_trigger || '')}</span>
-      <span><strong>Ask:</strong> ${esc(rules.ask_when || '')}</span>
+    rulesHtml += `<div class="rules-block"><div class="priority-row">
+      <span class="priority-tag"><strong>Default:</strong> ${esc(rules.default_priority || 'medium')}</span>
+      <span class="priority-tag"><strong>Low:</strong> ${esc(rules.low_trigger || '')}</span>
+      <span class="priority-tag"><strong>Ask:</strong> ${esc(rules.ask_when || '')}</span>
     </div></div>`;
 
     html += `<div class="rules-section" onclick="toggleSection(this)">
