@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Hermes</title>
+<link rel="stylesheet" href="../theme.css?v=3">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<link rel="stylesheet" href="shared.css">
+<link rel="stylesheet" href="../a11y-widget.css">
+<style>
+  .count-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    font-family: var(--mono);
+    padding: 2px 8px;
+    border-radius: var(--pill);
+    background: var(--accent-muted);
+    color: var(--accent);
+    border: 1px solid rgba(93,228,212,0.18);
+    line-height: 1.4;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: var(--s3);
+    margin-top: var(--s7);
+    margin-bottom: var(--s4);
+  }
+  .section-header:first-child { margin-top: 0; }
+  .section-title {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .repo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--s4);
+  }
+  @media (max-width: 600px) {
+    .repo-grid { grid-template-columns: 1fr; }
+  }
+  .repo-card {
+    display: block;
+    text-decoration: none;
+    padding: var(--s4) var(--s5);
+    border: 1px solid var(--border);
+    border-radius: var(--r2);
+    background: var(--bg-card);
+    transition: border-color 0.2s ease, background 0.2s ease;
+    color: inherit;
+  }
+  .repo-card:hover {
+    border-color: var(--accent);
+    background: var(--bg-inset);
+  }
+  .repo-name {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: var(--s2);
+    display: flex;
+    align-items: center;
+    gap: var(--s2);
+  }
+  .repo-name svg { width: 13px; height: 13px; color: var(--accent-dim); flex-shrink: 0; }
+  .repo-desc {
+    font-size: var(--fs-sm);
+    color: var(--text-2);
+    line-height: 1.5;
+    margin-bottom: var(--s3);
+  }
+  .repo-desc.muted { color: var(--text-3); font-style: italic; }
+  .repo-updated {
+    font-size: var(--fs-xs);
+    font-family: var(--mono);
+    color: var(--text-3);
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <a href="../index.html" class="back-link">
+      <i data-lucide="arrow-left" style="width:16px;height:16px"></i> Dashboard
+    </a>
+    <h1 class="page-title">
+      <i data-lucide="folder-git-2"></i> Portfolio
+    </h1>
+  </div>
+  <div class="page-body" id="page-body"></div>
+</div>
+<script src="utils.js"></script>
+<script src="../data.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const d = window.__DASHBOARD_DATA__;
+  if (!d) return;
+  const portfolio = d.portfolio || [];
+  const body = document.getElementById('page-body');
+
+  if (!portfolio.length) {
+    body.innerHTML = '<div class="empty">No repositories yet.</div>';
+    return;
+  }
+
+  // Update page title with total count badge
+  const titleEl = document.querySelector('.page-title');
+  titleEl.insertAdjacentHTML('beforeend', `<span class="count-badge">${portfolio.length}</span>`);
+
+  const CATEGORY_ORDER = ['a11y', 'apps', 'personal', 'other'];
+  const CATEGORY_LABELS = {
+    a11y: 'Accessibility',
+    apps: 'Apps & Tools',
+    personal: 'Personal',
+    other: 'Other'
+  };
+
+  // Group by category
+  const grouped = {};
+  for (const repo of portfolio) {
+    const cat = repo.category || 'other';
+    if (!grouped[cat]) grouped[cat] = [];
+    grouped[cat].push(repo);
+  }
+
+  function formatDate(dateStr) {
+    if (!dateStr) return '';
+    try {
+      const d = new Date(dateStr);
+      return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+    } catch (e) {
+      return dateStr;
+    }
+  }
+
+  function renderRepo(repo) {
+    const descHtml = repo.description
+      ? `<div class="repo-desc">${esc(repo.description)}</div>`
+      : `<div class="repo-desc muted">No description</div>`;
+    const updatedHtml = repo.updated
+      ? `<div class="repo-updated">Updated ${formatDate(repo.updated)}</div>`
+      : '';
+    return `<a class="repo-card" href="${esc(repo.url || '#')}" target="_blank" rel="noopener">
+      <div class="repo-name"><i data-lucide="git-branch" style="width:13px;height:13px"></i>${esc(repo.name || '')}</div>
+      ${descHtml}
+      ${updatedHtml}
+    </a>`;
+  }
+
+  let html = '';
+  for (const cat of CATEGORY_ORDER) {
+    const repos = grouped[cat];
+    if (!repos || !repos.length) continue;
+    const label = CATEGORY_LABELS[cat] || cat;
+    html += `<div class="section-header">
+      <span class="section-title">${esc(label)}</span>
+      <span class="count-badge">${repos.length}</span>
+    </div>
+    <div class="repo-grid">${repos.map(renderRepo).join('')}</div>`;
+  }
+
+  body.innerHTML = html;
+  if (typeof lucide !== 'undefined') lucide.createIcons();
+});
+</script>
+<script src="../a11y-widget.js"></script>
+</body>
+</html>

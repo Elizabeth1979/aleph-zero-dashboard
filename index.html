@@ -455,6 +455,15 @@
       <div id="projects-preview" style="margin-top:8px"></div>
     </a>
 
+    <a href="pages/portfolio.html" class="card">
+      <div class="card-h">
+        <h2>Portfolio</h2>
+        <span class="badge" id="portfolio-badge">0</span>
+      </div>
+      <div class="card-desc">All public repos — accessibility, apps, personal</div>
+      <div id="portfolio-preview" style="margin-top:8px;font-size:var(--fs-xs);color:var(--text-3)"></div>
+    </a>
+
   </div>
 
   <!-- SECTION: Reports -->
@@ -609,6 +618,12 @@ function loadCards() {
       return '<div style="margin-bottom:6px"><strong>' + esc(p.name) + '</strong> <span class="badge">' + pct + '%</span></div>';
     }).join('');
   }
+
+  // Portfolio
+  const portfolio = d.portfolio || [];
+  document.getElementById('portfolio-badge').textContent = portfolio.length;
+  const a11yCount = portfolio.filter(r => r.category === 'a11y').length;
+  document.getElementById('portfolio-preview').textContent = a11yCount + ' accessibility · ' + (portfolio.length - a11yCount) + ' other';
 
   // Reports
   const reports = d.reports || [];
