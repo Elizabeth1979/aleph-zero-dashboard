@@ -41,16 +41,39 @@ document.addEventListener('DOMContentLoaded', () => {
     { key: 'accessibility', name: 'accessibility.md', icon: 'eye', label: 'Accessibility' },
     { key: 'web_best_practices', name: 'web-best-practices.md', icon: 'globe', label: 'Web Best Practices' },
   ];
+  function renderMd(raw) {
+    let html = esc(raw);
+    // Headings
+    html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+    html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
+    html = html.replace(/^# (.+)$/gm, '<h1>$1</h1>');
+    // Bold & inline code
+    html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+    // Horizontal rules
+    html = html.replace(/^---$/gm, '<hr>');
+    // List items → <li> (nested handled by padding)
+    html = html.replace(/^- (.+)$/gm, '<li>$1</li>');
+    // Wrap consecutive <li> in <ul>
+    html = html.replace(/((?:<li>.*<\/li>\n?)+)/g, '<ul>$1</ul>');
+    // Remaining plain lines → <p> (skip empty, skip tags)
+    html = html.split('\n').map(line => {
+      const t = line.trim();
+      if (!t || t.startsWith('<')) return line;
+      return `<p>${t}</p>`;
+    }).join('\n');
+    return html;
+  }
   const detailHtml = detailFiles.filter(f => mf[f.key]).map(f => {
     const content = mf[f.key];
     const bytes = new Blob([content]).size;
     return `<div class="detail-file" data-file="${f.key}">
       <div class="detail-header" onclick="toggleDetail(this.parentElement)">
         <i data-lucide="chevron-right" class="detail-chevron"></i>
-        <span class="detail-name">${f.name}</span>
+        <span class="detail-name"><i data-lucide="${f.icon}" style="width:14px;height:14px"></i> ${f.label}</span>
         <span class="detail-size">${bytes} chars</span>
       </div>
-      <div class="detail-content">${esc(content)}</div>
+      <div class="detail-content">${renderMd(content)}</div>
     </div>`;
   }).join('');
 
