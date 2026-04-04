@@ -59,5 +59,21 @@
       "Released a skill to evaluate agentic harnesses — TODO: could run against our Hermes setup for fun"
     ],
     "added": "2026-04-03"
+  },
+  {
+    "id": "5",
+    "title": "opensource by Vercel — Give AI Agents Perfect Framework Context",
+    "url": "https://youtu.be/KYOg81dfac8?si=ndLH04UcyvMfzv8P",
+    "category": "ai-tools",
+    "status": "new",
+    "note": "NPM CLI tool that downloads entire source code of any npm package or GitHub repo into your project (.opensource/ folder, auto-gitignored). Gives AI agents the actual framework codebase as context — the ultimate source of truth for new/updated libraries the model wasn't trained on.",
+    "takeaways": [
+      "Source code > docs for AI agent context — code is the ultimate source of truth",
+      "Solves the 'model trained on old version' problem without copy-pasting docs or Context7 MCP",
+      "Usage: npx opensource <github-url> or npx opensource <package-name>",
+      "Auto-gitignored — won't bloat your repo",
+      "Could be useful for our web dev work when using newer framework features"
+    ],
+    "added": "2026-04-04"
   }
 ]
