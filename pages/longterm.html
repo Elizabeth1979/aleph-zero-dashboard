@@ -47,17 +47,26 @@ document.addEventListener('DOMContentLoaded', () => {
     Object.keys(cats).sort().forEach(cat => {
       html += `<div class="modal-chroma-cat">${esc(cat)} (${cats[cat].length})</div>`;
       cats[cat].forEach(m => {
-        if (rawMode) {
-          const ts = m.timestamp ? m.timestamp.replace('T', ' ').slice(0, 19) : '—';
-          html += `<div class="chroma-raw">`;
-          html += `<div class="chroma-raw-meta"><span class="chroma-raw-id">${esc(m.id)}</span><span class="chroma-raw-ts">${esc(ts)}</span></div>`;
-          html += `<div class="chroma-raw-text">${esc(m.text)}</div>`;
-          html += `</div>`;
-        } else {
+        if (!rawMode) {
           html += `<div class="modal-chroma-entry">${esc(m.text)}</div>`;
         }
       });
     });
+    if (rawMode) {
+      html += `<div class="chroma-table-wrap"><table class="chroma-table">`;
+      html += `<thead><tr><th>ID</th><th>Category</th><th>Text</th><th>Created</th></tr></thead><tbody>`;
+      const allMems = chroma.memories.slice().sort((a, b) => (a.category || '').localeCompare(b.category || ''));
+      allMems.forEach(m => {
+        const ts = m.timestamp ? m.timestamp.replace('T', ' ').slice(0, 16) : '—';
+        html += `<tr>`;
+        html += `<td class="chroma-td-id">${esc(m.id)}</td>`;
+        html += `<td class="chroma-td-cat">${esc(m.category || 'general')}</td>`;
+        html += `<td>${esc(m.text)}</td>`;
+        html += `<td class="chroma-td-ts">${esc(ts)}</td>`;
+        html += `</tr>`;
+      });
+      html += `</tbody></table></div>`;
+    }
     document.getElementById('page-body').innerHTML = html;
     if (typeof lucide !== 'undefined') lucide.createIcons();
   }
