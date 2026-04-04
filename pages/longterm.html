@@ -17,6 +17,7 @@
       <i data-lucide="arrow-left" style="width:16px;height:16px"></i> Dashboard
     </a>
     <h1 class="page-title"><i data-lucide="database"></i> Long-Term Memory</h1>
+    <button id="view-toggle" class="btn btn-save" style="margin-left:auto;font-size:var(--fs-xs)"><i data-lucide="rows-3" style="width:13px;height:13px"></i> Raw View</button>
   </div>
   <div class="page-body" id="page-body"></div>
 </div>
@@ -38,15 +39,40 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!cats[c]) cats[c] = [];
     cats[c].push(m);
   });
-  let html = '';
-  Object.keys(cats).sort().forEach(cat => {
-    html += `<div class="modal-chroma-cat">${esc(cat)} (${cats[cat].length})</div>`;
-    cats[cat].forEach(m => {
-      html += `<div class="modal-chroma-entry">${esc(m.text)}</div>`;
+
+  let rawMode = false;
+
+  function render() {
+    let html = '';
+    Object.keys(cats).sort().forEach(cat => {
+      html += `<div class="modal-chroma-cat">${esc(cat)} (${cats[cat].length})</div>`;
+      cats[cat].forEach(m => {
+        if (rawMode) {
+          const ts = m.timestamp ? m.timestamp.replace('T', ' ').slice(0, 19) : '—';
+          html += `<div class="chroma-raw">`;
+          html += `<div class="chroma-raw-meta"><span class="chroma-raw-id">${esc(m.id)}</span><span class="chroma-raw-ts">${esc(ts)}</span></div>`;
+          html += `<div class="chroma-raw-text">${esc(m.text)}</div>`;
+          html += `</div>`;
+        } else {
+          html += `<div class="modal-chroma-entry">${esc(m.text)}</div>`;
+        }
+      });
     });
+    document.getElementById('page-body').innerHTML = html;
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+  }
+
+  document.getElementById('view-toggle').addEventListener('click', () => {
+    rawMode = !rawMode;
+    const btn = document.getElementById('view-toggle');
+    btn.innerHTML = rawMode
+      ? '<i data-lucide="list" style="width:13px;height:13px"></i> Simple View'
+      : '<i data-lucide="rows-3" style="width:13px;height:13px"></i> Raw View';
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+    render();
   });
-  document.getElementById('page-body').innerHTML = html;
-  if (typeof lucide !== 'undefined') lucide.createIcons();
+
+  render();
 });
 
 </script>

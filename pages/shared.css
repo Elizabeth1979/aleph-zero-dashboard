@@ -284,6 +284,26 @@
     background: var(--bg-inset); border-radius: var(--r1);
     font-size: var(--fs-sm); color: var(--text); line-height: 1.6;
   }
+  .chroma-raw {
+    padding: var(--s3) var(--s4); margin-bottom: var(--s2);
+    background: var(--bg-inset); border-radius: var(--r1);
+    border: 1px solid var(--border);
+  }
+  .chroma-raw-meta {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: var(--s2);
+  }
+  .chroma-raw-id {
+    font-family: var(--mono); font-size: var(--fs-xs);
+    color: var(--accent-dim);
+  }
+  .chroma-raw-ts {
+    font-family: var(--mono); font-size: var(--fs-xs);
+    color: var(--text-3);
+  }
+  .chroma-raw-text {
+    font-size: var(--fs-sm); color: var(--text); line-height: 1.6;
+  }
   .skill-cat { margin-bottom: var(--s4); }
   .skill-cat-name {
     font-size: var(--fs-xs); font-weight: 600; color: var(--text-3);
