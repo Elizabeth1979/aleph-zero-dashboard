@@ -47,6 +47,22 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
+  /* Section headers */
+  .section-head {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: var(--s2);
+    margin-top: var(--s6);
+    margin-bottom: var(--s3);
+    padding-bottom: var(--s2);
+    border-bottom: 1px solid var(--border);
+  }
+  .section-head:first-child { margin-top: 0; }
+  .section-head svg { width: 16px; height: 16px; color: var(--accent); }
+
   /* Reuse card-inner styles */
   .cfg-row {
     display: flex;
