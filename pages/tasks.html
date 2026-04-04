@@ -164,9 +164,12 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   const catOrder = ['task', 'project', 'to-buy', 'idea', 'read', 'write', 'share', 'remember'];
 
+  const chevron = '<svg class="task-section-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+  const checkSvg = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent-dim)"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+
   function renderItem(t) {
     const cls = t.done ? 'task-item done' : 'task-item';
-    const check = t.done ? '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent-dim)"><polyline points="20 6 9 17 4 12"></polyline></svg>' : '';
+    const check = t.done ? checkSvg : '';
     const safePri = ['high','medium','low','critical'].includes(t.priority) ? t.priority : null;
     const pri = safePri ? `<span class="task-item-pri ${safePri}">${safePri}</span>` : '';
     const date = t.added ? `<span class="task-item-date">${t.added}</span>` : '';
@@ -189,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (urgent.length) {
     html += `<div class="task-section open" onclick="toggleSection(this)">
       <div class="task-section-header">
-        <i data-lucide="chevron-right" class="task-section-chevron"></i>
+        ${chevron}
         <span class="task-section-label urgent">Urgent</span>
         <span class="task-section-count">${urgent.length}</span>
       </div>
@@ -218,7 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     html += `<div class="task-section" onclick="toggleSection(this)">
       <div class="task-section-header">
-        <i data-lucide="chevron-right" class="task-section-chevron"></i>
+        ${chevron}
         <span class="task-section-label">${meta.label}</span>
         <span class="task-section-count">${open.length} open</span>
       </div>
@@ -261,7 +264,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     html += `<div class="rules-section" onclick="toggleSection(this)">
       <div class="rules-header">
-        <i data-lucide="chevron-right" class="rules-chevron"></i>
+        <svg class="rules-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
         Capture Rules
       </div>
       <div class="rules-body" onclick="event.stopPropagation()">
