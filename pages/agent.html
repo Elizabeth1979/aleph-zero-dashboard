@@ -315,7 +315,7 @@
 <script src="../data.js"></script>
 <script>
 function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 function cronHuman(c) {
   if (!c) return '?';
@@ -367,7 +367,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="detail-title"><i data-lucide="folder-open"></i> Detail Files</div>
       ${detailHtml || '<div class="empty">No detail files found</div>'}
     </div>`;
-  lucide.createIcons();
+  if (typeof lucide !== 'undefined') lucide.createIcons();
 });
 function toggleDetail(el) {
   const wasOpen = el.classList.contains('open');

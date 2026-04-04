@@ -265,7 +265,7 @@
 <script src="../data.js"></script>
 <script>
 function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 function cronHuman(c) {
   if (!c) return '?';
@@ -292,7 +292,7 @@ document.addEventListener('DOMContentLoaded', () => {
     doc.querySelectorAll('.config-item').forEach(item => {
       const k = item.querySelector('.config-key')?.textContent || '';
       const v = item.querySelector('.config-val')?.textContent || '';
-      html += `<div class="cfg-row"><span class="cfg-key">${k}</span><span class="cfg-val">${v}</span></div>`;
+      html += `<div class="cfg-row"><span class="cfg-key">${esc(k)}</span><span class="cfg-val">${esc(v)}</span></div>`;
     });
   }
 
@@ -310,9 +310,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (auth.length) {
     html += '<div class="section-head"><i data-lucide="key-round"></i> Credentials</div>';
     auth.forEach(a => {
-      html += `<div class="cfg-row"><span class="cfg-key" style="font-weight:600;color:var(--accent)">${a.name}</span><span class="cfg-val">${a.count} credential(s)</span></div>`;
+      html += `<div class="cfg-row"><span class="cfg-key" style="font-weight:600;color:var(--accent)">${esc(a.name)}</span><span class="cfg-val">${a.count} credential(s)</span></div>`;
       a.labels.forEach(l => {
-        html += `<div class="cfg-row"><span class="cfg-key" style="padding-left:var(--s4)">&rarr; ${l}</span><span class="cfg-val" style="color:var(--ok)">active</span></div>`;
+        html += `<div class="cfg-row"><span class="cfg-key" style="padding-left:var(--s4)">&rarr; ${esc(l)}</span><span class="cfg-val" style="color:var(--ok)">active</span></div>`;
       });
     });
   }
@@ -345,7 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
-  lucide.createIcons();
+  if (typeof lucide !== 'undefined') lucide.createIcons();
 });
 
 </script>

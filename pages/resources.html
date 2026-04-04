@@ -205,7 +205,7 @@
 <script src="../data.js"></script>
 <script>
 function esc(s) {
-  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 
 const catMeta = {
@@ -280,21 +280,24 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>`;
 
       items.forEach(r => {
-        const statusCls = 'status-' + (r.status || 'new');
+        const safeStatus = ['new','explored','archived'].includes(r.status) ? r.status : 'new';
+        const statusCls = 'status-' + safeStatus;
+        const safeUrl = /^https?:\/\//i.test(r.url) ? esc(r.url) : '#';
         let takeawaysHtml = '';
         if (r.takeaways && r.takeaways.length) {
           const items = r.takeaways.map(t => {
+            const escapedT = esc(t);
             const hasTodo = t.includes('TODO:');
-            const text = hasTodo ? t.replace('TODO:', '<span class="todo-tag">TODO</span>') : esc(t);
-            return `<div class="takeaway">${hasTodo ? text : esc(t)}</div>`;
+            const text = hasTodo ? escapedT.replace('TODO:', '<span class="todo-tag">TODO</span>') : escapedT;
+            return `<div class="takeaway">${text}</div>`;
           }).join('');
           takeawaysHtml = `<div class="takeaways"><div class="takeaways-label">Takeaways</div>${items}</div>`;
         }
         html += `<div class="resource ${statusCls}">
           <div class="resource-top">
-            <a href="${esc(r.url)}" target="_blank" rel="noopener" class="resource-title">${esc(r.title)}</a>
+            <a href="${safeUrl}" target="_blank" rel="noopener" class="resource-title">${esc(r.title)}</a>
             <div class="resource-tags">
-              <span class="tag tag-status ${r.status || 'new'}">${esc(r.status || 'new')}</span>
+              <span class="tag tag-status ${safeStatus}">${esc(safeStatus)}</span>
               <span class="resource-date">${esc(r.added || '')}</span>
             </div>
           </div>
@@ -307,7 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('page-body').innerHTML = html;
-    lucide.createIcons();
+    if (typeof lucide !== 'undefined') lucide.createIcons();
   }
 
   // Filter click handlers

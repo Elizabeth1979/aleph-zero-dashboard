@@ -298,7 +298,7 @@
 <script src="../data.js"></script>
 <script>
 function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 function cronHuman(c) {
   if (!c) return '?';
@@ -340,7 +340,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderTask(t) {
     const cls = t.done ? 'task done' : 'task';
     const check = t.done ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent-dim)"><polyline points="20 6 9 17 4 12"></polyline></svg>' : '';
-    const pri = t.priority ? `<span class="task-pri ${t.priority}">${t.priority}</span>` : '';
+    const safePri = ['high','medium','low','critical'].includes(t.priority) ? t.priority : null;
+    const pri = safePri ? `<span class="task-pri ${safePri}">${safePri}</span>` : '';
     return `<div class="${cls}">
       <div class="task-check">${check}</div>
       <span class="task-text">${esc(t.task)}</span>
@@ -425,7 +426,7 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>`;
 
     html += `<div class="rules-panel">
-      <div class="rules-toggle" onclick="document.getElementById('rules-body').classList.toggle('show'); this.querySelector('[data-lucide]').setAttribute('data-lucide', document.getElementById('rules-body').classList.contains('show') ? 'chevron-down' : 'chevron-right'); lucide.createIcons();">
+      <div class="rules-toggle" onclick="document.getElementById('rules-body').classList.toggle('show'); this.querySelector('[data-lucide]').setAttribute('data-lucide', document.getElementById('rules-body').classList.contains('show') ? 'chevron-down' : 'chevron-right'); if (typeof lucide !== 'undefined') lucide.createIcons();">
         <i data-lucide="chevron-right"></i> Capture Rules — how items get categorized
       </div>
       <div class="rules-content" id="rules-body">${rulesHtml}</div>
@@ -433,7 +434,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   document.getElementById('page-body').innerHTML = html;
-  lucide.createIcons();
+  if (typeof lucide !== 'undefined') lucide.createIcons();
 });
 
 </script>

@@ -249,7 +249,7 @@
 <script src="../data.js"></script>
 <script>
 function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 function cronHuman(c) {
   if (!c) return '?';
@@ -274,7 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const k = item.querySelector('.config-key')?.textContent || '';
       const v = item.querySelector('.config-val')?.textContent || '';
       const on = v.includes('Online') || v.includes('\u2713');
-      html += `<div class="cfg-row"><span class="cfg-key">${k}</span><span class="cfg-val" style="color:${on ? 'var(--ok)' : 'var(--text-3)'}">${v}</span></div>`;
+      html += `<div class="cfg-row"><span class="cfg-key">${esc(k)}</span><span class="cfg-val" style="color:${on ? 'var(--ok)' : 'var(--text-3)'}">${esc(v)}</span></div>`;
     });
   }
   // Restart button
@@ -287,7 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>`;
 
   document.getElementById('page-body').innerHTML = html || '<div class="empty">No gateway info</div>';
-  lucide.createIcons();
+  if (typeof lucide !== 'undefined') lucide.createIcons();
 });
 
 function restartGateway() {
