@@ -293,11 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     rulesHtml += '</div></div>';
 
-    rulesHtml += `<div class="rules-block"><div class="priority-defaults">
-      <span><strong>Default:</strong> ${esc(rules.default_priority || 'medium')}</span>
-      <span><strong>Low:</strong> ${esc(rules.low_trigger || '')}</span>
-      <span><strong>Ask:</strong> ${esc(rules.ask_when || '')}</span>
-    </div></div>`;
+
 
     html += `<div class="rules-section" onclick="toggleSection(this)">
       <div class="rules-header">
