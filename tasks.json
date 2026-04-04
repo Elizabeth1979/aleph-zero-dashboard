@@ -118,5 +118,13 @@
     "category": "project",
     "priority": "low",
     "done": false
+  },
+  {
+    "id": 16,
+    "task": "Finish onboarding this week",
+    "added": "2026-04-04",
+    "category": "task",
+    "priority": "high",
+    "done": false
   }
 ]
