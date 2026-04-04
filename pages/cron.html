@@ -175,7 +175,9 @@ function extractFlags(prompt) {
   for (const m of numbered) {
     if (flags.length >= 3) break;
     const s = m[1].trim().replace(/\.$/, '');
-    if (s.length > 2) flags.push(s.length > 60 ? s.slice(0, 57) + '…' : s);
+    // Strip markdown bold, emojis, leading ** or —
+    let cleaned = s.replace(/\*\*/g, '').replace(/—/g, '-').replace(/^\s*[\p{Emoji_Presentation}\p{Extended_Pictographic}]+\s*/gu, '').trim();
+    if (cleaned.length > 2) flags.push(cleaned.length > 60 ? cleaned.slice(0, 57) + '…' : cleaned);
   }
   if (flags.length >= 2) return flags;
 
