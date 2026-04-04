@@ -277,9 +277,37 @@ document.addEventListener('DOMContentLoaded', () => {
       html += `<div class="cfg-row"><span class="cfg-key">${k}</span><span class="cfg-val" style="color:${on ? 'var(--ok)' : 'var(--text-3)'}">${v}</span></div>`;
     });
   }
+  // Restart button
+  html += `<div style="margin-top:24px;display:flex;gap:12px;align-items:center">
+    <button id="gw-restart-btn" onclick="restartGateway()" style="
+      background:var(--accent);color:#0a0a0a;border:none;padding:12px 24px;
+      border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;
+    ">Restart Gateway</button>
+    <span id="gw-restart-status" style="color:var(--text-3);font-size:14px"></span>
+  </div>`;
+
   document.getElementById('page-body').innerHTML = html || '<div class="empty">No gateway info</div>';
   lucide.createIcons();
 });
+
+function restartGateway() {
+  const btn = document.getElementById('gw-restart-btn');
+  const status = document.getElementById('gw-restart-status');
+  btn.disabled = true;
+  btn.style.opacity = '0.5';
+  status.textContent = 'Restarting...';
+  fetch('http://localhost:7865/restart', { method: 'POST' })
+    .then(r => r.text())
+    .then(() => {
+      status.textContent = '✓ Restarted — refreshing...';
+      setTimeout(() => location.reload(), 2000);
+    })
+    .catch(() => {
+      status.textContent = '✗ Health server not running. Use terminal: gw';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    });
+}
 
 </script>
 <script src="../a11y-widget.js"></script>
