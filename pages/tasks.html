@@ -4,11 +4,126 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tasks — Hermes</title>
-<link rel="stylesheet" href="../theme.css">
+<link rel="stylesheet" href="../theme.css?v=3">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <link rel="stylesheet" href="shared.css">
 <link rel="stylesheet" href="../a11y-widget.css">
+<style>
+  /* Task page specific */
+  .task-section {
+    margin-bottom: var(--s5);
+    border: 1px solid var(--border);
+    border-radius: var(--r2);
+    overflow: hidden;
+  }
+  .task-section-header {
+    display: flex; align-items: center; gap: var(--s3);
+    padding: var(--s3) var(--s4);
+    cursor: pointer;
+    transition: background 0.15s ease;
+    user-select: none;
+  }
+  .task-section-header:hover { background: rgba(255,255,255,0.03); }
+  .task-section-chevron {
+    width: 14px; height: 14px; color: var(--text-3);
+    transition: transform 0.2s ease; flex-shrink: 0;
+  }
+  .task-section.open .task-section-chevron { transform: rotate(90deg); }
+  .task-section-label {
+    font-size: var(--fs-sm); font-weight: 600; color: var(--text); flex: 1;
+  }
+  .task-section-label.urgent { color: var(--danger); }
+  .task-section-count {
+    font-size: var(--fs-xs); color: var(--text-3);
+    background: rgba(255,255,255,0.04);
+    padding: 2px 8px; border-radius: var(--pill);
+  }
+  .task-section-body {
+    display: none;
+    border-top: 1px solid var(--border);
+  }
+  .task-section.open .task-section-body { display: block; }
+  .task-item {
+    display: flex; align-items: flex-start; gap: var(--s3);
+    padding: var(--s3) var(--s4);
+    border-bottom: 1px solid var(--border);
+  }
+  .task-item:last-child { border-bottom: none; }
+  .task-item.done { opacity: 0.35; }
+  .task-item.done .task-item-text { text-decoration: line-through; }
+  .task-item-check {
+    width: 16px; height: 16px; border-radius: 3px;
+    border: 1.5px solid var(--text-3); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 2px;
+  }
+  .task-item.done .task-item-check {
+    border-color: var(--accent-dim); background: var(--accent-muted);
+  }
+  .task-item-content { flex: 1; min-width: 0; }
+  .task-item-text {
+    font-size: var(--fs-sm); color: var(--text);
+    line-height: 1.4;
+  }
+  .task-item-meta {
+    display: flex; align-items: center; gap: var(--s2);
+    margin-top: 2px;
+  }
+  .task-item-pri {
+    font-size: 11px; font-weight: 600;
+    padding: 1px 6px; border-radius: var(--pill);
+  }
+  .task-item-pri.high { color: var(--danger); background: rgba(224,108,117,0.12); }
+  .task-item-pri.medium { color: var(--warn); background: rgba(240,184,102,0.12); }
+  .task-item-pri.low { color: var(--accent); background: var(--accent-muted); }
+  .task-item-date {
+    font-size: 11px; font-family: var(--mono); color: var(--text-3);
+  }
+
+  /* Rules panel */
+  .rules-section {
+    margin-top: var(--s5);
+    border: 1px solid var(--border);
+    border-radius: var(--r2);
+    overflow: hidden;
+  }
+  .rules-header {
+    display: flex; align-items: center; gap: var(--s3);
+    padding: var(--s3) var(--s4);
+    cursor: pointer;
+    font-size: var(--fs-sm); color: var(--text-2);
+    transition: background 0.15s ease;
+  }
+  .rules-header:hover { background: rgba(255,255,255,0.03); }
+  .rules-chevron {
+    width: 14px; height: 14px; color: var(--text-3);
+    transition: transform 0.2s ease; flex-shrink: 0;
+  }
+  .rules-section.open .rules-chevron { transform: rotate(90deg); }
+  .rules-body {
+    display: none;
+    padding: var(--s4); border-top: 1px solid var(--border);
+    background: var(--bg-inset);
+  }
+  .rules-section.open .rules-body { display: block; }
+  .rules-block { margin-bottom: var(--s4); }
+  .rules-block:last-child { margin-bottom: 0; }
+  .rules-block-title {
+    font-size: var(--fs-xs); font-weight: 600; color: var(--text-2);
+    text-transform: uppercase; letter-spacing: 0.05em;
+    margin-bottom: var(--s2);
+  }
+  .rules-row {
+    display: flex; align-items: center; gap: var(--s2);
+    font-size: var(--fs-sm); color: var(--text);
+    padding: 3px 0;
+  }
+  .rules-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+  .rules-row strong { font-weight: 600; }
+</style>
 </head>
 <body>
 <div class="page-wrap">
@@ -24,88 +139,96 @@
 <script src="../data.js"></script>
 <script>
 
+function toggleSection(el) {
+  el.classList.toggle('open');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const d = window.__DASHBOARD_DATA__;
   if (!d) return;
   const tasks = d.tasks || [];
-  if (!tasks.length) { document.getElementById('page-body').innerHTML = '<div class="empty">All clear — nothing to track</div>'; return; }
+  if (!tasks.length) {
+    document.getElementById('page-body').innerHTML = '<div class="empty">All clear — nothing to track</div>';
+    return;
+  }
 
   const catMeta = {
-    task:     { icon: 'circle-check', label: 'Tasks' },
-    idea:     { icon: 'lightbulb', label: 'Ideas' },
-    read:     { icon: 'book-open', label: 'To Read' },
-    write:    { icon: 'pen-line', label: 'To Write' },
-    share:    { icon: 'send', label: 'Share / Send' },
-    remember: { icon: 'bookmark', label: 'Remember' },
+    task:     { label: 'Tasks' },
+    idea:     { label: 'Ideas' },
+    read:     { label: 'To Read' },
+    write:    { label: 'To Write' },
+    share:    { label: 'Share / Send' },
+    remember: { label: 'Remember' },
+    project:  { label: 'Projects' },
+    'to-buy': { label: 'To Buy' },
   };
-  const catOrder = ['task', 'idea', 'read', 'write', 'share', 'remember'];
+  const catOrder = ['task', 'project', 'to-buy', 'idea', 'read', 'write', 'share', 'remember'];
 
-  // Group by category
-  const groups = {};
-  tasks.forEach(t => {
-    const cat = t.category || 'task';
-    if (!groups[cat]) groups[cat] = [];
-    groups[cat].push(t);
-  });
-
-  function renderTask(t) {
-    const cls = t.done ? 'task done' : 'task';
-    const check = t.done ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent-dim)"><polyline points="20 6 9 17 4 12"></polyline></svg>' : '';
+  function renderItem(t) {
+    const cls = t.done ? 'task-item done' : 'task-item';
+    const check = t.done ? '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent-dim)"><polyline points="20 6 9 17 4 12"></polyline></svg>' : '';
     const safePri = ['high','medium','low','critical'].includes(t.priority) ? t.priority : null;
-    const pri = safePri ? `<span class="task-pri ${safePri}">${safePri}</span>` : '';
+    const pri = safePri ? `<span class="task-item-pri ${safePri}">${safePri}</span>` : '';
+    const date = t.added ? `<span class="task-item-date">${t.added}</span>` : '';
     return `<div class="${cls}">
-      <div class="task-check">${check}</div>
-      <span class="task-text">${esc(t.task)}</span>
-      ${pri}
-      <span class="task-date">${t.added || ''}</span>
+      <div class="task-item-check">${check}</div>
+      <div class="task-item-content">
+        <div class="task-item-text">${esc(t.task)}</div>
+        ${(pri || date) ? `<div class="task-item-meta">${pri}${date}</div>` : ''}
+      </div>
     </div>`;
   }
 
-  // Pull urgent (high priority, not done) to the top
+  // Urgent (high priority, not done)
   const urgent = tasks.filter(t => !t.done && t.priority === 'high');
   const rest = tasks.filter(t => !(t.priority === 'high' && !t.done));
 
   let html = '';
 
-  // Urgent section
+  // Urgent section — open by default
   if (urgent.length) {
-    html += `<div class="cat-section">
-      <div class="cat-header" style="color:var(--danger)">
-        <i data-lucide="alert-triangle"></i> Urgent
-        <span class="cat-count">${urgent.length}</span>
+    html += `<div class="task-section open" onclick="toggleSection(this)">
+      <div class="task-section-header">
+        <i data-lucide="chevron-right" class="task-section-chevron"></i>
+        <span class="task-section-label urgent">Urgent</span>
+        <span class="task-section-count">${urgent.length}</span>
       </div>
-      ${urgent.map(renderTask).join('')}
+      <div class="task-section-body" onclick="event.stopPropagation()">
+        ${urgent.map(renderItem).join('')}
+      </div>
     </div>`;
   }
 
   // Group remaining by category
-  const groups2 = {};
+  const groups = {};
   rest.forEach(t => {
     const cat = t.category || 'task';
-    if (!groups2[cat]) groups2[cat] = [];
-    groups2[cat].push(t);
+    if (!groups[cat]) groups[cat] = [];
+    groups[cat].push(t);
   });
 
-  const activeCats = catOrder.filter(c => groups2[c] && groups2[c].length);
-  Object.keys(groups2).forEach(c => { if (!catOrder.includes(c)) activeCats.push(c); });
+  const activeCats = catOrder.filter(c => groups[c] && groups[c].length);
+  Object.keys(groups).forEach(c => { if (!catOrder.includes(c)) activeCats.push(c); });
 
   activeCats.forEach(cat => {
-    const items = groups2[cat];
+    const items = groups[cat];
     const open = items.filter(t => !t.done);
     const done = items.filter(t => t.done);
-    const meta = catMeta[cat] || { icon: 'circle', label: cat };
-    const openCount = open.length;
+    const meta = catMeta[cat] || { label: cat };
 
-    html += `<div class="cat-section">
-      <div class="cat-header">
-        <i data-lucide="${meta.icon}"></i> ${meta.label}
-        <span class="cat-count">${openCount} open</span>
+    html += `<div class="task-section" onclick="toggleSection(this)">
+      <div class="task-section-header">
+        <i data-lucide="chevron-right" class="task-section-chevron"></i>
+        <span class="task-section-label">${meta.label}</span>
+        <span class="task-section-count">${open.length} open</span>
       </div>
-      ${[...open, ...done].map(renderTask).join('')}
+      <div class="task-section-body" onclick="event.stopPropagation()">
+        ${[...open, ...done].map(renderItem).join('')}
+      </div>
     </div>`;
   });
 
-  // Capture rules panel
+  // Capture rules — collapsed
   const rules = d.capture_rules || {};
   if (rules.categories || rules.auto_high) {
     const catColors = {
@@ -113,34 +236,37 @@ document.addEventListener('DOMContentLoaded', () => {
       write: '#34d399', share: '#fbbf24', remember: '#a78bfa'
     };
 
-    let rulesHtml = '<div class="rules-group"><div class="rules-group-title">Categories</div>';
+    let rulesHtml = '<div class="rules-block"><div class="rules-block-title">Categories</div>';
     if (rules.categories) {
       Object.entries(rules.categories).forEach(([key, desc]) => {
         const color = catColors[key] || 'var(--text-3)';
-        rulesHtml += `<div class="rules-item"><span class="rules-cat-dot" style="background:${color}"></span> <strong>${key}</strong> — ${esc(desc)}</div>`;
+        rulesHtml += `<div class="rules-row"><span class="rules-dot" style="background:${color}"></span> <strong>${key}</strong> — ${esc(desc)}</div>`;
       });
     }
     rulesHtml += '</div>';
 
-    rulesHtml += '<div class="rules-group"><div class="rules-group-title">Auto High Priority</div>';
+    rulesHtml += '<div class="rules-block"><div class="rules-block-title">Auto High Priority</div>';
     if (rules.auto_high) {
       rules.auto_high.forEach(r => {
-        rulesHtml += `<div class="rules-item"><i data-lucide="alert-triangle" style="color:var(--danger)"></i> ${esc(r)}</div>`;
+        rulesHtml += `<div class="rules-row"><span class="rules-dot" style="background:var(--danger)"></span> ${esc(r)}</div>`;
       });
     }
     rulesHtml += '</div>';
 
-    rulesHtml += `<div class="rules-group">
-      <div class="rules-item"><i data-lucide="minus-circle"></i> <strong>Default:</strong> ${esc(rules.default_priority || 'medium')}</div>
-      <div class="rules-item"><i data-lucide="arrow-down-circle"></i> <strong>Low:</strong> ${esc(rules.low_trigger || '')}</div>
-      <div class="rules-item"><i data-lucide="help-circle"></i> <strong>Ask when:</strong> ${esc(rules.ask_when || '')}</div>
+    rulesHtml += `<div class="rules-block">
+      <div class="rules-row"><strong>Default:</strong> ${esc(rules.default_priority || 'medium')}</div>
+      <div class="rules-row"><strong>Low trigger:</strong> ${esc(rules.low_trigger || '')}</div>
+      <div class="rules-row"><strong>Ask when:</strong> ${esc(rules.ask_when || '')}</div>
     </div>`;
 
-    html += `<div class="rules-panel">
-      <div class="rules-toggle" onclick="document.getElementById('rules-body').classList.toggle('show'); this.querySelector('[data-lucide]').setAttribute('data-lucide', document.getElementById('rules-body').classList.contains('show') ? 'chevron-down' : 'chevron-right'); if (typeof lucide !== 'undefined') lucide.createIcons();">
-        <i data-lucide="chevron-right"></i> Capture Rules — how items get categorized
+    html += `<div class="rules-section" onclick="toggleSection(this)">
+      <div class="rules-header">
+        <i data-lucide="chevron-right" class="rules-chevron"></i>
+        Capture Rules
       </div>
-      <div class="rules-content" id="rules-body">${rulesHtml}</div>
+      <div class="rules-body" onclick="event.stopPropagation()">
+        ${rulesHtml}
+      </div>
     </div>`;
   }
 
