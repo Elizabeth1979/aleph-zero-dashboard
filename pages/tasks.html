@@ -114,52 +114,31 @@
     margin-bottom: var(--s3);
   }
 
-  /* Category chips — 2-col grid */
-  .cat-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: var(--s2);
+  /* Capture rules — two simple groups */
+  .rules-group-label {
+    font-size: var(--fs-xs); font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.08em; margin-bottom: var(--s2);
   }
-  .cat-chip {
-    display: flex; align-items: center; gap: var(--s2);
-    padding: var(--s2) var(--s3);
-    background: rgba(255,255,255,0.04);
-    border-radius: var(--r1);
-    border-left: 3px solid var(--chip-color, var(--text-3));
-  }
-  .cat-chip-name {
-    font-size: var(--fs-sm); font-weight: 600; color: var(--text);
-  }
-  .cat-chip-desc {
-    font-size: 12px; color: var(--text-3); margin-top: 1px;
-  }
-
-  /* Auto-high priority — grid of chips like categories */
-  .auto-high-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: var(--s2);
-  }
-  .auto-high-chip {
-    padding: var(--s2) var(--s3);
-    background: rgba(224, 108, 117, 0.08);
-    border-radius: var(--r1);
-    border-left: 3px solid var(--danger);
-  }
-  .auto-high-chip-name {
-    font-size: var(--fs-sm); font-weight: 600; color: var(--danger);
-  }
-  .auto-high-chip-desc {
-    font-size: 12px; color: var(--text-3); margin-top: 1px;
-  }
-
-  /* Priority defaults — chips row */
-  .priority-row {
+  .rules-group-label.urgent { color: var(--danger); }
+  .rules-group-label.rest { color: var(--text-3); }
+  .rules-tags {
     display: flex; flex-wrap: wrap; gap: var(--s2);
   }
-  .priority-tag {
-    font-size: 12px; color: var(--text-3);
+  .rules-tag {
+    font-size: var(--fs-sm); font-weight: 500;
     padding: var(--s1) var(--s3);
-    background: rgba(255,255,255,0.04);
     border-radius: var(--pill);
   }
-  .priority-tag strong { color: var(--text-2); font-weight: 600; }
+  .rules-tag.urgent {
+    background: rgba(224, 108, 117, 0.12);
+    color: var(--danger);
+  }
+  .rules-tag.cat {
+    background: rgba(255,255,255,0.06);
+    color: var(--text);
+    border-left: 3px solid var(--chip-color, var(--text-3));
+    border-radius: var(--r1);
+  }
 </style>
 </head>
 <body>
@@ -273,33 +252,25 @@ document.addEventListener('DOMContentLoaded', () => {
       write: '#34d399', share: '#fbbf24', remember: '#a78bfa'
     };
 
-    let rulesHtml = '<div class="rules-block"><div class="rules-block-title">Categories</div><div class="cat-grid">';
-    if (rules.categories) {
-      Object.entries(rules.categories).forEach(([key, desc]) => {
-        const color = catColors[key] || 'var(--text-3)';
-        rulesHtml += `<div class="cat-chip" style="--chip-color:${color}"><div><div class="cat-chip-name">${key}</div><div class="cat-chip-desc">${esc(desc)}</div></div></div>`;
-      });
-    }
-    rulesHtml += '</div></div>';
-
-    rulesHtml += '<div class="rules-block"><div class="rules-block-title">Auto High Priority</div><div class="auto-high-grid">';
+    // Urgent group
+    let rulesHtml = '<div class="rules-block"><div class="rules-group-label urgent">Urgent</div><div class="rules-tags">';
     if (rules.auto_high) {
       rules.auto_high.forEach(r => {
-        const parts = r.split(' — ');
-        if (parts.length === 2) {
-          rulesHtml += `<div class="auto-high-chip"><div class="auto-high-chip-name">${esc(parts[0])}</div><div class="auto-high-chip-desc">${esc(parts[1])}</div></div>`;
-        } else {
-          rulesHtml += `<div class="auto-high-chip"><div class="auto-high-chip-name">${esc(r)}</div></div>`;
-        }
+        const name = r.split(' — ')[0];
+        rulesHtml += `<span class="rules-tag urgent">${esc(name)}</span>`;
       });
     }
     rulesHtml += '</div></div>';
 
-    rulesHtml += `<div class="rules-block"><div class="priority-row">
-      <span class="priority-tag"><strong>Default:</strong> ${esc(rules.default_priority || 'medium')}</span>
-      <span class="priority-tag"><strong>Low:</strong> ${esc(rules.low_trigger || '')}</span>
-      <span class="priority-tag"><strong>Ask:</strong> ${esc(rules.ask_when || '')}</span>
-    </div></div>`;
+    // Categories group
+    rulesHtml += '<div class="rules-block"><div class="rules-group-label rest">Categories</div><div class="rules-tags">';
+    if (rules.categories) {
+      Object.keys(rules.categories).forEach(key => {
+        const color = catColors[key] || 'var(--text-3)';
+        rulesHtml += `<span class="rules-tag cat" style="--chip-color:${color}">${key}</span>`;
+      });
+    }
+    rulesHtml += '</div></div>';
 
     html += `<div class="rules-section" onclick="toggleSection(this)">
       <div class="rules-header">
