@@ -240,6 +240,40 @@ COMMANDS=$(cat "$DASH/commands.json" 2>/dev/null || echo "[]")
 # Activity feed — merge recent sessions + cron outputs, sort, limit 10
 ACTIVITY_DATA=$(python3 "$DASH/activity_data.py" "$HERMES" 2>/dev/null || echo "[]")
 
+# Reports from Obsidian vault Reviews folder
+REPORTS_DATA=$(python3 -c "
+import json, os, re
+vault = os.path.expanduser('~/Desktop/elli vault/Reviews')
+reports = []
+if os.path.isdir(vault):
+    for f in sorted(os.listdir(vault), reverse=True):
+        if f.endswith('.md'):
+            path = os.path.join(vault, f)
+            with open(path) as fh:
+                content = fh.read()
+            # Extract title from first # heading
+            title = f.replace('.md','')
+            m = re.search(r'^#\s+(.+)', content, re.M)
+            if m: title = m.group(1)
+            # Extract date
+            date_m = re.search(r'(\d{4}-\d{2}-\d{2})', f)
+            date = date_m.group(1) if date_m else ''
+            # Count severity markers
+            critical = len(re.findall(r'🔴', content))
+            medium = len(re.findall(r'🟠', content))
+            low = len(re.findall(r'🟡', content))
+            # Preview: first non-heading, non-empty line after ---
+            lines = content.split('\n')
+            preview = ''
+            for l in lines:
+                l = l.strip()
+                if l and not l.startswith('#') and not l.startswith('---') and not l.startswith('**Date') and not l.startswith('|'):
+                    preview = l[:120]
+                    break
+            reports.append({'file': f, 'title': title, 'date': date, 'content': content, 'preview': preview, 'critical': critical, 'medium': medium, 'low': low})
+print(json.dumps(reports))
+" 2>/dev/null || echo "[]")
+
 # Write data file
 # Raw config files (redact secrets)
 CONFIG_RAW=$(cat "$HERMES/config.yaml" 2>/dev/null | python3 -c "import sys,json; print(json.dumps(sys.stdin.read()))")
@@ -285,7 +319,8 @@ window.__DASHBOARD_DATA__ = {
     behavior: $MEM_BEHAVIOR,
     accessibility: $MEM_ACCESSIBILITY
   },
-  activity: $ACTIVITY_DATA
+  activity: $ACTIVITY_DATA,
+  reports: $REPORTS_DATA
 };
 JSEOF
 

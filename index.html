@@ -442,6 +442,22 @@
 
   </div>
 
+  <!-- SECTION: Reports -->
+  <div class="section-label"><i data-lucide="file-text" style="width:16px;height:16px"></i> Reports</div>
+  <div class="bento">
+
+    <a href="pages/reports.html" class="card">
+      <div class="card-h">
+        <i data-lucide="clipboard-check"></i>
+        <h2>Reviews & Research</h2>
+        <span class="badge" id="reports-badge">0</span>
+      </div>
+      <div class="card-desc">Code reviews, audits, and research reports</div>
+      <div class="card-preview" id="reports-preview"></div>
+    </a>
+
+  </div>
+
   <!-- SECTION: Settings -->
   <div class="section-label"><i data-lucide="settings" style="width:16px;height:16px"></i> Settings</div>
   <div class="bento">
@@ -565,6 +581,14 @@ function loadCards() {
   document.getElementById('skill-badge').textContent = skills.length;
   const cats = [...new Set(skills.map(s => s.category))];
   document.getElementById('skill-preview').textContent = cats.length + ' categories';
+
+  // Reports
+  const reports = d.reports || [];
+  document.getElementById('reports-badge').textContent = reports.length;
+  if (reports.length) {
+    const latest = reports[0];
+    document.getElementById('reports-preview').textContent = latest.title || latest.file;
+  }
 
   // SOUL.md preview
   const soulEl = document.getElementById('soul-preview');
