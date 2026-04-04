@@ -258,30 +258,21 @@
   .usage-fill.warn { background: var(--warn); }
   .usage-fill.danger { background: var(--danger); }
 
-  /* --- Status dot for gateway card --- */
-  .gw-status {
-    display: flex;
-    align-items: center;
-    gap: var(--s2);
-    margin-top: auto;
-    padding-top: var(--s3);
-    font-size: var(--fs-xs);
-    font-weight: 500;
-  }
-  .gw-status.online { color: var(--ok); }
-  .gw-status.offline { color: var(--text-3); }
+  /* --- Gateway restart button in header --- */
   .gw-restart-btn {
-    margin-top: var(--s3);
     background: var(--accent-muted);
     color: var(--accent);
     border: 1px solid rgba(93,228,212,0.2);
-    padding: var(--s2) var(--s4);
+    padding: 4px 12px;
     border-radius: var(--r2);
     font-family: var(--sans);
     font-size: var(--fs-xs);
     font-weight: 500;
     cursor: pointer;
     transition: background 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
   }
   .gw-restart-btn:hover { background: rgba(93,228,212,0.2); }
 
@@ -371,6 +362,8 @@
       <h1>Hermes <span>e11i's agent</span></h1>
     </div>
     <div class="status-row" id="status-bar"></div>
+    <button id="gw-restart-btn" onclick="restartGateway(event)" class="gw-restart-btn"><i data-lucide="refresh-cw" style="width:13px;height:13px"></i> Restart</button>
+    <span id="gw-restart-status" style="font-size:var(--fs-xs);color:var(--text-3)"></span>
   </div>
 
   <!-- SECTION: Action Items -->
@@ -397,18 +390,7 @@
       <div class="card-preview" id="cron-preview"></div>
     </a>
 
-    <div class="card">
-      <div class="card-h">
-        <i data-lucide="radio"></i>
-        <h2>Gateway</h2>
-      </div>
-      <div class="card-desc">Discord bot and service status</div>
-      <div class="gw-status" id="gw-status">
-        <span class="dot off"></span> Checking...
-      </div>
-      <button id="gw-restart-btn" onclick="restartGateway(event)" class="gw-restart-btn">Restart Gateway</button>
-      <span id="gw-restart-status" style="font-size:var(--fs-xs);color:var(--text-3);margin-top:4px"></span>
-    </div>
+
 
   </div>
 
