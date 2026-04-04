@@ -206,6 +206,16 @@
     background: rgba(93,228,212,0.1); color: var(--accent);
     padding: 0.15em 0.4em; border-radius: 4px; font-family: var(--mono); font-size: 0.9em;
   }
+  .rendered-md pre.code-block {
+    background: var(--bg-inset); border: 1px solid var(--border);
+    border-radius: var(--r1); padding: var(--s4); margin: 0.6em 0;
+    overflow-x: auto;
+  }
+  .rendered-md pre.code-block code {
+    background: none; padding: 0; border-radius: 0;
+    font-family: var(--mono); font-size: var(--fs-xs);
+    color: var(--text-2); white-space: pre-wrap; word-break: break-word;
+  }
   .rendered-md ul { margin: 0.4em 0; padding-left: 1.4em; list-style: disc; }
   .rendered-md li { margin: 0.2em 0; line-height: 1.5; }
   .rendered-md hr { border: none; border-top: 1px solid var(--border); margin: 0.8em 0; }
@@ -328,6 +338,14 @@
   .chroma-td-ts {
     font-family: var(--mono); font-size: var(--fs-xs);
     color: var(--text-3); white-space: nowrap;
+  }
+  /* Skill detail page */
+  .skill-meta {
+    display: flex; flex-wrap: wrap; gap: var(--s2); margin-bottom: var(--s4);
+  }
+  .tag-custom { background: var(--accent-muted); color: var(--accent); }
+  .skill-content.rendered-md {
+    border: none; background: transparent; padding: 0;
   }
   .skill-cat { margin-bottom: var(--s4); }
   .skill-cat-name {
