@@ -14,6 +14,7 @@ MEM_GOOGLE=$(cat "$HERMES/memory/google.md" 2>/dev/null | python3 -c "import sys
 MEM_GITHUB=$(cat "$HERMES/memory/github.md" 2>/dev/null | python3 -c "import sys,json; print(json.dumps(sys.stdin.read()))" 2>/dev/null || echo '""')
 MEM_BEHAVIOR=$(cat "$HERMES/memory/behavior.md" 2>/dev/null | python3 -c "import sys,json; print(json.dumps(sys.stdin.read()))" 2>/dev/null || echo '""')
 MEM_ACCESSIBILITY=$(cat "$HERMES/memory/accessibility.md" 2>/dev/null | python3 -c "import sys,json; print(json.dumps(sys.stdin.read()))" 2>/dev/null || echo '""')
+MEM_WEB_BEST_PRACTICES=$(cat "$HERMES/memory/web-best-practices.md" 2>/dev/null | python3 -c "import sys,json; print(json.dumps(sys.stdin.read()))" 2>/dev/null || echo '""')
 
 # Memory usage stats
 USER_CHARS=$(wc -c < "$HERMES/memories/USER.md" 2>/dev/null || echo 0)
@@ -325,7 +326,8 @@ window.__DASHBOARD_DATA__ = {
     google: $MEM_GOOGLE,
     github: $MEM_GITHUB,
     behavior: $MEM_BEHAVIOR,
-    accessibility: $MEM_ACCESSIBILITY
+    accessibility: $MEM_ACCESSIBILITY,
+    web_best_practices: $MEM_WEB_BEST_PRACTICES
   },
   activity: $ACTIVITY_DATA,
   reports: $REPORTS_DATA
