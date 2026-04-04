@@ -38,5 +38,37 @@
     "category": "to-buy",
     "priority": "medium",
     "done": false
+  },
+  {
+    "id": 6,
+    "task": "A11y App: Fix high contrast mode — highlight card borders & non-text UI elements (not just text)",
+    "added": "2026-04-04",
+    "category": "project",
+    "priority": "high",
+    "done": false
+  },
+  {
+    "id": 7,
+    "task": "A11y App: Add color scheme options — dark mode, light mode, custom user color picker",
+    "added": "2026-04-04",
+    "category": "project",
+    "priority": "high",
+    "done": false
+  },
+  {
+    "id": 8,
+    "task": "A11y App: Research AI-driven UI customization",
+    "added": "2026-04-04",
+    "category": "project",
+    "priority": "high",
+    "done": true
+  },
+  {
+    "id": 9,
+    "task": "A11y App: Implement AI-driven UI customization (simple language, layout switching, chart captions, text simplification)",
+    "added": "2026-04-04",
+    "category": "project",
+    "priority": "medium",
+    "done": false
   }
 ]
