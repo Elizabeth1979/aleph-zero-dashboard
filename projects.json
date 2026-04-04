@@ -7,15 +7,14 @@
     "started": "2026-04-04",
     "repo": "~/Projects/a11y-expert-mcp",
     "links": [
-      {"label": "Knowledge base repo", "url": "https://github.com/Elizabeth1979/a11y-skills"},
-      {"label": "Obsidian notes", "url": ""},
-      {"label": "Ideas & Todos", "url": ""}
+      {"label": "MCP repo", "url": "https://github.com/Elizabeth1979/a11y-expert-mcp"},
+      {"label": "Knowledge base repo", "url": "https://github.com/Elizabeth1979/a11y-skills"}
     ],
     "notes_path": "Accessibility Projects/A11y Expert MCP/",
     "milestones": [
       {"task": "MVP — 4 tools working locally", "done": true},
       {"task": "Add Resources & Prompts", "done": false},
-      {"task": "Push to GitHub", "done": false},
+      {"task": "Push to GitHub", "done": true},
       {"task": "Publish to PyPI", "done": false},
       {"task": "Add component library research tool", "done": false}
     ]

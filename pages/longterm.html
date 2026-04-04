@@ -280,7 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   let html = '';
   Object.keys(cats).sort().forEach(cat => {
-    html += `<div class="modal-chroma-cat">${cat} (${cats[cat].length})</div>`;
+    html += `<div class="modal-chroma-cat">${esc(cat)} (${cats[cat].length})</div>`;
     cats[cat].forEach(m => {
       html += `<div class="modal-chroma-entry">${esc(m.text)}</div>`;
     });

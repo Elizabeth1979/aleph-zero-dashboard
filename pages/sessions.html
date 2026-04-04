@@ -273,7 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
     html += '<div style="margin-top:var(--s5);margin-bottom:var(--s3)"><strong style="color:var(--text-2)">Recent:</strong></div>';
     sessions.forEach(s => {
       const date = s.created ? new Date(s.created).toLocaleString() : '';
-      const platform = s.platform ? `<span class="tag" style="margin-left:var(--s2)">${s.platform}</span>` : '';
+      const platform = s.platform ? `<span class="tag" style="margin-left:var(--s2)">${esc(s.platform)}</span>` : '';
       html += `<div class="cfg-row"><span class="cfg-key">${esc(s.title || s.file)}${platform}</span><span class="cfg-val" style="font-size:var(--fs-xs)">${date}</span></div>`;
     });
   }

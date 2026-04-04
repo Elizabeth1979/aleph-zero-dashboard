@@ -276,10 +276,10 @@ document.addEventListener('DOMContentLoaded', () => {
     return `<div class="cron">
       <div class="cron-top">
         <span class="dot ${enabled?'on':'off'}"></span>
-        <span class="cron-name">${j.name || j.job_id || j.id || 'Unnamed'}</span>
+        <span class="cron-name">${esc(j.name || j.job_id || j.id || 'Unnamed')}</span>
         <span class="tag tag-accent">${sched}</span>
-        <span class="tag">${j.deliver || 'local'}</span>
-        ${j.skills ? j.skills.map(s => `<span class="tag">${s}</span>`).join('') : ''}
+        <span class="tag">${esc(j.deliver || 'local')}</span>
+        ${j.skills ? j.skills.map(s => `<span class="tag">${esc(s)}</span>`).join('') : ''}
       </div>
       ${next ? `<div class="cron-meta">Next: ${next}</div>` : ''}
       ${j.prompt ? `<details><summary class="cron-prompt"><i data-lucide="chevron-right" style="width:12px;height:12px"></i>Prompt</summary><div class="cron-prompt-box">${esc(j.prompt)}</div></details>` : ''}

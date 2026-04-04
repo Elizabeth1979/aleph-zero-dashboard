@@ -272,15 +272,13 @@ document.addEventListener('DOMContentLoaded', () => {
   let html = '<div style="margin-bottom:var(--s5)"><strong style="color:var(--text-2)">Channels the bot can see and respond in:</strong></div>';
   channels.forEach(ch => {
     const icon = ch.type === 'channel' ? '#' : '\ud83e\uddf5';
-    html += `<div class="cfg-row"><span class="cfg-key">${icon} ${ch.name}</span><span class="cfg-val" style="font-size:var(--fs-xs)">${ch.guild} &bull; ${ch.id}</span></div>`;
+    html += `<div class="cfg-row"><span class="cfg-key">${icon} ${esc(ch.name)}</span><span class="cfg-val" style="font-size:var(--fs-xs)">${esc(ch.guild)} &bull; ${esc(ch.id)}</span></div>`;
   });
-  const threads = d.discord_threads || {};
-  const threadKeys = Object.keys(threads).filter(k => k !== 'updated_at');
-  if (threadKeys.length) {
+  const threads = d.discord_threads || [];
+  if (Array.isArray(threads) && threads.length) {
     html += '<div style="margin-top:var(--s6);margin-bottom:var(--s3)"><strong style="color:var(--text-2)">Active Threads:</strong></div>';
-    threadKeys.forEach(k => {
-      const t = threads[k];
-      html += `<div class="cfg-row"><span class="cfg-key">\ud83e\uddf5 ${t.name || k}</span><span class="cfg-val" style="font-size:var(--fs-xs)">${k}</span></div>`;
+    threads.forEach(t => {
+      html += `<div class="cfg-row"><span class="cfg-key">\ud83e\uddf5 ${esc(t)}</span><span class="cfg-val" style="font-size:var(--fs-xs)">${esc(t)}</span></div>`;
     });
   }
   document.getElementById('page-body').innerHTML = html;
