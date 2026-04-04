@@ -9,6 +9,87 @@
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <link rel="stylesheet" href="shared.css">
 <link rel="stylesheet" href="../a11y-widget.css">
+<style>
+  /* ── Description card ─────────────────────────── */
+  .cron-desc {
+    margin-top: var(--s3);
+    padding: var(--s3) var(--s4);
+    background: var(--bg-inset);
+    border-radius: var(--r1);
+    border-left: 2px solid var(--accent-dim);
+    display: grid;
+    gap: 0;
+  }
+  .desc-row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--s3);
+    padding: 4px 0;
+    font-size: var(--fs-sm);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .desc-row:last-child { border-bottom: none; }
+  .desc-key {
+    color: var(--text-3);
+    font-size: 13px;
+    min-width: 80px;
+    flex-shrink: 0;
+  }
+  .desc-val {
+    color: var(--text);
+    line-height: 1.5;
+    word-break: break-word;
+  }
+  .desc-val.accent { color: var(--accent); font-weight: 500; }
+  .desc-val.muted  { color: var(--text-2); }
+
+  /* Flags list */
+  .flags-list {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .flag-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--s2);
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.4;
+  }
+  .flag-item::before {
+    content: '◦';
+    color: var(--accent-dim);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* Status badge */
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 1px 7px;
+    border-radius: var(--pill);
+  }
+  .status-badge.ok   { color: var(--ok);   background: rgba(93,228,212,0.10); }
+  .status-badge.err  { color: var(--warn);  background: rgba(240,184,102,0.10); }
+  .status-badge.none { color: var(--text-3); }
+
+  /* Details/summary reset */
+  details { margin-top: var(--s3); }
+  details summary { list-style: none; }
+  details summary::-webkit-details-marker { display: none; }
+
+  /* Mobile tweaks */
+  @media (max-width: 480px) {
+    .desc-key { min-width: 68px; }
+    .cron-desc { padding: var(--s2) var(--s3); }
+    .cron-top  { gap: var(--s2); }
+  }
+</style>
 </head>
 <body>
 <div class="page-wrap">
@@ -24,28 +105,197 @@
 <script src="../data.js"></script>
 <script>
 
+/* ── Helpers ──────────────────────────────────────────────────────────── */
+
+function fmtDate(iso) {
+  if (!iso) return null;
+  try {
+    const d = new Date(iso);
+    if (isNaN(d)) return null;
+    const now = new Date();
+    const diff = d - now;
+    const absDiff = Math.abs(diff);
+    // Within 24 h — show relative
+    if (absDiff < 86400000) {
+      const mins = Math.round(diff / 60000);
+      if (mins > 0)  return `in ${mins < 60 ? mins + ' min' : Math.round(mins/60) + ' hr'}`;
+      if (mins < 0)  return `${Math.abs(mins) < 60 ? Math.abs(mins) + ' min ago' : Math.round(Math.abs(mins)/60) + ' hr ago'}`;
+      return 'just now';
+    }
+    // Same year — omit year
+    const opts = { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' };
+    if (d.getFullYear() !== now.getFullYear()) opts.year = 'numeric';
+    return d.toLocaleString(undefined, opts);
+  } catch(e) { return iso; }
+}
+
+function scheduleLabel(j) {
+  // schedule can be a string cron expr, or object with .display / .expr
+  const expr = (typeof j.schedule === 'object')
+    ? (j.schedule?.display || j.schedule?.expr || '')
+    : (j.schedule || '');
+  if (!expr) return j.repeat_display || '?';
+  // Extend cronHuman with day-of-month and other patterns
+  const p = expr.trim().split(/\s+/);
+  if (p.length === 5) {
+    const [min, hr, dom, mon, dow] = p;
+    const h = +hr, m = +min;
+    const t = `${h > 12 ? h-12 : h||12}:${String(m).padStart(2,'0')} ${h >= 12 ? 'PM' : 'AM'}`;
+    const ordinals = ['','1st','2nd','3rd','4th','5th','6th','7th','8th','9th','10th',
+      '11th','12th','13th','14th','15th','16th','17th','18th','19th','20th',
+      '21st','22nd','23rd','24th','25th','26th','27th','28th','29th','30th','31st'];
+    if (dom !== '*' && mon === '*' && dow === '*') {
+      return `Monthly on the ${ordinals[+dom] || dom} at ${t}`;
+    }
+    // Fall through to shared cronHuman for daily / weekly
+    const label = cronHuman(expr);
+    if (label !== expr) return label; // cronHuman recognized it
+  }
+  return expr; // raw fallback
+}
+
+function deliverLabel(deliver) {
+  if (!deliver) return 'local';
+  if (deliver.startsWith('discord:')) return 'Discord';
+  if (deliver === 'discord') return 'Discord';
+  return deliver;
+}
+
+/**
+ * extractFlags(prompt) → string[]
+ * Pulls up to 3 short action/condition bullets from a prompt string.
+ */
+function extractFlags(prompt) {
+  if (!prompt) return [];
+  const text = prompt.trim();
+  const flags = [];
+
+  // 1. Numbered list items: "1. ...", "1) ..."
+  const numbered = [...text.matchAll(/^\s*\d+[.)]\s+(.+)/gm)];
+  for (const m of numbered) {
+    if (flags.length >= 3) break;
+    const s = m[1].trim().replace(/\.$/, '');
+    if (s.length > 2) flags.push(s.length > 60 ? s.slice(0, 57) + '…' : s);
+  }
+  if (flags.length >= 2) return flags;
+
+  // 2. "alert if/when ...", "flag if ...", "notify if ..."
+  const alertPat = /\b(?:alert|flag|notify|warn(?:ing)?)\s+(?:if|when|whenever)\s+([^.!?\n]{5,80})/gi;
+  for (const m of text.matchAll(alertPat)) {
+    if (flags.length >= 3) break;
+    let s = m[1].trim().replace(/\.$/, '');
+    if (s.length > 60) s = s.slice(0, 57) + '…';
+    if (!flags.some(f => f.toLowerCase().includes(s.slice(0,20).toLowerCase()))) flags.push(s);
+  }
+  if (flags.length >= 2) return flags;
+
+  // 3. "if ... [threshold/condition]"
+  const ifPat = /\bif\s+([^,.\n]{5,80})/gi;
+  for (const m of text.matchAll(ifPat)) {
+    if (flags.length >= 3) break;
+    let s = m[1].trim().replace(/\.$/, '');
+    if (s.length > 60) s = s.slice(0, 57) + '…';
+    if (!flags.some(f => f.toLowerCase().includes(s.slice(0,20).toLowerCase()))) flags.push(s);
+  }
+  if (flags.length >= 2) return flags;
+
+  // 4. "check for ...", "look for ...", "search for ..."
+  const checkPat = /\b(?:check|look|search)\s+for\s+([^.!\n]{5,80})/gi;
+  for (const m of text.matchAll(checkPat)) {
+    if (flags.length >= 3) break;
+    let s = m[1].trim().replace(/\.$/, '');
+    if (s.length > 60) s = s.slice(0, 57) + '…';
+    if (!flags.some(f => f.toLowerCase().includes(s.slice(0,20).toLowerCase()))) flags.push(s);
+  }
+  if (flags.length) return flags;
+
+  // 5. Fallback: first meaningful sentence / first 100 chars
+  const first = text.replace(/\n+/g, ' ').slice(0, 100).replace(/\.$/, '');
+  return [first.length < text.length ? first + '…' : first];
+}
+
+/* ── Render ───────────────────────────────────────────────────────────── */
+
 document.addEventListener('DOMContentLoaded', () => {
   const d = window.__DASHBOARD_DATA__;
   if (!d) return;
   const jobs = d.cron_jobs || [];
-  if (!jobs.length) { document.getElementById('page-body').innerHTML = '<div class="empty">No jobs</div>'; return; }
+  if (!jobs.length) {
+    document.getElementById('page-body').innerHTML = '<div class="empty">No scheduled jobs</div>';
+    return;
+  }
+
   document.getElementById('page-body').innerHTML = jobs.map(j => {
-    const next = j.next_run_at ? new Date(j.next_run_at).toLocaleString() : '';
-    const sched = cronHuman(j.schedule);
-    const enabled = j.enabled !== false;
+    const enabled  = j.enabled !== false;
+    const name     = esc(j.name || j.job_id || j.id || 'Unnamed');
+    const sched    = esc(scheduleLabel(j));
+    const deliver  = esc(deliverLabel(j.deliver));
+    const nextRun  = fmtDate(j.next_run_at);
+    const lastRun  = fmtDate(j.last_run_at);
+    const status   = (j.last_status || '').toLowerCase();
+    const isOk     = status === 'ok' || status === 'success' || status === 'done';
+    const isErr    = status && !isOk && status !== '';
+    const flags    = j.prompt ? extractFlags(j.prompt) : [];
+
+    /* Status badge for last run */
+    const statusBadge = lastRun
+      ? `<span class="status-badge ${isOk ? 'ok' : isErr ? 'err' : 'none'}">${lastRun}${status ? ' · ' + esc(status) : ''}</span>`
+      : '<span class="status-badge none">—</span>';
+
+    /* Flags rows */
+    const flagsHtml = flags.length
+      ? `<div class="desc-row">
+           <span class="desc-key">Flags</span>
+           <span class="desc-val">
+             <div class="flags-list">
+               ${flags.map(f => `<span class="flag-item">${esc(f)}</span>`).join('')}
+             </div>
+           </span>
+         </div>`
+      : '';
+
+    /* Skills tags */
+    const skillTags = j.skills && j.skills.length
+      ? j.skills.map(s => `<span class="tag">${esc(s)}</span>`).join('')
+      : '';
+
     return `<div class="cron">
       <div class="cron-top">
-        <span class="dot ${enabled?'on':'off'}"></span>
-        <span class="cron-name">${esc(j.name || j.job_id || j.id || 'Unnamed')}</span>
-        <span class="tag tag-accent">${sched}</span>
-        <span class="tag">${esc(j.deliver || 'local')}</span>
-        ${j.skills ? j.skills.map(s => `<span class="tag">${esc(s)}</span>`).join('') : ''}
+        <span class="dot ${enabled ? 'on' : 'off'}" title="${enabled ? 'Enabled' : 'Disabled'}"></span>
+        <span class="cron-name">${name}</span>
+        ${skillTags}
       </div>
-      ${next ? `<div class="cron-meta">Next: ${next}</div>` : ''}
-      ${j.prompt ? `<details><summary class="cron-prompt"><i data-lucide="chevron-right" style="width:12px;height:12px"></i>Prompt</summary><div class="cron-prompt-box">${esc(j.prompt)}</div></details>` : ''}
+
+      <div class="cron-desc">
+        <div class="desc-row">
+          <span class="desc-key">Runs</span>
+          <span class="desc-val accent">${sched}</span>
+        </div>
+        <div class="desc-row">
+          <span class="desc-key">Delivers to</span>
+          <span class="desc-val muted">${deliver}</span>
+        </div>
+        <div class="desc-row">
+          <span class="desc-key">Next run</span>
+          <span class="desc-val">${nextRun ? esc(nextRun) : '<span class="status-badge none">—</span>'}</span>
+        </div>
+        <div class="desc-row">
+          <span class="desc-key">Last run</span>
+          <span class="desc-val">${statusBadge}</span>
+        </div>
+        ${flagsHtml}
+      </div>
+
+      ${j.prompt ? `<details>
+        <summary class="cron-prompt">
+          <i data-lucide="chevron-right" style="width:12px;height:12px"></i>Full prompt
+        </summary>
+        <div class="cron-prompt-box">${esc(j.prompt)}</div>
+      </details>` : ''}
     </div>`;
   }).join('');
-  // Accordion: only one details open at a time
+
+  /* Accordion: only one details open at a time */
   document.querySelectorAll('details').forEach(det => {
     det.addEventListener('toggle', () => {
       if (det.open) {
@@ -55,6 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
   if (typeof lucide !== 'undefined') lucide.createIcons();
 });
 
