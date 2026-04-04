@@ -14,5 +14,13 @@
     "category": "task",
     "priority": "high",
     "done": false
+  },
+  {
+    "id": 3,
+    "task": "Buy flight tickets to visit sister in the US",
+    "added": "2026-04-04",
+    "category": "task",
+    "priority": "high",
+    "done": false
   }
 ]
