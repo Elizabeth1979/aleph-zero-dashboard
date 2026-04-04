@@ -25,7 +25,7 @@
   },
   {
     "id": 4,
-    "task": "Build A11y Expert MCP — MVP without ChromaDB first, add ChromaDB later if needed. Plan in Obsidian vault: A11y App Research/08_mcp_product_plan.md",
+    "task": "Build A11y Expert MCP \u2014 MVP without ChromaDB first, add ChromaDB later if needed. Plan in Obsidian vault: A11y App Research/08_mcp_product_plan.md",
     "added": "2026-04-04",
     "category": "project",
     "priority": "medium",
@@ -41,7 +41,7 @@
   },
   {
     "id": 6,
-    "task": "A11y App: Fix high contrast mode — highlight card borders & non-text UI elements (not just text)",
+    "task": "A11y App: Fix high contrast mode \u2014 highlight card borders & non-text UI elements (not just text)",
     "added": "2026-04-04",
     "category": "project",
     "priority": "high",
@@ -49,7 +49,7 @@
   },
   {
     "id": 7,
-    "task": "A11y App: Add color scheme options — dark mode, light mode, custom user color picker",
+    "task": "A11y App: Add color scheme options \u2014 dark mode, light mode, custom user color picker",
     "added": "2026-04-04",
     "category": "project",
     "priority": "high",
@@ -69,6 +69,54 @@
     "added": "2026-04-04",
     "category": "project",
     "priority": "medium",
+    "done": false
+  },
+  {
+    "id": 10,
+    "task": "Dashboard: Add mobile breakpoints to all detail pages",
+    "added": "2026-04-04",
+    "category": "project",
+    "priority": "medium",
+    "done": false
+  },
+  {
+    "id": 11,
+    "task": "Dashboard: Fix contrast ratio \u2014 lighten --text-3 to WCAG AA (4.5:1)",
+    "added": "2026-04-04",
+    "category": "project",
+    "priority": "medium",
+    "done": false
+  },
+  {
+    "id": 12,
+    "task": "Dashboard: Fix --fs-xs from 13px to 14px + a11y widget font sizes",
+    "added": "2026-04-04",
+    "category": "project",
+    "priority": "medium",
+    "done": false
+  },
+  {
+    "id": 13,
+    "task": "Dashboard: Add <main> landmarks, aria-hidden on icons, focus-visible styles",
+    "added": "2026-04-04",
+    "category": "project",
+    "priority": "low",
+    "done": false
+  },
+  {
+    "id": 14,
+    "task": "Dashboard: Security hardening \u2014 CSP, pin Lucide + SRI, Object.create(null)",
+    "added": "2026-04-04",
+    "category": "project",
+    "priority": "low",
+    "done": false
+  },
+  {
+    "id": 15,
+    "task": "Dashboard: A11y widget \u2014 44px touch target on close btn, remove red from reset",
+    "added": "2026-04-04",
+    "category": "project",
+    "priority": "low",
     "done": false
   }
 ]
