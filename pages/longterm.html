@@ -42,21 +42,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let rawMode = false;
 
+  let activeFilter = 'all';
+  const catNames = Object.keys(cats).sort();
+
   function render() {
     let html = '';
-    Object.keys(cats).sort().forEach(cat => {
-      html += `<div class="modal-chroma-cat">${esc(cat)} (${cats[cat].length})</div>`;
-      cats[cat].forEach(m => {
-        if (!rawMode) {
+    if (!rawMode) {
+      // Simple view: grouped by category
+      catNames.forEach(cat => {
+        html += `<div class="modal-chroma-cat">${esc(cat)} (${cats[cat].length})</div>`;
+        cats[cat].forEach(m => {
           html += `<div class="modal-chroma-entry">${esc(m.text)}</div>`;
-        }
+        });
       });
-    });
-    if (rawMode) {
+    } else {
+      // Raw view: filter pills + table
+      html += `<div class="chroma-filters">`;
+      html += `<button class="pill${activeFilter === 'all' ? ' active' : ''}" data-cat="all">All (${chroma.memories.length})</button>`;
+      catNames.forEach(cat => {
+        html += `<button class="pill${activeFilter === cat ? ' active' : ''}" data-cat="${esc(cat)}">${esc(cat)} (${cats[cat].length})</button>`;
+      });
+      html += `</div>`;
+
+      const filtered = activeFilter === 'all'
+        ? chroma.memories.slice().sort((a, b) => (a.category || '').localeCompare(b.category || ''))
+        : cats[activeFilter] || [];
+
       html += `<div class="chroma-table-wrap"><table class="chroma-table">`;
       html += `<thead><tr><th>ID</th><th>Category</th><th>Text</th><th>Created</th></tr></thead><tbody>`;
-      const allMems = chroma.memories.slice().sort((a, b) => (a.category || '').localeCompare(b.category || ''));
-      allMems.forEach(m => {
+      filtered.forEach(m => {
         const ts = m.timestamp ? m.timestamp.replace('T', ' ').slice(0, 16) : '—';
         html += `<tr>`;
         html += `<td class="chroma-td-id">${esc(m.id)}</td>`;
@@ -69,6 +83,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     document.getElementById('page-body').innerHTML = html;
     if (typeof lucide !== 'undefined') lucide.createIcons();
+
+    // Attach filter click handlers
+    document.querySelectorAll('.chroma-filters .pill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        activeFilter = btn.dataset.cat;
+        render();
+      });
+    });
   }
 
   document.getElementById('view-toggle').addEventListener('click', () => {

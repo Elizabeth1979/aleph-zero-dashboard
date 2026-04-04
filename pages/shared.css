@@ -284,6 +284,10 @@
     background: var(--bg-inset); border-radius: var(--r1);
     font-size: var(--fs-sm); color: var(--text); line-height: 1.6;
   }
+  .chroma-filters {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-bottom: var(--s4);
+  }
   .chroma-table-wrap {
     overflow-x: auto; margin-top: var(--s4);
   }
