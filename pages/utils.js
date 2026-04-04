@@ -12,7 +12,24 @@ function renderMd(raw) {
   html = html.replace(/^# (.+)$/gm, '<h1>$1</h1>');
   // Bold & inline code
   html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-  html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+  html = html.replace(/`([^`]+)`/g, function(_, inner) {
+    // Linkify known file paths
+    const memMatch = inner.match(/~\/.hermes\/memory\/(.+\.md)/);
+    if (memMatch) {
+      const key = memMatch[1].replace('.md','').replace(/-/g,'_');
+      return `<a href="#detail-${key}" class="file-link" data-detail="${key}"><code>${inner}</code></a>`;
+    }
+    const dashMatch = inner.match(/~\/.hermes\/dashboard\/(.+)\.(json|html)/);
+    if (dashMatch) {
+      const pageMap = {
+        'tasks': 'tasks.html', 'commands': 'commands.html',
+        'config': 'config.html', 'data': null
+      };
+      const page = pageMap[dashMatch[1]];
+      if (page) return `<a href="${page}" class="file-link"><code>${inner}</code></a>`;
+    }
+    return `<code>${inner}</code>`;
+  });
   // Horizontal rules
   html = html.replace(/^---$/gm, '<hr>');
   // Section separators (§)
