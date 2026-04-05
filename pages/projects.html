@@ -148,6 +148,54 @@
     white-space: nowrap;
   }
 
+  /* Task table */
+  .task-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--fs-sm);
+  }
+  .task-table th {
+    text-align: left;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .task-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    vertical-align: top;
+  }
+  .task-table tr:last-child td { border-bottom: none; }
+  .task-table tr.is-done td { opacity: 0.35; }
+  .task-table tr.is-done .task-table-text { text-decoration: line-through; }
+  .task-table-text { color: var(--text); line-height: 1.4; }
+  .task-table-date { font-family: var(--mono); color: var(--text-3); font-size: var(--fs-xs); white-space: nowrap; }
+  .diff-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    padding: 2px 8px;
+    border-radius: var(--pill);
+    white-space: nowrap;
+  }
+  .diff-badge.easy {
+    color: var(--accent);
+    background: var(--accent-muted);
+  }
+  .diff-badge.medium {
+    color: var(--warn);
+    background: rgba(240, 184, 102, 0.12);
+  }
+  .diff-badge.hard {
+    color: #c084fc;
+    background: rgba(192, 132, 252, 0.12);
+  }
+
   /* Checklist items (milestones + tasks) */
   .checklist-item {
     display: flex;
@@ -265,20 +313,32 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>`;
     }
 
-    // Tasks from tasks.json
+    // Tasks from tasks.json — rendered as table with difficulty
     let tasksHtml = '';
     if (p.task_prefix) {
       const projectTasks = allTasks.filter(t => t.task.startsWith(p.task_prefix));
       if (projectTasks.length) {
         const pending = projectTasks.filter(t => !t.done);
         const done = projectTasks.filter(t => t.done);
-        const cleaned = [...pending, ...done].map(t => ({
-          task: t.task.replace(p.task_prefix, '').replace(/^\s*—?\s*/, '').trim() || t.task,
-          done: t.done
-        }));
+        const sorted = [...pending, ...done];
+        const rows = sorted.map(t => {
+          const text = t.task.replace(p.task_prefix, '').replace(/^\s*—?\s*/, '').trim() || t.task;
+          const diff = t.difficulty || '';
+          const diffBadge = diff ? `<span class="diff-badge ${diff}">${diff}</span>` : '';
+          const cls = t.done ? 'is-done' : '';
+          const date = t.added || '';
+          return `<tr class="${cls}">
+            <td class="task-table-text">${esc(text)}</td>
+            <td>${diffBadge}</td>
+            <td class="task-table-date">${date}</td>
+          </tr>`;
+        }).join('');
         tasksHtml = `<div class="card-section">
           <div class="card-section-title">Tasks</div>
-          ${renderChecklist(cleaned)}
+          <table class="task-table">
+            <thead><tr><th>Task</th><th>Difficulty</th><th>Added</th></tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
         </div>`;
       }
     }

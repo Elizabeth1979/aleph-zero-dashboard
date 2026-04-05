@@ -45,7 +45,8 @@
     "added": "2026-04-04",
     "category": "project",
     "done": false,
-    "urgent": false
+    "urgent": false,
+    "difficulty": "medium"
   },
   {
     "id": 7,
@@ -53,7 +54,8 @@
     "added": "2026-04-04",
     "category": "project",
     "done": false,
-    "urgent": false
+    "urgent": false,
+    "difficulty": "hard"
   },
   {
     "id": 8,
@@ -61,7 +63,8 @@
     "added": "2026-04-04",
     "category": "project",
     "done": true,
-    "urgent": false
+    "urgent": false,
+    "difficulty": "hard"
   },
   {
     "id": 9,
@@ -69,7 +72,8 @@
     "added": "2026-04-04",
     "category": "project",
     "done": false,
-    "urgent": false
+    "urgent": false,
+    "difficulty": "hard"
   },
   {
     "id": 10,
@@ -77,7 +81,8 @@
     "added": "2026-04-04",
     "category": "project",
     "done": false,
-    "urgent": false
+    "urgent": false,
+    "difficulty": "medium"
   },
   {
     "id": 11,
@@ -85,7 +90,8 @@
     "added": "2026-04-04",
     "category": "project",
     "done": false,
-    "urgent": false
+    "urgent": false,
+    "difficulty": "easy"
   },
   {
     "id": 12,
@@ -93,7 +99,8 @@
     "added": "2026-04-04",
     "category": "project",
     "done": false,
-    "urgent": false
+    "urgent": false,
+    "difficulty": "easy"
   },
   {
     "id": 13,
@@ -101,7 +108,8 @@
     "added": "2026-04-04",
     "category": "project",
     "done": false,
-    "urgent": false
+    "urgent": false,
+    "difficulty": "easy"
   },
   {
     "id": 14,
@@ -109,7 +117,8 @@
     "added": "2026-04-04",
     "category": "project",
     "done": false,
-    "urgent": false
+    "urgent": false,
+    "difficulty": "medium"
   },
   {
     "id": 15,
@@ -117,7 +126,8 @@
     "added": "2026-04-04",
     "category": "project",
     "done": false,
-    "urgent": false
+    "urgent": false,
+    "difficulty": "easy"
   },
   {
     "id": 16,
@@ -135,5 +145,23 @@
     "done": true,
     "priority": "medium",
     "urgent": false
+  },
+  {
+    "id": 18,
+    "task": "Dashboard: Fix Reset All button in a11y panel \u2014 verify it clears all settings and re-renders correctly",
+    "added": "2026-04-05",
+    "category": "project",
+    "done": false,
+    "urgent": false,
+    "difficulty": "easy"
+  },
+  {
+    "id": 19,
+    "task": "Dashboard: A11y panel advanced settings \u2014 custom font picker (multiple fonts), custom color pickers for text, background, links/buttons",
+    "added": "2026-04-05",
+    "category": "project",
+    "done": false,
+    "urgent": false,
+    "difficulty": "hard"
   }
 ]
