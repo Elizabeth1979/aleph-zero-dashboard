@@ -125,7 +125,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 16px 12px;
+  padding: 10px 14px 8px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   gap: 8px;
   flex-shrink: 0;
@@ -191,10 +191,10 @@
 
 /* Panel Body */
 .a11y-panel-body {
-  padding: 10px 12px;
+  padding: 8px 12px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
   flex: 1;
   min-height: 0;
   overflow-y: auto;
@@ -212,9 +212,9 @@
 .a11y-toggle {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   width: 100%;
-  padding: 9px 10px;
+  padding: 7px 10px;
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.05);
@@ -242,8 +242,8 @@
 
 /* Toggle icon wrapper */
 .a11y-toggle-icon {
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.06);
   display: flex;
@@ -363,7 +363,7 @@
 
 /* Panel Footer */
 .a11y-panel-footer {
-  padding: 8px 12px 12px;
+  padding: 6px 12px 10px;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
   flex-shrink: 0;
 }
