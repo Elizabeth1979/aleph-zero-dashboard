@@ -340,28 +340,21 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>`;
   }
 
-  // Group remaining by category
-  const catMeta = { task: 'Tasks', 'to-buy': 'To Buy', idea: 'Ideas', read: 'To Read', write: 'To Write', share: 'Share', remember: 'Remember' };
-  const catOrder = ['task', 'to-buy', 'idea', 'read', 'write', 'share', 'remember'];
-  const groups = {};
-  rest.forEach(t => { const cat = t.category || 'task'; if (!groups[cat]) groups[cat] = []; groups[cat].push(t); });
-  const activeCats = catOrder.filter(c => groups[c] && groups[c].length);
-  Object.keys(groups).forEach(c => { if (!catOrder.includes(c)) activeCats.push(c); });
-
-  activeCats.forEach(cat => {
-    const items = groups[cat];
-    const label = catMeta[cat] || cat;
+  // LOCKED LAYOUT — Two sections only: Urgent + Tasks. Tags (Work/Private/Buy) handle
+  // all categorization via pills + filter bar. No separate "To Buy" or other sections.
+  // Approved by Elli 2026-04-05. Do not split into category sections.
+  if (rest.length) {
     html += `<div class="task-section open" onclick="toggleSection(this)">
       <div class="task-section-header">
         ${chevron}
-        <span class="task-section-label">${label}</span>
-        <span class="task-section-count accent">${items.length}</span>
+        <span class="task-section-label">Tasks</span>
+        <span class="task-section-count accent">${rest.length}</span>
       </div>
       <div class="task-section-body" onclick="event.stopPropagation()">
-        ${items.map(renderItem).join('')}
+        ${rest.map(renderItem).join('')}
       </div>
     </div>`;
-  });
+  }
 
   // Auto-urgent rules — collapsed
   const rules = d.capture_rules || {};
