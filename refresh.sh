@@ -41,6 +41,8 @@ for j in jobs:
         j['repeat_display'] = f\"ran {r.get('completed',0)}x\" if r.get('completed') else ''
     if not j.get('job_id'):
         j['job_id'] = j.get('id', '')
+# Only include recurring jobs (repeat.times is None = forever)
+jobs = [j for j in jobs if not j.get('repeat') or j['repeat'].get('times') is None]
 print(json.dumps(jobs))
 " 2>/dev/null || echo "[]")
 
