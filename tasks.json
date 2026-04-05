@@ -80,7 +80,7 @@
     "task": "Dashboard: Fix contrast ratio \u2014 lighten --text-3 to WCAG AA (4.5:1)",
     "added": "2026-04-04",
     "category": "project",
-    "done": false,
+    "done": true,
     "urgent": false,
     "difficulty": "easy",
     "description": "Secondary text is too dim. Bump it up so it passes WCAG AA contrast requirements.",
