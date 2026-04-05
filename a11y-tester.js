@@ -154,7 +154,7 @@
 
     headings.forEach(h => {
       // Skip elements inside the tester panel itself
-      if (h.closest('.a11y-tester-panel, .a11y-tester-toggle')) return;
+      if (h.closest('.a11y-tester-panel, .a11y-tester-toggle, #a11y-widget-btn, #a11y-widget-panel')) return;
 
       const level = parseInt(h.tagName[1]);
       const text = h.textContent.trim() || '(empty)';
@@ -208,7 +208,7 @@
     // Semantic elements
     Object.keys(landmarkMap).forEach(tag => {
       document.querySelectorAll(tag).forEach(el => {
-        if (el.closest('.a11y-tester-panel, .a11y-tester-toggle')) return;
+        if (el.closest('.a11y-tester-panel, .a11y-tester-toggle, #a11y-widget-btn, #a11y-widget-panel')) return;
         const role = el.getAttribute('role') || landmarkMap[tag];
         const label = el.getAttribute('aria-label') || el.getAttribute('aria-labelledby') || '';
         // section without label is not a landmark
@@ -220,7 +220,7 @@
     // Explicit role attributes
     ariaRoles.forEach(role => {
       document.querySelectorAll(`[role="${role}"]`).forEach(el => {
-        if (el.closest('.a11y-tester-panel, .a11y-tester-toggle')) return;
+        if (el.closest('.a11y-tester-panel, .a11y-tester-toggle, #a11y-widget-btn, #a11y-widget-panel')) return;
         if (found.some(f => f.el === el)) return; // already found
         const label = el.getAttribute('aria-label') || '';
         found.push({ el, role, label, tag: el.tagName.toLowerCase() });
@@ -264,7 +264,7 @@
 
     const results = [];
     images.forEach(img => {
-      if (img.closest('.a11y-tester-panel, .a11y-tester-toggle')) return;
+      if (img.closest('.a11y-tester-panel, .a11y-tester-toggle, #a11y-widget-btn, #a11y-widget-panel')) return;
 
       const alt = img.getAttribute('alt');
       const src = img.src.split('/').pop().split('?')[0] || '(inline)';
@@ -319,7 +319,7 @@
 
     const results = [];
     interactives.forEach(el => {
-      if (el.closest('.a11y-tester-panel, .a11y-tester-toggle')) return;
+      if (el.closest('.a11y-tester-panel, .a11y-tester-toggle, #a11y-widget-btn, #a11y-widget-panel')) return;
 
       const tag = el.tagName.toLowerCase();
       const role = el.getAttribute('role') || tag;
@@ -364,7 +364,7 @@
 
     // aria-hidden elements
     document.querySelectorAll('[aria-hidden="true"]').forEach(el => {
-      if (el.closest('.a11y-tester-panel, .a11y-tester-toggle')) return;
+      if (el.closest('.a11y-tester-panel, .a11y-tester-toggle, #a11y-widget-btn, #a11y-widget-panel')) return;
       // Skip common decorative aria-hidden (icons)
       if (el.tagName === 'SVG' || el.tagName === 'I') return;
       hidden.push({ el, reason: 'aria-hidden="true"', tag: el.tagName.toLowerCase() });
@@ -372,7 +372,7 @@
 
     // display:none / visibility:hidden with content
     document.querySelectorAll('*').forEach(el => {
-      if (el.closest('.a11y-tester-panel, .a11y-tester-toggle')) return;
+      if (el.closest('.a11y-tester-panel, .a11y-tester-toggle, #a11y-widget-btn, #a11y-widget-panel')) return;
       if (hidden.some(h => h.el === el)) return;
       const style = getComputedStyle(el);
       if (
@@ -387,7 +387,7 @@
 
     // sr-only / visually-hidden
     document.querySelectorAll('.sr-only, .visually-hidden, [class*="screen-reader"]').forEach(el => {
-      if (el.closest('.a11y-tester-panel, .a11y-tester-toggle')) return;
+      if (el.closest('.a11y-tester-panel, .a11y-tester-toggle, #a11y-widget-btn, #a11y-widget-panel')) return;
       if (hidden.some(h => h.el === el)) return;
       hidden.push({ el, reason: 'visually hidden (sr-only)', tag: el.tagName.toLowerCase() });
     });
@@ -417,7 +417,7 @@
     const allFocusable = Array.from(document.querySelectorAll(selector));
 
     const focusable = allFocusable.filter(el => {
-      if (el.closest('.a11y-tester-panel, .a11y-tester-toggle')) return false;
+      if (el.closest('.a11y-tester-panel, .a11y-tester-toggle, #a11y-widget-btn, #a11y-widget-panel')) return false;
       const ti = el.getAttribute('tabindex');
       if (ti !== null && parseInt(ti) < 0) return false;
       return true;
@@ -532,7 +532,7 @@
     const failures = [];
 
     elements.forEach(el => {
-      if (el.closest('.a11y-tester-panel, .a11y-tester-toggle')) return;
+      if (el.closest('.a11y-tester-panel, .a11y-tester-toggle, #a11y-widget-btn, #a11y-widget-panel')) return;
       if (!el.textContent.trim()) return;
 
       const style = getComputedStyle(el);
@@ -597,7 +597,7 @@
   function runFocus() {
     const selector = 'a[href], button, input, select, textarea, [tabindex]';
     const focusable = Array.from(document.querySelectorAll(selector)).filter(el => {
-      if (el.closest('.a11y-tester-panel, .a11y-tester-toggle')) return false;
+      if (el.closest('.a11y-tester-panel, .a11y-tester-toggle, #a11y-widget-btn, #a11y-widget-panel')) return false;
       const ti = el.getAttribute('tabindex');
       return ti === null || parseInt(ti) >= 0;
     });
@@ -683,7 +683,7 @@
     );
 
     candidates.forEach(el => {
-      if (el.closest('.a11y-tester-panel, .a11y-tester-toggle')) return;
+      if (el.closest('.a11y-tester-panel, .a11y-tester-toggle, #a11y-widget-btn, #a11y-widget-panel')) return;
       const role = el.getAttribute('role');
       const tag = el.tagName.toLowerCase();
 
@@ -777,7 +777,7 @@
     let errorCount = 0;
 
     inputs.forEach(el => {
-      if (el.closest('.a11y-tester-panel, .a11y-tester-toggle')) return;
+      if (el.closest('.a11y-tester-panel, .a11y-tester-toggle, #a11y-widget-btn, #a11y-widget-panel')) return;
       if (el.type === 'hidden') return;
 
       const tag = el.tagName.toLowerCase();
