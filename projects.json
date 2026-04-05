@@ -21,10 +21,13 @@
     "milestones": [],
     "features": [
       "4 MCP tools: review_code, get_pattern, list_patterns, check_contrast",
-      "21 WAI-ARIA component patterns (modal, tabs, combobox, etc.)",
+      "33 WAI-ARIA component patterns in knowledge base",
       "WCAG contrast ratio checker with AA/AAA pass/fail",
       "Code review with specific fix suggestions and ARIA references",
-      "Published on GitHub as open-source"
+      "Published on GitHub as open-source",
+      "MCP resources: pattern index + per-component detail (a11y://patterns)",
+      "5 guided prompts: audit-component, make-accessible, check-form, wcag-checklist, aria-guide",
+      "Prompts auto-inject relevant WAI-ARIA patterns as context"
     ]
   },
   {
