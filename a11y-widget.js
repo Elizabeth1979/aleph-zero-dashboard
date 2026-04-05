@@ -22,6 +22,8 @@
   const CB_CYCLE = ['off', 'deuteranopia', 'protanopia', 'tritanopia'];
   const CB_LABELS = { off: 'Off', deuteranopia: 'Red-Green', protanopia: 'Red-Weak', tritanopia: 'Blue-Yellow' };
 
+  /* LOCKED — Feature order and panel layout approved by Elli 2026-04-05.
+     10 features in this order. Do not reorder or change the panel UI structure. */
   /* Feature definitions */
   const FEATURES = [
     {

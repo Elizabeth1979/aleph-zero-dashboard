@@ -148,6 +148,8 @@
     white-space: nowrap;
   }
 
+  /* LOCKED LAYOUT — 4 columns: Task (with desc), Difficulty, Impact, Score.
+     Sorted by score descending. Approved by Elli 2026-04-05. Do not change structure. */
   /* Task table */
   .task-table {
     width: 100%;
@@ -364,6 +366,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tasksHtml = `<div class="card-section">
           <div class="card-section-title">To Do</div>
           ${pending.length ? `<table class="task-table">
+            <!-- LOCKED: 4 columns — Task, Difficulty, Impact, Score -->
             <thead><tr><th>Task</th><th>Difficulty</th><th>Impact</th><th>Score</th></tr></thead>
             <tbody>${rows}</tbody>
           </table>` : '<div style="font-size:var(--fs-sm);color:var(--text-3)">All done!</div>'}

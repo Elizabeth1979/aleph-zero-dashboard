@@ -189,6 +189,8 @@
   display: block;
 }
 
+/* LOCKED LAYOUT — compact items, full-height panel, scroll preserved on toggle.
+   Approved by Elli 2026-04-05. Do not change item sizing/gaps. */
 /* Panel Body */
 .a11y-panel-body {
   padding: 6px 10px;

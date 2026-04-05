@@ -61,6 +61,7 @@
   }
 
   .task-item-content { flex: 1; min-width: 0; }
+  /* LOCKED LAYOUT — text left, pills right. Approved by Elli 2026-04-05. Do not change. */
   .task-item-row {
     display: flex; align-items: center; justify-content: space-between; gap: var(--s3);
   }
@@ -239,6 +240,8 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   const scopeColors = { 'private': '#c084fc', 'work': '#60a5fa' };
 
+  // LOCKED LAYOUT — .task-item-row with text left, pills/badges right-aligned.
+  // Change data/badges, NOT the row structure. Approved 2026-04-05.
   function renderItem(t) {
     const cls = t.done ? 'task-item done' : 'task-item';
     const tag = t.tag || '';
