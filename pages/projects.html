@@ -148,57 +148,20 @@
     white-space: nowrap;
   }
 
-  /* LOCKED LAYOUT — 4 columns: Task (with desc), Difficulty, Impact, Score.
-     Sorted by score descending. Approved by Elli 2026-04-05. Do not change structure. */
-  /* Task table */
-  .task-table {
-    width: 100%;
-    border-collapse: collapse;
+  /* Task list — simple ordered list, no scoring */
+  .task-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
     font-size: var(--fs-sm);
   }
-  .task-table th {
-    text-align: left;
-    font-size: var(--fs-xs);
-    font-weight: 600;
-    color: var(--text-3);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    padding: 6px 10px;
-    border-bottom: 1px solid var(--border);
-  }
-  .task-table td {
-    padding: 8px 10px;
+  .task-list li {
+    padding: 6px 0;
     border-bottom: 1px solid rgba(255,255,255,0.03);
-    vertical-align: top;
   }
-  .task-table tr:last-child td { border-bottom: none; }
-  .task-table-text { color: var(--text); line-height: 1.4; }
-  .task-table-desc { font-size: var(--fs-xs); color: var(--text-3); line-height: 1.4; margin-top: 2px; }
-  .badge {
-    display: inline-block;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.03em;
-    padding: 2px 8px;
-    border-radius: var(--pill);
-    white-space: nowrap;
-  }
-  .badge.easy { color: var(--accent); background: var(--accent-muted); }
-  .badge.medium { color: var(--warn); background: rgba(240, 184, 102, 0.12); }
-  .badge.hard { color: #c084fc; background: rgba(192, 132, 252, 0.12); }
-  .badge.impact-high { color: #f87171; background: rgba(248, 113, 113, 0.12); }
-  .badge.impact-medium { color: var(--warn); background: rgba(240, 184, 102, 0.12); }
-  .badge.impact-low { color: var(--text-3); background: rgba(255,255,255,0.06); }
-
-  /* Score number */
-  .score-num {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 28px; height: 28px; border-radius: 50%;
-    font-size: 13px; font-weight: 700; font-family: var(--mono);
-  }
-  .score-num.s-high { color: var(--accent); background: var(--accent-muted); }
-  .score-num.s-med { color: var(--warn); background: rgba(240, 184, 102, 0.12); }
-  .score-num.s-low { color: var(--text-3); background: rgba(255,255,255,0.06); }
+  .task-list li:last-child { border-bottom: none; }
+  .task-text { color: var(--text); line-height: 1.4; }
+  .task-desc { font-size: var(--fs-xs); color: var(--text-3); line-height: 1.4; margin-top: 2px; }
 
   /* Features list */
   .feature-list { list-style: none; padding: 0; margin: 0; }
@@ -335,41 +298,15 @@ document.addEventListener('DOMContentLoaded', () => {
       if (projectTasks.length) {
         const pending = projectTasks.filter(t => !t.done);
 
-        // Score = (Impact × 2) + (4 - Difficulty)
-        // Impact drives the score, difficulty is the tiebreaker
-        // Impact: high=3, medium=2, low=1 | Difficulty: easy=1, medium=2, hard=3
-        // Range: 3 (hard+low) to 9 (easy+high)
-        const impactVal = { high: 3, medium: 2, low: 1 };
-        const diffVal = { easy: 1, medium: 2, hard: 3 };
-        function calcScore(t) {
-          return ((impactVal[t.impact] || 2) * 2) + (4 - (diffVal[t.difficulty] || 2));
-        }
-        pending.sort((a, b) => calcScore(b) - calcScore(a));
-
-        const rows = pending.map(t => {
+        const items = pending.map(t => {
           const text = t.task.replace(p.task_prefix, '').replace(/^\s*—?\s*/, '').trim() || t.task;
-          const taskDesc = t.description ? `<div class="task-table-desc">${esc(t.description)}</div>` : '';
-          const diff = t.difficulty || '';
-          const impact = t.impact || '';
-          const diffBadge = diff ? `<span class="badge ${diff}">${diff}</span>` : '';
-          const impactBadge = impact ? `<span class="badge impact-${impact}">${impact}</span>` : '';
-          const score = calcScore(t);
-          const scoreCls = score >= 6 ? 's-high' : score >= 4 ? 's-med' : 's-low';
-          return `<tr>
-            <td><div class="task-table-text">${esc(text)}</div>${taskDesc}</td>
-            <td>${diffBadge}</td>
-            <td>${impactBadge}</td>
-            <td><span class="score-num ${scoreCls}">${score}</span></td>
-          </tr>`;
+          const taskDesc = t.description ? `<div class="task-desc">${esc(t.description)}</div>` : '';
+          return `<li><div class="task-text">${esc(text)}</div>${taskDesc}</li>`;
         }).join('');
 
         tasksHtml = `<div class="card-section">
           <div class="card-section-title">To Do</div>
-          ${pending.length ? `<table class="task-table">
-            <!-- LOCKED: 4 columns — Task, Difficulty, Impact, Score -->
-            <thead><tr><th>Task</th><th>Difficulty</th><th>Impact</th><th>Score</th></tr></thead>
-            <tbody>${rows}</tbody>
-          </table>` : '<div style="font-size:var(--fs-sm);color:var(--text-3)">All done!</div>'}
+          ${pending.length ? `<ul class="task-list">${items}</ul>` : '<div style="font-size:var(--fs-sm);color:var(--text-3)">All done!</div>'}
         </div>`;
       }
     }
@@ -382,8 +319,8 @@ document.addEventListener('DOMContentLoaded', () => {
       ${desc}
       ${metaHtml}
       ${linksHtml}
-      ${featuresHtml}
       ${tasksHtml}
+      ${featuresHtml}
     </div>`;
   }
 
