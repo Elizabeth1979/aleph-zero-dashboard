@@ -18,7 +18,14 @@
     ],
     "notes_path": "Accessibility Projects/A11y Expert MCP/",
     "task_prefix": "Build A11y Expert MCP",
-    "milestones": []
+    "milestones": [],
+    "features": [
+      "4 MCP tools: review_code, get_pattern, list_patterns, check_contrast",
+      "21 WAI-ARIA component patterns (modal, tabs, combobox, etc.)",
+      "WCAG contrast ratio checker with AA/AAA pass/fail",
+      "Code review with specific fix suggestions and ARIA references",
+      "Published on GitHub as open-source"
+    ]
   },
   {
     "id": "a11y-app",
@@ -29,7 +36,13 @@
     "links": [],
     "notes_path": "A11y App Research/",
     "task_prefix": "A11y App:",
-    "milestones": []
+    "milestones": [],
+    "features": [
+      "Research phase \u2014 competitive analysis of 10+ Play Store apps",
+      "Feature matrix comparing existing accessibility tools",
+      "Product plan with MVP scope defined",
+      "MCP product plan for AI-powered accessibility"
+    ]
   },
   {
     "id": "dashboard",
@@ -45,6 +58,14 @@
       }
     ],
     "task_prefix": "Dashboard:",
-    "milestones": []
+    "milestones": [],
+    "features": [
+      "Bento-grid home with 12+ cards (tasks, memory, cron, skills, projects, etc.)",
+      "A11y widget with 10 features (contrast, fonts, motion, reading guide, etc.)",
+      "Rendered markdown in memory/user/soul pages with clickable file paths",
+      "Project tracker with task tables, difficulty and impact ratings",
+      "Auto-refreshing data.js from JSON sources",
+      "GitHub Pages deployment with git push"
+    ]
   }
 ]

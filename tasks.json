@@ -48,7 +48,9 @@
     "category": "project",
     "done": false,
     "urgent": false,
-    "difficulty": "medium"
+    "difficulty": "medium",
+    "description": "High contrast currently only boosts text. Borders, icons, and dividers also need visible contrast.",
+    "impact": "high"
   },
   {
     "id": 7,
@@ -57,7 +59,9 @@
     "category": "project",
     "done": false,
     "urgent": false,
-    "difficulty": "hard"
+    "difficulty": "hard",
+    "description": "Let users pick their own color theme \u2014 not just dark/light but full custom palette.",
+    "impact": "high"
   },
   {
     "id": 8,
@@ -75,7 +79,9 @@
     "category": "project",
     "done": false,
     "urgent": false,
-    "difficulty": "hard"
+    "difficulty": "hard",
+    "description": "Use AI to simplify complex text, describe charts, and adapt layout for cognitive accessibility.",
+    "impact": "medium"
   },
   {
     "id": 10,
@@ -84,7 +90,9 @@
     "category": "project",
     "done": false,
     "urgent": false,
-    "difficulty": "medium"
+    "difficulty": "medium",
+    "description": "Detail pages break on phone screens. Add responsive CSS so everything stacks and scales properly.",
+    "impact": "high"
   },
   {
     "id": 11,
@@ -93,7 +101,9 @@
     "category": "project",
     "done": false,
     "urgent": false,
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "description": "Secondary text is too dim. Bump it up so it passes WCAG AA contrast requirements.",
+    "impact": "high"
   },
   {
     "id": 12,
@@ -102,7 +112,9 @@
     "category": "project",
     "done": false,
     "urgent": false,
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "description": "Smallest text is below the 14px minimum. Increase base sizes across the board.",
+    "impact": "medium"
   },
   {
     "id": 13,
@@ -111,7 +123,9 @@
     "category": "project",
     "done": false,
     "urgent": false,
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "description": "Screen readers need landmarks to navigate. Decorative icons should be hidden. Focus needs to be visible.",
+    "impact": "high"
   },
   {
     "id": 14,
@@ -120,7 +134,9 @@
     "category": "project",
     "done": false,
     "urgent": false,
-    "difficulty": "medium"
+    "difficulty": "medium",
+    "description": "Add Content Security Policy headers, pin external script versions, prevent prototype pollution.",
+    "impact": "low"
   },
   {
     "id": 15,
@@ -129,7 +145,9 @@
     "category": "project",
     "done": false,
     "urgent": false,
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "description": "Close button is too small for touch. Red on Reset conflicts with Elli's no-red preference.",
+    "impact": "medium"
   },
   {
     "id": 16,
@@ -146,7 +164,9 @@
     "category": "project",
     "done": true,
     "priority": "medium",
-    "urgent": false
+    "urgent": false,
+    "description": "Suite of testing tools embedded in the dashboard for live accessibility auditing.",
+    "impact": "medium"
   },
   {
     "id": 18,
@@ -155,7 +175,9 @@
     "category": "project",
     "done": false,
     "urgent": false,
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "description": "Reset button may not clear all new features (reading guide, big cursor). Verify and fix.",
+    "impact": "medium"
   },
   {
     "id": 19,
@@ -164,7 +186,9 @@
     "category": "project",
     "done": false,
     "urgent": false,
-    "difficulty": "hard"
+    "difficulty": "hard",
+    "description": "Let users choose from multiple fonts and pick exact colors for text, backgrounds, and interactive elements.",
+    "impact": "high"
   },
   {
     "id": 20,
@@ -173,7 +197,9 @@
     "category": "project",
     "done": true,
     "urgent": false,
-    "difficulty": "hard"
+    "difficulty": "hard",
+    "description": "Core tools: review_code, get_pattern, list_patterns, check_contrast.",
+    "impact": "high"
   },
   {
     "id": 21,
@@ -182,7 +208,9 @@
     "category": "project",
     "done": false,
     "urgent": false,
-    "difficulty": "medium"
+    "difficulty": "medium",
+    "description": "Expose knowledge base docs as MCP resources and add guided prompts for common a11y tasks.",
+    "impact": "medium"
   },
   {
     "id": 22,
@@ -191,7 +219,9 @@
     "category": "project",
     "done": true,
     "urgent": false,
-    "difficulty": "easy"
+    "difficulty": "easy",
+    "description": "Open-source the project so others can use and contribute.",
+    "impact": "high"
   },
   {
     "id": 23,
@@ -200,7 +230,9 @@
     "category": "project",
     "done": false,
     "urgent": false,
-    "difficulty": "medium"
+    "difficulty": "medium",
+    "description": "Make it installable with pip so anyone can add it to their AI tools with one command.",
+    "impact": "high"
   },
   {
     "id": 24,
@@ -209,6 +241,8 @@
     "category": "project",
     "done": false,
     "urgent": false,
-    "difficulty": "hard"
+    "difficulty": "hard",
+    "description": "A tool that looks up accessible implementations from real component libraries (Radix, Headless UI, etc.).",
+    "impact": "medium"
   }
 ]

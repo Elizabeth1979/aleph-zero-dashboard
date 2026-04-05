@@ -170,11 +170,9 @@
     vertical-align: top;
   }
   .task-table tr:last-child td { border-bottom: none; }
-  .task-table tr.is-done td { opacity: 0.35; }
-  .task-table tr.is-done .task-table-text { text-decoration: line-through; }
   .task-table-text { color: var(--text); line-height: 1.4; }
-  .task-table-date { font-family: var(--mono); color: var(--text-3); font-size: var(--fs-xs); white-space: nowrap; }
-  .diff-badge {
+  .task-table-desc { font-size: var(--fs-xs); color: var(--text-3); line-height: 1.4; margin-top: 2px; }
+  .badge {
     display: inline-block;
     font-size: 11px;
     font-weight: 600;
@@ -183,17 +181,50 @@
     border-radius: var(--pill);
     white-space: nowrap;
   }
-  .diff-badge.easy {
-    color: var(--accent);
-    background: var(--accent-muted);
+  .badge.easy { color: var(--accent); background: var(--accent-muted); }
+  .badge.medium { color: var(--warn); background: rgba(240, 184, 102, 0.12); }
+  .badge.hard { color: #c084fc; background: rgba(192, 132, 252, 0.12); }
+  .badge.impact-high { color: #f87171; background: rgba(248, 113, 113, 0.12); }
+  .badge.impact-medium { color: var(--warn); background: rgba(240, 184, 102, 0.12); }
+  .badge.impact-low { color: var(--text-3); background: rgba(255,255,255,0.06); }
+
+  /* Score cell: stacked badges */
+  .score-cell { display: flex; flex-direction: column; gap: 3px; align-items: flex-start; }
+
+  /* Features list */
+  .feature-list { list-style: none; padding: 0; margin: 0; }
+  .feature-list li {
+    display: flex; align-items: flex-start; gap: var(--s2);
+    padding: 4px 0; font-size: var(--fs-sm); color: var(--text-2); line-height: 1.4;
   }
-  .diff-badge.medium {
-    color: var(--warn);
-    background: rgba(240, 184, 102, 0.12);
+  .feature-list li::before {
+    content: ''; display: inline-block; flex-shrink: 0;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent-dim); margin-top: 6px;
   }
-  .diff-badge.hard {
-    color: #c084fc;
-    background: rgba(192, 132, 252, 0.12);
+
+  /* Completed toggle */
+  .completed-toggle {
+    display: flex; align-items: center; gap: var(--s2);
+    font-size: var(--fs-xs); color: var(--text-3);
+    cursor: pointer; padding: var(--s2) 0; margin-top: var(--s3);
+    border: none; background: none; font-family: inherit;
+  }
+  .completed-toggle:hover { color: var(--text-2); }
+  .completed-toggle svg {
+    width: 12px; height: 12px; transition: transform 0.2s ease;
+  }
+  .completed-toggle.open svg { transform: rotate(90deg); }
+  .completed-list { display: none; }
+  .completed-list.open { display: block; }
+  .completed-item {
+    display: flex; align-items: flex-start; gap: var(--s2);
+    padding: 3px 0; font-size: var(--fs-xs); color: var(--text-3);
+    text-decoration: line-through; line-height: 1.4;
+  }
+  .completed-item::before {
+    content: '✓'; flex-shrink: 0; color: var(--accent-dim);
+    font-size: 11px; margin-top: 1px;
   }
 
   /* Checklist items (milestones + tasks) */
@@ -296,38 +327,69 @@ document.addEventListener('DOMContentLoaded', () => {
       `<a href="${esc(l.url)}" target="_blank" rel="noopener" class="project-link"><i data-lucide="external-link" style="width:11px;height:11px"></i>${esc(l.label)}</a>`
     ).join('')}</div>` : '';
 
-    // Tasks from tasks.json — rendered as table with difficulty + progress bar
+    // Features section
+    const features = p.features || [];
+    let featuresHtml = '';
+    if (features.length) {
+      featuresHtml = `<div class="card-section">
+        <div class="card-section-title">What's Working</div>
+        <ul class="feature-list">${features.map(f => `<li>${esc(f)}</li>`).join('')}</ul>
+      </div>`;
+    }
+
+    // Tasks from tasks.json — only open tasks in table, done tasks collapsed
     let tasksHtml = '';
     if (p.task_prefix) {
       const projectTasks = allTasks.filter(t => t.task.startsWith(p.task_prefix));
       if (projectTasks.length) {
         const pending = projectTasks.filter(t => !t.done);
         const done = projectTasks.filter(t => t.done);
-        const sorted = [...pending, ...done];
-        const rows = sorted.map(t => {
+
+        // Sort pending: high impact + easy difficulty first (low-hanging fruit)
+        const impactOrder = { high: 0, medium: 1, low: 2 };
+        const diffOrder = { easy: 0, medium: 1, hard: 2 };
+        pending.sort((a, b) => {
+          const scoreA = (impactOrder[a.impact] || 1) + (diffOrder[a.difficulty] || 1);
+          const scoreB = (impactOrder[b.impact] || 1) + (diffOrder[b.difficulty] || 1);
+          return scoreA - scoreB;
+        });
+
+        const rows = pending.map(t => {
           const text = t.task.replace(p.task_prefix, '').replace(/^\s*—?\s*/, '').trim() || t.task;
+          const taskDesc = t.description ? `<div class="task-table-desc">${esc(t.description)}</div>` : '';
           const diff = t.difficulty || '';
-          const diffBadge = diff ? `<span class="diff-badge ${diff}">${diff}</span>` : '';
-          const cls = t.done ? 'is-done' : '';
-          const date = t.added || '';
-          return `<tr class="${cls}">
-            <td class="task-table-text">${esc(text)}</td>
-            <td>${diffBadge}</td>
-            <td class="task-table-date">${date}</td>
+          const impact = t.impact || '';
+          const diffBadge = diff ? `<span class="badge ${diff}">${diff}</span>` : '';
+          const impactBadge = impact ? `<span class="badge impact-${impact}">${impact} impact</span>` : '';
+          return `<tr>
+            <td><div class="task-table-text">${esc(text)}</div>${taskDesc}</td>
+            <td><div class="score-cell">${diffBadge}${impactBadge}</div></td>
           </tr>`;
         }).join('');
-        const doneCount = sorted.filter(t => t.done).length;
-        const pct = sorted.length ? Math.round((doneCount / sorted.length) * 100) : 0;
+
+        // Completed tasks — collapsible
+        let completedHtml = '';
+        if (done.length) {
+          const pid = p.id.replace(/[^a-z0-9]/g, '');
+          const doneItems = done.map(t => {
+            const text = t.task.replace(p.task_prefix, '').replace(/^\s*—?\s*/, '').trim() || t.task;
+            return `<div class="completed-item">${esc(text)}</div>`;
+          }).join('');
+          completedHtml = `
+            <button class="completed-toggle" onclick="this.classList.toggle('open');document.getElementById('done-${pid}').classList.toggle('open')" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              ${done.length} completed
+            </button>
+            <div class="completed-list" id="done-${pid}">${doneItems}</div>`;
+        }
+
         tasksHtml = `<div class="card-section">
-          <div class="card-section-title">Tasks</div>
-          <div class="progress-row">
-            <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
-            <span class="progress-pct">${doneCount}/${sorted.length}</span>
-          </div>
-          <table class="task-table">
-            <thead><tr><th>Task</th><th>Difficulty</th><th>Added</th></tr></thead>
+          <div class="card-section-title">To Do</div>
+          ${pending.length ? `<table class="task-table">
+            <thead><tr><th>Task</th><th>Score</th></tr></thead>
             <tbody>${rows}</tbody>
-          </table>
+          </table>` : '<div style="font-size:var(--fs-sm);color:var(--text-3)">All done!</div>'}
+          ${completedHtml}
         </div>`;
       }
     }
@@ -340,6 +402,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ${desc}
       ${metaHtml}
       ${linksHtml}
+      ${featuresHtml}
       ${tasksHtml}
     </div>`;
   }
