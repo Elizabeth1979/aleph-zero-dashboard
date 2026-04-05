@@ -39,6 +39,9 @@
     background: rgba(255,255,255,0.04);
     padding: 2px 8px; border-radius: var(--pill);
   }
+  .task-section-count.accent {
+    color: var(--accent); background: var(--accent-muted);
+  }
   .task-section-body {
     display: none;
     border-top: 1px solid var(--border);
@@ -194,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
     write:    { label: 'To Write' },
     share:    { label: 'Share / Send' },
     remember: { label: 'Remember' },
-    project:  { label: 'Projects' },
+    project:  { label: 'Project Tasks' },
     'to-buy': { label: 'To Buy' },
   };
   const catOrder = ['task', 'project', 'to-buy', 'idea', 'read', 'write', 'share', 'remember'];
@@ -214,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Urgent (high priority, not done)
   const urgent = tasks.filter(t => !t.done && t.priority === 'high');
-  const rest = tasks.filter(t => !(t.priority === 'high' && !t.done));
+  const rest = tasks.filter(t => !t.done && t.priority !== 'high');
 
   let html = '';
 
@@ -224,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="task-section-header">
         ${chevron}
         <span class="task-section-label urgent">Urgent</span>
-        <span class="task-section-count">${urgent.length}</span>
+        <span class="task-section-count accent">${urgent.length}</span>
       </div>
       <div class="task-section-body" onclick="event.stopPropagation()">
         ${urgent.map(renderItem).join('')}
@@ -245,18 +248,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   activeCats.forEach(cat => {
     const items = groups[cat];
-    const open = items.filter(t => !t.done);
-    const done = items.filter(t => t.done);
     const meta = catMeta[cat] || { label: cat };
 
     html += `<div class="task-section" onclick="toggleSection(this)">
       <div class="task-section-header">
         ${chevron}
         <span class="task-section-label">${meta.label}</span>
-        <span class="task-section-count">${open.length} open</span>
+        <span class="task-section-count accent">${items.length}</span>
       </div>
       <div class="task-section-body" onclick="event.stopPropagation()">
-        ${[...open, ...done].map(renderItem).join('')}
+        ${items.map(renderItem).join('')}
       </div>
     </div>`;
   });
