@@ -356,7 +356,7 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>`;
   }
 
-  // Auto-urgent rules — collapsed
+  // Urgent rules — collapsed by default
   const rules = d.capture_rules || {};
   if (rules.auto_urgent) {
     let rulesHtml = '<div class="rules-block"><div class="rules-block-title">Auto-Urgent</div><div class="auto-high-box">';
@@ -370,10 +370,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     rulesHtml += '</div></div>';
 
-    html += `<div class="rules-section open" onclick="toggleSection(this)">
+    html += `<div class="rules-section" onclick="toggleSection(this)">
       <div class="rules-header">
         <svg class="rules-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-        Auto-Urgent Rules
+        Urgent Rules
       </div>
       <div class="rules-body" onclick="event.stopPropagation()">
         ${rulesHtml}
