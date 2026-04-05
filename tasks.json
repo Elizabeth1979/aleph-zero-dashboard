@@ -218,9 +218,11 @@
   },
   {
     "id": 29,
-    "task": "Buy dog food for Bamba",
+"task": "Move Slack into Knowledge Base",
     "added": "2026-04-05",
-    "done": false,
+    "category": "task",
+    "tags": ["Work"],
+    "tags": ["Private"],
     "urgent": true,
     "scope": "private"
   }
