@@ -458,7 +458,7 @@
         <h2>Active Projects</h2>
         <span class="badge" id="projects-badge">0</span>
       </div>
-      <div class="card-desc">Ongoing projects and their progress</div>
+      <div class="card-desc">Ongoing projects and open tasks</div>
       <div id="projects-preview" style="margin-top:8px"></div>
     </a>
 
@@ -625,14 +625,14 @@ function loadCards() {
 
   // Projects
   const projects = (d.projects || []).filter(p => p.status !== 'done');
+  const allProjTasks = d.tasks || [];
   document.getElementById('projects-badge').textContent = projects.length;
   const projPreview = document.getElementById('projects-preview');
   if (projects.length) {
     projPreview.innerHTML = projects.map(p => {
-      const done = (p.milestones || []).filter(m => m.done).length;
-      const total = (p.milestones || []).length;
-      const pct = total ? Math.round(done / total * 100) : 0;
-      return '<div style="margin-bottom:6px"><strong>' + esc(p.name) + '</strong> <span class="badge">' + pct + '%</span></div>';
+      const open = allProjTasks.filter(t => t.category === 'project' && !t.done && p.task_prefix && t.task.startsWith(p.task_prefix)).length;
+      const label = open ? open + ' open' : 'all done';
+      return '<div style="margin-bottom:6px"><strong>' + esc(p.name) + '</strong> <span class="badge">' + label + '</span></div>';
     }).join('');
   }
 
