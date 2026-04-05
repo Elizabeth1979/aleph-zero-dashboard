@@ -220,11 +220,10 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderItem(t) {
     const cls = t.done ? 'task-item done' : 'task-item';
     const date = t.added ? `<span class="task-item-date">${t.added}</span>` : '';
-    const urgentTag = t.urgent ? '<span class="urgent-tag">urgent</span>' : '';
     return `<div class="${cls}">
       <div class="task-item-status"></div>
       <div class="task-item-content">
-        <div class="task-item-text">${esc(t.task)}${urgentTag}</div>
+        <div class="task-item-text">${esc(t.task)}</div>
         ${date ? `<div class="task-item-meta">${date}</div>` : ''}
       </div>
     </div>`;
