@@ -10,46 +10,56 @@
 <link rel="stylesheet" href="shared.css">
 <link rel="stylesheet" href="../a11y-widget.css">
 <style>
-  /* ── Description card ─────────────────────────── */
-  .cron-desc {
-    margin-top: var(--s3);
-    padding: var(--s3) var(--s4);
-    background: var(--bg-inset);
-    border-radius: var(--r1);
-    border-left: 2px solid var(--accent-dim);
+  /* ── Card grid ──────────────────────────────── */
+  .cron-grid {
     display: grid;
-    gap: 0;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: var(--s4);
   }
-  .desc-row {
-    display: flex;
-    align-items: baseline;
-    gap: var(--s3);
-    padding: 4px 0;
-    font-size: var(--fs-sm);
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-  }
-  .desc-row:last-child { border-bottom: none; }
-  .desc-key {
-    color: var(--text-3);
-    font-size: 13px;
-    min-width: 80px;
-    flex-shrink: 0;
-  }
-  .desc-val {
-    color: var(--text);
-    line-height: 1.5;
-    word-break: break-word;
-  }
-  .desc-val.accent { color: var(--accent); font-weight: 500; }
-  .desc-val.muted  { color: var(--text-2); }
 
-  /* Flags list */
-  .flags-list {
+  .cron-card {
+    background: var(--bg-card, var(--bg-inset));
+    border: 1px solid var(--border);
+    border-radius: var(--r2, 10px);
+    padding: var(--s4);
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: var(--s3);
   }
-  .flag-item {
+
+  /* Header row: dot + name + skill tag */
+  .cron-header {
+    display: flex;
+    align-items: center;
+    gap: var(--s2);
+    flex-wrap: wrap;
+  }
+  .cron-header .cron-name {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  /* Schedule + next run on one line */
+  .cron-schedule {
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .cron-schedule .next {
+    color: var(--text-3);
+    font-weight: 400;
+  }
+
+  /* Task bullets — no label */
+  .cron-tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 0;
+    margin: 0;
+  }
+  .cron-task {
     display: flex;
     align-items: flex-start;
     gap: var(--s2);
@@ -57,37 +67,42 @@
     color: var(--text-2);
     line-height: 1.4;
   }
-  .flag-item::before {
-    content: '◦';
+  .cron-task::before {
+    content: '·';
     color: var(--accent-dim);
     flex-shrink: 0;
-    margin-top: 1px;
+    font-weight: 700;
   }
 
-  /* Status badge */
-  .status-badge {
-    display: inline-flex;
+  /* Last run row */
+  .cron-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s3);
+    margin-top: auto;
+    padding-top: var(--s2);
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+  .cron-last-run {
+    font-size: 12px;
+    color: var(--text-3);
+    display: flex;
     align-items: center;
     gap: 4px;
-    font-size: 12px;
-    font-weight: 500;
-    padding: 1px 7px;
-    border-radius: var(--pill);
   }
-  .status-badge.ok   { color: var(--ok);   background: rgba(93,228,212,0.10); }
-  .status-badge.err  { color: var(--warn);  background: rgba(240,184,102,0.10); }
-  .status-badge.none { color: var(--text-3); }
+  .cron-last-run .check { color: var(--ok); }
+  .cron-last-run .fail  { color: var(--warn); }
 
-  /* Details/summary reset */
-  details { margin-top: var(--s3); }
-  details summary { list-style: none; }
-  details summary::-webkit-details-marker { display: none; }
+  /* Prompt toggle */
+  .cron-card details { margin: 0; }
+  .cron-card details summary { list-style: none; }
+  .cron-card details summary::-webkit-details-marker { display: none; }
 
-  /* Mobile tweaks */
+  /* Mobile */
   @media (max-width: 480px) {
-    .desc-key { min-width: 68px; }
-    .cron-desc { padding: var(--s2) var(--s3); }
-    .cron-top  { gap: var(--s2); }
+    .cron-grid { grid-template-columns: 1fr; }
+    .cron-card { padding: var(--s3); }
   }
 </style>
 </head>
@@ -115,14 +130,12 @@ function fmtDate(iso) {
     const now = new Date();
     const diff = d - now;
     const absDiff = Math.abs(diff);
-    // Within 24 h — show relative
     if (absDiff < 86400000) {
       const mins = Math.round(diff / 60000);
       if (mins > 0)  return `in ${mins < 60 ? mins + ' min' : Math.round(mins/60) + ' hr'}`;
       if (mins < 0)  return `${Math.abs(mins) < 60 ? Math.abs(mins) + ' min ago' : Math.round(Math.abs(mins)/60) + ' hr ago'}`;
       return 'just now';
     }
-    // Same year — omit year
     const opts = { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' };
     if (d.getFullYear() !== now.getFullYear()) opts.year = 'numeric';
     return d.toLocaleString(undefined, opts);
@@ -130,12 +143,10 @@ function fmtDate(iso) {
 }
 
 function scheduleLabel(j) {
-  // schedule can be a string cron expr, or object with .display / .expr
   const expr = (typeof j.schedule === 'object')
     ? (j.schedule?.display || j.schedule?.expr || '')
     : (j.schedule || '');
   if (!expr) return j.repeat_display || '?';
-  // Extend cronHuman with day-of-month and other patterns
   const p = expr.trim().split(/\s+/);
   if (p.length === 5) {
     const [min, hr, dom, mon, dow] = p;
@@ -147,72 +158,45 @@ function scheduleLabel(j) {
     if (dom !== '*' && mon === '*' && dow === '*') {
       return `Monthly on the ${ordinals[+dom] || dom} at ${t}`;
     }
-    // Fall through to shared cronHuman for daily / weekly
     const label = cronHuman(expr);
-    if (label !== expr) return label; // cronHuman recognized it
+    if (label !== expr) return label;
   }
-  return expr; // raw fallback
-}
-
-function deliverLabel(deliver) {
-  if (!deliver) return 'local';
-  if (deliver.startsWith('discord:')) return 'Discord';
-  if (deliver === 'discord') return 'Discord';
-  return deliver;
+  return expr;
 }
 
 /**
- * extractFlags(prompt) → string[]
- * Pulls up to 3 short action/condition bullets from a prompt string.
+ * extractTasks(prompt) → string[]
+ * Pulls up to 3 short action bullets from a prompt string.
  */
-function extractFlags(prompt) {
+function extractTasks(prompt) {
   if (!prompt) return [];
   const text = prompt.trim();
-  const flags = [];
+  const tasks = [];
 
-  // 1. Numbered list items: "1. ...", "1) ..."
+  // 1. Numbered list items
   const numbered = [...text.matchAll(/^\s*\d+[.)]\s+(.+)/gm)];
   for (const m of numbered) {
-    if (flags.length >= 3) break;
-    const s = m[1].trim().replace(/\.$/, '');
-    // Strip markdown bold, emojis, leading dashes
-    let cleaned = s.replace(/\*\*/g, '').replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}\u{FE0F}\u{200D}]+/gu, '').replace(/^\s*—\s*/, '- ').trim();
-    if (cleaned.length > 2) flags.push(cleaned.length > 60 ? cleaned.slice(0, 57) + '…' : cleaned);
+    if (tasks.length >= 3) break;
+    let cleaned = m[1].trim().replace(/\*\*/g, '').replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}\u{FE0F}\u{200D}]+/gu, '').replace(/^\s*—\s*/, '').trim();
+    // Take just the title part (before the em-dash or colon explanation)
+    const titleMatch = cleaned.match(/^([^—–:]+)/);
+    if (titleMatch) cleaned = titleMatch[1].trim();
+    if (cleaned.length > 2) tasks.push(cleaned.length > 50 ? cleaned.slice(0, 47) + '…' : cleaned);
   }
-  if (flags.length >= 2) return flags;
+  if (tasks.length >= 2) return tasks;
 
-  // 2. "alert if/when ...", "flag if ...", "notify if ..."
-  const alertPat = /\b(?:alert|flag|notify|warn(?:ing)?)\s+(?:if|when|whenever)\s+([^.!?\n]{5,80})/gi;
-  for (const m of text.matchAll(alertPat)) {
-    if (flags.length >= 3) break;
-    let s = m[1].trim().replace(/\.$/, '');
-    if (s.length > 60) s = s.slice(0, 57) + '…';
-    if (!flags.some(f => f.toLowerCase().includes(s.slice(0,20).toLowerCase()))) flags.push(s);
-  }
-  if (flags.length >= 2) return flags;
-
-  // 3. "if ... [threshold/condition]"
-  const ifPat = /\bif\s+([^,.\n]{5,80})/gi;
-  for (const m of text.matchAll(ifPat)) {
-    if (flags.length >= 3) break;
-    let s = m[1].trim().replace(/\.$/, '');
-    if (s.length > 60) s = s.slice(0, 57) + '…';
-    if (!flags.some(f => f.toLowerCase().includes(s.slice(0,20).toLowerCase()))) flags.push(s);
-  }
-  if (flags.length >= 2) return flags;
-
-  // 4. "check for ...", "look for ...", "search for ..."
-  const checkPat = /\b(?:check|look|search)\s+for\s+([^.!\n]{5,80})/gi;
+  // 2. "check for ..."
+  const checkPat = /\b(?:check|look|search)\s+for\s+([^.!\n]{5,60})/gi;
   for (const m of text.matchAll(checkPat)) {
-    if (flags.length >= 3) break;
+    if (tasks.length >= 3) break;
     let s = m[1].trim().replace(/\.$/, '');
-    if (s.length > 60) s = s.slice(0, 57) + '…';
-    if (!flags.some(f => f.toLowerCase().includes(s.slice(0,20).toLowerCase()))) flags.push(s);
+    if (s.length > 50) s = s.slice(0, 47) + '…';
+    if (!tasks.some(f => f.toLowerCase().includes(s.slice(0,20).toLowerCase()))) tasks.push(s);
   }
-  if (flags.length) return flags;
+  if (tasks.length) return tasks;
 
-  // 5. Fallback: first meaningful sentence / first 100 chars
-  const first = text.replace(/\n+/g, ' ').slice(0, 100).replace(/\.$/, '');
+  // 3. Fallback: first sentence
+  const first = text.replace(/\n+/g, ' ').slice(0, 80).replace(/\.$/, '');
   return [first.length < text.length ? first + '…' : first];
 }
 
@@ -227,75 +211,56 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
-  document.getElementById('page-body').innerHTML = jobs.map(j => {
+  document.getElementById('page-body').innerHTML = '<div class="cron-grid">' + jobs.map(j => {
     const enabled  = j.enabled !== false;
     const name     = esc(j.name || j.job_id || j.id || 'Unnamed');
     const sched    = esc(scheduleLabel(j));
-    const deliver  = esc(deliverLabel(j.deliver));
     const nextRun  = fmtDate(j.next_run_at);
     const lastRun  = fmtDate(j.last_run_at);
     const status   = (j.last_status || '').toLowerCase();
     const isOk     = status === 'ok' || status === 'success' || status === 'done';
-    const isErr    = status && !isOk && status !== '';
-    const flags    = j.prompt ? extractFlags(j.prompt) : [];
+    const isErr    = status && !isOk;
+    const tasks    = j.prompt ? extractTasks(j.prompt) : [];
 
-    /* Status badge for last run */
-    const statusBadge = lastRun
-      ? `<span class="status-badge ${isOk ? 'ok' : isErr ? 'err' : 'none'}">${lastRun}${status ? ' · ' + esc(status) : ''}</span>`
-      : '<span class="status-badge none">—</span>';
-
-    /* Flags rows */
-    const flagsHtml = flags.length
-      ? `<div class="desc-row">
-           <span class="desc-key">Flags</span>
-           <span class="desc-val">
-             <div class="flags-list">
-               ${flags.map(f => `<span class="flag-item">${esc(f)}</span>`).join('')}
-             </div>
-           </span>
-         </div>`
-      : '';
-
-    /* Skills tags */
+    /* Skill tags */
     const skillTags = j.skills && j.skills.length
       ? j.skills.map(s => `<span class="tag">${esc(s)}</span>`).join('')
       : '';
 
-    return `<div class="cron">
-      <div class="cron-top">
+    /* Task bullets */
+    const tasksHtml = tasks.length
+      ? `<div class="cron-tasks">${tasks.map(t => `<span class="cron-task">${esc(t)}</span>`).join('')}</div>`
+      : '';
+
+    /* Last run with check/fail icon */
+    const lastRunHtml = lastRun
+      ? `<span class="cron-last-run">Last run: ${esc(lastRun)} ${isOk ? '<span class="check">✓</span>' : isErr ? '<span class="fail">✗</span>' : ''}</span>`
+      : '<span class="cron-last-run">No runs yet</span>';
+
+    /* Prompt toggle */
+    const promptHtml = j.prompt
+      ? `<details>
+          <summary class="cron-prompt">
+            <i data-lucide="chevron-right" style="width:12px;height:12px"></i>Full prompt
+          </summary>
+          <div class="cron-prompt-box">${esc(j.prompt)}</div>
+        </details>`
+      : '';
+
+    return `<div class="cron-card">
+      <div class="cron-header">
         <span class="dot ${enabled ? 'on' : 'off'}" title="${enabled ? 'Enabled' : 'Disabled'}"></span>
         <span class="cron-name">${name}</span>
         ${skillTags}
       </div>
-
-      <div class="cron-desc">
-        <div class="desc-row">
-          <span class="desc-key">Runs</span>
-          <span class="desc-val accent">${sched}</span>
-        </div>
-        <div class="desc-row">
-          <span class="desc-key">Delivers to</span>
-          <span class="desc-val muted">${deliver}</span>
-        </div>
-        <div class="desc-row">
-          <span class="desc-key">Next run</span>
-          <span class="desc-val">${nextRun ? esc(nextRun) : '<span class="status-badge none">—</span>'}</span>
-        </div>
-        <div class="desc-row">
-          <span class="desc-key">Last run</span>
-          <span class="desc-val">${statusBadge}</span>
-        </div>
-        ${flagsHtml}
+      <span class="cron-schedule">${sched}${nextRun ? ` <span class="next">· ${esc(nextRun)}</span>` : ''}</span>
+      ${tasksHtml}
+      <div class="cron-footer">
+        ${lastRunHtml}
+        ${promptHtml}
       </div>
-
-      ${j.prompt ? `<details>
-        <summary class="cron-prompt">
-          <i data-lucide="chevron-right" style="width:12px;height:12px"></i>Full prompt
-        </summary>
-        <div class="cron-prompt-box">${esc(j.prompt)}</div>
-      </details>` : ''}
     </div>`;
-  }).join('');
+  }).join('') + '</div>';
 
   /* Accordion: only one details open at a time */
   document.querySelectorAll('details').forEach(det => {
