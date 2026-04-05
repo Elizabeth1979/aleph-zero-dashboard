@@ -491,9 +491,13 @@
 
       saveState(state);
 
-      /* Re-render panel so all indicators update */
+      /* Re-render panel — preserve scroll position */
+      const body = panel.querySelector('.a11y-panel-body');
+      const scrollY = body ? body.scrollTop : 0;
       panel.innerHTML = buildPanel(state);
       bindPanelEvents();
+      const newBody = panel.querySelector('.a11y-panel-body');
+      if (newBody) newBody.scrollTop = scrollY;
     }
 
     /* ----------------------------------------------------------
