@@ -188,8 +188,15 @@
   .badge.impact-medium { color: var(--warn); background: rgba(240, 184, 102, 0.12); }
   .badge.impact-low { color: var(--text-3); background: rgba(255,255,255,0.06); }
 
-  /* Score cell: stacked badges */
-  .score-cell { display: flex; flex-direction: column; gap: 3px; align-items: flex-start; }
+  /* Score number */
+  .score-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px; border-radius: 50%;
+    font-size: 13px; font-weight: 700; font-family: var(--mono);
+  }
+  .score-num.s-high { color: var(--accent); background: var(--accent-muted); }
+  .score-num.s-med { color: var(--warn); background: rgba(240, 184, 102, 0.12); }
+  .score-num.s-low { color: var(--text-3); background: rgba(255,255,255,0.06); }
 
   /* Features list */
   .feature-list { list-style: none; padding: 0; margin: 0; }
@@ -345,14 +352,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const pending = projectTasks.filter(t => !t.done);
         const done = projectTasks.filter(t => t.done);
 
-        // Sort pending: high impact + easy difficulty first (low-hanging fruit)
-        const impactOrder = { high: 0, medium: 1, low: 2 };
-        const diffOrder = { easy: 0, medium: 1, hard: 2 };
-        pending.sort((a, b) => {
-          const scoreA = (impactOrder[a.impact] || 1) + (diffOrder[a.difficulty] || 1);
-          const scoreB = (impactOrder[b.impact] || 1) + (diffOrder[b.difficulty] || 1);
-          return scoreA - scoreB;
-        });
+        // Score = Impact × (4 - Difficulty)
+        // Impact: high=3, medium=2, low=1 | Difficulty: easy=1, medium=2, hard=3
+        const impactVal = { high: 3, medium: 2, low: 1 };
+        const diffVal = { easy: 1, medium: 2, hard: 3 };
+        function calcScore(t) {
+          return (impactVal[t.impact] || 2) * (4 - (diffVal[t.difficulty] || 2));
+        }
+        pending.sort((a, b) => calcScore(b) - calcScore(a));
 
         const rows = pending.map(t => {
           const text = t.task.replace(p.task_prefix, '').replace(/^\s*—?\s*/, '').trim() || t.task;
@@ -360,10 +367,14 @@ document.addEventListener('DOMContentLoaded', () => {
           const diff = t.difficulty || '';
           const impact = t.impact || '';
           const diffBadge = diff ? `<span class="badge ${diff}">${diff}</span>` : '';
-          const impactBadge = impact ? `<span class="badge impact-${impact}">${impact} impact</span>` : '';
+          const impactBadge = impact ? `<span class="badge impact-${impact}">${impact}</span>` : '';
+          const score = calcScore(t);
+          const scoreCls = score >= 6 ? 's-high' : score >= 4 ? 's-med' : 's-low';
           return `<tr>
             <td><div class="task-table-text">${esc(text)}</div>${taskDesc}</td>
-            <td><div class="score-cell">${diffBadge}${impactBadge}</div></td>
+            <td>${diffBadge}</td>
+            <td>${impactBadge}</td>
+            <td><span class="score-num ${scoreCls}">${score}</span></td>
           </tr>`;
         }).join('');
 
@@ -386,7 +397,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tasksHtml = `<div class="card-section">
           <div class="card-section-title">To Do</div>
           ${pending.length ? `<table class="task-table">
-            <thead><tr><th>Task</th><th>Score</th></tr></thead>
+            <thead><tr><th>Task</th><th>Difficulty</th><th>Impact</th><th>Score</th></tr></thead>
             <tbody>${rows}</tbody>
           </table>` : '<div style="font-size:var(--fs-sm);color:var(--text-3)">All done!</div>'}
           ${completedHtml}
