@@ -5,7 +5,8 @@
     "added": "2026-04-03",
     "category": "task",
     "done": true,
-    "urgent": true
+    "urgent": true,
+    "status": "done"
   },
   {
     "id": 2,
@@ -80,7 +81,8 @@
     "category": "project",
     "done": true,
     "urgent": false,
-    "difficulty": "hard"
+    "difficulty": "hard",
+    "status": "done"
   },
   {
     "id": 9,
@@ -179,7 +181,8 @@
     "priority": "medium",
     "urgent": false,
     "description": "Suite of testing tools embedded in the dashboard for live accessibility auditing.",
-    "impact": "medium"
+    "impact": "medium",
+    "status": "done"
   },
   {
     "id": 18,
@@ -220,7 +223,7 @@
     "task": "Build A11y Expert MCP \u2014 Add Resources & Prompts",
     "added": "2026-04-04",
     "category": "project",
-    "done": false,
+    "done": true,
     "urgent": false,
     "difficulty": "medium",
     "description": "Expose knowledge base docs as MCP resources and add guided prompts for common a11y tasks.",
@@ -269,7 +272,7 @@
     "tags": [
       "Work"
     ],
-    "done": false,
+    "done": true,
     "urgent": false,
     "status": "done"
   },
