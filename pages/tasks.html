@@ -359,7 +359,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Urgent rules — collapsed by default
   const rules = d.capture_rules || {};
   if (rules.auto_urgent) {
-    let rulesHtml = '<div class="rules-block"><div class="rules-block-title">Auto-Urgent</div><div class="auto-high-box">';
+    let rulesHtml = '<div class="rules-block"><div class="auto-high-box">';
     rules.auto_urgent.forEach(r => {
       const parts = r.split(' — ');
       if (parts.length === 2) {
