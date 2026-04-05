@@ -202,14 +202,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const chevron = '<svg class="task-section-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
   function renderItem(t) {
     const cls = t.done ? 'task-item done' : 'task-item';
-    const safePri = ['high','medium','low','critical'].includes(t.priority) ? t.priority : null;
-    const pri = safePri ? `<span class="task-item-pri ${safePri}">${safePri}</span>` : '';
     const date = t.added ? `<span class="task-item-date">${t.added}</span>` : '';
     return `<div class="${cls}">
       <div class="task-item-status"></div>
       <div class="task-item-content">
         <div class="task-item-text">${esc(t.task)}</div>
-        ${(pri || date) ? `<div class="task-item-meta">${pri}${date}</div>` : ''}
+        ${date ? `<div class="task-item-meta">${date}</div>` : ''}
       </div>
     </div>`;
   }
