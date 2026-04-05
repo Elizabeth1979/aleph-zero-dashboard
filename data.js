@@ -54,10 +54,10 @@ window.__DASHBOARD_DATA__ = {
     "id": 5,
     "task": "Buy noise-reducing earbuds/headphones for misophonia",
     "added": "2026-04-04",
+    "category": "to-buy",
+    "tags": ["Buy"],
     "done": false,
-    "urgent": false,
-    "tag": "to-buy",
-    "scope": "private"
+    "urgent": false
   },
   {
     "id": 6,
