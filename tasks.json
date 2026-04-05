@@ -9,12 +9,14 @@
   },
   {
     "id": 2,
-"task": "Pay company annual fee",
-    "desc": "Owes two years back. Payment site was down last time — try again.",
+    "task": "Pay company annual fee",
+    "desc": "Owes two years back. Payment site was down last time \u2014 try again.",
     "added": "2026-04-03",
     "due": "2026-04-12",
     "category": "task",
-    "tags": ["Private"],
+    "tags": [
+      "Private"
+    ],
     "done": false,
     "urgent": true
   },
@@ -23,7 +25,9 @@
     "task": "Buy flight tickets to visit sister in the US",
     "added": "2026-04-04",
     "category": "task",
-    "tags": ["Private"],
+    "tags": [
+      "Private"
+    ],
     "done": false,
     "urgent": true
   },
@@ -157,7 +161,9 @@
     "task": "Finish onboarding this week",
     "added": "2026-04-04",
     "category": "task",
-    "tags": ["Work"],
+    "tags": [
+      "Work"
+    ],
     "done": false,
     "urgent": true
   },
@@ -254,7 +260,9 @@
     "task": "Move Slack into Knowledge Base",
     "added": "2026-04-05",
     "category": "task",
-    "tags": ["Work"],
+    "tags": [
+      "Work"
+    ],
     "done": false,
     "urgent": false
   },
@@ -264,8 +272,21 @@
     "desc": "Questions and answers about accessibility for the knowledge base.",
     "added": "2026-04-05",
     "category": "task",
-    "tags": ["Work"],
+    "tags": [
+      "Work"
+    ],
     "done": false,
     "urgent": false
+  },
+  {
+    "id": 25,
+    "task": "Find a good doctor and switch",
+    "added": "2026-04-05",
+    "category": "task",
+    "tags": [
+      "Private"
+    ],
+    "done": false,
+    "urgent": true
   }
 ]
