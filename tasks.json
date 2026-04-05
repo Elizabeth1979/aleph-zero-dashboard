@@ -10,7 +10,8 @@
       "Private"
     ],
     "done": false,
-    "urgent": true
+    "urgent": true,
+    "scope": "private"
   },
   {
     "id": 3,
@@ -21,7 +22,8 @@
       "Private"
     ],
     "done": false,
-    "urgent": true
+    "urgent": true,
+    "scope": "private"
   },
   {
     "id": 5,
@@ -30,7 +32,8 @@
     "category": "task",
     "done": false,
     "urgent": false,
-    "tag": "to-buy"
+    "tag": "to-buy",
+    "scope": "private"
   },
   {
     "id": 6,
@@ -129,7 +132,8 @@
       "Work"
     ],
     "done": false,
-    "urgent": true
+    "urgent": true,
+    "scope": "work"
   },
   {
     "id": 18,
@@ -185,7 +189,8 @@
       "Work"
     ],
     "done": false,
-    "urgent": false
+    "urgent": false,
+    "scope": "work"
   },
   {
     "id": 25,
@@ -196,7 +201,8 @@
       "Private"
     ],
     "done": false,
-    "urgent": true
+    "urgent": true,
+    "scope": "private"
   },
   {
     "id": 26,
