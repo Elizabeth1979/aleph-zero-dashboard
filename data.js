@@ -241,7 +241,10 @@ window.__DASHBOARD_DATA__ = {
     "added": "2026-04-05",
     "category": "project",
     "done": false,
-    "urgent": false
+    "urgent": false,
+    "description": "Tasks have both 'done' and 'status' fields. Remove 'status' to keep one source of truth.",
+    "difficulty": "easy",
+    "impact": "low"
   },
   {
     "id": 27,
@@ -249,7 +252,10 @@ window.__DASHBOARD_DATA__ = {
     "added": "2026-04-05",
     "category": "project",
     "done": false,
-    "urgent": false
+    "urgent": false,
+    "description": "The check-form-accessibility prompt duplicates what audit-component already does with component_type='form'. Remove the redundant one.",
+    "difficulty": "easy",
+    "impact": "medium"
   },
   {
     "id": 28,
@@ -257,7 +263,10 @@ window.__DASHBOARD_DATA__ = {
     "added": "2026-04-05",
     "category": "project",
     "done": false,
-    "urgent": false
+    "urgent": false,
+    "description": "Three separate cron jobs checking the same thing. Merge into one that covers all checks.",
+    "difficulty": "easy",
+    "impact": "low"
   }
 ],
   resources: [
