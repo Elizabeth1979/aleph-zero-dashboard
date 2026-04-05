@@ -210,6 +210,37 @@
     background: var(--accent-dim); margin-top: 6px;
   }
 
+  /* Collapsible toggle button */
+  .completed-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    padding: 4px 0;
+    cursor: pointer;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--text-2);
+    font-family: inherit;
+  }
+  .completed-toggle svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+  .completed-toggle.open svg {
+    transform: rotate(90deg);
+  }
+  .completed-list {
+    display: none;
+    padding-top: var(--s3);
+  }
+  .completed-list.open {
+    display: block;
+  }
+
   /* Checklist items (milestones + tasks) */
   .checklist-item {
     display: flex;
