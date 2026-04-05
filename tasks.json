@@ -1,14 +1,5 @@
 [
   {
-    "id": 1,
-    "task": "Cancel ElevenLabs subscription",
-    "added": "2026-04-03",
-    "category": "task",
-    "done": true,
-    "urgent": true,
-    "status": "done"
-  },
-  {
     "id": 2,
     "task": "Pay company annual fee",
     "desc": "Owes two years back. Payment site was down last time \u2014 try again.",
@@ -31,18 +22,6 @@
     ],
     "done": false,
     "urgent": true
-  },
-  {
-    "id": 4,
-    "task": "Build A11y Expert MCP \u2014 Use file-based knowledge instead of ChromaDB",
-    "added": "2026-04-04",
-    "category": "project",
-    "done": true,
-    "urgent": false,
-    "difficulty": "hard",
-    "description": "Decided to skip vector DB and use flat files. Simpler to ship and maintain. Already implemented.",
-    "impact": "high",
-    "status": "done"
   },
   {
     "id": 5,
@@ -73,16 +52,6 @@
     "difficulty": "hard",
     "description": "Let users pick their own color theme \u2014 not just dark/light but full custom palette.",
     "impact": "high"
-  },
-  {
-    "id": 8,
-    "task": "A11y App: Research AI-driven UI customization",
-    "added": "2026-04-04",
-    "category": "project",
-    "done": true,
-    "urgent": false,
-    "difficulty": "hard",
-    "status": "done"
   },
   {
     "id": 9,
@@ -173,18 +142,6 @@
     "urgent": true
   },
   {
-    "id": 17,
-    "task": "A11y Tester Toolkit: Add tab order visualization, color contrast checker, focus indicator testing, ARIA validation, form label audit",
-    "added": "2026-04-05",
-    "category": "project",
-    "done": true,
-    "priority": "medium",
-    "urgent": false,
-    "description": "Suite of testing tools embedded in the dashboard for live accessibility auditing.",
-    "impact": "medium",
-    "status": "done"
-  },
-  {
     "id": 18,
     "task": "Dashboard: Fix Reset All button in a11y panel \u2014 verify it clears all settings and re-renders correctly",
     "added": "2026-04-05",
@@ -207,42 +164,6 @@
     "impact": "high"
   },
   {
-    "id": 20,
-    "task": "Build A11y Expert MCP \u2014 MVP \u2014 4 tools working locally",
-    "added": "2026-04-04",
-    "category": "project",
-    "done": true,
-    "urgent": false,
-    "difficulty": "hard",
-    "description": "Core tools: review_code, get_pattern, list_patterns, check_contrast.",
-    "impact": "high",
-    "status": "done"
-  },
-  {
-    "id": 21,
-    "task": "Build A11y Expert MCP \u2014 Add Resources & Prompts",
-    "added": "2026-04-04",
-    "category": "project",
-    "done": true,
-    "urgent": false,
-    "difficulty": "medium",
-    "description": "Expose knowledge base docs as MCP resources and add guided prompts for common a11y tasks.",
-    "impact": "medium",
-    "status": "done"
-  },
-  {
-    "id": 22,
-    "task": "Build A11y Expert MCP \u2014 Push to GitHub",
-    "added": "2026-04-04",
-    "category": "project",
-    "done": true,
-    "urgent": false,
-    "difficulty": "easy",
-    "description": "Open-source the project so others can use and contribute.",
-    "impact": "high",
-    "status": "done"
-  },
-  {
     "id": 23,
     "task": "Build A11y Expert MCP \u2014 Publish to PyPI",
     "added": "2026-04-04",
@@ -263,18 +184,6 @@
     "difficulty": "hard",
     "description": "A tool that looks up accessible implementations from real component libraries (Radix, Headless UI, etc.).",
     "impact": "medium"
-  },
-  {
-    "id": 22,
-    "task": "Move Slack into Knowledge Base",
-    "added": "2026-04-05",
-    "category": "task",
-    "tags": [
-      "Work"
-    ],
-    "done": true,
-    "urgent": false,
-    "status": "done"
   },
   {
     "id": 23,
