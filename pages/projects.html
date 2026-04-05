@@ -334,13 +334,19 @@ document.addEventListener('DOMContentLoaded', () => {
       `<a href="${esc(l.url)}" target="_blank" rel="noopener" class="project-link"><i data-lucide="external-link" style="width:11px;height:11px"></i>${esc(l.label)}</a>`
     ).join('')}</div>` : '';
 
-    // Features section
+    // Features — collapsible, same pattern as completed tasks
     const features = p.features || [];
     let featuresHtml = '';
     if (features.length) {
+      const fid = 'feat-' + p.id.replace(/[^a-z0-9]/g, '');
       featuresHtml = `<div class="card-section">
-        <div class="card-section-title">What's Working</div>
-        <ul class="feature-list">${features.map(f => `<li>${esc(f)}</li>`).join('')}</ul>
+        <button class="completed-toggle" onclick="this.classList.toggle('open');document.getElementById('${fid}').classList.toggle('open')" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          What's working (${features.length})
+        </button>
+        <div class="completed-list" id="${fid}">
+          <ul class="feature-list">${features.map(f => `<li>${esc(f)}</li>`).join('')}</ul>
+        </div>
       </div>`;
     }
 
