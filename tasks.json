@@ -126,5 +126,14 @@
     "category": "task",
     "done": false,
     "urgent": true
+  },
+  {
+    "id": 17,
+    "task": "A11y Tester Toolkit: Add tab order visualization, color contrast checker, focus indicator testing, ARIA validation, form label audit",
+    "added": "2026-04-05",
+    "category": "project",
+    "done": false,
+    "priority": "medium",
+    "urgent": false
   }
 ]
