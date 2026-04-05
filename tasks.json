@@ -236,6 +236,7 @@
     "added": "2026-04-05",
     "category": "task",
     "done": false,
-    "urgent": true
+    "urgent": true,
+    "scope": "private"
   }
 ]
