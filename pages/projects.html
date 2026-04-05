@@ -333,12 +333,14 @@ document.addEventListener('DOMContentLoaded', () => {
       if (projectTasks.length) {
         const pending = projectTasks.filter(t => !t.done);
 
-        // Score = Impact × (4 - Difficulty)
+        // Score = (Impact × 2) + (4 - Difficulty)
+        // Impact drives the score, difficulty is the tiebreaker
         // Impact: high=3, medium=2, low=1 | Difficulty: easy=1, medium=2, hard=3
+        // Range: 3 (hard+low) to 9 (easy+high)
         const impactVal = { high: 3, medium: 2, low: 1 };
         const diffVal = { easy: 1, medium: 2, hard: 3 };
         function calcScore(t) {
-          return (impactVal[t.impact] || 2) * (4 - (diffVal[t.difficulty] || 2));
+          return ((impactVal[t.impact] || 2) * 2) + (4 - (diffVal[t.difficulty] || 2));
         }
         pending.sort((a, b) => calcScore(b) - calcScore(a));
 
