@@ -229,7 +229,7 @@
     "id": 30,
     "task": "Build A11y Expert MCP — Add a README",
     "added": "2026-04-05",
-    "done": false,
+    "done": true,
     "urgent": false,
     "description": "Write a proper README.md for the a11y-expert-mcp repo — what it does, installation, usage, available tools/prompts/resources.",
     "difficulty": "easy",
