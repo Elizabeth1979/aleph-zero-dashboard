@@ -1,4 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <rect width="32" height="32" rx="6" fill="#1a1b26"/>
-  <text x="16" y="23" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-weight="700" font-size="20" fill="#56b6c2">H</text>
+  <!-- Eye shape -->
+  <ellipse cx="16" cy="16" rx="11" ry="7" fill="none" stroke="#56b6c2" stroke-width="1.8"/>
+  <!-- Iris -->
+  <circle cx="16" cy="16" r="4.5" fill="#56b6c2" opacity="0.25"/>
+  <!-- Pupil with "A" -->
+  <circle cx="16" cy="16" r="3.2" fill="#56b6c2"/>
+  <text x="16" y="19.2" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-weight="700" font-size="7" fill="#1a1b26">A</text>
 </svg>
