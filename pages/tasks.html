@@ -64,13 +64,16 @@
     background: var(--accent-dim); opacity: 0.7;
   }
   .task-item-content { flex: 1; min-width: 0; }
+  .task-item-row {
+    display: flex; align-items: center; justify-content: space-between; gap: var(--s3);
+  }
   .task-item-text {
     font-size: var(--fs-sm); color: var(--text);
-    line-height: 1.4;
+    line-height: 1.4; flex: 1; min-width: 0;
   }
-  .task-item-meta {
-    display: flex; align-items: center; gap: var(--s2);
-    margin-top: 2px;
+  .task-item-desc {
+    font-size: 12px; color: var(--text-3);
+    line-height: 1.4; margin-top: 3px;
   }
   .task-item-pri {
     font-size: 11px; font-weight: 600;
@@ -240,13 +243,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   function renderItem(t) {
     const cls = t.done ? 'task-item done' : 'task-item';
-    const date = t.added ? `<span class="task-item-date">${t.added}</span>` : '';
     const due = t.due ? `<span class="due-tag">Due ${fmtDue(t.due)}</span>` : '';
+    const desc = t.desc ? `<div class="task-item-desc">${esc(t.desc)}</div>` : '';
     return `<div class="${cls}">
       <div class="task-item-status"></div>
       <div class="task-item-content">
-        <div class="task-item-text">${esc(t.task)}${due}</div>
-        ${date ? `<div class="task-item-meta">${date}</div>` : ''}
+        <div class="task-item-row">
+          <div class="task-item-text">${esc(t.task)}</div>
+          ${due}
+        </div>
+        ${desc}
       </div>
     </div>`;
   }

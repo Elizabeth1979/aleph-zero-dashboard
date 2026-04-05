@@ -9,7 +9,8 @@
   },
   {
     "id": 2,
-    "task": "Pay company annual fee (owes 2 years back \u2014 payment site was down last time)",
+"task": "Pay company annual fee",
+    "desc": "Owes two years back. Payment site was down last time — try again.",
     "added": "2026-04-03",
     "due": "2026-04-12",
     "category": "task",
