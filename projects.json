@@ -11,6 +11,7 @@
       {"label": "Knowledge base repo", "url": "https://github.com/Elizabeth1979/a11y-skills"}
     ],
     "notes_path": "Accessibility Projects/A11y Expert MCP/",
+    "task_prefix": "Build A11y Expert MCP",
     "milestones": [
       {"task": "MVP — 4 tools working locally", "done": true},
       {"task": "Add Resources & Prompts", "done": false},
@@ -18,5 +19,29 @@
       {"task": "Publish to PyPI", "done": false},
       {"task": "Add component library research tool", "done": false}
     ]
+  },
+  {
+    "id": "a11y-app",
+    "name": "A11y App",
+    "status": "in_progress",
+    "description": "Android accessibility app — helps users customize UI for their needs. High contrast, color schemes, AI-driven simplification.",
+    "started": "2026-04-04",
+    "links": [],
+    "notes_path": "A11y App Research/",
+    "task_prefix": "A11y App:",
+    "milestones": []
+  },
+  {
+    "id": "dashboard",
+    "name": "Hermes Dashboard",
+    "status": "in_progress",
+    "description": "Bento-grid dashboard — tasks, memory, cron, skills, projects. Elli's single source of truth.",
+    "started": "2026-04-03",
+    "repo": "~/.hermes/dashboard",
+    "links": [
+      {"label": "Live site", "url": "https://elizabeth1979.github.io/hermes-dashboard/"}
+    ],
+    "task_prefix": "Dashboard:",
+    "milestones": []
   }
 ]

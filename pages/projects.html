@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const d = window.__DASHBOARD_DATA__;
   if (!d) return;
   const projects = d.projects || [];
+  const allTasks = (d.tasks || []).filter(t => t.category === 'project');
   if (!projects.length) {
     document.getElementById('page-body').innerHTML = '<div class="empty">No projects yet — get building!</div>';
     return;
@@ -35,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const statusLabel = { in_progress: 'In Progress', done: 'Done', paused: 'Paused' };
   const checkSvg = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent-dim)"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+  const circleSvg = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-3)"><circle cx="12" cy="12" r="10"></circle></svg>';
 
   function renderProject(p) {
     const status = p.status || 'in_progress';
@@ -88,6 +90,27 @@ document.addEventListener('DOMContentLoaded', () => {
       milestonesHtml = `<div class="milestones-label">Milestones</div>${mItems}`;
     }
 
+    // Project tasks from tasks.json (matched by task_prefix)
+    let tasksHtml = '';
+    if (p.task_prefix) {
+      const projectTasks = allTasks.filter(t => t.task.startsWith(p.task_prefix));
+      if (projectTasks.length) {
+        const pending = projectTasks.filter(t => !t.done);
+        const done = projectTasks.filter(t => t.done);
+        const taskItems = [...pending, ...done].map(t => {
+          const cls = t.done ? 'milestone done-item' : 'milestone';
+          const icon = t.done ? checkSvg : circleSvg;
+          // Strip the prefix for cleaner display
+          const label = t.task.replace(p.task_prefix, '').replace(/^\s*—?\s*/, '').trim();
+          return `<div class="${cls}">
+            <div class="milestone-check">${icon}</div>
+            <span class="milestone-text">${esc(label || t.task)}</span>
+          </div>`;
+        }).join('');
+        tasksHtml = `<div class="milestones-label" style="margin-top:var(--s4)">Tasks</div>${taskItems}`;
+      }
+    }
+
     return `<div class="project-card">
       <div class="project-top">
         <span class="project-name">${esc(p.name || p.id)}</span>
@@ -98,6 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ${linksHtml}
       ${progressHtml}
       ${milestonesHtml}
+      ${tasksHtml}
     </div>`;
   }
 

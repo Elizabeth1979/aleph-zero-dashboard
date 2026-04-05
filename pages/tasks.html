@@ -212,10 +212,9 @@ document.addEventListener('DOMContentLoaded', () => {
     write:    { label: 'To Write' },
     share:    { label: 'Share / Send' },
     remember: { label: 'Remember' },
-    project:  { label: 'Project Tasks' },
     'to-buy': { label: 'To Buy' },
   };
-  const catOrder = ['task', 'project', 'to-buy', 'idea', 'read', 'write', 'share', 'remember'];
+  const catOrder = ['task', 'to-buy', 'idea', 'read', 'write', 'share', 'remember'];
 
   const chevron = '<svg class="task-section-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
   function renderItem(t) {
@@ -231,9 +230,12 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>`;
   }
 
+  // Filter out project tasks — those live on the Projects page
+  const nonProject = tasks.filter(t => t.category !== 'project');
+
   // Urgent vs everything else (binary system)
-  const urgent = tasks.filter(t => !t.done && t.urgent);
-  const rest = tasks.filter(t => !t.done && !t.urgent);
+  const urgent = nonProject.filter(t => !t.done && t.urgent);
+  const rest = nonProject.filter(t => !t.done && !t.urgent);
 
   let html = '';
 
