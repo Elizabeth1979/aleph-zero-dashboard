@@ -2,7 +2,7 @@
   {
     "id": 2,
     "task": "Pay company annual fee",
-    "desc": "Owes two years back. Payment site was down last time \u2014 try again.",
+    "desc": "Owes two years back. Payment site was down last time — try again.",
     "added": "2026-04-03",
     "due": "2026-04-12",
     "category": "task",
@@ -33,7 +33,7 @@
   },
   {
     "id": 6,
-    "task": "A11y App: Fix high contrast mode \u2014 highlight card borders & non-text UI elements (not just text)",
+    "task": "A11y App: Fix high contrast mode — highlight card borders & non-text UI elements (not just text)",
     "added": "2026-04-04",
     "category": "project",
     "done": false,
@@ -44,13 +44,13 @@
   },
   {
     "id": 7,
-    "task": "A11y App: Add color scheme options \u2014 dark mode, light mode, custom user color picker",
+    "task": "A11y App: Add color scheme options — dark mode, light mode, custom user color picker",
     "added": "2026-04-04",
     "category": "project",
     "done": false,
     "urgent": false,
     "difficulty": "hard",
-    "description": "Let users pick their own color theme \u2014 not just dark/light but full custom palette.",
+    "description": "Let users pick their own color theme — not just dark/light but full custom palette.",
     "impact": "high"
   },
   {
@@ -73,17 +73,6 @@
     "urgent": false,
     "difficulty": "medium",
     "description": "Detail pages break on phone screens. Add responsive CSS so everything stacks and scales properly.",
-    "impact": "high"
-  },
-  {
-    "id": 11,
-    "task": "Dashboard: Fix contrast ratio \u2014 lighten --text-3 to WCAG AA (4.5:1)",
-    "added": "2026-04-04",
-    "category": "project",
-    "done": true,
-    "urgent": false,
-    "difficulty": "easy",
-    "description": "Secondary text is too dim. Bump it up so it passes WCAG AA contrast requirements.",
     "impact": "high"
   },
   {
@@ -110,7 +99,7 @@
   },
   {
     "id": 14,
-    "task": "Dashboard: Security hardening \u2014 CSP, pin Lucide + SRI, Object.create(null)",
+    "task": "Dashboard: Security hardening — CSP, pin Lucide + SRI, Object.create(null)",
     "added": "2026-04-04",
     "category": "project",
     "done": false,
@@ -121,7 +110,7 @@
   },
   {
     "id": 15,
-    "task": "Dashboard: A11y widget \u2014 44px touch target on close btn, remove red from reset",
+    "task": "Dashboard: A11y widget — 44px touch target on close btn, remove red from reset",
     "added": "2026-04-04",
     "category": "project",
     "done": false,
@@ -143,7 +132,7 @@
   },
   {
     "id": 18,
-    "task": "Dashboard: Fix Reset All button in a11y panel \u2014 verify it clears all settings and re-renders correctly",
+    "task": "Dashboard: Fix Reset All button in a11y panel — verify it clears all settings and re-renders correctly",
     "added": "2026-04-05",
     "category": "project",
     "done": false,
@@ -154,7 +143,7 @@
   },
   {
     "id": 19,
-    "task": "Dashboard: A11y panel advanced settings \u2014 custom font picker (multiple fonts), custom color pickers for text, background, links/buttons",
+    "task": "Dashboard: A11y panel advanced settings — custom font picker (multiple fonts), custom color pickers for text, background, links/buttons",
     "added": "2026-04-05",
     "category": "project",
     "done": false,
@@ -165,7 +154,7 @@
   },
   {
     "id": 23,
-    "task": "Build A11y Expert MCP \u2014 Publish to PyPI",
+    "task": "Build A11y Expert MCP — Publish to PyPI",
     "added": "2026-04-04",
     "category": "project",
     "done": false,
@@ -176,7 +165,7 @@
   },
   {
     "id": 24,
-    "task": "Build A11y Expert MCP \u2014 Add component library research tool",
+    "task": "Build A11y Expert MCP — Add component library research tool",
     "added": "2026-04-04",
     "category": "project",
     "done": false,
@@ -210,7 +199,7 @@
   },
   {
     "id": 26,
-    "task": "Dashboard: Remove redundant status field from tasks.json \u2014 use done (boolean) only",
+    "task": "Dashboard: Remove redundant status field from tasks.json — use done (boolean) only",
     "added": "2026-04-05",
     "category": "project",
     "done": false,
@@ -221,7 +210,7 @@
   },
   {
     "id": 27,
-    "task": "Build A11y Expert MCP \u2014 Remove check-form-accessibility prompt (audit-component with component_type=\"form\" does the same thing)",
+    "task": "Build A11y Expert MCP — Remove check-form-accessibility prompt (audit-component with component_type=\"form\" does the same thing)",
     "added": "2026-04-05",
     "category": "project",
     "done": false,

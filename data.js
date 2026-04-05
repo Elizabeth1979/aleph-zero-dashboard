@@ -29,7 +29,7 @@ window.__DASHBOARD_DATA__ = {
   {
     "id": 2,
     "task": "Pay company annual fee",
-    "desc": "Owes two years back. Payment site was down last time \u2014 try again.",
+    "desc": "Owes two years back. Payment site was down last time — try again.",
     "added": "2026-04-03",
     "due": "2026-04-12",
     "category": "task",
@@ -60,7 +60,7 @@ window.__DASHBOARD_DATA__ = {
   },
   {
     "id": 6,
-    "task": "A11y App: Fix high contrast mode \u2014 highlight card borders & non-text UI elements (not just text)",
+    "task": "A11y App: Fix high contrast mode — highlight card borders & non-text UI elements (not just text)",
     "added": "2026-04-04",
     "category": "project",
     "done": false,
@@ -71,13 +71,13 @@ window.__DASHBOARD_DATA__ = {
   },
   {
     "id": 7,
-    "task": "A11y App: Add color scheme options \u2014 dark mode, light mode, custom user color picker",
+    "task": "A11y App: Add color scheme options — dark mode, light mode, custom user color picker",
     "added": "2026-04-04",
     "category": "project",
     "done": false,
     "urgent": false,
     "difficulty": "hard",
-    "description": "Let users pick their own color theme \u2014 not just dark/light but full custom palette.",
+    "description": "Let users pick their own color theme — not just dark/light but full custom palette.",
     "impact": "high"
   },
   {
@@ -100,17 +100,6 @@ window.__DASHBOARD_DATA__ = {
     "urgent": false,
     "difficulty": "medium",
     "description": "Detail pages break on phone screens. Add responsive CSS so everything stacks and scales properly.",
-    "impact": "high"
-  },
-  {
-    "id": 11,
-    "task": "Dashboard: Fix contrast ratio \u2014 lighten --text-3 to WCAG AA (4.5:1)",
-    "added": "2026-04-04",
-    "category": "project",
-    "done": true,
-    "urgent": false,
-    "difficulty": "easy",
-    "description": "Secondary text is too dim. Bump it up so it passes WCAG AA contrast requirements.",
     "impact": "high"
   },
   {
@@ -137,7 +126,7 @@ window.__DASHBOARD_DATA__ = {
   },
   {
     "id": 14,
-    "task": "Dashboard: Security hardening \u2014 CSP, pin Lucide + SRI, Object.create(null)",
+    "task": "Dashboard: Security hardening — CSP, pin Lucide + SRI, Object.create(null)",
     "added": "2026-04-04",
     "category": "project",
     "done": false,
@@ -148,7 +137,7 @@ window.__DASHBOARD_DATA__ = {
   },
   {
     "id": 15,
-    "task": "Dashboard: A11y widget \u2014 44px touch target on close btn, remove red from reset",
+    "task": "Dashboard: A11y widget — 44px touch target on close btn, remove red from reset",
     "added": "2026-04-04",
     "category": "project",
     "done": false,
@@ -170,7 +159,7 @@ window.__DASHBOARD_DATA__ = {
   },
   {
     "id": 18,
-    "task": "Dashboard: Fix Reset All button in a11y panel \u2014 verify it clears all settings and re-renders correctly",
+    "task": "Dashboard: Fix Reset All button in a11y panel — verify it clears all settings and re-renders correctly",
     "added": "2026-04-05",
     "category": "project",
     "done": false,
@@ -181,7 +170,7 @@ window.__DASHBOARD_DATA__ = {
   },
   {
     "id": 19,
-    "task": "Dashboard: A11y panel advanced settings \u2014 custom font picker (multiple fonts), custom color pickers for text, background, links/buttons",
+    "task": "Dashboard: A11y panel advanced settings — custom font picker (multiple fonts), custom color pickers for text, background, links/buttons",
     "added": "2026-04-05",
     "category": "project",
     "done": false,
@@ -192,7 +181,7 @@ window.__DASHBOARD_DATA__ = {
   },
   {
     "id": 23,
-    "task": "Build A11y Expert MCP \u2014 Publish to PyPI",
+    "task": "Build A11y Expert MCP — Publish to PyPI",
     "added": "2026-04-04",
     "category": "project",
     "done": false,
@@ -203,7 +192,7 @@ window.__DASHBOARD_DATA__ = {
   },
   {
     "id": 24,
-    "task": "Build A11y Expert MCP \u2014 Add component library research tool",
+    "task": "Build A11y Expert MCP — Add component library research tool",
     "added": "2026-04-04",
     "category": "project",
     "done": false,
@@ -237,7 +226,7 @@ window.__DASHBOARD_DATA__ = {
   },
   {
     "id": 26,
-    "task": "Dashboard: Remove redundant status field from tasks.json \u2014 use done (boolean) only",
+    "task": "Dashboard: Remove redundant status field from tasks.json — use done (boolean) only",
     "added": "2026-04-05",
     "category": "project",
     "done": false,
@@ -248,7 +237,7 @@ window.__DASHBOARD_DATA__ = {
   },
   {
     "id": 27,
-    "task": "Build A11y Expert MCP \u2014 Remove check-form-accessibility prompt (audit-component with component_type=\"form\" does the same thing)",
+    "task": "Build A11y Expert MCP — Remove check-form-accessibility prompt (audit-component with component_type=\"form\" does the same thing)",
     "added": "2026-04-05",
     "category": "project",
     "done": false,
@@ -676,6 +665,6 @@ window.__DASHBOARD_DATA__ = {
     web_best_practices: "# Web Best Practices\n\n## UX Patterns\n\n- **Modal dialogs**: click outside backdrop to close is standard (focus is trapped, backdrop is visible)\n- **Non-modal panels** (settings, tools, sidebars): do NOT close on outside click. User opened it intentionally \u2014 let them close with X button or Escape key. Click-outside is frustrating when you accidentally dismiss a panel you're using.\n- **Tooltips/popovers**: click outside to close is fine (they're transient)\n- **General rule**: the more persistent the UI, the more explicit the close action should be\n\nLiving reference file. Updated as we build and learn.\n\n---\n\n## HTML\n\n- Use semantic elements: `<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<aside>`, `<footer>`\n- One `<main>` per page\n- Headings in order \u2014 don't skip levels (h1 \u2192 h2 \u2192 h3)\n- Use `<button>` for actions, `<a>` for navigation \u2014 never a `<div>` with click handlers\n- Always include `lang` attribute on `<html>`\n- Images need meaningful `alt` text (or `alt=\"\"` for decorative)\n- Use `<label>` with `for` attribute for every form input\n- Don't use `<br>` for spacing \u2014 use CSS margin/padding\n\n## CSS\n\n- Don't use interactive-looking elements (checkboxes, toggles) if they're not actionable \u2014 use passive indicators instead (dots, badges, color)\n- Use CSS custom properties (variables) for colors, spacing, fonts \u2014 single source of truth\n- Mobile-first: write base styles for small screens, add `min-width` media queries for larger\n- Use `rem` for font sizes, `em` for component-relative spacing\n- Avoid `!important` \u2014 fix specificity instead\n- Use logical properties (`margin-inline`, `padding-block`) for RTL support\n- Prefer `gap` over margins for flex/grid children\n- Use `clamp()` for fluid typography: `font-size: clamp(1rem, 2.5vw, 1.5rem)`\n- Keep specificity flat \u2014 prefer classes over nested selectors\n- Group related properties: layout \u2192 box model \u2192 typography \u2192 visual\n- Use `prefers-reduced-motion` media query for animations\n- Use `prefers-color-scheme` for dark/light mode\n- Avoid fixed heights \u2014 let content determine height\n- Use `min-height` instead of `height` for containers\n- **px is absolute** \u2014 setting `font-size: 120%` on `<html>` only scales `em`/`rem`, not `px`. If CSS variables use `px` (e.g. `--fs-base: 15px`), override them with scaled values for font-size toggles\n- **Prefer % on `<html>` for font scaling** \u2014 `font-size: 120%` on `<html>` scales everything using `rem`/`em` automatically. Two lines instead of twenty element-specific rules\n- **Avoid `calc()` with `em` for sizing** \u2014 `calc(1em + 2px)` compounds on nested elements (each level adds 2px more). Use `rem` or CSS variable overrides instead\n- **Don't list specific elements for global changes** \u2014 targeting `p`, `span`, `li` etc. individually misses headings, divs, buttons, inputs. Apply to `<html>` or `:root` and let inheritance do the work\n\n## JavaScript\n\n- Use `const` by default, `let` when reassignment needed, never `var`\n- Use template literals over string concatenation\n- Prefer `addEventListener` over inline `onclick`\n- Debounce scroll/resize handlers\n- Use `async/await` over `.then()` chains\n- Handle errors with try/catch \u2014 don't swallow errors silently\n- Use `document.querySelector` / `querySelectorAll` over `getElementById`\n- Keep DOM reads and writes batched to avoid layout thrashing\n\n## Accessibility (a11y)\n\n- Color contrast: minimum 4.5:1 for normal text, 3:1 for large text (WCAG AA)\n- All interactive elements must be keyboard accessible (Tab, Enter, Escape)\n- Use `aria-label` or `aria-labelledby` when visible text isn't enough\n- Use `role` attributes only when semantic HTML can't do the job\n- Focus indicators must be visible \u2014 never `outline: none` without replacement\n- Use `aria-live` regions for dynamic content updates\n- Skip-to-content link as first focusable element\n- Don't rely on color alone to convey information\n- Test with screen reader (TalkBack on Android)\n- Use `prefers-reduced-motion: reduce` to disable non-essential animations\n- Minimum touch target: 44\u00d744px (WCAG 2.5.5)\n- Form errors: associate with `aria-describedby`, announce with `aria-live`\n- **Underline links = inline text links only** \u2014 navigational block elements (`<a class=\"card\">`, bento cards) are visually distinct already. Don't underline those. Target inline `<a>` inside text content, not every `<a>` on the page\n\n## Performance\n\n- Lazy-load images below the fold: `loading=\"lazy\"`\n- Use `<picture>` with `srcset` for responsive images\n- Minimize layout shifts \u2014 set explicit `width`/`height` on images\n- Defer non-critical JS: `<script defer>`\n- Inline critical CSS, lazy-load the rest\n\n---\n\n*Last updated: 2026-04-04 (added: px vs rem scaling, font-size toggle patterns, underline links scope)*\n",
     learnings: "# Learnings Log\n\nThings we've discovered along the way \u2014 mistakes, insights, and useful patterns.\n\n---\n\n## 2026-04-04 \u2014 Skill Routing Needs Trigger Phrases\n**Category:** Skills\nSkill descriptions need \"Use when...\" trigger phrases and \"NOT for...\" negative triggers, or the agent picks the wrong skill. Discovered via the Journey Kits Skill Drift Detector \u2014 88 skills scanned, most were missing both.\n\n## 2026-04-04 \u2014 Use curl/APIs, Not Browser\n**Category:** Tools\nBrowser tools are slow and wasteful for websites. Use curl or APIs instead. Browser only for interactive tasks that absolutely require it (CAPTCHAs, JS-heavy apps with no API).\n\n## 2026-04-04 \u2014 Journey Kits CLI Broken on Node 25\n**Category:** Tools\nThe `journeykits` npm CLI crashes on Node v25.5.0 (`ERR_INVALID_ARG_VALUE`). Workaround: use the API directly via curl. All endpoints work fine without the CLI.\n\n## 2026-04-04 \u2014 Firecrawl for Web Scraping\n**Category:** Tools\n`firecrawl` CLI is installed globally and works well for scraping websites to markdown. Better than curl for JS-rendered pages. `firecrawl scrape <url> --format markdown`.\n\n## 2026-04-04 \u2014 Kit Adaptation > Kit Installation\n**Category:** Workflow\nAgent workflow kits (like Journey Kits) are rarely drop-in. They're built for specific stacks (OpenClaw, Telegram, GPT). The real value is in the logic \u2014 adapt the core idea to your own setup rather than installing as-is.\n"
   },
-  activity: [{"timestamp": "2026-04-05T18:24:46.996512", "type": "chat", "description": "in the chron task suggestion you sugg...", "channel": "e11i's server / #general / in the chron task suggestion you suggested this but it was already done so pl..."}, {"timestamp": "2026-04-05T16:01:18", "type": "cron", "description": "0c4481ec7d23", "channel": "automated"}, {"timestamp": "2026-04-05T14:58:59.457981", "type": "chat", "description": "For some reason the agent says many t...", "channel": "e11i's server / #general / For some reason the agent says many times that he cannot answer see this mess..."}, {"timestamp": "2026-04-05T14:58:13.380362", "type": "chat", "description": "I wanted to ask you: for example I'm ...", "channel": "e11i's server / #general / I wanted to ask you: for example I'm telling you, 'Okay I'm going to do this ..."}, {"timestamp": "2026-04-05T14:01:20", "type": "cron", "description": "Cron Health Check", "channel": "automated"}, {"timestamp": "2026-04-05T14:00:40", "type": "cron", "description": "Gateway Health Check", "channel": "automated"}, {"timestamp": "2026-04-05T14:00:26", "type": "cron", "description": "Memory Health Check", "channel": "automated"}, {"timestamp": "2026-04-05T13:00:58", "type": "cron", "description": "0c4481ec7d23", "channel": "automated"}, {"timestamp": "2026-04-05T11:53:49.973969", "type": "chat", "description": "Cronjob Response: Daily Task Suggeste...", "channel": "e11i's server / #general / Cronjob Response: Daily Task Suggester-------------Hey Elli! \u2600\ufe0f Ready to t..."}, {"timestamp": "2026-04-05T11:41:48.879051", "type": "chat", "description": "Okay so I received this morning's cro...", "channel": "e11i's server / #general / Okay so I received this morning's cron briefing and I want to tackle the issu..."}],
+  activity: [{"timestamp": "2026-04-05T18:27:09.414300", "type": "chat", "description": "in the chron task suggestion you sugg...", "channel": "e11i's server / #general / in the chron task suggestion you suggested this but it was already done so pl..."}, {"timestamp": "2026-04-05T16:01:18", "type": "cron", "description": "0c4481ec7d23", "channel": "automated"}, {"timestamp": "2026-04-05T14:58:59.457981", "type": "chat", "description": "For some reason the agent says many t...", "channel": "e11i's server / #general / For some reason the agent says many times that he cannot answer see this mess..."}, {"timestamp": "2026-04-05T14:58:13.380362", "type": "chat", "description": "I wanted to ask you: for example I'm ...", "channel": "e11i's server / #general / I wanted to ask you: for example I'm telling you, 'Okay I'm going to do this ..."}, {"timestamp": "2026-04-05T14:01:20", "type": "cron", "description": "Cron Health Check", "channel": "automated"}, {"timestamp": "2026-04-05T14:00:40", "type": "cron", "description": "Gateway Health Check", "channel": "automated"}, {"timestamp": "2026-04-05T14:00:26", "type": "cron", "description": "Memory Health Check", "channel": "automated"}, {"timestamp": "2026-04-05T13:00:58", "type": "cron", "description": "0c4481ec7d23", "channel": "automated"}, {"timestamp": "2026-04-05T11:53:49.973969", "type": "chat", "description": "Cronjob Response: Daily Task Suggeste...", "channel": "e11i's server / #general / Cronjob Response: Daily Task Suggester-------------Hey Elli! \u2600\ufe0f Ready to t..."}, {"timestamp": "2026-04-05T11:41:48.879051", "type": "chat", "description": "Okay so I received this morning's cro...", "channel": "e11i's server / #general / Okay so I received this morning's cron briefing and I want to tackle the issu..."}],
   reports: [{"file": "2026-04-04 Dashboard Code Review.md", "title": "Hermes Dashboard \u2014 Full Code Review", "date": "2026-04-04", "content": "# Hermes Dashboard \u2014 Full Code Review\n\n**Date:** 2026-04-04\n**Scope:** All 18 HTML files, 2 JS files, 2 CSS files in `~/.hermes/dashboard/`\n**Type:** Security + Code Quality + Accessibility + CSS/Design\n\n---\n\n## Executive Summary\n\nThe dashboard has **9 XSS vulnerabilities**, **6 prototype pollution sites**, **2 broken pages**, significant code duplication, and mobile responsiveness gaps. Most issues stem from one root cause: data from `data.js` inserted via `innerHTML` without escaping.\n\n**By severity:**\n- \ud83d\udd34 Critical/High: 17 issues (XSS, broken pages, prototype pollution)\n- \ud83d\udfe0 Medium: 10 issues (bugs, missing guards, duplication)\n- \ud83d\udfe1 Low: 12 issues (dead code, performance, design inconsistencies)\n\n---\n\n## \ud83d\udd34 Critical & High Severity\n\n### Security \u2014 XSS Vulnerabilities\n\n| ID | File:Line | Issue | Fix |\n|----|-----------|-------|-----|\n| XSS-1 | `cron.html:279-282` | `j.name`, `j.job_id`, `j.deliver`, skill names unescaped in innerHTML | Wrap with `esc()` |\n| XSS-2 | `discord_channels.html:275,283` | `ch.name`, `ch.guild`, `ch.id`, `t.name` unescaped | Wrap with `esc()` |\n| XSS-3 | `longterm.html:283` | ChromaDB category names unescaped | Wrap with `esc()` |\n| XSS-4 | `sessions.html:276` | `s.platform` unescaped | Wrap with `esc()` |\n| XSS-5 | `skills.html:289,291,308,311` | Skill/category names unescaped | Wrap with `esc()` |\n| XSS-6 | `resources.html:283,288` | CSS class injection via `r.status` + partial escape in TODO takeaways | Allowlist status values; escape before replacing TODO |\n| XSS-7 | `tasks.html:343` | `t.priority` injected as CSS class AND content unescaped | Allowlist `['high','medium','low']` |\n| XSS-8 | `resources.html:295` | `esc()` doesn't block `javascript:` URLs | Validate URL starts with `https?://` |\n| XSS-9 | `auth.html:275,277` / `config.html:295` | Credential names and config keys unescaped | Wrap with `esc()` |\n\n### Security \u2014 Prototype Pollution\n\n6 locations use `const groups = {}` with untrusted category keys from data.js:\n- `tasks.html:335-337, 371-374`\n- `resources.html:257-262`\n- `longterm.html:275-280`\n- `skills.html:282-285, 299-302`\n\n**Fix:** Use `Object.create(null)` instead of `{}`.\n\n### Broken Pages\n\n| ID | File:Line | Issue |\n|----|-----------|-------|\n| SEC-1 | `auth.html:270`, `config.html:309` | Wrong data key `d.auth` instead of `d.auth_data` \u2014 both pages show \"No credentials\" even when credentials exist |\n| BUG-1 | `discord_channels.html:277-284` | `d.discord_threads` is an array, treated as object with `Object.keys()` \u2014 threads section renders numeric indices instead of names |\n\n---\n\n## \ud83d\udfe0 Medium Severity\n\n### Security\n\n| ID | Issue | Scope |\n|----|-------|-------|\n| SEC-2 | No Content-Security-Policy headers | All 18 files |\n| SEC-3 | External scripts (Lucide `@latest`, Google Fonts) have no Subresource Integrity (SRI) hashes | All 18 files |\n| SEC-4 | `gateway.html:299` \u2014 localhost HTTP fetch from HTTPS GitHub Pages (always fails as mixed content) | gateway.html |\n| SEC-5 | `index.html:606`, `config.html:295` \u2014 `.textContent` values re-injected into innerHTML without `esc()` | index.html, config.html |\n\n### `esc()` Function Incomplete\n\nAll 17 copies of `esc()` only escape `&`, `<`, `>` \u2014 missing `\"` (`&quot;`) and `'` (`&#39;`). When output appears in HTML attributes (e.g., `data-file=\"${esc(f.key)}\"`), a quote in the value breaks the attribute boundary.\n\n### No CDN Failure Guard\n\n`lucide.createIcons()` called on all 18 pages with no check for `typeof lucide !== 'undefined'`. If unpkg.com is unreachable, every page crashes entirely.\n\n### Code Duplication (Major)\n\n| What | Copies | Used in |\n|------|--------|---------|\n| `esc()` function | 17 files | All |\n| `cronHuman()` function | 15 files | Only `cron.html` |\n| ~230-line CSS `<style>` block | 17 files | Each page |\n| `saveMemory()` function | 3 files | None (dead + broken) |\n\n**Recommendation:** Extract to `shared.css`, `utils.js`.\n\n---\n\n## \ud83d\udfe1 Low Severity\n\n### CSS & Design\n\n| ID | Issue | Details |\n|----|-------|---------|\n| CSS-1 | `--text-3` (#5f6368) fails WCAG AA contrast | 3.20:1 on `--bg`, needs 4.5:1. Affects all secondary text. Fix: lighten to `#878d93` |\n| CSS-2 | Zero `@media` breakpoints in 17 detail pages | Only index.html has mobile breakpoint. User views on Android! |\n| CSS-3 | `.a11y-close-btn` is 26\u00d726px | Below 44px touch minimum for Android |\n| CSS-4 | `--fs-xs: 13px` used 228 times | Below 14px minimum preference |\n| CSS-5 | No `:focus-visible` on any element except a11y widget | Browser-default blue outlines jarring on dark theme |\n| CSS-6 | A11y widget reset button uses red hover (#ff8585) | Design preference says no red |\n| CSS-7 | Category colors hardcoded outside theme.css | `#fbbf24` doesn't match `--warn: #f0b866` |\n| CSS-8 | No print stylesheet | Printing renders black backgrounds |\n\n### Accessibility\n\n| ID | Issue | Scope |\n|----|-------|-------|\n| A11Y-1 | No `<main>` semantic landmark | All 18 files |\n| A11Y-2 | Lucide icons missing `aria-hidden`/`aria-label` | All files |\n| A11Y-3 | Cards have no `aria-describedby` | index.html |\n| A11Y-4 | 3 non-button click-only `<div>` elements | tasks.html, agent.html, index.html |\n\n### Dead Code & Performance\n\n- `saveMemory()` in 3 pages: targets `<div>` not `<textarea>`, `.value` always `undefined`, no trigger buttons exist\n- `cronHuman()` dead in 14 of 15 pages\n- `setTimeout` delays (500ms/800ms) in index.html serve no purpose inside `DOMContentLoaded`\n- a11y widget: full panel re-render on every toggle click (could surgically update)\n- 6 pages not linked from index.html (sessions, resources, discord_channels, google, auth, commands)\n\n---\n\n## Recommended Fix Order\n\n### Phase 1 \u2014 Fix What's Broken (Quick Wins)\n1. [ ] Fix `d.auth` \u2192 `d.auth_data` in auth.html and config.html\n2. [ ] Fix discord_channels.html thread data handling\n3. [ ] Add `esc()` to all innerHTML injections (XSS-1 through XSS-9)\n4. [ ] Add `\"` and `'` escaping to `esc()` function\n5. [ ] Add `typeof lucide !== 'undefined'` guard on all pages\n\n### Phase 2 \u2014 Extract Shared Code (Reduces Future Risk)\n6. [ ] Create `shared.css` \u2014 extract duplicated 230-line style block\n7. [ ] Create `utils.js` \u2014 extract `esc()`, `cronHuman()`\n8. [ ] Remove dead `saveMemory()` from 3 pages\n9. [ ] Remove dead `cronHuman()` from 14 pages\n\n### Phase 3 \u2014 Mobile & Accessibility\n10. [ ] Add `@media (max-width: 600px)` to detail pages\n11. [ ] Fix `--text-3` contrast ratio\n12. [ ] Fix `--fs-xs` to 14px minimum\n13. [ ] Add `<main>` landmarks\n14. [ ] Add `aria-hidden` to decorative icons\n15. [ ] Increase a11y close button to 44px\n16. [ ] Remove red from a11y widget reset button\n\n### Phase 4 \u2014 Security Hardening\n17. [ ] Pin Lucide to specific version + add SRI hash\n18. [ ] Add CSP meta tags\n19. [ ] Validate URLs before use in `href` attributes\n20. [ ] Use `Object.create(null)` for grouping objects\n\n---\n\n*Review performed by Claude Code on 2026-04-04. Files reviewed: 18 HTML, 2 JS, 2 CSS.*\n", "preview": "**Scope:** All 18 HTML files, 2 JS files, 2 CSS files in `~/.hermes/dashboard/`", "critical": 2, "medium": 2, "low": 2}]
 };

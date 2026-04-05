@@ -210,30 +210,6 @@
     background: var(--accent-dim); margin-top: 6px;
   }
 
-  /* Completed toggle */
-  .completed-toggle {
-    display: flex; align-items: center; gap: var(--s2);
-    font-size: var(--fs-xs); color: var(--text-3);
-    cursor: pointer; padding: var(--s2) 0; margin-top: var(--s3);
-    border: none; background: none; font-family: inherit;
-  }
-  .completed-toggle:hover { color: var(--text-2); }
-  .completed-toggle svg {
-    width: 12px; height: 12px; transition: transform 0.2s ease;
-  }
-  .completed-toggle.open svg { transform: rotate(90deg); }
-  .completed-list { display: none; }
-  .completed-list.open { display: block; }
-  .completed-item {
-    display: flex; align-items: flex-start; gap: var(--s2);
-    padding: 3px 0; font-size: var(--fs-xs); color: var(--text-3);
-    text-decoration: line-through; line-height: 1.4;
-  }
-  .completed-item::before {
-    content: '✓'; flex-shrink: 0; color: var(--accent-dim);
-    font-size: 11px; margin-top: 1px;
-  }
-
   /* Checklist items (milestones + tasks) */
   .checklist-item {
     display: flex;
@@ -356,7 +332,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const projectTasks = allTasks.filter(t => t.task.startsWith(p.task_prefix));
       if (projectTasks.length) {
         const pending = projectTasks.filter(t => !t.done);
-        const done = projectTasks.filter(t => t.done);
 
         // Score = Impact × (4 - Difficulty)
         // Impact: high=3, medium=2, low=1 | Difficulty: easy=1, medium=2, hard=3
@@ -384,29 +359,12 @@ document.addEventListener('DOMContentLoaded', () => {
           </tr>`;
         }).join('');
 
-        // Completed tasks — collapsible
-        let completedHtml = '';
-        if (done.length) {
-          const pid = p.id.replace(/[^a-z0-9]/g, '');
-          const doneItems = done.map(t => {
-            const text = t.task.replace(p.task_prefix, '').replace(/^\s*—?\s*/, '').trim() || t.task;
-            return `<div class="completed-item">${esc(text)}</div>`;
-          }).join('');
-          completedHtml = `
-            <button class="completed-toggle" onclick="this.classList.toggle('open');document.getElementById('done-${pid}').classList.toggle('open')" type="button">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-              ${done.length} completed
-            </button>
-            <div class="completed-list" id="done-${pid}">${doneItems}</div>`;
-        }
-
         tasksHtml = `<div class="card-section">
           <div class="card-section-title">To Do</div>
           ${pending.length ? `<table class="task-table">
             <thead><tr><th>Task</th><th>Difficulty</th><th>Impact</th><th>Score</th></tr></thead>
             <tbody>${rows}</tbody>
           </table>` : '<div style="font-size:var(--fs-sm);color:var(--text-3)">All done!</div>'}
-          ${completedHtml}
         </div>`;
       }
     }
