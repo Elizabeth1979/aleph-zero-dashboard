@@ -150,6 +150,22 @@
     letter-spacing: 0.03em;
   }
 
+  /* Due-date pill on task items */
+  .due-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+    background: var(--accent-muted);
+    border: 1px solid rgba(86, 182, 194, 0.25);
+    border-radius: 4px;
+    padding: 1px 6px;
+    margin-left: 8px;
+    vertical-align: middle;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+
   /* Auto-urgent — compact callout */
   .auto-high-box {
     background: rgba(224, 108, 117, 0.08);
@@ -217,13 +233,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const catOrder = ['task', 'to-buy', 'idea', 'read', 'write', 'share', 'remember'];
 
   const chevron = '<svg class="task-section-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+  function fmtDue(iso) {
+    const d = new Date(iso + 'T00:00:00');
+    const mon = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()];
+    return mon + ' ' + d.getDate();
+  }
   function renderItem(t) {
     const cls = t.done ? 'task-item done' : 'task-item';
     const date = t.added ? `<span class="task-item-date">${t.added}</span>` : '';
+    const due = t.due ? `<span class="due-tag">Due ${fmtDue(t.due)}</span>` : '';
     return `<div class="${cls}">
       <div class="task-item-status"></div>
       <div class="task-item-content">
-        <div class="task-item-text">${esc(t.task)}</div>
+        <div class="task-item-text">${esc(t.task)}${due}</div>
         ${date ? `<div class="task-item-meta">${date}</div>` : ''}
       </div>
     </div>`;
