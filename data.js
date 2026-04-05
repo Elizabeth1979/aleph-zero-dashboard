@@ -41,6 +41,7 @@ window.__DASHBOARD_DATA__ = {
     "added": "2026-04-03",
     "due": "2026-04-12",
     "category": "task",
+    "tags": ["Private"],
     "done": false,
     "urgent": true
   },
@@ -272,6 +273,25 @@ window.__DASHBOARD_DATA__ = {
     "difficulty": "hard",
     "description": "A tool that looks up accessible implementations from real component libraries (Radix, Headless UI, etc.).",
     "impact": "medium"
+  },
+  {
+    "id": 22,
+    "task": "Move Slack into Knowledge Base",
+    "added": "2026-04-05",
+    "category": "task",
+    "tags": ["Work"],
+    "done": false,
+    "urgent": false
+  },
+  {
+    "id": 23,
+    "task": "Prepare Q&A about accessibility",
+    "desc": "Questions and answers about accessibility for the knowledge base.",
+    "added": "2026-04-05",
+    "category": "task",
+    "tags": ["Work"],
+    "done": false,
+    "urgent": false
   }
 ],
   resources: [
