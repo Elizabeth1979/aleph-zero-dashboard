@@ -557,7 +557,7 @@
     ---------------------------------------------------------- */
     document.addEventListener('mousedown', (e) => {
       if (!isOpen) return;
-      if (e.target.closest('#a11y-widget-panel') || e.target.closest('#a11y-widget-btn')) return;
+      if (e.target.closest('#a11y-widget-panel') || e.target.closest('#a11y-widget-btn') || e.target.closest('.a11y-tester-panel') || e.target.closest('.a11y-tester-toggle')) return;
       closePanel();
     });
 
