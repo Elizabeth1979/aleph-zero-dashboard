@@ -296,24 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
       `<a href="${esc(l.url)}" target="_blank" rel="noopener" class="project-link"><i data-lucide="external-link" style="width:11px;height:11px"></i>${esc(l.label)}</a>`
     ).join('')}</div>` : '';
 
-    // Milestones
-    let milestonesHtml = '';
-    const milestones = p.milestones || [];
-    if (milestones.length) {
-      const doneCount = milestones.filter(m => m.done).length;
-      const pct = Math.round((doneCount / milestones.length) * 100);
-
-      milestonesHtml = `<div class="card-section">
-        <div class="card-section-title">Milestones</div>
-        <div class="progress-row">
-          <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
-          <span class="progress-pct">${doneCount}/${milestones.length}</span>
-        </div>
-        ${renderChecklist(milestones)}
-      </div>`;
-    }
-
-    // Tasks from tasks.json — rendered as table with difficulty
+    // Tasks from tasks.json — rendered as table with difficulty + progress bar
     let tasksHtml = '';
     if (p.task_prefix) {
       const projectTasks = allTasks.filter(t => t.task.startsWith(p.task_prefix));
@@ -333,8 +316,14 @@ document.addEventListener('DOMContentLoaded', () => {
             <td class="task-table-date">${date}</td>
           </tr>`;
         }).join('');
+        const doneCount = sorted.filter(t => t.done).length;
+        const pct = sorted.length ? Math.round((doneCount / sorted.length) * 100) : 0;
         tasksHtml = `<div class="card-section">
           <div class="card-section-title">Tasks</div>
+          <div class="progress-row">
+            <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+            <span class="progress-pct">${doneCount}/${sorted.length}</span>
+          </div>
           <table class="task-table">
             <thead><tr><th>Task</th><th>Difficulty</th><th>Added</th></tr></thead>
             <tbody>${rows}</tbody>
@@ -351,7 +340,6 @@ document.addEventListener('DOMContentLoaded', () => {
       ${desc}
       ${metaHtml}
       ${linksHtml}
-      ${milestonesHtml}
       ${tasksHtml}
     </div>`;
   }

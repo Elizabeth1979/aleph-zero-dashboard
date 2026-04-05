@@ -1,10 +1,10 @@
 window.__DASHBOARD_DATA__ = {
   user_memory: "**Name:** Elli | **TZ:** Asia/Jerusalem | **Email:** el.patrick79@gmail.com | **GitHub:** Elizabeth1979\n\u00a7\nObsidian vault at ~/Desktop/elli vault. Reviews/audits \u2192 save to vault Reviews/ + dashboard reports page.\n\u00a7\n**Discord:** Server \"e1i's server\". Bot \"Claude Code#1264\". OpenClaw agent on Hostinger.\n\u00a7\n**Daily brief:** urgent emails, meetings, tasks, AI newsletter summaries. Heavy Gmail/newsletters, Google Drive, YouTube.\n\u00a7\n**UI prefs:** sea/teal/light blue, no red. Min 14px. Left-aligned. Minimalist \u2014 no gradients/emojis, clean colors, Lucide icons OK. Dashboard must be beautiful.\n\u00a7\nBefore running commands, explain what they do in visible text (tool calls are hidden on Discord).\n\u00a7\nAndroid phone (not Apple/iOS). Apple Reminders won't sync. Interacts via Discord on phone \u2014 bot must be self-healing.\n\u00a7\nReads/writes Hebrew. Celebrates Pesach. Has handwritten family recipes in Hebrew. Uses Discord voice messages. Has ADHD \u2014 needs thread follow-up pings.\n\u00a7\nA11y app: Android accessibility app. Research in vault \"A11y App Research/\". Has a company in Israel. Sister lives in the US.\n\u00a7\nADHD: One clear path, no alternatives. Incremental. May have misophonia.\n\u00a7\nRepetitive red \"urgent\" tags on every task item cause anxiety \u2014 only show urgent label once at the section level, not per-item. Binary priority system: urgent or not urgent (no high/medium/low).",
-  agent_memory: "MEMORY ARCHITECTURE: Detail files live in ~/.hermes/memory/. Read the relevant file when you need specifics. Add new topics as new files + a pointer here.\n\u00a7\nDiscord (bot, gateway, channels, threads, follow-ups): ~/.hermes/memory/discord.md\nRULE: Keep threads focused. If Elli brings up a new topic, suggest opening a new thread.\n\u00a7\nRULE: After ANY backend change (cron, skill, task, config, memory detail file), run: bash ~/.hermes/dashboard/refresh.sh && cd ~/.hermes/dashboard && git add -A && git commit -m \"update\" && git push\n\u00a7\nRULE: When creating a custom skill, add \"custom: true\" to YAML frontmatter. Description MUST include trigger phrases (\"Use when...\") and negative triggers (\"NOT for...\") for proper routing. When adding a new shell alias, also add it to ~/.hermes/dashboard/commands.json.\n\u00a7\nAlways check Anthropic API for latest models before suggesting.\n\u00a7\nRULE: Do NOT use browser tools for websites. Use curl/APIs instead. Browser is only for interactive tasks that absolutely require it (CAPTCHAs, JS-heavy apps with no API).\n\u00a7\nGoogle Drive: readonly scope \u2014 can't upload without re-auth. Elli learns through her own project examples, not abstract explanations. Hidden state causes anxiety \u2014 always surface everything visibly on dashboard.\n\u00a7\nTasks: ALL in ~/.hermes/dashboard/tasks.json. Binary urgent/not-urgent system. Project tasks (category:\"project\") show only on Projects page via task_prefix matching in projects.json. Daily cron suggests next task at 10am.\n\u00a7\nDiscord formatting: NEVER use markdown tables \u2014 they don't render on Discord (especially mobile). Use bullet lists with bold labels instead.\n\u00a7\nWeb best practices (HTML, CSS, JS, a11y, performance): ~/.hermes/memory/web-best-practices.md \u2014 living reference file, update whenever we learn something new during web dev work.\n\u00a7\nLearnings log: ~/.hermes/memory/learnings.md \u2014 append new discoveries, mistakes, and useful patterns as we go. Dashboard has a Learnings card + detail page. When we learn something new, add it here.\n\u00a7\nDashboard CSS/JS: NEVER add cache-busting version params (?v=5 etc.) to file references. Git handles versioning. Just use clean filenames like shared.css, theme.css, a11y-widget.css.",
+  agent_memory: "MEMORY ARCHITECTURE: Detail files live in ~/.hermes/memory/. Read the relevant file when you need specifics. Add new topics as new files + a pointer here.\n\u00a7\nDiscord (bot, gateway, channels, threads, follow-ups): ~/.hermes/memory/discord.md\nRULE: Keep threads focused. If Elli brings up a new topic, suggest opening a new thread.\n\u00a7\nRULE: After ANY backend change (cron, skill, task, config, memory detail file), run: bash ~/.hermes/dashboard/refresh.sh && cd ~/.hermes/dashboard && git add -A && git commit -m \"update\" && git push\n\u00a7\nRULE: When creating a custom skill, add \"custom: true\" to YAML frontmatter. Description MUST include trigger phrases (\"Use when...\") and negative triggers (\"NOT for...\") for proper routing. When adding a new shell alias, also add it to ~/.hermes/dashboard/commands.json.\n\u00a7\nAlways check Anthropic API for latest models before suggesting.\n\u00a7\nRULE: Do NOT use browser tools for websites. Use curl/APIs instead. Browser is only for interactive tasks that absolutely require it (CAPTCHAs, JS-heavy apps with no API).\n\u00a7\nGoogle Drive: readonly scope \u2014 can't upload without re-auth. Elli learns through her own project examples, not abstract explanations. Hidden state causes anxiety \u2014 always surface everything visibly on dashboard.\n\u00a7\nTasks: ALL in ~/.hermes/dashboard/tasks.json. Binary urgent/not-urgent. One-time reminders = tasks with \"due\" date, NOT cron jobs. Cron is recurring only. Project tasks show on Projects page via task_prefix in projects.json.\n\u00a7\nDiscord formatting: NEVER use markdown tables \u2014 they don't render on Discord (especially mobile). Use bullet lists with bold labels instead.\n\u00a7\nWeb best practices (HTML, CSS, JS, a11y, performance): ~/.hermes/memory/web-best-practices.md \u2014 living reference file, update whenever we learn something new during web dev work.\n\u00a7\nLearnings log: ~/.hermes/memory/learnings.md \u2014 append new discoveries, mistakes, and useful patterns as we go. Dashboard has a Learnings card + detail page. When we learn something new, add it here.\n\u00a7\nDashboard CSS/JS: NEVER add cache-busting version params (?v=5 etc.) to file references. Git handles versioning. Just use clean filenames like shared.css, theme.css, a11y-widget.css.",
   user_chars:     1383,
   user_limit: 1375,
   user_pct: 100,
-  agent_chars:     2212,
+  agent_chars:     2214,
   agent_limit: 2200,
   agent_pct: 100,
   cron_jobs: [{"id": "9a6cc6e7ea59", "name": "Morning Brief", "prompt": "You are Elli's morning brief assistant. Run this every morning and deliver a concise, useful brief. Use the google-workspace skill to access Gmail and Calendar.\n\nFormat the brief like this:\n\n**\u2600\ufe0f Morning Brief \u2014 [Today's Date]**\n\n1. **\ud83d\udcc5 Today's Schedule** \u2014 Check Google Calendar for today's events. List them with times.\n2. **\ud83d\udce7 Urgent Emails** \u2014 Check Gmail for important/urgent emails from the last 24h. Skip newsletters and promos.\n3. **\ud83d\udccb Tasks** \u2014 Read ~/.hermes/dashboard/tasks.json and list any pending/in-progress tasks.\n4. **\ud83c\udfdb\ufe0f On This Day in History** \u2014 Share one interesting historical fact that happened on today's date. Pick something surprising, fun, or lesser-known \u2014 not the obvious ones everyone knows.\n\nKeep it short and scannable. No fluff.", "skills": ["google-workspace"], "skill": "google-workspace", "model": "claude-sonnet-4-6", "provider": "anthropic", "base_url": null, "schedule": "0 8 * * *", "schedule_display": "0 8 * * *", "repeat": {"times": null, "completed": 5}, "enabled": true, "state": "scheduled", "paused_at": null, "paused_reason": null, "created_at": "2026-04-02T19:17:22.345893+03:00", "next_run_at": "2026-04-06T08:00:00+03:00", "last_run_at": "2026-04-05T09:29:56.879807+03:00", "last_status": "ok", "last_error": null, "deliver": "discord:1489553133066653726", "origin": null, "repeat_display": "ran 5x", "job_id": "9a6cc6e7ea59"}, {"id": "544b41e48276", "name": "Nightly Memory Consolidation", "prompt": "Nightly memory maintenance. Do these checks AND fix what you can:\n\n1. Read all files in ~/.hermes/memory/ (detail files). For each file:\n   - Flag AND FIX contradictions between files\n   - Flag AND FIX stale references (e.g. \"needs restart\" when it's already active, deprecated items still mentioned)\n   - Move misplaced content to the correct file (e.g. personal notes in technical files)\n   - Note if any file is getting very long (>100 lines) and needs splitting\n\n2. Read ~/.hermes/dashboard/resources.json \u2014 count unprocessed resources and pending TODOs in takeaways.\n\n3. Verify cron job list matches what's documented in memory files. Fix any gaps.\n\n4. Delete orphaned/deprecated files that are no longer referenced.\n\n5. Report what you FOUND and what you FIXED in a short summary. Format:\n\n**\ud83e\uddf9 Nightly Maintenance \u2014 [Date]**\n\n**Fixed:**\n- (list of things you actually changed)\n\n**Flagged (needs Elli):**\n- (only things that need a human decision)\n\n**All clear:**\n- (categories where nothing was wrong)\n\nKeep it short. If everything is clean, just say so in 2 lines. Don't pad the report.", "skills": [], "skill": null, "model": null, "provider": null, "base_url": null, "schedule": "0 23 * * *", "schedule_display": "0 23 * * *", "repeat": {"times": null, "completed": 2}, "enabled": true, "state": "scheduled", "paused_at": null, "paused_reason": null, "created_at": "2026-04-03T16:33:43.653601+03:00", "next_run_at": "2026-04-05T23:00:00+03:00", "last_run_at": "2026-04-04T23:04:46.242605+03:00", "last_status": "ok", "last_error": null, "deliver": "discord:1489553133066653726", "origin": {"platform": "discord", "chat_id": "1489618821181608077", "chat_name": "e11i's server / #dashboard / Okay now let's tackle the modal thing. I prefer it to be just a link to a dif...", "thread_id": "1489618821181608077"}, "repeat_display": "ran 2x", "job_id": "544b41e48276"}, {"id": "3522003f6b68", "name": "Weekend Review", "prompt": "Read ~/.hermes/dashboard/tasks.json and ~/.hermes/dashboard/resources.json. Give a weekend review:\n\n1. **Open Tasks** \u2014 list all tasks where done=false, grouped by priority (high first)\n2. **Unprocessed Resources** \u2014 list all resources where status=\"new\" with their title and URL\n3. **TODOs from processed resources** \u2014 scan takeaways for any containing \"TODO:\" and list them\n\nKeep it short and scannable. ALWAYS send a report, even if everything is clear. Never use [SILENT]. Elli wants confirmation it ran.", "skills": [], "skill": null, "model": null, "provider": null, "base_url": null, "schedule": "0 12 * * 5", "schedule_display": "0 12 * * 5", "repeat": {"times": null, "completed": 0}, "enabled": true, "state": "scheduled", "paused_at": null, "paused_reason": null, "created_at": "2026-04-03T17:13:56.271968+03:00", "next_run_at": "2026-04-10T12:00:00+03:00", "last_run_at": null, "last_status": null, "last_error": null, "deliver": "discord:1489553133066653726", "origin": null, "repeat_display": "", "job_id": "3522003f6b68"}, {"id": "5b81348d7c03", "name": "WIX Stock Review", "prompt": "Research Wix.com (NASDAQ: WIX) current stock status. Find:\n1. Current stock price and recent trend (1-month change)\n2. 52-week high/low\n3. Any recent earnings results or guidance updates\n4. Current analyst consensus rating and average price target\n5. Any notable news (upgrades, downgrades, product launches, macro impact)\n\nContext: Elli holds WIX shares and is waiting for the price to recover before selling. As of April 2026, the stock was at ~$168.79 with a 52-week high of $231.85 and analyst targets around $200-$220.\n\nGive a concise summary with a clear recommendation: is now a good time to consider selling, or should she keep holding? Flag if the stock crosses above $200 or drops below $150.", "skills": [], "skill": null, "model": null, "provider": null, "base_url": null, "schedule": "0 10 1 * *", "schedule_display": "0 10 1 * *", "repeat": {"times": null, "completed": 0}, "enabled": true, "state": "scheduled", "paused_at": null, "paused_reason": null, "created_at": "2026-04-04T09:27:39.885326+03:00", "next_run_at": "2026-05-01T10:00:00+03:00", "last_run_at": null, "last_status": null, "last_error": null, "deliver": "discord:1489553133066653726", "origin": {"platform": "discord", "chat_id": "1489569423038742648", "chat_name": "e11i's server / #general / Todo", "thread_id": "1489569423038742648"}, "repeat_display": "", "job_id": "5b81348d7c03"}, {"id": "b07f24cc2a8e", "name": "Thread follow-up pinger", "prompt": "Check ~/.hermes/pending_replies.json for open threads awaiting Elli's response. For each entry that is older than 24 hours and has status \"open\", send a friendly ping to the specific Discord thread (using the thread_id in the entry) reminding Elli there are pending action items. The ping should be short and specific \u2014 mention what's waiting (from the \"summary\" field). Example: \"Hey! Still waiting on your input here \u2014 [summary]. Let me know if you want to move forward or close this out.\"\n\nFormat of pending_replies.json entries:\n{\"thread_id\": \"123\", \"thread_name\": \"Topic\", \"summary\": \"what's pending\", \"timestamp\": \"ISO date\", \"status\": \"open\"}\n\nAfter pinging, do NOT modify the file \u2014 only Elli's response or explicit close removes entries.\n\nALWAYS send a report, even if the file is empty or all entries are closed. Never use [SILENT]. If nothing is pending, just say \"No open threads waiting \u2014 all clear \u2713\". Elli wants confirmation it ran.", "skills": [], "skill": null, "model": null, "provider": null, "base_url": null, "schedule": "0 19 * * *", "schedule_display": "0 19 * * *", "repeat": {"times": null, "completed": 1}, "enabled": true, "state": "scheduled", "paused_at": null, "paused_reason": null, "created_at": "2026-04-04T13:57:23.038826+03:00", "next_run_at": "2026-04-05T19:00:00+03:00", "last_run_at": "2026-04-04T19:01:04.255937+03:00", "last_status": "ok", "last_error": null, "deliver": "discord:1489553133066653726", "origin": {"platform": "discord", "chat_id": "1489934283597549680", "chat_name": "e11i's server / #general / The accessibility icon doesn't appear on the main page, only on the other pag...", "thread_id": "1489934283597549680"}, "repeat_display": "ran 1x", "job_id": "b07f24cc2a8e"}, {"id": "0c4481ec7d23", "name": "Project Task Suggester", "prompt": "Read the task list at ~/.hermes/dashboard/tasks.json and the project list at ~/.hermes/dashboard/projects.json.\n\nFilter for tasks where category is \"project\" and done is false. Pick the next one to suggest based on this logic:\n1. Group tasks by project (match task text against each project's task_prefix)\n2. Rotate between projects \u2014 don't suggest the same project twice in a row if possible\n3. Prefer smaller/quicker tasks early in the day, bigger ones for afternoon focus blocks\n\nPresent the suggestion like this:\n- Name the task clearly\n- Say which project it belongs to\n- Give a rough time estimate (small fix: ~30 min, medium feature: 1-2 hrs, big build: half day)\n- Offer to start working on it together\n\nKeep it short and encouraging. No emojis overload. If all project tasks are done, celebrate and suggest adding new ones.\n\nIMPORTANT: Do NOT suggest non-project tasks (category \"task\" or \"to-buy\"). This is strictly for project work.", "skills": [], "skill": null, "model": null, "provider": null, "base_url": null, "schedule": "0 10,13,16,19 * * *", "schedule_display": "0 10,13,16,19 * * *", "repeat": {"times": null, "completed": 1}, "enabled": true, "state": "scheduled", "paused_at": null, "paused_reason": null, "created_at": "2026-04-04T14:49:40.627085+03:00", "next_run_at": "2026-04-05T13:00:00+03:00", "last_run_at": "2026-04-05T10:01:09.621541+03:00", "last_status": "ok", "last_error": null, "deliver": "discord:1489553133066653726", "origin": {"platform": "discord", "chat_id": "1489952664178528369", "chat_name": "e11i's server / #general / Wow that was a weird experience. I typed out a message that was more than 200...", "thread_id": "1489952664178528369"}, "repeat_display": "ran 1x", "job_id": "0c4481ec7d23"}],
@@ -36,7 +36,7 @@ window.__DASHBOARD_DATA__ = {
   },
   {
     "id": 2,
-    "task": "Pay company annual fee (owes 2 years back — payment site was down last time)",
+    "task": "Pay company annual fee (owes 2 years back \u2014 payment site was down last time)",
     "added": "2026-04-03",
     "due": "2026-04-12",
     "category": "task",
@@ -57,7 +57,8 @@ window.__DASHBOARD_DATA__ = {
     "added": "2026-04-04",
     "category": "project",
     "done": false,
-    "urgent": false
+    "urgent": false,
+    "difficulty": "hard"
   },
   {
     "id": 5,
@@ -191,6 +192,51 @@ window.__DASHBOARD_DATA__ = {
     "done": false,
     "urgent": false,
     "difficulty": "hard"
+  },
+  {
+    "id": 20,
+    "task": "Build A11y Expert MCP \u2014 MVP \u2014 4 tools working locally",
+    "added": "2026-04-04",
+    "category": "project",
+    "done": true,
+    "urgent": false,
+    "difficulty": "hard"
+  },
+  {
+    "id": 21,
+    "task": "Build A11y Expert MCP \u2014 Add Resources & Prompts",
+    "added": "2026-04-04",
+    "category": "project",
+    "done": false,
+    "urgent": false,
+    "difficulty": "medium"
+  },
+  {
+    "id": 22,
+    "task": "Build A11y Expert MCP \u2014 Push to GitHub",
+    "added": "2026-04-04",
+    "category": "project",
+    "done": true,
+    "urgent": false,
+    "difficulty": "easy"
+  },
+  {
+    "id": 23,
+    "task": "Build A11y Expert MCP \u2014 Publish to PyPI",
+    "added": "2026-04-04",
+    "category": "project",
+    "done": false,
+    "urgent": false,
+    "difficulty": "medium"
+  },
+  {
+    "id": 24,
+    "task": "Build A11y Expert MCP \u2014 Add component library research tool",
+    "added": "2026-04-04",
+    "category": "project",
+    "done": false,
+    "urgent": false,
+    "difficulty": "hard"
   }
 ],
   resources: [
@@ -281,24 +327,24 @@ window.__DASHBOARD_DATA__ = {
     "started": "2026-04-04",
     "repo": "~/Projects/a11y-expert-mcp",
     "links": [
-      {"label": "MCP repo", "url": "https://github.com/Elizabeth1979/a11y-expert-mcp"},
-      {"label": "Knowledge base repo", "url": "https://github.com/Elizabeth1979/a11y-skills"}
+      {
+        "label": "MCP repo",
+        "url": "https://github.com/Elizabeth1979/a11y-expert-mcp"
+      },
+      {
+        "label": "Knowledge base repo",
+        "url": "https://github.com/Elizabeth1979/a11y-skills"
+      }
     ],
     "notes_path": "Accessibility Projects/A11y Expert MCP/",
     "task_prefix": "Build A11y Expert MCP",
-    "milestones": [
-      {"task": "MVP — 4 tools working locally", "done": true},
-      {"task": "Add Resources & Prompts", "done": false},
-      {"task": "Push to GitHub", "done": true},
-      {"task": "Publish to PyPI", "done": false},
-      {"task": "Add component library research tool", "done": false}
-    ]
+    "milestones": []
   },
   {
     "id": "a11y-app",
     "name": "A11y App",
     "status": "in_progress",
-    "description": "Android accessibility app — helps users customize UI for their needs. High contrast, color schemes, AI-driven simplification.",
+    "description": "Android accessibility app \u2014 helps users customize UI for their needs. High contrast, color schemes, AI-driven simplification.",
     "started": "2026-04-04",
     "links": [],
     "notes_path": "A11y App Research/",
@@ -309,11 +355,14 @@ window.__DASHBOARD_DATA__ = {
     "id": "dashboard",
     "name": "Hermes Dashboard",
     "status": "in_progress",
-    "description": "Bento-grid dashboard — tasks, memory, cron, skills, projects. Elli's single source of truth.",
+    "description": "Bento-grid dashboard \u2014 tasks, memory, cron, skills, projects. Elli's single source of truth.",
     "started": "2026-04-03",
     "repo": "~/.hermes/dashboard",
     "links": [
-      {"label": "Live site", "url": "https://elizabeth1979.github.io/hermes-dashboard/"}
+      {
+        "label": "Live site",
+        "url": "https://elizabeth1979.github.io/hermes-dashboard/"
+      }
     ],
     "task_prefix": "Dashboard:",
     "milestones": []
@@ -560,8 +609,8 @@ window.__DASHBOARD_DATA__ = {
   google_status: "connected",
   google_apis: "configured",
   gateway_state: {"pid": 811, "state": "running", "exit_reason": "discord: failed to connect", "updated_at": "2026-04-04T14:58:50.067360+00:00"},
-  session_count: 228,
-  recent_sessions: [{"file": "session_20260405_122227_269a2c.json", "title": "session_20260405_122227_269a2c.json", "platform": "cli", "created": ""}, {"file": "session_20260405_122216_eb2adf.json", "title": "session_20260405_122216_eb2adf.json", "platform": "cli", "created": ""}, {"file": "session_20260405_121315_488886.json", "title": "session_20260405_121315_488886.json", "platform": "cli", "created": ""}, {"file": "session_20260405_115524_942c43b5.json", "title": "session_20260405_115524_942c43b5.json", "platform": "discord", "created": ""}, {"file": "session_20260405_114351_e83390b7.json", "title": "session_20260405_114351_e83390b7.json", "platform": "discord", "created": ""}],
+  session_count: 229,
+  recent_sessions: [{"file": "session_20260405_122506_e0f663.json", "title": "session_20260405_122506_e0f663.json", "platform": "cli", "created": ""}, {"file": "session_20260405_122227_269a2c.json", "title": "session_20260405_122227_269a2c.json", "platform": "cli", "created": ""}, {"file": "session_20260405_122216_eb2adf.json", "title": "session_20260405_122216_eb2adf.json", "platform": "cli", "created": ""}, {"file": "session_20260405_121315_488886.json", "title": "session_20260405_121315_488886.json", "platform": "cli", "created": ""}, {"file": "session_20260405_115524_942c43b5.json", "title": "session_20260405_115524_942c43b5.json", "platform": "discord", "created": ""}],
   system_settings: "# System Settings Reference\n\n## Power Management (set 2026-04-03)\n\n### Why\nKeep Discord bot gateway running 24/7 when plugged in, save battery when unplugged.\n\n### Terminal Settings (pmset)\n\n**Plugged in (AC):**\n```\nsleep 0          # never sleep\ndisplaysleep 0   # display never sleeps\ndisksleep 0      # disk never sleeps\nstandby 0        # no standby\nautopoweroff 0   # no auto power off\nnetworkoversleep 1  # keep network alive\ntcpkeepalive 1   # keep TCP connections\npowernap 1       # background tasks run\n```\n\n**On battery:**\n```\nsleep 15         # sleep after 15 min\ndisplaysleep 5   # display off after 5 min\ndisksleep 10     # disk sleep after 10 min\nstandby 1        # standby enabled\n```\n\n**To re-apply these settings:**\n```bash\nsudo pmset -c sleep 0 displaysleep 0 disksleep 0 standby 0 autopoweroff 0 networkoversleep 1 tcpkeepalive 1 powernap 1\nsudo pmset -b sleep 15 displaysleep 5 disksleep 10 standby 1\n```\n\n### macOS GUI Settings (System Settings > Battery > Options)\n- Slightly dim display on battery: ON\n- Prevent automatic sleeping on power adapter: ON\n- Wake for network access: ON (Only on Power Adapter)\n- Optimize video streaming on battery: OFF\n\n### Important Notes\n- Closing the lid ALWAYS sleeps the Mac (Apple hardware, can't override)\n- Keep lid open + plugged in for 24/7 bot uptime\n- Battery has Optimized Charging built-in on newer macOS\n- MacBook Pro, 9 cycles, battery health: Normal (as of 2026-04-03)\n\n## Gateway Auto-Restart (launchd)\n\nFile: `~/Library/LaunchAgents/ai.hermes.gateway.plist`\n- `KeepAlive: true` \u2014 macOS auto-restarts if it crashes\n- `ThrottleInterval: 10` \u2014 waits 10 sec before restart\n- Bot sets presence to \"Online\" on connect\n\n## Shell Aliases (~/.zshrc)\n- `dashboard` \u2014 refresh + open Hermes dashboard\n- `gw` \u2014 check if gateway is running or dead\n",
   memory_files: {
     discord: "# Discord Setup\n\n## Bot\n- Bot: \"Claude Code#1264\" (was \"Hermes agent\")\n- Server: \"e1i's server\"\n- Home channel: #general (ID: 1477354390036680880)\n\n## Gateway\n- discord.py must be installed in Hermes venv\n- All 3 Privileged Gateway Intents enabled (Presence, Server Members, Message Content)\n- GATEWAY_ALLOW_ALL_USERS=true in .env\n- Installed as launchd service: ~/Library/LaunchAgents/ai.hermes.gateway.plist\n\n## Channels\n- **#general** (ID: 1477354390036680880) \u2014 Main chat channel. No threads needed for casual messages.\n- **#dashboard** (ID: 1489553133066653726) \u2014 All cron job output goes here (Morning Brief, Nightly Memory Consolidation, Weekend Review, WIX Stock Review, Thread Follow-up Pinger, Daily Task Suggester).\n\n## Key Threads\n- **Dashboard** (1489633714278236330 in #general) \u2014 dashboard updates and discussions\n- **Todo** (1489569423038742648 in #general) \u2014 Elli's catch-all inbox (todos, app improvements, work stuff, reading list, blog ideas). Capture items to tasks.json.\n- **Ideas** (1489291757169541273 in #general) \u2014 brainstorming, planning, architecture, resource sharing\n\n## Thread Follow-up System\n- Track open threads in ~/.hermes/pending_replies.json\n- Cron b07f24cc2a8e pings daily 19:00 IST for threads awaiting reply 24h+\n- Add entry when work done & awaiting Elli's response, remove on close\n- Threads = her \"tabs\" (ADHD-friendly). Don't force specific channels.\n\n## Routing\n- All cron jobs deliver to \"discord:1489553133066653726\" (#dashboard)\n- Use \"origin\" to reply back to whatever channel/thread the message came from\n",

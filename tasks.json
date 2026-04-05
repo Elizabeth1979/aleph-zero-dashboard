@@ -9,7 +9,7 @@
   },
   {
     "id": 2,
-    "task": "Pay company annual fee (owes 2 years back — payment site was down last time)",
+    "task": "Pay company annual fee (owes 2 years back \u2014 payment site was down last time)",
     "added": "2026-04-03",
     "due": "2026-04-12",
     "category": "task",
@@ -30,7 +30,8 @@
     "added": "2026-04-04",
     "category": "project",
     "done": false,
-    "urgent": false
+    "urgent": false,
+    "difficulty": "hard"
   },
   {
     "id": 5,
@@ -160,6 +161,51 @@
     "id": 19,
     "task": "Dashboard: A11y panel advanced settings \u2014 custom font picker (multiple fonts), custom color pickers for text, background, links/buttons",
     "added": "2026-04-05",
+    "category": "project",
+    "done": false,
+    "urgent": false,
+    "difficulty": "hard"
+  },
+  {
+    "id": 20,
+    "task": "Build A11y Expert MCP \u2014 MVP \u2014 4 tools working locally",
+    "added": "2026-04-04",
+    "category": "project",
+    "done": true,
+    "urgent": false,
+    "difficulty": "hard"
+  },
+  {
+    "id": 21,
+    "task": "Build A11y Expert MCP \u2014 Add Resources & Prompts",
+    "added": "2026-04-04",
+    "category": "project",
+    "done": false,
+    "urgent": false,
+    "difficulty": "medium"
+  },
+  {
+    "id": 22,
+    "task": "Build A11y Expert MCP \u2014 Push to GitHub",
+    "added": "2026-04-04",
+    "category": "project",
+    "done": true,
+    "urgent": false,
+    "difficulty": "easy"
+  },
+  {
+    "id": 23,
+    "task": "Build A11y Expert MCP \u2014 Publish to PyPI",
+    "added": "2026-04-04",
+    "category": "project",
+    "done": false,
+    "urgent": false,
+    "difficulty": "medium"
+  },
+  {
+    "id": 24,
+    "task": "Build A11y Expert MCP \u2014 Add component library research tool",
+    "added": "2026-04-04",
     "category": "project",
     "done": false,
     "urgent": false,
