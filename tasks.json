@@ -23,6 +23,7 @@
     "task": "Buy flight tickets to visit sister in the US",
     "added": "2026-04-04",
     "category": "task",
+    "tags": ["Private"],
     "done": false,
     "urgent": true
   },
@@ -156,6 +157,7 @@
     "task": "Finish onboarding this week",
     "added": "2026-04-04",
     "category": "task",
+    "tags": ["Work"],
     "done": false,
     "urgent": true
   },
