@@ -204,6 +204,37 @@
   }
   .auto-high-row strong { color: var(--danger); font-weight: 600; }
 
+  /* Filter bar */
+  .filter-bar {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-bottom: var(--s4);
+  }
+  .filter-btn {
+    font-size: 12px; font-weight: 600;
+    padding: 4px 12px; border-radius: var(--pill);
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.04);
+    color: var(--text-3);
+    cursor: pointer; transition: all 0.15s ease;
+    font-family: inherit;
+  }
+  .filter-btn:hover { background: rgba(255,255,255,0.08); }
+  .filter-btn.active {
+    color: var(--bg); font-weight: 700;
+  }
+  .filter-btn.active[data-filter="all"] {
+    background: var(--text-2); border-color: var(--text-2); color: var(--bg);
+  }
+  .filter-btn.active[data-filter="Work"] {
+    background: #60a5fa; border-color: #60a5fa;
+  }
+  .filter-btn.active[data-filter="Private"] {
+    background: #a78bfa; border-color: #a78bfa;
+  }
+  .filter-btn.active[data-filter="Buy"] {
+    background: #34d399; border-color: #34d399;
+  }
+
   /* Urgent rules — inline */
   .urgent-rules {
     display: flex; flex-wrap: wrap; gap: var(--s2) var(--s4);
@@ -260,7 +291,8 @@ document.addEventListener('DOMContentLoaded', () => {
       return `<span class="${c}">${esc(tag)}</span>`;
     }).join('');
     const desc = t.desc ? `<div class="task-item-desc">${esc(t.desc)}</div>` : '';
-    return `<div class="${cls}">
+    const tagList = (t.tags || []).join(',');
+    return `<div class="${cls}" data-tags="${tagList}">
       <div class="task-item-status"></div>
       <div class="task-item-content">
         <div class="task-item-row">
@@ -281,7 +313,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const urgent = nonProject.filter(t => !t.done && t.urgent);
   const rest = nonProject.filter(t => !t.done && !t.urgent);
 
+  // Collect all unique tags for filter bar
+  const allTags = new Set();
+  nonProject.filter(t => !t.done).forEach(t => (t.tags || []).forEach(tag => allTags.add(tag)));
+  
   let html = '';
+  if (allTags.size) {
+    html += '<div class="filter-bar"><button class="filter-btn active" data-filter="all">All</button>';
+    allTags.forEach(tag => {
+      html += `<button class="filter-btn" data-filter="${esc(tag)}">${esc(tag)}</button>`;
+    });
+    html += '</div>';
+  }
 
   // Urgent section — open by default
   if (urgent.length) {
@@ -347,6 +390,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('page-body').innerHTML = html;
   if (typeof lucide !== 'undefined') lucide.createIcons();
+
+  // Filter logic
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Toggle active state
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filter = btn.dataset.filter;
+      const items = document.querySelectorAll('.task-item');
+      const sections = document.querySelectorAll('.task-section');
+
+      items.forEach(item => {
+        if (filter === 'all') {
+          item.style.display = '';
+        } else {
+          const tags = (item.dataset.tags || '').split(',');
+          item.style.display = tags.includes(filter) ? '' : 'none';
+        }
+      });
+
+      // Hide sections that have no visible items
+      sections.forEach(sec => {
+        const body = sec.querySelector('.task-section-body');
+        if (!body) return;
+        const visible = body.querySelectorAll('.task-item:not([style*="display: none"])');
+        sec.style.display = visible.length ? '' : 'none';
+      });
+    });
+  });
 });
 
 </script>
