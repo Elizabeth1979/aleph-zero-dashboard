@@ -240,18 +240,27 @@ document.addEventListener('DOMContentLoaded', () => {
     task: 'var(--text-3)'
   };
 
+  function fmtDue(iso) {
+    const d = new Date(iso + 'T00:00:00');
+    const mon = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()];
+    return mon + ' ' + d.getDate();
+  }
   function renderItem(t) {
     const cls = t.done ? 'task-item done' : 'task-item';
-    const cat = t.category || '';
-    const catPill = cat ? `<span class="task-item-pri" style="color:${pillColors[cat]||'var(--text-3)'};background:${pillColors[cat]||'var(--text-3)'}18">${cat}</span>` : '';
-    const date = t.added ? `<span class="task-item-date">${t.added}</span>` : '';
+    const due = t.due ? `<span class="due-tag">Due ${fmtDue(t.due)}</span>` : '';
+    const tags = (t.tags || []).map(tag => {
+      const c = 'task-tag tag-' + tag.toLowerCase().replace(/[^a-z]/g, '');
+      return `<span class="${c}">${esc(tag)}</span>`;
+    }).join('');
+    const desc = t.desc ? `<div class="task-item-desc">${esc(t.desc)}</div>` : '';
     return `<div class="${cls}">
       <div class="task-item-status"></div>
       <div class="task-item-content">
         <div class="task-item-row">
           <div class="task-item-text">${esc(t.task)}</div>
-          <div style="display:flex;gap:6px;flex-shrink:0">${catPill}${date}</div>
+          <div style="display:flex;gap:6px;flex-shrink:0">${tags}${due}</div>
         </div>
+        ${desc}
       </div>
     </div>`;
   }
@@ -281,19 +290,28 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>`;
   }
 
-  // Everything else — one flat section
-  if (rest.length) {
+  // Group remaining by category
+  const catMeta = { task: 'Tasks', 'to-buy': 'To Buy', idea: 'Ideas', read: 'To Read', write: 'To Write', share: 'Share', remember: 'Remember' };
+  const catOrder = ['task', 'to-buy', 'idea', 'read', 'write', 'share', 'remember'];
+  const groups = {};
+  rest.forEach(t => { const cat = t.category || 'task'; if (!groups[cat]) groups[cat] = []; groups[cat].push(t); });
+  const activeCats = catOrder.filter(c => groups[c] && groups[c].length);
+  Object.keys(groups).forEach(c => { if (!catOrder.includes(c)) activeCats.push(c); });
+
+  activeCats.forEach(cat => {
+    const items = groups[cat];
+    const label = catMeta[cat] || cat;
     html += `<div class="task-section open" onclick="toggleSection(this)">
       <div class="task-section-header">
         ${chevron}
-        <span class="task-section-label">Everything Else</span>
-        <span class="task-section-count accent">${rest.length}</span>
+        <span class="task-section-label">${label}</span>
+        <span class="task-section-count accent">${items.length}</span>
       </div>
       <div class="task-section-body" onclick="event.stopPropagation()">
-        ${rest.map(renderItem).join('')}
+        ${items.map(renderItem).join('')}
       </div>
     </div>`;
-  }
+  });
 
   // Auto-urgent rules — collapsed
   const rules = d.capture_rules || {};
