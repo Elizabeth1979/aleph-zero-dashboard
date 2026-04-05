@@ -40,7 +40,8 @@
     "urgent": false,
     "difficulty": "hard",
     "description": "Decided to skip vector DB and use flat files. Simpler to ship and maintain. Already implemented.",
-    "impact": "high"
+    "impact": "high",
+    "status": "done"
   },
   {
     "id": 5,
@@ -211,7 +212,8 @@
     "urgent": false,
     "difficulty": "hard",
     "description": "Core tools: review_code, get_pattern, list_patterns, check_contrast.",
-    "impact": "high"
+    "impact": "high",
+    "status": "done"
   },
   {
     "id": 21,
@@ -234,7 +236,8 @@
     "urgent": false,
     "difficulty": "easy",
     "description": "Open-source the project so others can use and contribute.",
-    "impact": "high"
+    "impact": "high",
+    "status": "done"
   },
   {
     "id": 23,
@@ -267,7 +270,8 @@
       "Work"
     ],
     "done": false,
-    "urgent": false
+    "urgent": false,
+    "status": "done"
   },
   {
     "id": 23,
