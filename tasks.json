@@ -2,7 +2,6 @@
   {
     "id": 2,
     "task": "Pay company annual fee",
-    "desc": "Owes two years back. Payment site was down last time \u2014 try again.",
     "added": "2026-04-03",
     "due": "2026-04-12",
     "tags": [
@@ -10,7 +9,8 @@
     ],
     "done": false,
     "urgent": true,
-    "scope": "private"
+    "scope": "private",
+    "description": "Owes two years back. Payment site was down last time — try again."
   },
   {
     "id": 3,
@@ -28,29 +28,37 @@
     "task": "Buy noise-reducing earbuds/headphones for misophonia",
     "added": "2026-04-04",
     "category": "task",
-    "tags": ["Buy"],
+    "tags": [
+      "Buy"
+    ],
     "done": false,
     "urgent": false
   },
   {
     "id": 6,
-    "task": "A11y App: Fix high contrast mode \u2014 highlight card borders & non-text UI elements (not just text)",
+    "task": "A11y App: Fix high contrast mode — highlight card borders & non-text UI elements (not just text)",
     "added": "2026-04-04",
     "done": false,
     "urgent": false,
     "difficulty": "medium",
     "description": "High contrast currently only boosts text. Borders, icons, and dividers also need visible contrast.",
-    "impact": "high"
+    "impact": "high",
+    "tags": [
+      "A11y App"
+    ]
   },
   {
     "id": 7,
-    "task": "A11y App: Add color scheme options \u2014 dark mode, light mode, custom user color picker",
+    "task": "A11y App: Add color scheme options — dark mode, light mode, custom user color picker",
     "added": "2026-04-04",
     "done": false,
     "urgent": false,
     "difficulty": "hard",
-    "description": "Let users pick their own color theme \u2014 not just dark/light but full custom palette.",
-    "impact": "high"
+    "description": "Let users pick their own color theme — not just dark/light but full custom palette.",
+    "impact": "high",
+    "tags": [
+      "A11y App"
+    ]
   },
   {
     "id": 9,
@@ -60,7 +68,10 @@
     "urgent": false,
     "difficulty": "hard",
     "description": "Use AI to simplify complex text, describe charts, and adapt layout for cognitive accessibility.",
-    "impact": "medium"
+    "impact": "medium",
+    "tags": [
+      "A11y App"
+    ]
   },
   {
     "id": 10,
@@ -70,7 +81,10 @@
     "urgent": false,
     "difficulty": "medium",
     "description": "Detail pages break on phone screens. Add responsive CSS so everything stacks and scales properly.",
-    "impact": "high"
+    "impact": "high",
+    "tags": [
+      "Dashboard"
+    ]
   },
   {
     "id": 12,
@@ -80,7 +94,10 @@
     "urgent": false,
     "difficulty": "easy",
     "description": "Smallest text is below the 14px minimum. Increase base sizes across the board.",
-    "impact": "medium"
+    "impact": "medium",
+    "tags": [
+      "Dashboard"
+    ]
   },
   {
     "id": 13,
@@ -90,27 +107,36 @@
     "urgent": false,
     "difficulty": "easy",
     "description": "Screen readers need landmarks to navigate. Decorative icons should be hidden. Focus needs to be visible.",
-    "impact": "high"
+    "impact": "high",
+    "tags": [
+      "Dashboard"
+    ]
   },
   {
     "id": 14,
-    "task": "Dashboard: Security hardening \u2014 CSP, pin Lucide + SRI, Object.create(null)",
+    "task": "Dashboard: Security hardening — CSP, pin Lucide + SRI, Object.create(null)",
     "added": "2026-04-04",
     "done": false,
     "urgent": false,
     "difficulty": "medium",
     "description": "Add Content Security Policy headers, pin external script versions, prevent prototype pollution.",
-    "impact": "low"
+    "impact": "low",
+    "tags": [
+      "Dashboard"
+    ]
   },
   {
     "id": 15,
-    "task": "Dashboard: A11y widget \u2014 44px touch target on close btn, remove red from reset",
+    "task": "Dashboard: A11y widget — 44px touch target on close btn, remove red from reset",
     "added": "2026-04-04",
     "done": false,
     "urgent": false,
     "difficulty": "easy",
     "description": "Close button is too small for touch. Red on Reset conflicts with Elli's no-red preference.",
-    "impact": "medium"
+    "impact": "medium",
+    "tags": [
+      "Dashboard"
+    ]
   },
   {
     "id": 16,
@@ -125,55 +151,67 @@
   },
   {
     "id": 18,
-    "task": "Dashboard: Fix Reset All button in a11y panel \u2014 verify it clears all settings and re-renders correctly",
+    "task": "Dashboard: Fix Reset All button in a11y panel — verify it clears all settings and re-renders correctly",
     "added": "2026-04-05",
     "done": false,
     "urgent": false,
     "difficulty": "easy",
     "description": "Reset button may not clear all new features (reading guide, big cursor). Verify and fix.",
-    "impact": "medium"
+    "impact": "medium",
+    "tags": [
+      "Dashboard"
+    ]
   },
   {
     "id": 19,
-    "task": "Dashboard: A11y panel advanced settings \u2014 custom font picker (multiple fonts), custom color pickers for text, background, links/buttons",
+    "task": "Dashboard: A11y panel advanced settings — custom font picker (multiple fonts), custom color pickers for text, background, links/buttons",
     "added": "2026-04-05",
     "done": false,
     "urgent": false,
     "difficulty": "hard",
     "description": "Let users choose from multiple fonts and pick exact colors for text, backgrounds, and interactive elements.",
-    "impact": "high"
+    "impact": "high",
+    "tags": [
+      "Dashboard"
+    ]
   },
   {
     "id": 23,
-    "task": "Build A11y Expert MCP \u2014 Publish to PyPI",
+    "task": "Build A11y Expert MCP — Publish to PyPI",
     "added": "2026-04-04",
     "done": false,
     "urgent": false,
     "difficulty": "medium",
     "description": "Make it installable with pip so anyone can add it to their AI tools with one command.",
-    "impact": "high"
+    "impact": "high",
+    "tags": [
+      "MCP"
+    ]
   },
   {
     "id": 24,
-    "task": "Build A11y Expert MCP \u2014 Add component library research tool",
+    "task": "Build A11y Expert MCP — Add component library research tool",
     "added": "2026-04-04",
     "done": false,
     "urgent": false,
     "difficulty": "hard",
     "description": "A tool that looks up accessible implementations from real component libraries (Radix, Headless UI, etc.).",
-    "impact": "medium"
+    "impact": "medium",
+    "tags": [
+      "MCP"
+    ]
   },
   {
-    "id": 23,
+    "id": 31,
     "task": "Prepare Q&A about accessibility",
-    "desc": "Questions and answers about accessibility for the knowledge base.",
     "added": "2026-04-05",
     "tags": [
       "Work"
     ],
     "done": false,
     "urgent": false,
-    "scope": "work"
+    "scope": "work",
+    "description": "Questions and answers about accessibility for the knowledge base."
   },
   {
     "id": 25,
@@ -188,23 +226,29 @@
   },
   {
     "id": 26,
-    "task": "Dashboard: Remove redundant status field from tasks.json \u2014 use done (boolean) only",
+    "task": "Dashboard: Remove redundant status field from tasks.json — use done (boolean) only",
     "added": "2026-04-05",
     "done": false,
     "urgent": false,
     "description": "Tasks have both 'done' and 'status' fields. Remove 'status' to keep one source of truth.",
     "difficulty": "easy",
-    "impact": "low"
+    "impact": "low",
+    "tags": [
+      "Dashboard"
+    ]
   },
   {
     "id": 27,
-    "task": "Build A11y Expert MCP \u2014 Remove check-form-accessibility prompt (audit-component with component_type=\"form\" does the same thing)",
+    "task": "Build A11y Expert MCP — Remove check-form-accessibility prompt (audit-component with component_type=\"form\" does the same thing)",
     "added": "2026-04-05",
     "done": false,
     "urgent": false,
     "description": "The check-form-accessibility prompt duplicates what audit-component already does with component_type='form'. Remove the redundant one.",
     "difficulty": "easy",
-    "impact": "medium"
+    "impact": "medium",
+    "tags": [
+      "MCP"
+    ]
   },
   {
     "id": 28,
@@ -214,14 +258,19 @@
     "urgent": false,
     "description": "Three separate cron jobs checking the same thing. Merge into one that covers all checks.",
     "difficulty": "easy",
-    "impact": "low"
+    "impact": "low",
+    "tags": [
+      "Dashboard"
+    ]
   },
   {
     "id": 29,
     "task": "Move Slack into Knowledge Base",
     "added": "2026-04-05",
     "category": "task",
-    "tags": ["Work"],
+    "tags": [
+      "Work"
+    ],
     "done": false,
     "urgent": false
   },
@@ -233,6 +282,9 @@
     "urgent": false,
     "description": "Write a proper README.md for the a11y-expert-mcp repo — what it does, installation, usage, available tools/prompts/resources.",
     "difficulty": "easy",
-    "impact": "high"
+    "impact": "high",
+    "tags": [
+      "MCP"
+    ]
   }
 ]

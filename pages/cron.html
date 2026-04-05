@@ -16,6 +16,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
     gap: var(--s4);
+    align-items: start;
   }
 
   .cron-card {
@@ -26,6 +27,10 @@
     display: flex;
     flex-direction: column;
     gap: var(--s3);
+    transition: border-color 0.2s ease;
+  }
+  .cron-card:hover {
+    border-color: var(--accent-dim, rgba(255,255,255,0.12));
   }
 
   /* Header row: dot + name + skill tag */
@@ -95,15 +100,105 @@
   .cron-last-run .check { color: var(--ok); }
   .cron-last-run .fail  { color: var(--warn); }
 
-  /* Prompt toggle */
+  /* Prompt toggle — inline expand per card */
   .cron-card details { margin: 0; }
   .cron-card details summary { list-style: none; }
   .cron-card details summary::-webkit-details-marker { display: none; }
+
+  /* Prompt modal overlay */
+  .prompt-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--s6);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+  }
+  .prompt-overlay.open {
+    opacity: 1;
+    visibility: visible;
+  }
+  .prompt-modal {
+    background: var(--bg-card, var(--bg-inset));
+    border: 1px solid var(--border);
+    border-radius: var(--r2, 10px);
+    padding: var(--s5);
+    max-width: 640px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s3);
+    transform: translateY(8px);
+    transition: transform 0.2s ease;
+  }
+  .prompt-overlay.open .prompt-modal {
+    transform: translateY(0);
+  }
+  .prompt-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s3);
+  }
+  .prompt-modal-header h2 {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--text);
+    margin: 0;
+  }
+  .prompt-modal-close {
+    background: none;
+    border: none;
+    color: var(--text-3);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    transition: color 0.15s ease;
+  }
+  .prompt-modal-close:hover { color: var(--text); }
+  .prompt-modal-body {
+    font-family: var(--mono);
+    font-size: var(--fs-xs);
+    color: var(--text-2);
+    white-space: pre-wrap;
+    word-break: break-word;
+    line-height: 1.6;
+    padding: var(--s4);
+    background: var(--bg-inset);
+    border-radius: var(--r1);
+  }
+
+  /* View prompt link in footer */
+  .prompt-link {
+    font-size: 12px;
+    color: var(--text-3);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    font-family: inherit;
+    transition: color 0.15s ease;
+  }
+  .prompt-link:hover { color: var(--accent); }
 
   /* Mobile */
   @media (max-width: 480px) {
     .cron-grid { grid-template-columns: 1fr; }
     .cron-card { padding: var(--s3); }
+    .prompt-overlay { padding: var(--s3); }
   }
 </style>
 </head>
@@ -239,14 +334,11 @@ document.addEventListener('DOMContentLoaded', () => {
       ? `<span class="cron-last-run">Last run: ${esc(lastRun)} ${isOk ? '<span class="check">✓</span>' : isErr ? '<span class="fail">✗</span>' : ''}</span>`
       : '<span class="cron-last-run">No runs yet</span>';
 
-    /* Prompt toggle */
-    const promptHtml = j.prompt
-      ? `<details>
-          <summary class="cron-prompt">
-            <i data-lucide="chevron-right" style="width:12px;height:12px"></i>Full prompt
-          </summary>
-          <div class="cron-prompt-box">${esc(j.prompt)}</div>
-        </details>`
+    /* Prompt link */
+    const promptBtn = j.prompt
+      ? `<button class="prompt-link" data-prompt="${esc(j.prompt).replace(/"/g, '&quot;')}" data-name="${name}">
+          <i data-lucide="file-text" style="width:12px;height:12px"></i>View prompt
+        </button>`
       : '';
 
     return `<div class="cron-card">
@@ -259,19 +351,33 @@ document.addEventListener('DOMContentLoaded', () => {
       ${tasksHtml}
       <div class="cron-footer">
         ${lastRunHtml}
-        ${promptHtml}
+        ${promptBtn}
       </div>
     </div>`;
   }).join('') + '</div>';
 
-  /* Accordion: only one details open at a time */
-  document.querySelectorAll('details').forEach(det => {
-    det.addEventListener('toggle', () => {
-      if (det.open) {
-        document.querySelectorAll('details').forEach(other => {
-          if (other !== det) other.removeAttribute('open');
-        });
-      }
+  /* ── Prompt modal ──────────────────────────────────────────────────── */
+  const overlay = document.createElement('div');
+  overlay.className = 'prompt-overlay';
+  overlay.innerHTML = `<div class="prompt-modal">
+    <div class="prompt-modal-header">
+      <h2 class="prompt-modal-title"></h2>
+      <button class="prompt-modal-close"><i data-lucide="x" style="width:16px;height:16px"></i></button>
+    </div>
+    <div class="prompt-modal-body"></div>
+  </div>`;
+  document.body.appendChild(overlay);
+
+  const closeModal = () => overlay.classList.remove('open');
+  overlay.querySelector('.prompt-modal-close').addEventListener('click', closeModal);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  document.querySelectorAll('.prompt-link').forEach(btn => {
+    btn.addEventListener('click', () => {
+      overlay.querySelector('.prompt-modal-title').textContent = btn.dataset.name;
+      overlay.querySelector('.prompt-modal-body').textContent = btn.dataset.prompt;
+      overlay.classList.add('open');
     });
   });
 
