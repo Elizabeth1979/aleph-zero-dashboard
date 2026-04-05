@@ -298,5 +298,29 @@
     ],
     "done": false,
     "urgent": true
+  },
+  {
+    "id": 26,
+    "task": "Dashboard: Remove redundant status field from tasks.json \u2014 use done (boolean) only",
+    "added": "2026-04-05",
+    "category": "project",
+    "done": false,
+    "urgent": false
+  },
+  {
+    "id": 27,
+    "task": "Build A11y Expert MCP \u2014 Remove check-form-accessibility prompt (audit-component with component_type=\"form\" does the same thing)",
+    "added": "2026-04-05",
+    "category": "project",
+    "done": false,
+    "urgent": false
+  },
+  {
+    "id": 28,
+    "task": "Dashboard: Consolidate 3 health check crons into 1",
+    "added": "2026-04-05",
+    "category": "project",
+    "done": false,
+    "urgent": false
   }
 ]
