@@ -629,11 +629,8 @@ function loadCards() {
   document.getElementById('projects-badge').textContent = projects.length;
   const projPreview = document.getElementById('projects-preview');
   if (projects.length) {
-    projPreview.innerHTML = projects.map(p => {
-      const open = allProjTasks.filter(t => t.category === 'project' && !t.done && p.task_prefix && t.task.startsWith(p.task_prefix)).length;
-      const label = open ? open + ' open' : 'all done';
-      return '<div style="margin-bottom:6px"><strong>' + esc(p.name) + '</strong> <span class="badge">' + label + '</span></div>';
-    }).join('');
+    const totalOpen = allProjTasks.filter(t => t.category === 'project' && !t.done).length;
+    projPreview.textContent = totalOpen + ' open tasks across ' + projects.length + ' projects';
   }
 
   // Portfolio
