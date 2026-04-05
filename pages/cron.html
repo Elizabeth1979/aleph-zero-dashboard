@@ -205,7 +205,8 @@ function extractTasks(prompt) {
 document.addEventListener('DOMContentLoaded', () => {
   const d = window.__DASHBOARD_DATA__;
   if (!d) return;
-  const jobs = d.cron_jobs || [];
+  // Only show recurring jobs (repeat.times === null means forever)
+  const jobs = (d.cron_jobs || []).filter(j => !j.repeat || j.repeat.times === null || j.repeat.times === undefined);
   if (!jobs.length) {
     document.getElementById('page-body').innerHTML = '<div class="empty">No scheduled jobs</div>';
     return;
