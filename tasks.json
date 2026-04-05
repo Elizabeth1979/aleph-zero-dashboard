@@ -218,12 +218,11 @@
   },
   {
     "id": 29,
-"task": "Move Slack into Knowledge Base",
+    "task": "Move Slack into Knowledge Base",
     "added": "2026-04-05",
     "category": "task",
     "tags": ["Work"],
-    "tags": ["Private"],
-    "urgent": true,
-    "scope": "private"
+    "done": false,
+    "urgent": false
   }
 ]
