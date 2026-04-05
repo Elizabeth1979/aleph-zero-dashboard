@@ -1,12 +1,4 @@
 {
-  "categories": {
-    "task": "Day-to-day action items, errands, chores",
-    "idea": "App improvements, feature requests, project ideas",
-    "read": "Articles, books, resources, links to check out",
-    "write": "Blog posts, content to create, docs to draft",
-    "share": "Things to send or forward to someone",
-    "remember": "Anything else worth not forgetting"
-  },
   "auto_urgent": [
     "Money — payments, bills, subscriptions, fees",
     "Health — doctor, dentist, medical appointments",

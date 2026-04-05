@@ -234,34 +234,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const chevron = '<svg class="task-section-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
 
-  const tagColors = {
-    'to-buy': 'var(--accent)', 'idea': '#c084fc', 'to-read': '#60a5fa',
-    'to-write': '#34d399', 'share': '#fbbf24', 'remember': '#a78bfa'
+  const pillColors = {
+    'to-buy': 'var(--accent)', idea: '#c084fc', read: '#60a5fa',
+    write: '#34d399', share: '#fbbf24', remember: '#a78bfa',
+    task: 'var(--text-3)'
   };
-  const scopeColors = { 'private': '#c084fc', 'work': '#60a5fa' };
 
-  // LOCKED LAYOUT — .task-item-row with text left, pills/badges right-aligned.
-  // Change data/badges, NOT the row structure. Approved 2026-04-05.
   function renderItem(t) {
     const cls = t.done ? 'task-item done' : 'task-item';
-    const tag = t.tag || '';
-    const tagBadge = tag ? `<span class="task-item-pri" style="color:${tagColors[tag]||'var(--text-3)'};background:${tagColors[tag]||'var(--text-3)'}18">${tag}</span>` : '';
-    const scope = t.scope || '';
-    const scopeBadge = scope ? `<span class="task-item-pri" style="color:${scopeColors[scope]||'var(--text-3)'};background:${scopeColors[scope]||'var(--text-3)'}18">${scope}</span>` : '';
+    const cat = t.category || '';
+    const catPill = cat ? `<span class="task-item-pri" style="color:${pillColors[cat]||'var(--text-3)'};background:${pillColors[cat]||'var(--text-3)'}18">${cat}</span>` : '';
     const date = t.added ? `<span class="task-item-date">${t.added}</span>` : '';
     return `<div class="${cls}">
       <div class="task-item-status"></div>
       <div class="task-item-content">
         <div class="task-item-row">
           <div class="task-item-text">${esc(t.task)}</div>
-          <div style="display:flex;gap:6px;flex-shrink:0">${tagBadge}${scopeBadge}${date}</div>
+          <div style="display:flex;gap:6px;flex-shrink:0">${catPill}${date}</div>
         </div>
       </div>
     </div>`;
   }
 
-  // Filter out project tasks — those live on the Projects page
-  const nonProject = tasks.filter(t => t.category !== 'project');
+  // Filter out project tasks — those live on the Projects page (matched by task_prefix)
+  const projects = d.projects || [];
+  const prefixes = projects.map(p => p.task_prefix).filter(Boolean);
+  const nonProject = tasks.filter(t => !prefixes.some(px => t.task.startsWith(px)));
 
   // Urgent vs everything else — flat list, no category sections
   const urgent = nonProject.filter(t => !t.done && t.urgent);
@@ -297,42 +295,24 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>`;
   }
 
-  // Capture rules — collapsed
+  // Auto-urgent rules — collapsed
   const rules = d.capture_rules || {};
-  if (rules.categories || rules.auto_urgent) {
-    const catColors = {
-      task: 'var(--text-2)', idea: '#c084fc', read: '#60a5fa',
-      write: '#34d399', share: '#fbbf24', remember: '#a78bfa'
-    };
-
-    let rulesHtml = '<div class="rules-block"><div class="rules-block-title">Categories</div><div class="cat-grid">';
-    if (rules.categories) {
-      Object.entries(rules.categories).forEach(([key, desc]) => {
-        const color = catColors[key] || 'var(--text-3)';
-        rulesHtml += `<div class="cat-chip" style="--chip-color:${color}"><div><div class="cat-chip-name">${key}</div><div class="cat-chip-desc">${esc(desc)}</div></div></div>`;
-      });
-    }
+  if (rules.auto_urgent) {
+    let rulesHtml = '<div class="rules-block"><div class="rules-block-title">Auto-Urgent</div><div class="auto-high-box">';
+    rules.auto_urgent.forEach(r => {
+      const parts = r.split(' — ');
+      if (parts.length === 2) {
+        rulesHtml += `<div class="auto-high-row"><strong>${esc(parts[0])}</strong> — ${esc(parts[1])}</div>`;
+      } else {
+        rulesHtml += `<div class="auto-high-row">${esc(r)}</div>`;
+      }
+    });
     rulesHtml += '</div></div>';
-
-rulesHtml += '<div class=\"rules-block\"><div class=\"rules-block-title\">Auto-Urgent</div><div class=\"auto-high-box\">';
-    if (rules.auto_urgent) {
-      rules.auto_urgent.forEach(r => {
-        const parts = r.split(' — ');
-        if (parts.length === 2) {
-          rulesHtml += `<div class="auto-high-row"><strong>${esc(parts[0])}</strong> — ${esc(parts[1])}</div>`;
-        } else {
-          rulesHtml += `<div class="auto-high-row">${esc(r)}</div>`;
-        }
-      });
-    }
-    rulesHtml += '</div></div>';
-
-
 
     html += `<div class="rules-section open" onclick="toggleSection(this)">
       <div class="rules-header">
         <svg class="rules-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-        Capture Rules
+        Auto-Urgent Rules
       </div>
       <div class="rules-body" onclick="event.stopPropagation()">
         ${rulesHtml}
