@@ -4,127 +4,127 @@
     "task": "Cancel ElevenLabs subscription",
     "added": "2026-04-03",
     "category": "task",
-    "priority": "high",
-    "done": true
+    "done": true,
+    "urgent": true
   },
   {
     "id": 2,
     "task": "Pay company annual fee",
     "added": "2026-04-03",
     "category": "task",
-    "priority": "high",
-    "done": false
+    "done": false,
+    "urgent": true
   },
   {
     "id": 3,
     "task": "Buy flight tickets to visit sister in the US",
     "added": "2026-04-04",
     "category": "task",
-    "priority": "high",
-    "done": false
+    "done": false,
+    "urgent": true
   },
   {
     "id": 4,
     "task": "Build A11y Expert MCP \u2014 MVP without ChromaDB first, add ChromaDB later if needed. Plan in Obsidian vault: A11y App Research/08_mcp_product_plan.md",
     "added": "2026-04-04",
     "category": "project",
-    "priority": "medium",
-    "done": false
+    "done": false,
+    "urgent": false
   },
   {
     "id": 5,
     "task": "Buy noise-reducing earbuds/headphones for misophonia",
     "added": "2026-04-04",
     "category": "to-buy",
-    "priority": "medium",
-    "done": false
+    "done": false,
+    "urgent": false
   },
   {
     "id": 6,
     "task": "A11y App: Fix high contrast mode \u2014 highlight card borders & non-text UI elements (not just text)",
     "added": "2026-04-04",
     "category": "project",
-    "priority": "high",
-    "done": false
+    "done": false,
+    "urgent": false
   },
   {
     "id": 7,
     "task": "A11y App: Add color scheme options \u2014 dark mode, light mode, custom user color picker",
     "added": "2026-04-04",
     "category": "project",
-    "priority": "high",
-    "done": false
+    "done": false,
+    "urgent": false
   },
   {
     "id": 8,
     "task": "A11y App: Research AI-driven UI customization",
     "added": "2026-04-04",
     "category": "project",
-    "priority": "high",
-    "done": true
+    "done": true,
+    "urgent": false
   },
   {
     "id": 9,
     "task": "A11y App: Implement AI-driven UI customization (simple language, layout switching, chart captions, text simplification)",
     "added": "2026-04-04",
     "category": "project",
-    "priority": "medium",
-    "done": false
+    "done": false,
+    "urgent": false
   },
   {
     "id": 10,
     "task": "Dashboard: Add mobile breakpoints to all detail pages",
     "added": "2026-04-04",
     "category": "project",
-    "priority": "medium",
-    "done": false
+    "done": false,
+    "urgent": false
   },
   {
     "id": 11,
     "task": "Dashboard: Fix contrast ratio \u2014 lighten --text-3 to WCAG AA (4.5:1)",
     "added": "2026-04-04",
     "category": "project",
-    "priority": "medium",
-    "done": false
+    "done": false,
+    "urgent": false
   },
   {
     "id": 12,
     "task": "Dashboard: Fix --fs-xs from 13px to 14px + a11y widget font sizes",
     "added": "2026-04-04",
     "category": "project",
-    "priority": "medium",
-    "done": false
+    "done": false,
+    "urgent": false
   },
   {
     "id": 13,
     "task": "Dashboard: Add <main> landmarks, aria-hidden on icons, focus-visible styles",
     "added": "2026-04-04",
     "category": "project",
-    "priority": "low",
-    "done": false
+    "done": false,
+    "urgent": false
   },
   {
     "id": 14,
     "task": "Dashboard: Security hardening \u2014 CSP, pin Lucide + SRI, Object.create(null)",
     "added": "2026-04-04",
     "category": "project",
-    "priority": "low",
-    "done": false
+    "done": false,
+    "urgent": false
   },
   {
     "id": 15,
     "task": "Dashboard: A11y widget \u2014 44px touch target on close btn, remove red from reset",
     "added": "2026-04-04",
     "category": "project",
-    "priority": "low",
-    "done": false
+    "done": false,
+    "urgent": false
   },
   {
     "id": 16,
     "task": "Finish onboarding this week",
     "added": "2026-04-04",
     "category": "task",
-    "priority": "high",
-    "done": false
+    "done": false,
+    "urgent": true
   }
 ]

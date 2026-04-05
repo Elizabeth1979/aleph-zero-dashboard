@@ -135,7 +135,7 @@
     font-size: 12px; color: var(--text-3); margin-top: 1px;
   }
 
-  /* Auto-high priority — compact callout */
+  /* Auto-urgent — compact callout */
   .auto-high-box {
     background: rgba(224, 108, 117, 0.08);
     border: 1px solid rgba(224, 108, 117, 0.2);
@@ -155,12 +155,12 @@
   }
   .auto-high-row strong { color: var(--danger); font-weight: 600; }
 
-  /* Priority defaults — inline */
-  .priority-defaults {
+  /* Urgent rules — inline */
+  .urgent-rules {
     display: flex; flex-wrap: wrap; gap: var(--s2) var(--s4);
     font-size: var(--fs-xs); color: var(--text-3);
   }
-  .priority-defaults strong { color: var(--text-2); font-weight: 600; }
+  .urgent-rules strong { color: var(--text-2); font-weight: 600; }
 </style>
 </head>
 <body>
@@ -215,9 +215,9 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>`;
   }
 
-  // Urgent (high priority, not done)
-  const urgent = tasks.filter(t => !t.done && t.priority === 'high');
-  const rest = tasks.filter(t => !t.done && t.priority !== 'high');
+  // Urgent vs everything else (binary system)
+  const urgent = tasks.filter(t => !t.done && t.urgent);
+  const rest = tasks.filter(t => !t.done && !t.urgent);
 
   let html = '';
 
@@ -264,7 +264,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Capture rules — collapsed
   const rules = d.capture_rules || {};
-  if (rules.categories || rules.auto_high) {
+  if (rules.categories || rules.auto_urgent) {
     const catColors = {
       task: 'var(--text-2)', idea: '#c084fc', read: '#60a5fa',
       write: '#34d399', share: '#fbbf24', remember: '#a78bfa'
@@ -279,9 +279,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     rulesHtml += '</div></div>';
 
-    rulesHtml += '<div class="rules-block"><div class="rules-block-title">Auto High Priority</div><div class="auto-high-box">';
-    if (rules.auto_high) {
-      rules.auto_high.forEach(r => {
+rulesHtml += '<div class=\"rules-block\"><div class=\"rules-block-title\">Auto-Urgent</div><div class=\"auto-high-box\">';
+    if (rules.auto_urgent) {
+      rules.auto_urgent.forEach(r => {
         const parts = r.split(' — ');
         if (parts.length === 2) {
           rulesHtml += `<div class="auto-high-row"><strong>${esc(parts[0])}</strong> — ${esc(parts[1])}</div>`;

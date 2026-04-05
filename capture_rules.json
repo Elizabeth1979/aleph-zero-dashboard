@@ -7,13 +7,10 @@
     "share": "Things to send or forward to someone",
     "remember": "Anything else worth not forgetting"
   },
-  "auto_high": [
+  "auto_urgent": [
     "Money — payments, bills, subscriptions, fees",
     "Health — doctor, dentist, medical appointments",
     "Deadlines — anything with an explicit date or time pressure",
     "Work obligations — meetings, deliverables, boss requests"
-  ],
-  "default_priority": "medium",
-  "low_trigger": "Only if Elli says 'no rush' or 'someday'",
-  "ask_when": "Genuinely ambiguous — could be casual or critical"
+  ]
 }
