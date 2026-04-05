@@ -231,39 +231,28 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
-  const catMeta = {
-    task:     { label: 'Tasks' },
-    idea:     { label: 'Ideas' },
-    read:     { label: 'To Read' },
-    write:    { label: 'To Write' },
-    share:    { label: 'Share / Send' },
-    remember: { label: 'Remember' },
-    'to-buy': { label: 'To Buy' },
-  };
-  const catOrder = ['task', 'to-buy', 'idea', 'read', 'write', 'share', 'remember'];
-
   const chevron = '<svg class="task-section-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
-  function fmtDue(iso) {
-    const d = new Date(iso + 'T00:00:00');
-    const mon = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()];
-    return mon + ' ' + d.getDate();
-  }
+
+  const tagColors = {
+    'to-buy': 'var(--accent)', 'idea': '#c084fc', 'to-read': '#60a5fa',
+    'to-write': '#34d399', 'share': '#fbbf24', 'remember': '#a78bfa'
+  };
+  const scopeColors = { 'private': '#c084fc', 'work': '#60a5fa' };
+
   function renderItem(t) {
     const cls = t.done ? 'task-item done' : 'task-item';
-    const due = t.due ? `<span class="due-tag">Due ${fmtDue(t.due)}</span>` : '';
-    const tags = (t.tags || []).map(tag => {
-      const cls = 'task-tag tag-' + tag.toLowerCase().replace(/[^a-z]/g, '');
-      return `<span class="${cls}">${esc(tag)}</span>`;
-    }).join('');
-    const desc = t.desc ? `<div class="task-item-desc">${esc(t.desc)}</div>` : '';
+    // Tag badge
+    const tag = t.tag || '';
+    const tagBadge = tag ? `<span class="task-item-pri" style="color:${tagColors[tag]||'var(--text-3)'};background:${tagColors[tag]||'var(--text-3)'}18">${tag}</span>` : '';
+    // Scope badge
+    const scope = t.scope || '';
+    const scopeBadge = scope ? `<span class="task-item-pri" style="color:${scopeColors[scope]||'var(--text-3)'};background:${scopeColors[scope]||'var(--text-3)'}18">${scope}</span>` : '';
+    const date = t.added ? `<span class="task-item-date">${t.added}</span>` : '';
     return `<div class="${cls}">
       <div class="task-item-status"></div>
       <div class="task-item-content">
-        <div class="task-item-row">
-          <div class="task-item-text">${esc(t.task)}</div>
-          <div style="display:flex;gap:6px;flex-shrink:0">${tags}${due}</div>
-        </div>
-        ${desc}
+        <div class="task-item-text">${esc(t.task)}</div>
+        <div class="task-item-meta">${tagBadge}${scopeBadge}${date}</div>
       </div>
     </div>`;
   }
@@ -271,7 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Filter out project tasks — those live on the Projects page
   const nonProject = tasks.filter(t => t.category !== 'project');
 
-  // Urgent vs everything else (binary system)
+  // Urgent vs everything else — flat list, no category sections
   const urgent = nonProject.filter(t => !t.done && t.urgent);
   const rest = nonProject.filter(t => !t.done && !t.urgent);
 
@@ -291,32 +280,19 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>`;
   }
 
-  // Group remaining by category
-  const groups = {};
-  rest.forEach(t => {
-    const cat = t.category || 'task';
-    if (!groups[cat]) groups[cat] = [];
-    groups[cat].push(t);
-  });
-
-  const activeCats = catOrder.filter(c => groups[c] && groups[c].length);
-  Object.keys(groups).forEach(c => { if (!catOrder.includes(c)) activeCats.push(c); });
-
-  activeCats.forEach(cat => {
-    const items = groups[cat];
-    const meta = catMeta[cat] || { label: cat };
-
-    html += `<div class="task-section" onclick="toggleSection(this)">
+  // Everything else — one flat section
+  if (rest.length) {
+    html += `<div class="task-section open" onclick="toggleSection(this)">
       <div class="task-section-header">
         ${chevron}
-        <span class="task-section-label">${meta.label}</span>
-        <span class="task-section-count accent">${items.length}</span>
+        <span class="task-section-label">Everything Else</span>
+        <span class="task-section-count accent">${rest.length}</span>
       </div>
       <div class="task-section-body" onclick="event.stopPropagation()">
-        ${items.map(renderItem).join('')}
+        ${rest.map(renderItem).join('')}
       </div>
     </div>`;
-  });
+  }
 
   // Capture rules — collapsed
   const rules = d.capture_rules || {};
