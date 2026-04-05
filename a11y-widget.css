@@ -191,7 +191,14 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+  max-height: 400px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(93, 228, 212, 0.3) transparent;
 }
+.a11y-panel-body::-webkit-scrollbar { width: 4px; }
+.a11y-panel-body::-webkit-scrollbar-track { background: transparent; }
+.a11y-panel-body::-webkit-scrollbar-thumb { background: rgba(93, 228, 212, 0.3); border-radius: 4px; }
 
 /* ------------------------------------------------------------
    Toggle Items
@@ -448,14 +455,14 @@ html.a11y-high-contrast [class*="tag"] {
 }
 
 /* ------------------------------------------------------------
-   2c. Colorblind Friendly (Deuteranopia-safe)
-      Replaces red/green hues with blue/orange equivalents.
+   2c. Color Vision (Colorblind modes)
+      Cycles: Off → Deuteranopia → Protanopia → Tritanopia
    ------------------------------------------------------------ */
-html.a11y-colorblind {
-  filter: url(#a11y-deuteranopia-filter);
-}
+html.a11y-cb-deuteranopia { filter: url(#a11y-deuteranopia-filter); }
+html.a11y-cb-protanopia   { filter: url(#a11y-protanopia-filter); }
+html.a11y-cb-tritanopia   { filter: url(#a11y-tritanopia-filter); }
 
-/* SVG filter injected by JS — selector targets the hidden SVG container */
+/* SVG filter injected by JS */
 .a11y-svg-filters {
   position: absolute;
   width: 0;
@@ -464,15 +471,15 @@ html.a11y-colorblind {
   pointer-events: none;
 }
 
-/* CSS-level colorblind adjustments (complementary to the SVG filter) */
-html.a11y-colorblind :is(
+/* CSS-level colorblind adjustments for all modes */
+html[class*="a11y-cb-"] :is(
   .success, .ok, .positive, [class*="green"], [class*="success"]
 ) {
   --color-success: #1a78c2 !important;
   color: #1a78c2 !important;
 }
 
-html.a11y-colorblind :is(
+html[class*="a11y-cb-"] :is(
   .error, .danger, .negative, [class*="red"], [class*="error"], [class*="danger"]
 ) {
   --color-danger: #e07b00 !important;
@@ -552,6 +559,80 @@ html.a11y-focus-highlight [tabindex]:focus {
   outline: 2.5px solid #5de4d4 !important;
   outline-offset: 3px !important;
   box-shadow: 0 0 0 5px rgba(93, 228, 212, 0.20) !important;
+}
+
+/* ------------------------------------------------------------
+   2g. Reduce Motion (manual toggle)
+   ------------------------------------------------------------ */
+html.a11y-reduce-motion,
+html.a11y-reduce-motion *,
+html.a11y-reduce-motion *::before,
+html.a11y-reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* ------------------------------------------------------------
+   2h. Letter Spacing
+   ------------------------------------------------------------ */
+html.a11y-letter-spacing body,
+html.a11y-letter-spacing p,
+html.a11y-letter-spacing span,
+html.a11y-letter-spacing li,
+html.a11y-letter-spacing a,
+html.a11y-letter-spacing h1,
+html.a11y-letter-spacing h2,
+html.a11y-letter-spacing h3,
+html.a11y-letter-spacing h4,
+html.a11y-letter-spacing h5,
+html.a11y-letter-spacing h6,
+html.a11y-letter-spacing td,
+html.a11y-letter-spacing th,
+html.a11y-letter-spacing label,
+html.a11y-letter-spacing button,
+html.a11y-letter-spacing input {
+  letter-spacing: 0.12em !important;
+  word-spacing: 0.16em !important;
+}
+
+/* ------------------------------------------------------------
+   2i. Reading Guide
+   ------------------------------------------------------------ */
+#a11y-reading-guide {
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(93, 228, 212, 0.65);
+  box-shadow: 0 0 12px rgba(93, 228, 212, 0.35);
+  pointer-events: none;
+  z-index: 9997;
+  transition: top 0.05s linear;
+}
+
+/* ------------------------------------------------------------
+   2j. Big Cursor
+   ------------------------------------------------------------ */
+html.a11y-big-cursor,
+html.a11y-big-cursor * {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M4 4l10 24 3.5-10.5L28 14z' fill='white' stroke='black' stroke-width='1.5'/%3E%3C/svg%3E") 4 4, auto !important;
+}
+html.a11y-big-cursor a,
+html.a11y-big-cursor button,
+html.a11y-big-cursor [role="button"],
+html.a11y-big-cursor input[type="submit"],
+html.a11y-big-cursor label {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M10 4C10 4 10 22 10 22C10 22 13 18 15 18C17 18 22 28 22 28L26 26C26 26 21 16 19 16C17 16 20 14 20 14z' fill='white' stroke='black' stroke-width='1.5'/%3E%3C/svg%3E") 10 4, pointer !important;
+}
+
+/* Colorblind cycle badge (same style as font badge) */
+.a11y-toggle[data-feature="colorblind"] .a11y-toggle-pill { display: none; }
+.a11y-toggle[data-feature="colorblind"][aria-pressed="true"] .a11y-font-badge {
+  background: rgba(93, 228, 212, 0.15);
+  color: #5de4d4;
+  border-color: rgba(93, 228, 212, 0.30);
 }
 
 /* ============================================================

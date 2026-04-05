@@ -19,6 +19,9 @@
   const FONT_CYCLE = ['default', 'lg', 'xl'];
   const FONT_LABELS = { default: 'Default', lg: 'Large', xl: 'XL' };
 
+  const CB_CYCLE = ['off', 'deuteranopia', 'protanopia', 'tritanopia'];
+  const CB_LABELS = { off: 'Off', deuteranopia: 'Red-Green', protanopia: 'Red-Weak', tritanopia: 'Blue-Yellow' };
+
   /* Feature definitions */
   const FEATURES = [
     {
@@ -45,10 +48,10 @@
     },
     {
       id: 'colorblind',
-      cls: 'a11y-colorblind',
-      label: 'Colorblind Friendly',
-      desc: 'Deuteranopia-safe colour palette',
-      type: 'toggle',
+      cls: null, // managed via a11y-cb-deuteranopia / a11y-cb-protanopia / a11y-cb-tritanopia
+      label: 'Color Vision',
+      desc: 'Cycles: Off → Red-Green → Red-Weak → Blue-Yellow',
+      type: 'cycle-cb',
       icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="12" cy="12" r="9"/>
         <path d="M9 12a3 3 0 0 1 6 0"/>
@@ -89,6 +92,53 @@
       icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <rect x="3" y="3" width="18" height="18" rx="3" stroke-dasharray="4 2"/>
         <circle cx="12" cy="12" r="3"/>
+      </svg>`,
+    },
+    {
+      id: 'reduce-motion',
+      cls: 'a11y-reduce-motion',
+      label: 'Reduce Motion',
+      desc: 'Stops animations and transitions',
+      type: 'toggle',
+      icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9"/>
+        <line x1="8" y1="12" x2="16" y2="12"/>
+      </svg>`,
+    },
+    {
+      id: 'letter-spacing',
+      cls: 'a11y-letter-spacing',
+      label: 'Letter Spacing',
+      desc: 'Increases space between characters',
+      type: 'toggle',
+      icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7 8h10"/>
+        <path d="M5 12h14"/>
+        <path d="M7 16h10"/>
+        <line x1="3" y1="8" x2="3" y2="16"/>
+        <line x1="21" y1="8" x2="21" y2="16"/>
+      </svg>`,
+    },
+    {
+      id: 'reading-guide',
+      cls: 'a11y-reading-guide',
+      label: 'Reading Guide',
+      desc: 'Horizontal line follows your cursor',
+      type: 'toggle',
+      icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <polyline points="8 8 12 4 16 8"/>
+      </svg>`,
+    },
+    {
+      id: 'big-cursor',
+      cls: 'a11y-big-cursor',
+      label: 'Big Cursor',
+      desc: 'Enlarges the mouse pointer',
+      type: 'toggle',
+      icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 4l7 18 2.5-7.5L21 12z" fill="currentColor" stroke="none"/>
+        <path d="M4 4l7 18 2.5-7.5L21 12z"/>
       </svg>`,
     },
   ];
@@ -135,6 +185,13 @@
     if (level === 'xl') html.classList.add('a11y-font-xl');
   }
 
+  function applyColorblind(mode) {
+    html.classList.remove('a11y-cb-deuteranopia', 'a11y-cb-protanopia', 'a11y-cb-tritanopia');
+    // Also remove legacy class
+    html.classList.remove('a11y-colorblind');
+    if (mode && mode !== 'off') html.classList.add('a11y-cb-' + mode);
+  }
+
   function applyState(state) {
     FEATURES.forEach(feat => {
       if (feat.type === 'toggle' && feat.cls) {
@@ -142,11 +199,15 @@
       }
     });
     applyFontSize(state['font-size'] || 'default');
+    applyColorblind(state['colorblind'] || 'off');
 
     /* Load Lexend dynamically if enabled */
     if (state['dyslexia-font']) {
       loadLexend();
     }
+
+    /* Reading guide: create/destroy the guide element */
+    manageReadingGuide(!!state['reading-guide']);
   }
 
   /* ----------------------------------------------------------
@@ -164,7 +225,32 @@
   }
 
   /* ----------------------------------------------------------
-     Inject SVG filter for deuteranopia
+     Reading guide — horizontal bar following mouse
+  ---------------------------------------------------------- */
+  let readingGuideEl = null;
+
+  function manageReadingGuide(enabled) {
+    if (enabled && !readingGuideEl) {
+      readingGuideEl = document.createElement('div');
+      readingGuideEl.id = 'a11y-reading-guide';
+      readingGuideEl.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(readingGuideEl);
+      document.addEventListener('mousemove', moveReadingGuide);
+    } else if (!enabled && readingGuideEl) {
+      document.removeEventListener('mousemove', moveReadingGuide);
+      readingGuideEl.remove();
+      readingGuideEl = null;
+    }
+  }
+
+  function moveReadingGuide(e) {
+    if (readingGuideEl) {
+      readingGuideEl.style.top = e.clientY + 'px';
+    }
+  }
+
+  /* ----------------------------------------------------------
+     Inject SVG filters for color vision
   ---------------------------------------------------------- */
   function injectSVGFilters() {
     if (document.getElementById('a11y-svg-filter-defs')) return;
@@ -174,13 +260,28 @@
     svg.classList.add('a11y-svg-filters');
     svg.innerHTML = `
       <defs>
-        <!-- Deuteranopia simulation matrix -->
         <filter id="a11y-deuteranopia-filter" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="linearRGB">
           <feColorMatrix type="matrix" values="
             0.367 0.861 -0.228 0 0
             0.280 0.673  0.047 0 0
            -0.012 0.043  0.969 0 0
             0     0      0     1 0
+          "/>
+        </filter>
+        <filter id="a11y-protanopia-filter" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="linearRGB">
+          <feColorMatrix type="matrix" values="
+            0.152 1.053 -0.205 0 0
+            0.115 0.786  0.099 0 0
+           -0.004 -0.048  1.052 0 0
+            0     0      0     1 0
+          "/>
+        </filter>
+        <filter id="a11y-tritanopia-filter" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="linearRGB">
+          <feColorMatrix type="matrix" values="
+            1.256 -0.077 -0.179 0 0
+           -0.078  0.931  0.148 0 0
+            0.005  0.691  0.304 0 0
+            0      0      0     1 0
           "/>
         </filter>
       </defs>
@@ -209,9 +310,14 @@
     let togglesHTML = '';
 
     FEATURES.forEach(feat => {
-      const isOn = feat.type === 'cycle'
-        ? (state['font-size'] || 'default') !== 'default'
-        : !!state[feat.id];
+      let isOn;
+      if (feat.type === 'cycle') {
+        isOn = (state['font-size'] || 'default') !== 'default';
+      } else if (feat.type === 'cycle-cb') {
+        isOn = (state['colorblind'] || 'off') !== 'off';
+      } else {
+        isOn = !!state[feat.id];
+      }
 
       const ariaPressed = isOn ? 'true' : 'false';
 
@@ -219,6 +325,9 @@
       if (feat.type === 'cycle') {
         const level = state['font-size'] || 'default';
         rightEl = `<span class="a11y-font-badge" data-font-badge>${FONT_LABELS[level]}</span>`;
+      } else if (feat.type === 'cycle-cb') {
+        const mode = state['colorblind'] || 'off';
+        rightEl = `<span class="a11y-font-badge" data-cb-badge>${CB_LABELS[mode]}</span>`;
       } else {
         rightEl = `<span class="a11y-toggle-pill" aria-hidden="true"></span>`;
       }
@@ -359,6 +468,10 @@
         if (feat.id === 'dyslexia-font' && state[feat.id]) {
           loadLexend();
         }
+        /* Toggle reading guide */
+        if (feat.id === 'reading-guide') {
+          manageReadingGuide(state[feat.id]);
+        }
 
       } else if (feat.type === 'cycle') {
         /* Font size cycle: default → lg → xl → default */
@@ -367,6 +480,13 @@
         const next = FONT_CYCLE[(idx + 1) % FONT_CYCLE.length];
         state['font-size'] = next;
         applyFontSize(next);
+      } else if (feat.type === 'cycle-cb') {
+        /* Colorblind cycle: off → deuteranopia → protanopia → tritanopia → off */
+        const current = state['colorblind'] || 'off';
+        const idx = CB_CYCLE.indexOf(current);
+        const next = CB_CYCLE[(idx + 1) % CB_CYCLE.length];
+        state['colorblind'] = next;
+        applyColorblind(next);
       }
 
       saveState(state);
@@ -466,6 +586,8 @@
       const fs = state['font-size'] || 'default';
       if (fs === 'lg') html.classList.add('a11y-font-lg');
       if (fs === 'xl') html.classList.add('a11y-font-xl');
+      const cb = state['colorblind'] || 'off';
+      if (cb !== 'off') html.classList.add('a11y-cb-' + cb);
     } catch { /* ignore */ }
   })();
 
