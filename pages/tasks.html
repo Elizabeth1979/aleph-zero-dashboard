@@ -241,18 +241,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderItem(t) {
     const cls = t.done ? 'task-item done' : 'task-item';
-    // Tag badge
     const tag = t.tag || '';
     const tagBadge = tag ? `<span class="task-item-pri" style="color:${tagColors[tag]||'var(--text-3)'};background:${tagColors[tag]||'var(--text-3)'}18">${tag}</span>` : '';
-    // Scope badge
     const scope = t.scope || '';
     const scopeBadge = scope ? `<span class="task-item-pri" style="color:${scopeColors[scope]||'var(--text-3)'};background:${scopeColors[scope]||'var(--text-3)'}18">${scope}</span>` : '';
     const date = t.added ? `<span class="task-item-date">${t.added}</span>` : '';
     return `<div class="${cls}">
       <div class="task-item-status"></div>
       <div class="task-item-content">
-        <div class="task-item-text">${esc(t.task)}</div>
-        <div class="task-item-meta">${tagBadge}${scopeBadge}${date}</div>
+        <div class="task-item-row">
+          <div class="task-item-text">${esc(t.task)}</div>
+          <div style="display:flex;gap:6px;flex-shrink:0">${tagBadge}${scopeBadge}${date}</div>
+        </div>
       </div>
     </div>`;
   }
