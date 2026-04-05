@@ -249,7 +249,8 @@ window.__DASHBOARD_DATA__ = {
     "urgent": false,
     "difficulty": "medium",
     "description": "Expose knowledge base docs as MCP resources and add guided prompts for common a11y tasks.",
-    "impact": "medium"
+    "impact": "medium",
+    "status": "done"
   },
   {
     "id": 22,
