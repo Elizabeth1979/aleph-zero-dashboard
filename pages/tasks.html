@@ -63,7 +63,10 @@
   .task-item-content { flex: 1; min-width: 0; }
   /* LOCKED LAYOUT — text left, pills right. Approved by Elli 2026-04-05. Do not change. */
   .task-item-row {
-    display: flex; align-items: center; justify-content: space-between; gap: var(--s3);
+    display: flex; align-items: baseline; justify-content: space-between; gap: var(--s4);
+  }
+  .task-item-pills {
+    display: flex; gap: 6px; flex-shrink: 0; justify-content: flex-end;
   }
   .task-item-text {
     font-size: var(--fs-sm); color: var(--text);
@@ -258,7 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="task-item-content">
         <div class="task-item-row">
           <div class="task-item-text">${esc(t.task)}</div>
-          <div style="display:flex;gap:6px;flex-shrink:0">${tags}${due}</div>
+          <div class="task-item-pills">${tags}${due}</div>
         </div>
         ${desc}
       </div>
