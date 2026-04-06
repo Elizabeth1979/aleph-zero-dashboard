@@ -360,7 +360,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Links
     const links = (p.links || []).filter(l => l.url);
     const linksHtml = links.length ? `<div class="project-links">${links.map(l =>
-      `<a href="${esc(l.url)}" target="_blank" rel="noopener" class="project-link"><i data-lucide="external-link" style="width:11px;height:11px"></i>${esc(l.label)}</a>`
+      `<a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer" class="project-link"><i data-lucide="external-link" style="width:11px;height:11px"></i>${esc(l.label)}</a>`
     ).join('')}</div>` : '';
 
     // Features — collapsible, same pattern as completed tasks

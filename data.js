@@ -1,13 +1,13 @@
 window.__DASHBOARD_DATA__ = {
-  user_memory: "**Elli** | TZ: Asia/Jerusalem | el.patrick79@gmail.com | GitHub: Elizabeth1979\n\u00a7\nObsidian vault: ~/Desktop/elli vault. Reviews \u2192 vault Reviews/ + dashboard reports.\n\u00a7\nDiscord: server \"e1i's server\", bot \"Claude Code#1264\". OpenClaw agent on Hostinger.\n\u00a7\nDaily brief: emails, meetings, tasks, AI newsletters. Subs: Claude + Google AI Premium + ChatGPT Pro ($20/no API). Prefers Claude for code, Gemini for non-code.\n\u00a7\nUI: sea/teal/light blue, no red. Min 14px. Left-aligned. Minimalist, Lucide icons OK. Dashboard cards: no inline lists (click to see details). Every task needs title+description+difficulty+impact+score. Collapse secondary info. Low-hanging fruit first.\n\u00a7\nExplain commands before running (hidden on Discord). Wants to understand technical details too.\n\u00a7\nAndroid (not iOS). Discord on phone \u2014 tables unreadable, use numbered lists with \u2192 arrows. Bot must self-heal.\n\u00a7\nReads/writes Hebrew. Celebrates Pesach. Family recipes in Hebrew. Discord voice messages. ADHD \u2014 needs follow-up pings. Dog named Bamba. Has a company in Israel.\n\u00a7\nADHD: one clear path, no alternatives, incremental. Thread follow-up pings. May have misophonia.\n\u00a7\nA11y app: Android accessibility app. Research in vault \"A11y App Research/\". Company in Israel. Sister in US.\n\u00a7\nAnxiety: no repetitive red \"urgent\" per-item \u2014 once at section level. Binary priority: urgent or not.",
-  agent_memory: "Detail files: ~/.hermes/memory/. Read when needed. New topics = new files + pointer here.\n\u00a7\nDiscord, threads, formatting, commitments: ~/.hermes/memory/discord.md\n\u00a7\nDashboard detail: ~/.hermes/memory/dashboard.md. Locked UI layouts have /* LOCKED */ comments directly in the code \u2014 never change code near those comments without Elli's approval.\n\u00a7\nBehavior, browser rule, teaching style, frustration: ~/.hermes/memory/behavior.md\n\u00a7\nGoogle workspace, Drive (readonly): ~/.hermes/memory/google.md\n\u00a7\nLearnings log: ~/.hermes/memory/learnings.md\n\u00a7\nA11y app research tasks: ~/.hermes/memory/a11y-app-tasks.md\n\u00a7\nGitHub setup: ~/.hermes/memory/github.md\n\u00a7\nAccessibility references: ~/.hermes/memory/accessibility.md\n\u00a7\nRULE: After ANY backend change, run: bash ~/.hermes/dashboard/refresh.sh && cd ~/.hermes/dashboard && git add -A && git commit -m \"update\" && git push\n\u00a7\nRULE: Always use the cleanest, DRY, best-practice approach. If a better way exists, use it. No shortcuts that add noise or repetition.\n\u00a7\nGoogle Gemini: custom provider configured (OpenAI-compatible endpoint). Key in .env works. Key is FREE TIER (x-gemini-service-tier: standard). Google AI Pro subscription does NOT unlock paid API access \u2014 it's only for the web chat. Gemini 3.1 Pro Preview accessible for now (preview perk), may change when it goes GA.\n\u00a7\nElli uses Claude Pro subscription (ANTHROPIC_TOKEN, not API key). Model setup: Main=claude-sonnet-4-6, Coding/Delegation=claude-opus-4-6, Summarization=claude-sonnet-4-6, Auxiliary=claude-haiku-4-5-20251001, Fallback=haiku\u2192ollama/gemma4:e4b. Sonnet has its own separate usage limit.\n\u00a7\nRULE: For API docs, model info, or any fast-moving tech \u2014 fetch live docs first (curl or Context7 MCP), never answer from training data alone.\n\u00a7\nHostinger VPS: srv1411564.hstgr.cloud (IP: 187.124.1.130, KVM 2, Ubuntu 24.04, expires 2028-02-21). SSH key auth set up. Docker installed, clean slate. OpenClaw agent runs there \u2014 Elli wants to remove it eventually but not yet. Plan: install Hermes + Discord gateway on VPS for always-on uptime.",
-  user_chars:     1379,
+  user_memory: "**Elli** | TZ: Asia/Jerusalem | el.patrick79@gmail.com | GitHub: Elizabeth1979\n\u00a7\nObsidian vault: ~/Desktop/elli vault. Reviews \u2192 vault Reviews/ + dashboard reports.\n\u00a7\nDiscord: \"e1i's server\", bot \"Claude Code#1264\". Mobile formatting: use numbered lists with \u2192 arrows (no tables). Bot must self-heal.\n\u00a7\nSubs: Claude Pro ($20), Google AI Premium, ChatGPT Pro. Prefers Claude for code, Gemini for non-code.\n\u00a7\nDesign prefs: sea/teal/light blue, no red. Min 14px, left-aligned, minimalist, Lucide icons. Dashboard cards need title+desc+difficulty+impact+score.\n\u00a7\nCommunication: Explain commands. ADHD: one clear path, incremental, follow-up pings. Misophonia possible. Anxiety: no repetitive red \"urgent\", binary priority (urgent/not).\n\u00a7\nPersonal: Reads/writes Hebrew, celebrates Pesach. Dog: Bamba. Company in Israel, sister in US.\n\u00a7\nCurrent Project: A11y Android app. Research in vault \"A11y App Research/\".",
+  agent_memory: "Detail files: ~/.hermes/memory/. Read when needed. New topics = new files + pointer here.\n\u00a7\nDiscord, threads, formatting, commitments: ~/.hermes/memory/discord.md\n\u00a7\nDashboard detail: ~/.hermes/memory/dashboard.md\n\u00a7\nBehavior, teaching style, frustration: ~/.hermes/memory/behavior.md\n\u00a7\nGoogle workspace, Drive: ~/.hermes/memory/google.md\n\u00a7\nLearnings log: ~/.hermes/memory/learnings.md\n\u00a7\nA11y app research tasks: ~/.hermes/memory/a11y-app-tasks.md\n\u00a7\nGitHub setup: ~/.hermes/memory/github.md\n\u00a7\nAccessibility references: ~/.hermes/memory/accessibility.md\n\u00a7\nInfrastructure (Gemini, Claude, Hostinger VPS): ~/.hermes/memory/infrastructure.md\n\u00a7\nRules (refresh.sh, DRY, live docs): ~/.hermes/memory/rules.md",
+  user_chars:      916,
   user_limit: 1375,
-  user_pct: 100,
-  agent_chars:     2069,
+  user_pct: 66,
+  agent_chars:      709,
   agent_limit: 2200,
-  agent_pct: 94,
-  cron_jobs: [{"id": "9a6cc6e7ea59", "name": "Morning Brief", "prompt": "You are Elli's morning brief assistant. Run this every morning and deliver a concise, useful brief. Use the google-workspace skill to access Gmail and Calendar.\n\nFormat the brief like this:\n\n**\u2600\ufe0f Morning Brief \u2014 [Today's Date]**\n\n1. **\ud83d\udcc5 Today's Schedule** \u2014 Check Google Calendar for today's events. List them with times.\n2. **\ud83d\udce7 Urgent Emails** \u2014 Check Gmail for important/urgent emails from the last 24h. Skip newsletters and promos.\n3. **\ud83d\udccb Tasks** \u2014 Read ~/.hermes/dashboard/tasks.json and list any pending/in-progress tasks.\n4. **\ud83c\udfdb\ufe0f On This Day in History** \u2014 Share one interesting historical fact that happened on today's date. Pick something surprising, fun, or lesser-known \u2014 not the obvious ones everyone knows.\n5. **\ud83c\uddee\ud83c\uddf1 This Day in Israeli History** \u2014 Share one event from Israeli or pre-state Eretz Yisrael history that happened on today's date. Can be political, cultural, military, scientific \u2014 anything interesting. If nothing notable happened on the exact date, pick the closest date within a few days and note it.\n\nEnd the brief with:\n\ud83d\udcd6 **Daily Tehilim:** https://tehilim.co/\n\nKeep it short and scannable. No fluff.", "skills": ["google-workspace"], "skill": "google-workspace", "model": "claude-sonnet-4-6", "provider": "anthropic", "base_url": null, "schedule": "0 8 * * *", "schedule_display": "0 8 * * *", "repeat": {"times": null, "completed": 6}, "enabled": true, "state": "scheduled", "paused_at": null, "paused_reason": null, "created_at": "2026-04-02T19:17:22.345893+03:00", "next_run_at": "2026-04-07T08:00:00+03:00", "last_run_at": "2026-04-06T08:02:03.669994+03:00", "last_status": "ok", "last_error": null, "deliver": "discord:1489553133066653726", "origin": null, "repeat_display": "ran 6x", "job_id": "9a6cc6e7ea59"}, {"id": "544b41e48276", "name": "Nightly Memory Consolidation", "prompt": "Nightly memory maintenance. Do these checks AND fix what you can:\n\n1. Read all files in ~/.hermes/memory/ \u2014 check for stale, duplicate, or conflicting info. Fix what you find.\n2. Check memory tool (both user and memory targets) for near-capacity. If over 80%, offload details to ~/.hermes/memory/ detail files.\n3. Check ~/.hermes/dashboard/tasks.json for duplicate tasks, inconsistent fields, or tasks missing tags. Fix what you find.\n\n4. LEARNINGS COLLECTION \u2014 This is important:\n   - Use session_search (no query) to get today's sessions.\n   - For each session, identify NEW things learned: mistakes caught, tool quirks discovered, workflow insights, non-obvious patterns, corrections made.\n   - Do NOT re-add learnings already in ~/.hermes/memory/learnings.md \u2014 check existing entries first.\n   - For each new learning, append to ~/.hermes/memory/learnings.md in this format:\n     ## YYYY-MM-DD \u2014 Short Title\n     **Category:** (Tools | Workflow | Skills | Code | Design | A11y | General)\n     One-paragraph description of what was learned and why it matters.\n   - After updating learnings.md, run: bash ~/.hermes/dashboard/refresh.sh && cd ~/.hermes/dashboard && git add -A && git commit -m \"nightly: add learnings\" && git push\n\n5. SECURITY SCAN \u2014 Check all dashboard HTML/JS files for:\n   - Secrets, API keys, or tokens accidentally committed (grep for patterns like key=, token=, password=, secret=, Bearer, sk-, etc.)\n   - CDN/external scripts missing `integrity` attribute (Subresource Integrity)\n   - Unsafe `innerHTML` usage without `esc()` sanitization\n   - `target=\"_blank\"` links missing `rel=\"noopener noreferrer\"`\n   - Any `eval()`, `new Function()`, or `document.write()` calls\n   - HTTP (not HTTPS) external resource URLs\n   Reference: ~/.hermes/dashboard/BEST-PRACTICES.md Security section.\n   Report findings. Fix what's safe to fix automatically, flag the rest.\n\n6. Run: bash ~/.hermes/dashboard/refresh.sh && cd ~/.hermes/dashboard && git add -A && git commit -m \"nightly consolidation\" && git push\n\nReport what you found and fixed. Keep it brief \u2014 bullet points only.", "skills": ["memory-optimizer"], "skill": "memory-optimizer", "model": null, "provider": null, "base_url": null, "schedule": "0 23 * * *", "schedule_display": "0 23 * * *", "repeat": {"times": null, "completed": 3}, "enabled": true, "state": "scheduled", "paused_at": null, "paused_reason": null, "created_at": "2026-04-03T16:33:43.653601+03:00", "next_run_at": "2026-04-06T23:00:00+03:00", "last_run_at": "2026-04-05T23:05:43.360316+03:00", "last_status": "ok", "last_error": null, "deliver": "discord:1489553133066653726", "origin": {"platform": "discord", "chat_id": "1489618821181608077", "chat_name": "e11i's server / #dashboard / Okay now let's tackle the modal thing. I prefer it to be just a link to a dif...", "thread_id": "1489618821181608077"}, "repeat_display": "ran 3x", "job_id": "544b41e48276"}, {"id": "3522003f6b68", "name": "Weekend Review", "prompt": "Read ~/.hermes/dashboard/tasks.json and ~/.hermes/dashboard/resources.json. Give a weekend review:\n\n1. **Open Tasks** \u2014 list all tasks where done=false, grouped by priority (high first)\n2. **Unprocessed Resources** \u2014 list all resources where status=\"new\" with their title and URL\n3. **TODOs from processed resources** \u2014 scan takeaways for any containing \"TODO:\" and list them\n\nKeep it short and scannable. ALWAYS send a report, even if everything is clear. Never use [SILENT]. Elli wants confirmation it ran.", "skills": [], "skill": null, "model": "claude-sonnet-4-6", "provider": "anthropic", "base_url": null, "schedule": "0 12 * * 5", "schedule_display": "0 12 * * 5", "repeat": {"times": null, "completed": 0}, "enabled": true, "state": "scheduled", "paused_at": null, "paused_reason": null, "created_at": "2026-04-03T17:13:56.271968+03:00", "next_run_at": "2026-04-10T12:00:00+03:00", "last_run_at": null, "last_status": null, "last_error": null, "deliver": "discord:1489553133066653726", "origin": null, "repeat_display": "", "job_id": "3522003f6b68"}, {"id": "5b81348d7c03", "name": "WIX Stock Review", "prompt": "Research Wix.com (NASDAQ: WIX) current stock status. Find:\n1. Current stock price and recent trend (1-month change)\n2. 52-week high/low\n3. Any recent earnings results or guidance updates\n4. Current analyst consensus rating and average price target\n5. Any notable news (upgrades, downgrades, product launches, macro impact)\n\nContext: Elli holds WIX shares and is waiting for the price to recover before selling. As of April 2026, the stock was at ~$168.79 with a 52-week high of $231.85 and analyst targets around $200-$220.\n\nGive a concise summary with a clear recommendation: is now a good time to consider selling, or should she keep holding? Flag if the stock crosses above $200 or drops below $150.", "skills": [], "skill": null, "model": "claude-sonnet-4-6", "provider": "anthropic", "base_url": null, "schedule": "0 10 1 * *", "schedule_display": "0 10 1 * *", "repeat": {"times": null, "completed": 0}, "enabled": true, "state": "scheduled", "paused_at": null, "paused_reason": null, "created_at": "2026-04-04T09:27:39.885326+03:00", "next_run_at": "2026-05-01T10:00:00+03:00", "last_run_at": null, "last_status": null, "last_error": null, "deliver": "discord:1489553133066653726", "origin": {"platform": "discord", "chat_id": "1489569423038742648", "chat_name": "e11i's server / #general / Todo", "thread_id": "1489569423038742648"}, "repeat_display": "", "job_id": "5b81348d7c03"}, {"id": "b07f24cc2a8e", "name": "Follow-up pinger", "prompt": "You are Elli's end-of-day follow-up pinger. Check TWO sources and deliver a combined report.\n\n## 1. Daily Commitments (~/.hermes/commitments.json)\nThese are things Elli told you she'd do today. Format:\n[{\"id\": \"uuid\", \"text\": \"what she said she'd do\", \"added\": \"ISO date\", \"status\": \"pending\"}]\n\nFor each entry with status \"pending\" from today, list it and ask if she did it.\nAfter listing, do NOT modify the file \u2014 only the live conversation agent manages it.\n\n## 2. Thread Follow-ups (~/.hermes/pending_replies.json)\nOpen threads awaiting Elli's response. Format:\n[{\"thread_id\": \"123\", \"thread_name\": \"Topic\", \"summary\": \"what's pending\", \"timestamp\": \"ISO date\", \"status\": \"open\"}]\n\nFor entries older than 24 hours with status \"open\", mention them.\n\n## Output Format\nALWAYS send a report, even if both files are empty. Never use [SILENT].\n\nIf there are commitments:\n**End of day check-in:**\n**You said you'd do:**\n\u2022 [commitment text] \u2014 did you?\n\u2022 [commitment text] \u2014 did you?\n\nIf there are open threads:\n**Threads waiting on you:**\n\u2022 [thread_name] \u2014 [summary]\n\nIf everything is empty:\n\"All clear \u2014 nothing pending, no open threads \u2713\"\n\nKeep it short and friendly. This is an accountability nudge, not a lecture.", "skills": [], "skill": null, "model": "claude-sonnet-4-6", "provider": "anthropic", "base_url": null, "schedule": "0 19 * * *", "schedule_display": "0 19 * * *", "repeat": {"times": null, "completed": 3}, "enabled": true, "state": "scheduled", "paused_at": null, "paused_reason": null, "created_at": "2026-04-04T13:57:23.038826+03:00", "next_run_at": "2026-04-07T19:00:00+03:00", "last_run_at": "2026-04-06T19:05:18.480400+03:00", "last_status": "ok", "last_error": null, "deliver": "discord:1489553133066653726", "origin": {"platform": "discord", "chat_id": "1489934283597549680", "chat_name": "e11i's server / #general / The accessibility icon doesn't appear on the main page, only on the other pag...", "thread_id": "1489934283597549680"}, "repeat_display": "ran 3x", "job_id": "b07f24cc2a8e"}, {"id": "d571e17cb95c", "name": "Memory Health Check", "prompt": "Quick memory health check. Do NOT use the memory tool \u2014 it is not available in cron.\n\nInstead, check memory health by reading files directly:\n\n1. Run: wc -c ~/.hermes/memory.json 2>/dev/null || echo \"memory.json not found\"\n2. Run: ls -la ~/.hermes/memory/ 2>/dev/null | head -20\n3. Run: wc -l ~/.hermes/memory/*.md 2>/dev/null || echo \"No .md memory files\"\n\nCalculate approximate memory usage:\n- Count total characters across all memory files\n- Flag if any single file exceeds 5000 chars\n- Flag if total exceeds 20000 chars\n\nReport format (one line each):\n[SILENT] unless there's a problem\nMemory Health \u2713 \u2014 X files, ~Y chars total\n\nIf usage > 80%, say: \u26a0\ufe0f Memory near capacity \u2014 consider running Nightly Memory Consolidation\nIf a file is missing or unreadable, say: \u26a0\ufe0f Memory file issue: <filename>\n\nOnly deliver to Discord if there's a warning or error. Otherwise stay silent.", "skills": ["memory-optimizer"], "skill": "memory-optimizer", "model": null, "provider": null, "base_url": null, "schedule": "0 9,14,19 * * *", "schedule_display": "0 9,14,19 * * *", "repeat": {"times": null, "completed": 5}, "enabled": true, "state": "scheduled", "paused_at": null, "paused_reason": null, "created_at": "2026-04-05T13:22:09.899343+03:00", "next_run_at": "2026-04-07T09:00:00+03:00", "last_run_at": "2026-04-06T19:05:27.093065+03:00", "last_status": "ok", "last_error": null, "deliver": "discord:1489553133066653726", "origin": null, "repeat_display": "ran 5x", "job_id": "d571e17cb95c"}, {"id": "7224fea9184f", "name": "Gateway Health Check", "prompt": "Quick Discord gateway health check.\n\n1. Run: pgrep -f \"hermes.*gateway\" or check launchctl list | grep hermes.gateway to see if the gateway process is running.\n2. If running, say: \"Gateway OK \u2713\"\n3. If NOT running, try to restart it: launchctl kickstart -k gui/$(id -u)/ai.hermes.gateway \u2014 then wait 10 seconds and check again.\n4. If restart succeeded: \"Gateway was down \u2014 restarted successfully \u2713\"\n5. If restart failed: \"\u26a0 Gateway is DOWN and restart failed. Manual intervention needed.\"\n\nKeep the response to one line unless there's a problem.", "skills": [], "skill": null, "model": null, "provider": null, "base_url": null, "schedule": "0 9,14,19 * * *", "schedule_display": "0 9,14,19 * * *", "repeat": {"times": null, "completed": 5}, "enabled": true, "state": "scheduled", "paused_at": null, "paused_reason": null, "created_at": "2026-04-05T13:27:57.437727+03:00", "next_run_at": "2026-04-07T09:00:00+03:00", "last_run_at": "2026-04-06T19:05:35.744678+03:00", "last_status": "ok", "last_error": null, "deliver": "discord:1489553133066653726", "origin": null, "repeat_display": "ran 5x", "job_id": "7224fea9184f"}, {"id": "a22e6c824c9a", "name": "Cron Health Check", "prompt": "Quick cron job health check. List all cron jobs using the cronjob tool (action=list). For each enabled job, check:\n\n1. If last_status is \"error\" or \"failed\" \u2014 flag it\n2. If a daily job hasn't run in over 36 hours (compare last_run_at to now) \u2014 flag it as possibly stuck\n3. If a job's state is anything other than \"scheduled\" \u2014 flag it\n\nIf everything looks good: \"Crons OK \u2713 \u2014 X/X jobs healthy\"\nIf there are problems, list each flagged job by name with what's wrong. Keep it concise.", "skills": [], "skill": null, "model": null, "provider": null, "base_url": null, "schedule": "0 9,14,19 * * *", "schedule_display": "0 9,14,19 * * *", "repeat": {"times": null, "completed": 5}, "enabled": true, "state": "scheduled", "paused_at": null, "paused_reason": null, "created_at": "2026-04-05T13:27:58.442444+03:00", "next_run_at": "2026-04-07T09:00:00+03:00", "last_run_at": "2026-04-06T19:05:44.213673+03:00", "last_status": "ok", "last_error": null, "deliver": "discord:1489553133066653726", "origin": null, "repeat_display": "ran 5x", "job_id": "a22e6c824c9a"}],
+  agent_pct: 32,
+  cron_jobs: [{"id": "9a6cc6e7ea59", "name": "Morning Brief", "prompt": "You are Elli's morning brief assistant. Run this every morning and deliver a concise, useful brief. Use the google-workspace skill to access Gmail and Calendar.\n\nFormat the brief like this:\n\n**\u2600\ufe0f Morning Brief \u2014 [Today's Date]**\n\n1. **\ud83d\udcc5 Today's Schedule** \u2014 Check Google Calendar for today's events. List them with times.\n2. **\ud83d\udce7 Urgent Emails** \u2014 Check Gmail for important/urgent emails from the last 24h. Skip newsletters and promos.\n3. **\ud83d\udccb Tasks** \u2014 Read ~/.hermes/dashboard/tasks.json and list any pending/in-progress tasks.\n4. **\ud83c\udfdb\ufe0f On This Day in History** \u2014 Share one interesting historical fact that happened on today's date. Pick something surprising, fun, or lesser-known \u2014 not the obvious ones everyone knows.\n5. **\ud83c\uddee\ud83c\uddf1 This Day in Israeli History** \u2014 Share one event from Israeli or pre-state Eretz Yisrael history that happened on today's date. Can be political, cultural, military, scientific \u2014 anything interesting. If nothing notable happened on the exact date, pick the closest date within a few days and note it.\n\nEnd the brief with:\n\ud83d\udcd6 **Daily Tehilim:** https://tehilim.co/\n\nKeep it short and scannable. No fluff.", "skills": ["google-workspace"], "skill": "google-workspace", "model": "claude-sonnet-4-6", "provider": "anthropic", "base_url": null, "schedule": "0 8 * * *", "schedule_display": "0 8 * * *", "repeat": {"times": null, "completed": 6}, "enabled": true, "state": "scheduled", "paused_at": null, "paused_reason": null, "created_at": "2026-04-02T19:17:22.345893+03:00", "next_run_at": "2026-04-07T08:00:00+03:00", "last_run_at": "2026-04-06T08:02:03.669994+03:00", "last_status": "ok", "last_error": null, "deliver": "discord:1489553133066653726", "origin": null, "repeat_display": "ran 6x", "job_id": "9a6cc6e7ea59"}, {"id": "544b41e48276", "name": "Nightly Memory Consolidation", "prompt": "Nightly memory maintenance. Do these checks AND fix what you can:\n\n1. Read all files in ~/.hermes/memory/ \u2014 check for stale, duplicate, or conflicting info. Fix what you find.\n2. Check memory tool (both user and memory targets) for near-capacity. If over 80%, offload details to ~/.hermes/memory/ detail files.\n3. Check ~/.hermes/dashboard/tasks.json for duplicate tasks, inconsistent fields, or tasks missing tags. Fix what you find.\n\n4. LEARNINGS COLLECTION \u2014 This is important:\n   - Use session_search (no query) to get today's sessions.\n   - For each session, identify NEW things learned: mistakes caught, tool quirks discovered, workflow insights, non-obvious patterns, corrections made.\n   - Do NOT re-add learnings already in ~/.hermes/memory/learnings.md \u2014 check existing entries first.\n   - For each new learning, append to ~/.hermes/memory/learnings.md in this format:\n     ## YYYY-MM-DD \u2014 Short Title\n     **Category:** (Tools | Workflow | Skills | Code | Design | A11y | General)\n     One-paragraph description of what was learned and why it matters.\n   - After updating learnings.md, run: bash ~/.hermes/dashboard/refresh.sh && cd ~/.hermes/dashboard && git add -A && git commit -m \"nightly: add learnings\" && git push\n\n5. SECURITY SCAN \u2014 Check all dashboard HTML/JS files for:\n   - Secrets, API keys, or tokens accidentally committed (grep for patterns like key=, token=, password=, secret=, Bearer, sk-, etc.)\n   - CDN/external scripts missing `integrity` attribute (Subresource Integrity)\n   - Unsafe `innerHTML` usage without `esc()` sanitization\n   - `target=\"_blank\"` links missing `rel=\"noopener noreferrer\"`\n   - Any `eval()`, `new Function()`, or `document.write()` calls\n   - HTTP (not HTTPS) external resource URLs\n   Reference: ~/.hermes/dashboard/BEST-PRACTICES.md Security section.\n   Report findings. Fix what's safe to fix automatically, flag the rest.\n\n6. Run: bash ~/.hermes/dashboard/refresh.sh && cd ~/.hermes/dashboard && git add -A && git commit -m \"nightly consolidation\" && git push\n\nReport what you found and fixed. Keep it brief \u2014 bullet points only.", "skills": ["memory-optimizer"], "skill": "memory-optimizer", "model": null, "provider": null, "base_url": null, "schedule": "0 23 * * *", "schedule_display": "0 23 * * *", "repeat": {"times": null, "completed": 3}, "enabled": true, "state": "scheduled", "paused_at": null, "paused_reason": null, "created_at": "2026-04-03T16:33:43.653601+03:00", "next_run_at": "2026-04-07T23:00:00+03:00", "last_run_at": "2026-04-05T23:05:43.360316+03:00", "last_status": "ok", "last_error": null, "deliver": "discord:1489553133066653726", "origin": {"platform": "discord", "chat_id": "1489618821181608077", "chat_name": "e11i's server / #dashboard / Okay now let's tackle the modal thing. I prefer it to be just a link to a dif...", "thread_id": "1489618821181608077"}, "repeat_display": "ran 3x", "job_id": "544b41e48276"}, {"id": "3522003f6b68", "name": "Weekend Review", "prompt": "Read ~/.hermes/dashboard/tasks.json and ~/.hermes/dashboard/resources.json. Give a weekend review:\n\n1. **Open Tasks** \u2014 list all tasks where done=false, grouped by priority (high first)\n2. **Unprocessed Resources** \u2014 list all resources where status=\"new\" with their title and URL\n3. **TODOs from processed resources** \u2014 scan takeaways for any containing \"TODO:\" and list them\n\nKeep it short and scannable. ALWAYS send a report, even if everything is clear. Never use [SILENT]. Elli wants confirmation it ran.", "skills": [], "skill": null, "model": "claude-sonnet-4-6", "provider": "anthropic", "base_url": null, "schedule": "0 12 * * 5", "schedule_display": "0 12 * * 5", "repeat": {"times": null, "completed": 0}, "enabled": true, "state": "scheduled", "paused_at": null, "paused_reason": null, "created_at": "2026-04-03T17:13:56.271968+03:00", "next_run_at": "2026-04-10T12:00:00+03:00", "last_run_at": null, "last_status": null, "last_error": null, "deliver": "discord:1489553133066653726", "origin": null, "repeat_display": "", "job_id": "3522003f6b68"}, {"id": "5b81348d7c03", "name": "WIX Stock Review", "prompt": "Research Wix.com (NASDAQ: WIX) current stock status. Find:\n1. Current stock price and recent trend (1-month change)\n2. 52-week high/low\n3. Any recent earnings results or guidance updates\n4. Current analyst consensus rating and average price target\n5. Any notable news (upgrades, downgrades, product launches, macro impact)\n\nContext: Elli holds WIX shares and is waiting for the price to recover before selling. As of April 2026, the stock was at ~$168.79 with a 52-week high of $231.85 and analyst targets around $200-$220.\n\nGive a concise summary with a clear recommendation: is now a good time to consider selling, or should she keep holding? Flag if the stock crosses above $200 or drops below $150.", "skills": [], "skill": null, "model": "claude-sonnet-4-6", "provider": "anthropic", "base_url": null, "schedule": "0 10 1 * *", "schedule_display": "0 10 1 * *", "repeat": {"times": null, "completed": 0}, "enabled": true, "state": "scheduled", "paused_at": null, "paused_reason": null, "created_at": "2026-04-04T09:27:39.885326+03:00", "next_run_at": "2026-05-01T10:00:00+03:00", "last_run_at": null, "last_status": null, "last_error": null, "deliver": "discord:1489553133066653726", "origin": {"platform": "discord", "chat_id": "1489569423038742648", "chat_name": "e11i's server / #general / Todo", "thread_id": "1489569423038742648"}, "repeat_display": "", "job_id": "5b81348d7c03"}, {"id": "b07f24cc2a8e", "name": "Follow-up pinger", "prompt": "You are Elli's end-of-day follow-up pinger. Check TWO sources and deliver a combined report.\n\n## 1. Daily Commitments (~/.hermes/commitments.json)\nThese are things Elli told you she'd do today. Format:\n[{\"id\": \"uuid\", \"text\": \"what she said she'd do\", \"added\": \"ISO date\", \"status\": \"pending\"}]\n\nFor each entry with status \"pending\" from today, list it and ask if she did it.\nAfter listing, do NOT modify the file \u2014 only the live conversation agent manages it.\n\n## 2. Thread Follow-ups (~/.hermes/pending_replies.json)\nOpen threads awaiting Elli's response. Format:\n[{\"thread_id\": \"123\", \"thread_name\": \"Topic\", \"summary\": \"what's pending\", \"timestamp\": \"ISO date\", \"status\": \"open\"}]\n\nFor entries older than 24 hours with status \"open\", mention them.\n\n## Output Format\nALWAYS send a report, even if both files are empty. Never use [SILENT].\n\nIf there are commitments:\n**End of day check-in:**\n**You said you'd do:**\n\u2022 [commitment text] \u2014 did you?\n\u2022 [commitment text] \u2014 did you?\n\nIf there are open threads:\n**Threads waiting on you:**\n\u2022 [thread_name] \u2014 [summary]\n\nIf everything is empty:\n\"All clear \u2014 nothing pending, no open threads \u2713\"\n\nKeep it short and friendly. This is an accountability nudge, not a lecture.", "skills": [], "skill": null, "model": "claude-sonnet-4-6", "provider": "anthropic", "base_url": null, "schedule": "0 19 * * *", "schedule_display": "0 19 * * *", "repeat": {"times": null, "completed": 3}, "enabled": true, "state": "scheduled", "paused_at": null, "paused_reason": null, "created_at": "2026-04-04T13:57:23.038826+03:00", "next_run_at": "2026-04-07T19:00:00+03:00", "last_run_at": "2026-04-06T19:05:18.480400+03:00", "last_status": "ok", "last_error": null, "deliver": "discord:1489553133066653726", "origin": {"platform": "discord", "chat_id": "1489934283597549680", "chat_name": "e11i's server / #general / The accessibility icon doesn't appear on the main page, only on the other pag...", "thread_id": "1489934283597549680"}, "repeat_display": "ran 3x", "job_id": "b07f24cc2a8e"}, {"id": "d571e17cb95c", "name": "Memory Health Check", "prompt": "Quick memory health check. Do NOT use the memory tool \u2014 it is not available in cron.\n\nInstead, check memory health by reading files directly:\n\n1. Run: wc -c ~/.hermes/memory.json 2>/dev/null || echo \"memory.json not found\"\n2. Run: ls -la ~/.hermes/memory/ 2>/dev/null | head -20\n3. Run: wc -l ~/.hermes/memory/*.md 2>/dev/null || echo \"No .md memory files\"\n\nCalculate approximate memory usage:\n- Count total characters across all memory files\n- Flag if any single file exceeds 5000 chars\n- Flag if total exceeds 20000 chars\n\nReport format (one line each):\n[SILENT] unless there's a problem\nMemory Health \u2713 \u2014 X files, ~Y chars total\n\nIf usage > 80%, say: \u26a0\ufe0f Memory near capacity \u2014 consider running Nightly Memory Consolidation\nIf a file is missing or unreadable, say: \u26a0\ufe0f Memory file issue: <filename>\n\nOnly deliver to Discord if there's a warning or error. Otherwise stay silent.", "skills": ["memory-optimizer"], "skill": "memory-optimizer", "model": null, "provider": null, "base_url": null, "schedule": "0 9,14,19 * * *", "schedule_display": "0 9,14,19 * * *", "repeat": {"times": null, "completed": 5}, "enabled": true, "state": "scheduled", "paused_at": null, "paused_reason": null, "created_at": "2026-04-05T13:22:09.899343+03:00", "next_run_at": "2026-04-07T09:00:00+03:00", "last_run_at": "2026-04-06T19:05:27.093065+03:00", "last_status": "ok", "last_error": null, "deliver": "discord:1489553133066653726", "origin": null, "repeat_display": "ran 5x", "job_id": "d571e17cb95c"}, {"id": "7224fea9184f", "name": "Gateway Health Check", "prompt": "Quick Discord gateway health check.\n\n1. Run: pgrep -f \"hermes.*gateway\" or check launchctl list | grep hermes.gateway to see if the gateway process is running.\n2. If running, say: \"Gateway OK \u2713\"\n3. If NOT running, try to restart it: launchctl kickstart -k gui/$(id -u)/ai.hermes.gateway \u2014 then wait 10 seconds and check again.\n4. If restart succeeded: \"Gateway was down \u2014 restarted successfully \u2713\"\n5. If restart failed: \"\u26a0 Gateway is DOWN and restart failed. Manual intervention needed.\"\n\nKeep the response to one line unless there's a problem.", "skills": [], "skill": null, "model": null, "provider": null, "base_url": null, "schedule": "0 9,14,19 * * *", "schedule_display": "0 9,14,19 * * *", "repeat": {"times": null, "completed": 5}, "enabled": true, "state": "scheduled", "paused_at": null, "paused_reason": null, "created_at": "2026-04-05T13:27:57.437727+03:00", "next_run_at": "2026-04-07T09:00:00+03:00", "last_run_at": "2026-04-06T19:05:35.744678+03:00", "last_status": "ok", "last_error": null, "deliver": "discord:1489553133066653726", "origin": null, "repeat_display": "ran 5x", "job_id": "7224fea9184f"}, {"id": "a22e6c824c9a", "name": "Cron Health Check", "prompt": "Quick cron job health check. List all cron jobs using the cronjob tool (action=list). For each enabled job, check:\n\n1. If last_status is \"error\" or \"failed\" \u2014 flag it\n2. If a daily job hasn't run in over 36 hours (compare last_run_at to now) \u2014 flag it as possibly stuck\n3. If a job's state is anything other than \"scheduled\" \u2014 flag it\n\nIf everything looks good: \"Crons OK \u2713 \u2014 X/X jobs healthy\"\nIf there are problems, list each flagged job by name with what's wrong. Keep it concise.", "skills": [], "skill": null, "model": null, "provider": null, "base_url": null, "schedule": "0 9,14,19 * * *", "schedule_display": "0 9,14,19 * * *", "repeat": {"times": null, "completed": 5}, "enabled": true, "state": "scheduled", "paused_at": null, "paused_reason": null, "created_at": "2026-04-05T13:27:58.442444+03:00", "next_run_at": "2026-04-07T09:00:00+03:00", "last_run_at": "2026-04-06T19:05:44.213673+03:00", "last_status": "ok", "last_error": null, "deliver": "discord:1489553133066653726", "origin": null, "repeat_display": "ran 5x", "job_id": "a22e6c824c9a"}],
   status: "<div class=\"config-item\"><span class=\"config-key\">Gateway</span><span class=\"config-val\"><span class=\"status-dot status-on\"></span>Online (PID 27148)</span></div><div class=\"config-item\"><span class=\"config-key\">Discord</span><span class=\"config-val\">\u2713 Online</span></div><div class=\"config-item\"><span class=\"config-key\">Google</span><span class=\"config-val\">\u2713 Connected</span></div>\n",
   config: "<div class=\"config-item\"><span class=\"config-key\">Provider</span><span class=\"config-val\">google</span></div><div class=\"config-item\"><span class=\"config-key\">Timezone</span><span class=\"config-val\">Asia/Jerusalem</span></div><div class=\"config-item\"><span class=\"config-key\">Main Model</span><span class=\"config-val\">gemini-3.1-pro-preview</span></div><div class=\"config-item\"><span class=\"config-key\">Coding (Delegation)</span><span class=\"config-val\">claude-opus-4-6</span></div><div class=\"config-item\"><span class=\"config-key\">Summarization</span><span class=\"config-val\">claude-sonnet-4-6</span></div><div class=\"config-item\"><span class=\"config-key\">Auxiliary</span><span class=\"config-val\">claude-haiku-4-5-20251001</span></div><div class=\"config-item\"><span class=\"config-key\">Fallback</span><span class=\"config-val\">claude-sonnet-4-6 \u2192 gemma4:e4b</span></div><div class=\"config-item\"><span class=\"config-key\">Google/Gemini</span><span class=\"config-val\">configured (generativelanguage.googleapis.com)</span></div><div class=\"config-item\"><span class=\"config-key\">Memories Dir</span><span class=\"config-val\">~/.hermes/memories/</span></div><div class=\"config-item\"><span class=\"config-key\">Config</span><span class=\"config-val\">~/.hermes/config.yaml</span></div>\n",
   skills: "<span class=\"tag\">apple/apple-notes</span> <span class=\"tag\">apple/apple-reminders</span> <span class=\"tag\">apple/findmy</span> <span class=\"tag\">apple/imessage</span> <span class=\"tag\">autonomous-ai-agents/claude-code</span> <span class=\"tag\">autonomous-ai-agents/codex</span> <span class=\"tag\">autonomous-ai-agents/hermes-agent</span> <span class=\"tag\">autonomous-ai-agents/opencode</span> <span class=\"tag\">creative/ascii-art</span> <span class=\"tag\">creative/ascii-video</span> <span class=\"tag\">creative/excalidraw</span> <span class=\"tag\">creative/humanizer</span> <span class=\"tag\">creative/songwriting-and-ai-music</span> <span class=\"tag\">data-science/jupyter-live-kernel</span> <span class=\"tag\">devops/discord-gateway-setup</span> <span class=\"tag\">devops/webhook-subscriptions</span> <span class=\"tag\">email/himalaya</span> <span class=\"tag\">gaming/minecraft-modpack-server</span> <span class=\"tag\">gaming/pokemon-player</span> <span class=\"tag\">github/codebase-inspection</span> <span class=\"tag\">github/github-auth</span> <span class=\"tag\">github/github-code-review</span> <span class=\"tag\">github/github-issues</span> <span class=\"tag\">github/github-pr-workflow</span> <span class=\"tag\">github/github-repo-management</span> <span class=\"tag\">leisure/find-nearby</span> <span class=\"tag\">mcp/build-mcp-server</span> <span class=\"tag\">mcp/mcporter</span> <span class=\"tag\">mcp/native-mcp</span> <span class=\"tag\">media/gif-search</span> <span class=\"tag\">media/heartmula</span> <span class=\"tag\">media/songsee</span> <span class=\"tag\">media/youtube-content</span> <span class=\"tag\">mlops/huggingface-hub</span> <span class=\"tag\">note-taking/obsidian</span> <span class=\"tag\">openclaw-imports/find-skills</span> <span class=\"tag\">openclaw-imports/remotion-best-practices</span> <span class=\"tag\">productivity/chromadb-memory</span> <span class=\"tag\">productivity/discord-thread-discipline</span> <span class=\"tag\">productivity/google-workspace</span> <span class=\"tag\">productivity/hermes-dashboard</span> <span class=\"tag\">productivity/hermes-model-routing</span> <span class=\"tag\">productivity/idea-lab</span> <span class=\"tag\">productivity/journey-kits</span> <span class=\"tag\">productivity/linear</span> <span class=\"tag\">productivity/memory-management</span> <span class=\"tag\">productivity/memory-optimizer</span> <span class=\"tag\">productivity/model-cost-optimization</span> <span class=\"tag\">productivity/nano-pdf</span> <span class=\"tag\">productivity/notion</span> <span class=\"tag\">productivity/ocr-and-documents</span> <span class=\"tag\">productivity/powerpoint</span> <span class=\"tag\">productivity/quick-capture</span> <span class=\"tag\">red-teaming/godmode</span> <span class=\"tag\">research/arxiv</span> <span class=\"tag\">research/blogwatcher</span> <span class=\"tag\">research/ml-paper-writing</span> <span class=\"tag\">research/play-store-research</span> <span class=\"tag\">research/polymarket</span> <span class=\"tag\">research/research-paper-writing</span> <span class=\"tag\">smart-home/openhue</span> <span class=\"tag\">social-media/xitter</span> <span class=\"tag\">software-development/a11y-audit-toolkit</span> <span class=\"tag\">software-development/accessibility-widget</span> <span class=\"tag\">software-development/code-review</span> <span class=\"tag\">software-development/plan</span> <span class=\"tag\">software-development/requesting-code-review</span> <span class=\"tag\">software-development/subagent-driven-development</span> <span class=\"tag\">software-development/systematic-debugging</span> <span class=\"tag\">software-development/test-driven-development</span> <span class=\"tag\">software-development/writing-plans</span> \n",
@@ -37,7 +37,8 @@ window.__DASHBOARD_DATA__ = {
     "done": false,
     "urgent": true,
     "scope": "private",
-    "description": "Owes two years back. Payment site was down last time — try again."
+    "description": "Owes two years back. Payment site was down last time \u2014 try again.",
+    "status": "pending"
   },
   {
     "id": 3,
@@ -48,7 +49,8 @@ window.__DASHBOARD_DATA__ = {
     ],
     "done": false,
     "urgent": true,
-    "scope": "private"
+    "scope": "private",
+    "status": "pending"
   },
   {
     "id": 5,
@@ -59,11 +61,12 @@ window.__DASHBOARD_DATA__ = {
       "Buy"
     ],
     "done": false,
-    "urgent": false
+    "urgent": false,
+    "status": "pending"
   },
   {
     "id": 6,
-    "task": "A11y App: Fix high contrast mode — highlight card borders & non-text UI elements (not just text)",
+    "task": "A11y App: Fix high contrast mode \u2014 highlight card borders & non-text UI elements (not just text)",
     "added": "2026-04-04",
     "done": false,
     "urgent": false,
@@ -72,20 +75,22 @@ window.__DASHBOARD_DATA__ = {
     "impact": "high",
     "tags": [
       "A11y App"
-    ]
+    ],
+    "status": "pending"
   },
   {
     "id": 7,
-    "task": "A11y App: Add color scheme options — dark mode, light mode, custom user color picker",
+    "task": "A11y App: Add color scheme options \u2014 dark mode, light mode, custom user color picker",
     "added": "2026-04-04",
     "done": false,
     "urgent": false,
     "difficulty": "hard",
-    "description": "Let users pick their own color theme — not just dark/light but full custom palette.",
+    "description": "Let users pick their own color theme \u2014 not just dark/light but full custom palette.",
     "impact": "high",
     "tags": [
       "A11y App"
-    ]
+    ],
+    "status": "pending"
   },
   {
     "id": 9,
@@ -98,7 +103,8 @@ window.__DASHBOARD_DATA__ = {
     "impact": "medium",
     "tags": [
       "A11y App"
-    ]
+    ],
+    "status": "pending"
   },
   {
     "id": 10,
@@ -111,7 +117,8 @@ window.__DASHBOARD_DATA__ = {
     "impact": "high",
     "tags": [
       "Dashboard"
-    ]
+    ],
+    "status": "pending"
   },
   {
     "id": 12,
@@ -124,7 +131,8 @@ window.__DASHBOARD_DATA__ = {
     "impact": "medium",
     "tags": [
       "Dashboard"
-    ]
+    ],
+    "status": "pending"
   },
   {
     "id": 13,
@@ -137,11 +145,12 @@ window.__DASHBOARD_DATA__ = {
     "impact": "high",
     "tags": [
       "Dashboard"
-    ]
+    ],
+    "status": "pending"
   },
   {
     "id": 14,
-    "task": "Dashboard: Security hardening — CSP, pin Lucide + SRI, Object.create(null)",
+    "task": "Dashboard: Security hardening \u2014 CSP, pin Lucide + SRI, Object.create(null)",
     "added": "2026-04-04",
     "done": false,
     "urgent": false,
@@ -150,11 +159,12 @@ window.__DASHBOARD_DATA__ = {
     "impact": "low",
     "tags": [
       "Dashboard"
-    ]
+    ],
+    "status": "pending"
   },
   {
     "id": 15,
-    "task": "Dashboard: A11y widget — 44px touch target on close btn, remove red from reset",
+    "task": "Dashboard: A11y widget \u2014 44px touch target on close btn, remove red from reset",
     "added": "2026-04-04",
     "done": false,
     "urgent": false,
@@ -163,7 +173,8 @@ window.__DASHBOARD_DATA__ = {
     "impact": "medium",
     "tags": [
       "Dashboard"
-    ]
+    ],
+    "status": "pending"
   },
   {
     "id": 16,
@@ -174,11 +185,12 @@ window.__DASHBOARD_DATA__ = {
     ],
     "done": false,
     "urgent": true,
-    "scope": "work"
+    "scope": "work",
+    "status": "pending"
   },
   {
     "id": 18,
-    "task": "Dashboard: Fix Reset All button in a11y panel — verify it clears all settings and re-renders correctly",
+    "task": "Dashboard: Fix Reset All button in a11y panel \u2014 verify it clears all settings and re-renders correctly",
     "added": "2026-04-05",
     "done": false,
     "urgent": false,
@@ -187,11 +199,12 @@ window.__DASHBOARD_DATA__ = {
     "impact": "medium",
     "tags": [
       "Dashboard"
-    ]
+    ],
+    "status": "pending"
   },
   {
     "id": 19,
-    "task": "Dashboard: A11y panel advanced settings — custom font picker (multiple fonts), custom color pickers for text, background, links/buttons",
+    "task": "Dashboard: A11y panel advanced settings \u2014 custom font picker (multiple fonts), custom color pickers for text, background, links/buttons",
     "added": "2026-04-05",
     "done": false,
     "urgent": false,
@@ -200,11 +213,12 @@ window.__DASHBOARD_DATA__ = {
     "impact": "high",
     "tags": [
       "Dashboard"
-    ]
+    ],
+    "status": "pending"
   },
   {
     "id": 23,
-    "task": "Build A11y Expert MCP — Publish to PyPI",
+    "task": "Build A11y Expert MCP \u2014 Publish to PyPI",
     "added": "2026-04-04",
     "done": false,
     "urgent": false,
@@ -213,11 +227,12 @@ window.__DASHBOARD_DATA__ = {
     "impact": "high",
     "tags": [
       "MCP"
-    ]
+    ],
+    "status": "pending"
   },
   {
     "id": 24,
-    "task": "Build A11y Expert MCP — Add component library research tool",
+    "task": "Build A11y Expert MCP \u2014 Add component library research tool",
     "added": "2026-04-04",
     "done": false,
     "urgent": false,
@@ -226,7 +241,8 @@ window.__DASHBOARD_DATA__ = {
     "impact": "medium",
     "tags": [
       "MCP"
-    ]
+    ],
+    "status": "pending"
   },
   {
     "id": 31,
@@ -238,7 +254,8 @@ window.__DASHBOARD_DATA__ = {
     "done": false,
     "urgent": false,
     "scope": "work",
-    "description": "Questions and answers about accessibility for the knowledge base."
+    "description": "Questions and answers about accessibility for the knowledge base.",
+    "status": "pending"
   },
   {
     "id": 25,
@@ -249,11 +266,12 @@ window.__DASHBOARD_DATA__ = {
     ],
     "done": false,
     "urgent": true,
-    "scope": "private"
+    "scope": "private",
+    "status": "pending"
   },
   {
     "id": 26,
-    "task": "Dashboard: Remove redundant status field from tasks.json — use done (boolean) only",
+    "task": "Dashboard: Remove redundant status field from tasks.json \u2014 use done (boolean) only",
     "added": "2026-04-05",
     "done": false,
     "urgent": false,
@@ -262,11 +280,12 @@ window.__DASHBOARD_DATA__ = {
     "impact": "low",
     "tags": [
       "Dashboard"
-    ]
+    ],
+    "status": "pending"
   },
   {
     "id": 27,
-    "task": "Build A11y Expert MCP — Remove check-form-accessibility prompt (audit-component with component_type=\"form\" does the same thing)",
+    "task": "Build A11y Expert MCP \u2014 Remove check-form-accessibility prompt (audit-component with component_type=\"form\" does the same thing)",
     "added": "2026-04-05",
     "done": false,
     "urgent": false,
@@ -275,7 +294,8 @@ window.__DASHBOARD_DATA__ = {
     "impact": "medium",
     "tags": [
       "MCP"
-    ]
+    ],
+    "status": "pending"
   },
   {
     "id": 28,
@@ -288,7 +308,8 @@ window.__DASHBOARD_DATA__ = {
     "impact": "low",
     "tags": [
       "Dashboard"
-    ]
+    ],
+    "status": "pending"
   },
   {
     "id": 29,
@@ -299,20 +320,22 @@ window.__DASHBOARD_DATA__ = {
       "Work"
     ],
     "done": false,
-    "urgent": false
+    "urgent": false,
+    "status": "pending"
   },
   {
     "id": 30,
-    "task": "Build A11y Expert MCP — Add a README",
+    "task": "Build A11y Expert MCP \u2014 Add a README",
     "added": "2026-04-05",
     "done": true,
     "urgent": false,
-    "description": "Write a proper README.md for the a11y-expert-mcp repo — what it does, installation, usage, available tools/prompts/resources.",
+    "description": "Write a proper README.md for the a11y-expert-mcp repo \u2014 what it does, installation, usage, available tools/prompts/resources.",
     "difficulty": "easy",
     "impact": "high",
     "tags": [
       "MCP"
-    ]
+    ],
+    "status": "done"
   },
   {
     "id": 32,
@@ -323,7 +346,8 @@ window.__DASHBOARD_DATA__ = {
     "tags": [
       "Work"
     ],
-    "description": "Think through whether Hermes should move to the Hostinger VPS as the source of truth. Decide: (1) keep Mac vs VPS as the real storage for config.yaml, .env, memory, sessions, cron, and dashboard files; (2) privacy model for secrets, memory, and OAuth tokens on VPS; (3) whether dashboard stays local/private or is published in sanitized form only; (4) security hardening needed before going live: SSH keys only, firewall/UFW, fail2ban, dedicated hermes user, minimal exposed ports, backups; (5) migration plan from current Mac-hosted setup and what happens to OpenClaw. Continue tomorrow before making changes."
+    "description": "Think through whether Hermes should move to the Hostinger VPS as the source of truth. Decide: (1) keep Mac vs VPS as the real storage for config.yaml, .env, memory, sessions, cron, and dashboard files; (2) privacy model for secrets, memory, and OAuth tokens on VPS; (3) whether dashboard stays local/private or is published in sanitized form only; (4) security hardening needed before going live: SSH keys only, firewall/UFW, fail2ban, dedicated hermes user, minimal exposed ports, backups; (5) migration plan from current Mac-hosted setup and what happens to OpenClaw. Continue tomorrow before making changes.",
+    "status": "pending"
   }
 ],
   resources: [

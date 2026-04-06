@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         html += `<div class="resource ${statusCls}">
           <div class="resource-top">
-            <a href="${safeUrl}" target="_blank" rel="noopener" class="resource-title">${esc(r.title)}</a>
+            <a href="${safeUrl}" target="_blank" rel="noopener noreferrer" class="resource-title">${esc(r.title)}</a>
             <div class="resource-tags">
               <span class="tag tag-status ${safeStatus}">${esc(safeStatus)}</span>
               <span class="resource-date">${esc(r.added || '')}</span>

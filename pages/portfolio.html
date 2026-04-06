@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const updatedHtml = repo.updated
       ? `<div class="repo-updated">Updated ${formatDate(repo.updated)}</div>`
       : '';
-    return `<a class="repo-card" href="${esc(repo.url || '#')}" target="_blank" rel="noopener">
+    return `<a class="repo-card" href="${esc(repo.url || '#')}" target="_blank" rel="noopener noreferrer">
       <div class="repo-name"><i data-lucide="git-branch" style="width:13px;height:13px"></i>${esc(repo.name || '')}</div>
       ${descHtml}
       ${updatedHtml}
