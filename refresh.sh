@@ -114,18 +114,38 @@ STATUS_HTML="$STATUS_HTML<div class=\"config-item\"><span class=\"config-key\">D
 STATUS_HTML="$STATUS_HTML<div class=\"config-item\"><span class=\"config-key\">Google</span><span class=\"config-val\">$([ -f "$HERMES/google_token.json" ] && echo "✓ Connected" || echo "✗ Not connected")</span></div>"
 
 # Build config HTML
-CONFIG_HTML="<div class=\"config-item\"><span class=\"config-key\">Model</span><span class=\"config-val\">${MODEL:-default}</span></div>"
-CONFIG_HTML="$CONFIG_HTML<div class=\"config-item\"><span class=\"config-key\">Provider</span><span class=\"config-val\">${PROVIDER:-default}</span></div>"
+CONFIG_HTML="<div class=\"config-item\"><span class=\"config-key\">Provider</span><span class=\"config-val\">${PROVIDER:-default}</span></div>"
 CONFIG_HTML="$CONFIG_HTML<div class=\"config-item\"><span class=\"config-key\">Timezone</span><span class=\"config-val\">${TZ:-Asia/Jerusalem}</span></div>"
 
 # Model assignments
 SUMMARY_MODEL=$(grep "summary_model:" "$HERMES/config.yaml" 2>/dev/null | head -1 | awk '{print $2}')
 DELEGATION_MODEL=$(grep -A1 "^delegation:" "$HERMES/config.yaml" 2>/dev/null | grep "model:" | awk '{print $2}')
 VISION_MODEL=$(grep -A2 "vision:" "$HERMES/config.yaml" 2>/dev/null | grep "model:" | head -1 | awk '{print $2}' | tr -d "'")
+FALLBACK_MODEL=$(python3 -c "
+import yaml, sys
+with open('$HERMES/config.yaml') as f:
+    cfg = yaml.safe_load(f)
+providers = cfg.get('fallback_providers', [])
+# show non-anthropic fallback first, else first entry
+fb = next((p for p in providers if p.get('provider') != 'anthropic'), providers[0] if providers else None)
+if fb:
+    print(fb.get('provider','?') + '/' + fb.get('model','?'))
+" 2>/dev/null)
+GOOGLE_MODEL=$(python3 -c "
+import yaml, sys
+with open('$HERMES/config.yaml') as f:
+    cfg = yaml.safe_load(f)
+for p in cfg.get('custom_providers', []):
+    if p.get('name') == 'google':
+        print('configured (' + p.get('base_url','').split('/')[2] + ')')
+        break
+" 2>/dev/null)
 CONFIG_HTML="$CONFIG_HTML<div class=\"config-item\"><span class=\"config-key\">Main Model</span><span class=\"config-val\">${MODEL:-default}</span></div>"
-CONFIG_HTML="$CONFIG_HTML<div class=\"config-item\"><span class=\"config-key\">Delegation</span><span class=\"config-val\">${DELEGATION_MODEL:-default}</span></div>"
+CONFIG_HTML="$CONFIG_HTML<div class=\"config-item\"><span class=\"config-key\">Coding (Delegation)</span><span class=\"config-val\">${DELEGATION_MODEL:-default}</span></div>"
 CONFIG_HTML="$CONFIG_HTML<div class=\"config-item\"><span class=\"config-key\">Summarization</span><span class=\"config-val\">${SUMMARY_MODEL:-default}</span></div>"
 CONFIG_HTML="$CONFIG_HTML<div class=\"config-item\"><span class=\"config-key\">Auxiliary</span><span class=\"config-val\">${VISION_MODEL:-auto}</span></div>"
+[ -n "$FALLBACK_MODEL" ] && CONFIG_HTML="$CONFIG_HTML<div class=\"config-item\"><span class=\"config-key\">Fallback</span><span class=\"config-val\">${FALLBACK_MODEL}</span></div>"
+[ -n "$GOOGLE_MODEL" ] && CONFIG_HTML="$CONFIG_HTML<div class=\"config-item\"><span class=\"config-key\">Google/Gemini</span><span class=\"config-val\">${GOOGLE_MODEL}</span></div>"
 CONFIG_HTML="$CONFIG_HTML<div class=\"config-item\"><span class=\"config-key\">Memories Dir</span><span class=\"config-val\">~/.hermes/memories/</span></div>"
 CONFIG_HTML="$CONFIG_HTML<div class=\"config-item\"><span class=\"config-key\">Config</span><span class=\"config-val\">~/.hermes/config.yaml</span></div>"
 
