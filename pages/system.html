@@ -34,10 +34,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!d.system_settings) { document.getElementById('page-body').innerHTML = '<div class="empty">No system settings documented</div>'; return; }
   document.getElementById('page-body').innerHTML = `<div class="raw-box">${esc(d.system_settings)}</div>`;
   if (typeof lucide !== 'undefined') lucide.createIcons();
+});
 
-</div>
-
-<script>
+</script>
 <link rel="stylesheet" href="../a11y-tester.css">
 <script src="../a11y-widget.js"></script>
 <script src="../a11y-tester.js"></script>
