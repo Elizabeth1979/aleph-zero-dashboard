@@ -202,20 +202,9 @@
   }
   .prompt-modal-body strong { color: var(--text); }
 
-  /* View prompt link in footer */
-  .prompt-link {
-    font-size: 12px;
-    color: var(--text-3);
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    background: none;
-    border: none;
-    font-family: inherit;
-    transition: color 0.15s ease;
-  }
-  .prompt-link:hover { color: var(--accent); }
+  /* Clickable card */
+  .cron-card.clickable { cursor: pointer; transition: border-color 0.15s ease; }
+  .cron-card.clickable:hover { border-color: var(--accent); }
 
   /* Mobile */
   @media (max-width: 480px) {
@@ -357,14 +346,12 @@ document.addEventListener('DOMContentLoaded', () => {
       ? `<span class="cron-last-run">Last run: ${esc(lastRun)} ${isOk ? '<span class="check">✓</span>' : isErr ? '<span class="fail">✗</span>' : ''}</span>`
       : '<span class="cron-last-run">No runs yet</span>';
 
-    /* Prompt link */
-    const promptBtn = j.prompt
-      ? `<button class="prompt-link" data-prompt="${esc(j.prompt).replace(/"/g, '&quot;')}" data-name="${name}">
-          <i data-lucide="file-text" style="width:12px;height:12px"></i>View prompt
-        </button>`
+    const hasPrompt = !!j.prompt;
+    const promptAttr = hasPrompt
+      ? ` data-prompt="${esc(j.prompt).replace(/"/g, '&quot;')}" data-name="${name}"`
       : '';
 
-    return `<div class="cron-card">
+    return `<div class="cron-card${hasPrompt ? ' clickable' : ''}"${promptAttr}>
       <div class="cron-header">
         <span class="dot ${enabled ? 'on' : 'off'}" title="${enabled ? 'Enabled' : 'Disabled'}"></span>
         <span class="cron-name">${name}</span>
@@ -374,7 +361,6 @@ document.addEventListener('DOMContentLoaded', () => {
       ${tasksHtml}
       <div class="cron-footer">
         ${lastRunHtml}
-        ${promptBtn}
       </div>
     </div>`;
   }).join('') + '</div>';
@@ -396,10 +382,10 @@ document.addEventListener('DOMContentLoaded', () => {
   overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-  document.querySelectorAll('.prompt-link').forEach(btn => {
-    btn.addEventListener('click', () => {
-      overlay.querySelector('.prompt-modal-title').textContent = btn.dataset.name;
-      overlay.querySelector('.prompt-modal-body').innerHTML = renderMd(btn.dataset.prompt);
+  document.querySelectorAll('.cron-card.clickable').forEach(card => {
+    card.addEventListener('click', () => {
+      overlay.querySelector('.prompt-modal-title').textContent = card.dataset.name;
+      overlay.querySelector('.prompt-modal-body').innerHTML = renderMd(card.dataset.prompt);
       overlay.classList.add('open');
     });
   });
