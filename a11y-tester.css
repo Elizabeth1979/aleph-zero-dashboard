@@ -7,77 +7,114 @@
 /* --- Toggle Button (bottom-left, separate from a11y widget) --- */
 .a11y-tester-toggle {
   position: fixed;
-  bottom: 20px;
-  left: 20px;
+  bottom: 24px;
+  left: 24px;
   z-index: 10000;
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  border: 2px solid rgba(93, 228, 212, 0.4);
+  border: none;
   background: #5de4d4;
   color: #0b0e11;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  box-shadow:
+    0 4px 16px rgba(93, 228, 212, 0.35),
+    0 2px 6px rgba(0, 0, 0, 0.5);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    filter 0.18s ease;
+  outline: none;
+  padding: 0;
 }
 .a11y-tester-toggle:hover {
-  background: #5de4d4;
-  border-color: #5de4d4;
   filter: brightness(1.12);
   transform: scale(1.06);
+  box-shadow:
+    0 6px 22px rgba(93, 228, 212, 0.50),
+    0 2px 8px rgba(0, 0, 0, 0.55);
 }
-.a11y-tester-toggle svg { width: 22px; height: 22px; }
+.a11y-tester-toggle:focus-visible {
+  outline: 2px solid #5de4d4;
+  outline-offset: 3px;
+}
+.a11y-tester-toggle:active {
+  transform: scale(0.97);
+}
+.a11y-tester-toggle svg { width: 26px; height: 26px; display: block; flex-shrink: 0; }
 
 /* --- Panel --- */
 .a11y-tester-panel {
   position: fixed;
-  bottom: 74px;
-  left: 20px;
+  bottom: 80px;
+  left: 24px;
   z-index: 10001;
-  width: 320px;
-  max-height: calc(100vh - 100px);
-  background: #0d1117;
-  border: 1px solid rgba(93, 228, 212, 0.2);
-  border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-  display: none;
+  width: 280px;
+  max-height: calc(100vh - 120px);
+  background: #13171c;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  box-shadow:
+    0 8px 40px rgba(0, 0, 0, 0.65),
+    0 2px 8px rgba(0, 0, 0, 0.4);
   flex-direction: column;
   overflow: hidden;
-  font-family: 'Inter', -apple-system, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: #e8eaed;
+
+  /* Closed state — matches widget animation */
+  opacity: 0;
+  transform: translateY(10px) scale(0.97);
+  pointer-events: none;
+  transition:
+    opacity 0.22s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
 }
-.a11y-tester-panel.open { display: flex; }
+.a11y-tester-panel.open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
 
 .a11y-tester-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 10px 14px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  gap: 8px;
+  flex-shrink: 0;
 }
 .a11y-tester-title {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
-  color: #e0e0e0;
+  letter-spacing: 0.02em;
+  color: #e8eaed;
   display: flex;
   align-items: center;
   gap: 8px;
+  line-height: 1;
 }
-.a11y-tester-title svg { width: 16px; height: 16px; color: #5de4d4; }
+.a11y-tester-title svg { width: 15px; height: 15px; color: #5de4d4; flex-shrink: 0; }
 .a11y-tester-close {
-  background: none;
-  border: none;
-  color: #666;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #9aa0a6;
   cursor: pointer;
-  padding: 4px;
-  border-radius: 4px;
   display: flex;
   align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
 }
-.a11y-tester-close:hover { color: #e0e0e0; background: rgba(255,255,255,0.06); }
-.a11y-tester-close svg { width: 16px; height: 16px; }
+.a11y-tester-close:hover { color: #e8eaed; background: rgba(255,255,255,0.10); }
+.a11y-tester-close svg { width: 14px; height: 14px; }
 
 /* --- Tool Buttons --- */
 .a11y-tester-tools {
