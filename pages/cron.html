@@ -168,16 +168,39 @@
   }
   .prompt-modal-close:hover { color: var(--text); }
   .prompt-modal-body {
-    font-family: var(--mono);
-    font-size: var(--fs-xs);
+    font-size: var(--fs-sm);
     color: var(--text-2);
-    white-space: pre-wrap;
     word-break: break-word;
     line-height: 1.6;
     padding: var(--s4);
     background: var(--bg-inset);
     border-radius: var(--r1);
   }
+  .prompt-modal-body h1, .prompt-modal-body h2, .prompt-modal-body h3 {
+    color: var(--text);
+    margin: 0.8em 0 0.4em;
+  }
+  .prompt-modal-body h1 { font-size: 1.1em; }
+  .prompt-modal-body h2 { font-size: 1em; }
+  .prompt-modal-body h3 { font-size: 0.95em; }
+  .prompt-modal-body p { margin: 0.4em 0; }
+  .prompt-modal-body ol, .prompt-modal-body ul { padding-left: 1.4em; margin: 0.4em 0; }
+  .prompt-modal-body li { margin: 0.3em 0; }
+  .prompt-modal-body code {
+    font-family: var(--mono);
+    font-size: 0.9em;
+    background: rgba(255,255,255,0.06);
+    padding: 0.1em 0.4em;
+    border-radius: 3px;
+  }
+  .prompt-modal-body pre.code-block {
+    background: rgba(0,0,0,0.3);
+    padding: var(--s3);
+    border-radius: var(--r1);
+    overflow-x: auto;
+    margin: 0.5em 0;
+  }
+  .prompt-modal-body strong { color: var(--text); }
 
   /* View prompt link in footer */
   .prompt-link {
@@ -376,7 +399,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.prompt-link').forEach(btn => {
     btn.addEventListener('click', () => {
       overlay.querySelector('.prompt-modal-title').textContent = btn.dataset.name;
-      overlay.querySelector('.prompt-modal-body').textContent = btn.dataset.prompt;
+      overlay.querySelector('.prompt-modal-body').innerHTML = renderMd(btn.dataset.prompt);
       overlay.classList.add('open');
     });
   });
