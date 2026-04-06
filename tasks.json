@@ -10,7 +10,7 @@
     "done": false,
     "urgent": true,
     "scope": "private",
-    "description": "Owes two years back. Payment site was down last time \u2014 try again.",
+    "description": "Owes two years back. Payment site was down last time — try again.",
     "status": "pending"
   },
   {
@@ -39,7 +39,7 @@
   },
   {
     "id": 6,
-    "task": "A11y App: Fix high contrast mode \u2014 highlight card borders & non-text UI elements (not just text)",
+    "task": "A11y App: Fix high contrast mode — highlight card borders & non-text UI elements (not just text)",
     "added": "2026-04-04",
     "done": false,
     "urgent": false,
@@ -53,12 +53,12 @@
   },
   {
     "id": 7,
-    "task": "A11y App: Add color scheme options \u2014 dark mode, light mode, custom user color picker",
+    "task": "A11y App: Add color scheme options — dark mode, light mode, custom user color picker",
     "added": "2026-04-04",
     "done": false,
     "urgent": false,
     "difficulty": "hard",
-    "description": "Let users pick their own color theme \u2014 not just dark/light but full custom palette.",
+    "description": "Let users pick their own color theme — not just dark/light but full custom palette.",
     "impact": "high",
     "tags": [
       "A11y App"
@@ -123,7 +123,7 @@
   },
   {
     "id": 14,
-    "task": "Dashboard: Security hardening \u2014 CSP, pin Lucide + SRI, Object.create(null)",
+    "task": "Dashboard: Security hardening — CSP, pin Lucide + SRI, Object.create(null)",
     "added": "2026-04-04",
     "done": false,
     "urgent": false,
@@ -137,7 +137,7 @@
   },
   {
     "id": 15,
-    "task": "Dashboard: A11y widget \u2014 44px touch target on close btn, remove red from reset",
+    "task": "Dashboard: A11y widget — 44px touch target on close btn, remove red from reset",
     "added": "2026-04-04",
     "done": false,
     "urgent": false,
@@ -163,7 +163,7 @@
   },
   {
     "id": 18,
-    "task": "Dashboard: Fix Reset All button in a11y panel \u2014 verify it clears all settings and re-renders correctly",
+    "task": "Dashboard: Fix Reset All button in a11y panel — verify it clears all settings and re-renders correctly",
     "added": "2026-04-05",
     "done": false,
     "urgent": false,
@@ -177,7 +177,7 @@
   },
   {
     "id": 19,
-    "task": "Dashboard: A11y panel advanced settings \u2014 custom font picker (multiple fonts), custom color pickers for text, background, links/buttons",
+    "task": "Dashboard: A11y panel advanced settings — custom font picker (multiple fonts), custom color pickers for text, background, links/buttons",
     "added": "2026-04-05",
     "done": false,
     "urgent": false,
@@ -191,7 +191,7 @@
   },
   {
     "id": 23,
-    "task": "Build A11y Expert MCP \u2014 Publish to PyPI",
+    "task": "Build A11y Expert MCP — Publish to PyPI",
     "added": "2026-04-04",
     "done": false,
     "urgent": false,
@@ -205,7 +205,7 @@
   },
   {
     "id": 24,
-    "task": "Build A11y Expert MCP \u2014 Add component library research tool",
+    "task": "Build A11y Expert MCP — Add component library research tool",
     "added": "2026-04-04",
     "done": false,
     "urgent": false,
@@ -244,7 +244,7 @@
   },
   {
     "id": 26,
-    "task": "Dashboard: Remove redundant status field from tasks.json \u2014 use done (boolean) only",
+    "task": "Dashboard: Remove redundant status field from tasks.json — use done (boolean) only",
     "added": "2026-04-05",
     "done": false,
     "urgent": false,
@@ -258,7 +258,7 @@
   },
   {
     "id": 27,
-    "task": "Build A11y Expert MCP \u2014 Remove check-form-accessibility prompt (audit-component with component_type=\"form\" does the same thing)",
+    "task": "Build A11y Expert MCP — Remove check-form-accessibility prompt (audit-component with component_type=\"form\" does the same thing)",
     "added": "2026-04-05",
     "done": false,
     "urgent": false,
@@ -298,11 +298,11 @@
   },
   {
     "id": 30,
-    "task": "Build A11y Expert MCP \u2014 Add a README",
+    "task": "Build A11y Expert MCP — Add a README",
     "added": "2026-04-05",
     "done": true,
     "urgent": false,
-    "description": "Write a proper README.md for the a11y-expert-mcp repo \u2014 what it does, installation, usage, available tools/prompts/resources.",
+    "description": "Write a proper README.md for the a11y-expert-mcp repo — what it does, installation, usage, available tools/prompts/resources.",
     "difficulty": "easy",
     "impact": "high",
     "tags": [
@@ -320,6 +320,18 @@
       "Work"
     ],
     "description": "Think through whether Hermes should move to the Hostinger VPS as the source of truth. Decide: (1) keep Mac vs VPS as the real storage for config.yaml, .env, memory, sessions, cron, and dashboard files; (2) privacy model for secrets, memory, and OAuth tokens on VPS; (3) whether dashboard stays local/private or is published in sanitized form only; (4) security hardening needed before going live: SSH keys only, firewall/UFW, fail2ban, dedicated hermes user, minimal exposed ports, backups; (5) migration plan from current Mac-hosted setup and what happens to OpenClaw. Continue tomorrow before making changes.",
+    "status": "pending"
+  },
+  {
+    "id": 33,
+    "task": "Manual reviews",
+    "added": "2026-04-06",
+    "due": "2026-04-07",
+    "tags": [
+      "Work"
+    ],
+    "done": false,
+    "urgent": false,
     "status": "pending"
   }
 ]
