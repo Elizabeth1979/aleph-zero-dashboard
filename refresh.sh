@@ -122,14 +122,12 @@ SUMMARY_MODEL=$(grep "summary_model:" "$HERMES/config.yaml" 2>/dev/null | head -
 DELEGATION_MODEL=$(grep -A1 "^delegation:" "$HERMES/config.yaml" 2>/dev/null | grep "model:" | awk '{print $2}')
 VISION_MODEL=$(grep -A2 "vision:" "$HERMES/config.yaml" 2>/dev/null | grep "model:" | head -1 | awk '{print $2}' | tr -d "'")
 FALLBACK_MODEL=$(python3 -c "
-import yaml, sys
+import yaml
 with open('$HERMES/config.yaml') as f:
     cfg = yaml.safe_load(f)
 providers = cfg.get('fallback_providers', [])
-# show non-anthropic fallback first, else first entry
-fb = next((p for p in providers if p.get('provider') != 'anthropic'), providers[0] if providers else None)
-if fb:
-    print(fb.get('provider','?') + '/' + fb.get('model','?'))
+parts = [p.get('model', p.get('provider','?')) for p in providers]
+print(' → '.join(parts))
 " 2>/dev/null)
 GOOGLE_MODEL=$(python3 -c "
 import yaml, sys
