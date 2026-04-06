@@ -1,4 +1,10 @@
 <!-- AGENT RULE: Only change what Elli explicitly asks for. No extra improvements, no removing elements, no unsolicited cleanup. -->
+<!--
+  CRON PAGE RULES:
+  - Only show recurring jobs (repeat.times === null).
+  - One-time reminders are filtered out in both refresh.sh (source) and here (JS fallback).
+  - Don't add one-time cron reminders to this page.
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>

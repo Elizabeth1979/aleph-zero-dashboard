@@ -1,4 +1,12 @@
 <!-- AGENT RULE: Only change what Elli explicitly asks for. No extra improvements, no removing elements, no unsolicited cleanup. -->
+<!--
+  DASHBOARD RULES:
+  - Score formula: Score = (Impact×2) + (4-Difficulty). Impact: high=3, medium=2, low=1. Difficulty: easy=1, medium=2, hard=3. Range 3-9.
+  - Every task MUST have: title, description, difficulty, impact fields — or the table breaks.
+  - Tags: array of Work/Private/Buy shown as colored pills + filter bar.
+  - Two sections: Urgent + Tasks (LOCKED). No separate category sections.
+  - One-time reminders = tasks with "due" date, NOT cron jobs.
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>

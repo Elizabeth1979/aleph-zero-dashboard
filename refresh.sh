@@ -1,5 +1,8 @@
 #!/bin/bash
 # Refresh Hermes Dashboard with live data
+# AGENT RULE: After ANY backend change (cron/task/memory/skill/config), run:
+#   bash ~/.hermes/dashboard/refresh.sh && cd ~/.hermes/dashboard && git add -A && git commit -m "update" && git push
+# AGENT RULE: Always use the cleanest, DRY, best-practice approach. No shortcuts that add noise or repetition.
 HERMES="$HOME/.hermes"
 DASH="$HERMES/dashboard"
 
