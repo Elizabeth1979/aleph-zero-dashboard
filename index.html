@@ -830,17 +830,23 @@ function restartGateway(e) {
   btn.disabled = true;
   btn.style.opacity = '0.5';
   status.textContent = 'Restarting...';
-  fetch('http://localhost:7865/restart', { method: 'POST' })
-    .then(r => r.text())
-    .then(() => {
-      status.textContent = '✓ Restarted';
-      setTimeout(() => location.reload(), 2000);
-    })
-    .catch(() => {
+  const hosts = ['localhost', 'Elizabeths-MacBook-Pro.local'];
+  function tryHost(i) {
+    if (i >= hosts.length) {
       status.textContent = 'Health server not running. Use terminal: gw';
       btn.disabled = false;
       btn.style.opacity = '1';
-    });
+      return;
+    }
+    fetch(`http://${hosts[i]}:7865/restart`, { method: 'POST' })
+      .then(r => r.text())
+      .then(() => {
+        status.textContent = '✓ Restarted';
+        setTimeout(() => location.reload(), 2000);
+      })
+      .catch(() => tryHost(i + 1));
+  }
+  tryHost(0);
 }
 </script>
 <link rel="stylesheet" href="a11y-tester.css">
