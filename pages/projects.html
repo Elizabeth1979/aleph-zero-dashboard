@@ -163,7 +163,8 @@
     min-width: 480px;
   }
   @media (max-width: 600px) {
-    .task-table { min-width: 0; table-layout: fixed; }
+    .task-table-wrap { overflow-x: visible; margin: 0; padding: 0; }
+    .task-table { min-width: 0; table-layout: fixed; width: 100%; }
     .task-table th, .task-table td { padding: 5px 4px; font-size: var(--fs-xs); }
     .task-table th:first-child, .task-table td:first-child { width: 50%; }
     .task-table th:nth-child(2), .task-table td:nth-child(2),
