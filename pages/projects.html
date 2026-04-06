@@ -163,10 +163,13 @@
     min-width: 480px;
   }
   @media (max-width: 600px) {
-    .task-table { min-width: 0; }
-    .task-table th:nth-child(3),
-    .task-table td:nth-child(3) { display: none; }
-    .task-table th, .task-table td { padding: 6px 6px; }
+    .task-table { min-width: 0; table-layout: fixed; }
+    .task-table th, .task-table td { padding: 5px 4px; font-size: var(--fs-xs); }
+    .task-table th:first-child, .task-table td:first-child { width: 50%; }
+    .task-table th:nth-child(2), .task-table td:nth-child(2),
+    .task-table th:nth-child(3), .task-table td:nth-child(3) { width: 18%; text-align: center; }
+    .task-table th:nth-child(4), .task-table td:nth-child(4) { width: 14%; text-align: center; }
+    .badge { font-size: 10px; padding: 1px 5px; }
   }
   .task-table th {
     text-align: left;
