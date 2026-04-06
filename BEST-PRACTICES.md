@@ -69,6 +69,19 @@ Living reference file. Updated as we build and learn.
 - Form errors: associate with `aria-describedby`, announce with `aria-live`
 - **Underline links = inline text links only** — navigational block elements (`<a class="card">`, bento cards) are visually distinct already. Don't underline those. Target inline `<a>` inside text content, not every `<a>` on the page
 
+## Security
+
+- Never commit secrets, API keys, or tokens in client-side code
+- CDN scripts must have `integrity` + `crossorigin="anonymous"` (Subresource Integrity)
+- Sanitize any dynamic content before `innerHTML` — use `textContent` for plain text, `esc()` for HTML templates
+- External links: always `rel="noopener noreferrer"` on `target="_blank"`
+- No `eval()`, `new Function()`, or `document.write()`
+- No inline event handlers (`onclick="..."`) — use `addEventListener`
+- Avoid loading scripts from untrusted third-party domains
+- Use HTTPS for all external resources
+- Set `autocomplete="off"` on sensitive form inputs
+- Don't store sensitive data in `localStorage` — it's accessible to any JS on the domain
+
 ## Performance
 
 - Lazy-load images below the fold: `loading="lazy"`
