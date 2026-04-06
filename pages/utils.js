@@ -64,10 +64,16 @@ function renderMd(raw) {
   html = html.replace(/^---$/gm, '<hr>');
   // Section separators (§)
   html = html.replace(/^§$/gm, '<hr class="section-sep">');
-  // List items → <li>
+  // Unordered list items → <li>
   html = html.replace(/^- (.+)$/gm, '<li>$1</li>');
   // Wrap consecutive <li> in <ul>
   html = html.replace(/((?:<li>.*<\/li>\n?)+)/g, '<ul>$1</ul>');
+  // Ordered list items → <li class="ol">
+  html = html.replace(/^\d+\.\s+(.+)$/gm, '<li class="ol">$1</li>');
+  // Wrap consecutive <li class="ol"> in <ol>
+  html = html.replace(/((?:<li class="ol">.*<\/li>\n?)+)/g, function(block) {
+    return '<ol>' + block.replace(/ class="ol"/g, '') + '</ol>';
+  });
   // Remaining plain lines → <p> (skip empty, skip tags)
   html = html.split('\n').map(line => {
     const t = line.trim();

@@ -12,6 +12,15 @@
     margin: 0 auto;
     padding: var(--s6);
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .page-footer {
+    text-align: center;
+    font-size: var(--fs-xs);
+    color: var(--text-3);
+    padding: var(--s5) 0 var(--s3);
+    flex-shrink: 0;
   }
   .page-header {
     display: flex;
@@ -41,7 +50,7 @@
     flex: 1;
   }
   .page-title svg { width: 22px; height: 22px; color: var(--accent); }
-  .page-body { animation: fadeIn 0.3s ease both; }
+  .page-body { animation: fadeIn 0.3s ease both; flex: 1; }
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(6px); }
     to { opacity: 1; transform: translateY(0); }

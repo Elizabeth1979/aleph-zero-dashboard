@@ -1,4 +1,4 @@
-<!-- AGENT RULE: Only change what Elli explicitly asks for. No extra improvements, no removing elements, no unsolicited cleanup. -->
+<!-- AGENT RULE: Only change what Elli explicitly asks for. No extra improvements, no removing elements, no unsolicited cleanup. Apply changes to ALL instances, not just the first one. -->
 <!-- AGENT: Read BEST-PRACTICES.md before writing HTML/CSS/JS. -->
 <!DOCTYPE html>
 <html lang="en">
@@ -93,9 +93,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
   if (typeof lucide !== 'undefined') lucide.createIcons();
-});
 
-</script>
+  <div class="page-footer">built with ❤️ by e11i</div>
+</div>
+
+<script>
 <link rel="stylesheet" href="../a11y-tester.css">
 <script src="../a11y-widget.js"></script>
 <script src="../a11y-tester.js"></script>
