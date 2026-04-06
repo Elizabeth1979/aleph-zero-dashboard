@@ -436,6 +436,9 @@
       isOpen = true;
       panel.classList.add('a11y-panel-open');
       btn.setAttribute('aria-expanded', 'true');
+      /* Close the tester panel if open */
+      const testerPanel = document.querySelector('.a11y-tester-panel');
+      if (testerPanel) testerPanel.classList.remove('open');
       /* Stop pulse permanently after first open */
       if (btn.classList.contains('a11y-pulse')) {
         btn.classList.remove('a11y-pulse');

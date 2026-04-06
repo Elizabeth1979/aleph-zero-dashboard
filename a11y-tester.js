@@ -925,7 +925,17 @@
 
     // Events
     toggle.addEventListener('click', () => {
+      const willOpen = !panel.classList.contains('open');
       panel.classList.toggle('open');
+      /* Close the widget panel if we're opening */
+      if (willOpen) {
+        const widgetPanel = document.getElementById('a11y-widget-panel');
+        if (widgetPanel) {
+          widgetPanel.classList.remove('a11y-panel-open');
+          const widgetBtn = document.getElementById('a11y-widget-btn');
+          if (widgetBtn) widgetBtn.setAttribute('aria-expanded', 'false');
+        }
+      }
     });
 
     panel.querySelector('.a11y-tester-close').addEventListener('click', () => {
