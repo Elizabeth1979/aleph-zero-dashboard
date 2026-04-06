@@ -96,9 +96,11 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="cat-header">
           <i data-lucide="${meta.icon}"></i> ${meta.label}
           <span class="cat-count">${items.length}</span>
-        </div>`;
 
-      items.forEach(r => {
+  <div class="page-footer">built with ❤️ by e11i</div>
+</div>
+
+<script>
         const safeStatus = ['new','explored','archived'].includes(r.status) ? r.status : 'new';
         const statusCls = 'status-' + safeStatus;
         const safeUrl = /^https?:\/\//i.test(r.url) ? esc(r.url) : '#';
