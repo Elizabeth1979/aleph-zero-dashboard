@@ -319,8 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const d = window.__DASHBOARD_DATA__;
   if (!d) return;
   const projects = d.projects || [];
-  const allTasks = d.tasks || [];
-  const prefixes = projects.map(p => p.task_prefix).filter(Boolean);
+
   if (!projects.length) {
     document.getElementById('page-body').innerHTML = '<div class="empty">No projects yet — get building!</div>';
     return;
@@ -381,10 +380,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Tasks from tasks.json — only open tasks in table, done tasks collapsed
     let tasksHtml = '';
-    if (p.task_prefix) {
-      const projectTasks = allTasks.filter(t => t.task.startsWith(p.task_prefix));
-      if (projectTasks.length) {
-        const pending = projectTasks; // all tasks in file are open (done tasks get removed)
+    const projectTasks = p.tasks || [];
+    if (projectTasks.length) {
+      {
+        const pending = projectTasks;
 
         // Score = (Impact × 2) + (4 - Difficulty)
         // Impact drives the score, difficulty is the tiebreaker
@@ -398,7 +397,7 @@ document.addEventListener('DOMContentLoaded', () => {
         pending.sort((a, b) => calcScore(b) - calcScore(a));
 
         const rows = pending.map(t => {
-          const text = t.task.replace(p.task_prefix, '').replace(/^\s*—?\s*/, '').trim() || t.task;
+          const text = t.task || '';
           const taskDesc = t.description ? `<div class="task-table-desc">${esc(t.description)}</div>` : '';
           const diff = t.difficulty || '';
           const impact = t.impact || '';

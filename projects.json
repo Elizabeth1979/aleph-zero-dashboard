@@ -17,7 +17,6 @@
       }
     ],
     "notes_path": "Accessibility Projects/A11y Expert MCP/",
-    "task_prefix": "Build A11y Expert MCP",
     "milestones": [],
     "features": [
       "4 MCP tools: review_code, get_pattern, list_patterns, check_contrast",
@@ -28,6 +27,26 @@
       "MCP resources: pattern index + per-component detail (a11y://patterns)",
       "5 guided prompts: audit-component, make-accessible, check-form, wcag-checklist, aria-guide",
       "Prompts auto-inject relevant WAI-ARIA patterns as context"
+    ],
+    "tasks": [
+      {
+        "task": "Publish to PyPI",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "Package and publish the A11y Expert MCP server to PyPI for easy install."
+      },
+      {
+        "task": "Add component library research tool",
+        "difficulty": "hard",
+        "impact": "high",
+        "description": "Tool to research and compare accessible component libraries."
+      },
+      {
+        "task": "Remove check-form-accessibility prompt (audit-component with component_type=form does the same thing)",
+        "difficulty": "easy",
+        "impact": "low",
+        "description": "Cleanup: remove redundant prompt."
+      }
     ]
   },
   {
@@ -38,13 +57,29 @@
     "started": "2026-04-04",
     "links": [],
     "notes_path": "A11y App Research/",
-    "task_prefix": "A11y App:",
     "milestones": [],
     "features": [
       "Research phase — competitive analysis of 10+ Play Store apps",
       "Feature matrix comparing existing accessibility tools",
       "Product plan with MVP scope defined",
       "MCP product plan for AI-powered accessibility"
+    ],
+    "tasks": [
+      {
+        "task": "Fix high contrast mode — highlight card borders & non-text UI elements",
+        "difficulty": "medium",
+        "impact": "high"
+      },
+      {
+        "task": "Add color scheme options — dark mode, light mode, custom user color picker",
+        "difficulty": "medium",
+        "impact": "high"
+      },
+      {
+        "task": "Implement AI-driven UI customization (simple language, layout switching, chart captions, text simplification)",
+        "difficulty": "hard",
+        "impact": "high"
+      }
     ]
   },
   {
@@ -60,7 +95,6 @@
         "url": "https://elizabeth1979.github.io/hermes-dashboard/"
       }
     ],
-    "task_prefix": "Dashboard:",
     "milestones": [],
     "features": [
       "Bento-grid home with 12+ cards (tasks, memory, cron, skills, projects, etc.)",
@@ -69,6 +103,48 @@
       "Project tracker with task tables, difficulty and impact ratings",
       "Auto-refreshing data.js from JSON sources",
       "GitHub Pages deployment with git push"
+    ],
+    "tasks": [
+      {
+        "task": "Add mobile breakpoints to all detail pages",
+        "difficulty": "medium",
+        "impact": "high"
+      },
+      {
+        "task": "Fix --fs-xs from 13px to 14px + a11y widget font sizes",
+        "difficulty": "easy",
+        "impact": "medium"
+      },
+      {
+        "task": "Add main landmarks, aria-hidden on icons, focus-visible styles",
+        "difficulty": "easy",
+        "impact": "medium"
+      },
+      {
+        "task": "Security hardening — CSP, pin Lucide + SRI, Object.create(null)",
+        "difficulty": "medium",
+        "impact": "medium"
+      },
+      {
+        "task": "A11y widget — 44px touch target on close btn, remove red from reset",
+        "difficulty": "easy",
+        "impact": "medium"
+      },
+      {
+        "task": "Fix Reset All button in a11y panel",
+        "difficulty": "easy",
+        "impact": "medium"
+      },
+      {
+        "task": "A11y panel — custom font picker, color pickers for text/background/links",
+        "difficulty": "hard",
+        "impact": "medium"
+      },
+      {
+        "task": "Consolidate 3 health check crons into 1",
+        "difficulty": "easy",
+        "impact": "low"
+      }
     ]
   },
   {
@@ -80,7 +156,6 @@
     "repo": "~/.hermes",
     "links": [],
     "notes_path": "",
-    "task_prefix": "Hermes Agent:",
     "milestones": [],
     "features": [
       "Active project to improve Hermes for Elli-specific workflows",
@@ -95,132 +170,132 @@
   {
     "id": "dashboard-rebuild",
     "name": "Dashboard Rebuild v2",
-    "status": "paused",
+    "status": "in_progress",
     "description": "Rebuild the Hermes dashboard from scratch using React + a vetted accessible design system. Goal: component-based architecture so all pages share the same templates, header, layout — no more 24 separate HTML files.",
     "category": "infrastructure",
     "progress": 0,
     "features": [],
-    "milestones": [
+    "milestones": [],
+    "tasks": [
       {
-        "title": "Research phase",
-        "tasks": [
-          {
-            "text": "Research accessible design systems: Shopify Polaris, Radix UI, Adobe Spectrum, Carbon — compare a11y compliance, theming, React support",
-            "done": false
-          },
-          {
-            "text": "Research Storybook — evaluate if useful for this project scope",
-            "done": false
-          },
-          {
-            "text": "Decide: React + Vite (static, GitHub Pages) vs Next.js (needs Vercel/server)",
-            "done": false
-          },
-          {
-            "text": "Define teal/sea color palette as design tokens to map onto chosen system",
-            "done": false
-          },
-          {
-            "text": "Document current pages inventory: list all pages, their data sources, and component needs",
-            "done": false
-          }
-        ]
+        "task": "Research phase: Research accessible design systems: Shopify Polaris, Radix UI, Adobe Spectrum, Carbon — compare a11y compliance, theming, React support",
+        "difficulty": "medium",
+        "impact": "medium"
       },
       {
-        "title": "Architecture & setup",
-        "tasks": [
-          {
-            "text": "Create separate dev branch or repo (e.g. hermes-dashboard-v2) — keep v1 in production",
-            "done": false
-          },
-          {
-            "text": "Set up React + Vite project with chosen design system",
-            "done": false
-          },
-          {
-            "text": "Define shared component library: PageLayout, Header, Card, StatusBadge, CodeBlock, Table",
-            "done": false
-          },
-          {
-            "text": "Define routing structure (React Router or file-based)",
-            "done": false
-          },
-          {
-            "text": "Set up data layer: how data.js feeds React components (context, props, or store)",
-            "done": false
-          }
-        ]
+        "task": "Research phase: Research Storybook — evaluate if useful for this project scope",
+        "difficulty": "medium",
+        "impact": "medium"
       },
       {
-        "title": "Build core components",
-        "tasks": [
-          {
-            "text": "Build Header component (logo, status dots, restart button) — shared across all pages",
-            "done": false
-          },
-          {
-            "text": "Build PageLayout component (header + page title + body + footer)",
-            "done": false
-          },
-          {
-            "text": "Build Card component matching current bento grid cards",
-            "done": false
-          },
-          {
-            "text": "Build RenderedMarkdown component (replaces renderMd() util)",
-            "done": false
-          },
-          {
-            "text": "Build CodeBlock component (replaces raw-box)",
-            "done": false
-          }
-        ]
+        "task": "Research phase: Decide: React + Vite (static, GitHub Pages) vs Next.js (needs Vercel/server)",
+        "difficulty": "medium",
+        "impact": "medium"
       },
       {
-        "title": "Migrate pages",
-        "tasks": [
-          {
-            "text": "Migrate index.html (home/bento grid)",
-            "done": false
-          },
-          {
-            "text": "Migrate tasks.html",
-            "done": false
-          },
-          {
-            "text": "Migrate projects.html",
-            "done": false
-          },
-          {
-            "text": "Migrate cron.html",
-            "done": false
-          },
-          {
-            "text": "Migrate all remaining pages (skills, memory, sessions, etc.)",
-            "done": false
-          }
-        ]
+        "task": "Research phase: Define teal/sea color palette as design tokens to map onto chosen system",
+        "difficulty": "medium",
+        "impact": "medium"
       },
       {
-        "title": "QA & launch",
-        "tasks": [
-          {
-            "text": "Accessibility audit on rebuilt dashboard (axe, keyboard nav, contrast)",
-            "done": false
-          },
-          {
-            "text": "Mobile responsiveness check on all pages",
-            "done": false
-          },
-          {
-            "text": "Deploy v2 to GitHub Pages (separate URL or replace v1)",
-            "done": false
-          },
-          {
-            "text": "Decommission v1 once v2 is stable",
-            "done": false
-          }
-        ]
+        "task": "Research phase: Document current pages inventory: list all pages, their data sources, and component needs",
+        "difficulty": "medium",
+        "impact": "medium"
+      },
+      {
+        "task": "Architecture & setup: Create separate dev branch or repo (e.g. hermes-dashboard-v2) — keep v1 in production",
+        "difficulty": "medium",
+        "impact": "medium"
+      },
+      {
+        "task": "Architecture & setup: Set up React + Vite project with chosen design system",
+        "difficulty": "medium",
+        "impact": "medium"
+      },
+      {
+        "task": "Architecture & setup: Define shared component library: PageLayout, Header, Card, StatusBadge, CodeBlock, Table",
+        "difficulty": "medium",
+        "impact": "medium"
+      },
+      {
+        "task": "Architecture & setup: Define routing structure (React Router or file-based)",
+        "difficulty": "medium",
+        "impact": "medium"
+      },
+      {
+        "task": "Architecture & setup: Set up data layer: how data.js feeds React components (context, props, or store)",
+        "difficulty": "medium",
+        "impact": "medium"
+      },
+      {
+        "task": "Build core components: Build Header component (logo, status dots, restart button) — shared across all pages",
+        "difficulty": "medium",
+        "impact": "medium"
+      },
+      {
+        "task": "Build core components: Build PageLayout component (header + page title + body + footer)",
+        "difficulty": "medium",
+        "impact": "medium"
+      },
+      {
+        "task": "Build core components: Build Card component matching current bento grid cards",
+        "difficulty": "medium",
+        "impact": "medium"
+      },
+      {
+        "task": "Build core components: Build RenderedMarkdown component (replaces renderMd() util)",
+        "difficulty": "medium",
+        "impact": "medium"
+      },
+      {
+        "task": "Build core components: Build CodeBlock component (replaces raw-box)",
+        "difficulty": "medium",
+        "impact": "medium"
+      },
+      {
+        "task": "Migrate pages: Migrate index.html (home/bento grid)",
+        "difficulty": "medium",
+        "impact": "medium"
+      },
+      {
+        "task": "Migrate pages: Migrate tasks.html",
+        "difficulty": "medium",
+        "impact": "medium"
+      },
+      {
+        "task": "Migrate pages: Migrate projects.html",
+        "difficulty": "medium",
+        "impact": "medium"
+      },
+      {
+        "task": "Migrate pages: Migrate cron.html",
+        "difficulty": "medium",
+        "impact": "medium"
+      },
+      {
+        "task": "Migrate pages: Migrate all remaining pages (skills, memory, sessions, etc.)",
+        "difficulty": "medium",
+        "impact": "medium"
+      },
+      {
+        "task": "QA & launch: Accessibility audit on rebuilt dashboard (axe, keyboard nav, contrast)",
+        "difficulty": "medium",
+        "impact": "medium"
+      },
+      {
+        "task": "QA & launch: Mobile responsiveness check on all pages",
+        "difficulty": "medium",
+        "impact": "medium"
+      },
+      {
+        "task": "QA & launch: Deploy v2 to GitHub Pages (separate URL or replace v1)",
+        "difficulty": "medium",
+        "impact": "medium"
+      },
+      {
+        "task": "QA & launch: Decommission v1 once v2 is stable",
+        "difficulty": "medium",
+        "impact": "medium"
       }
     ]
   }
