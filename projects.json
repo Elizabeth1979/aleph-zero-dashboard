@@ -165,11 +165,38 @@
       "Reduce narration and progress spam during coding tasks",
       "Apply these ideas project by project instead of changing everything at once",
       "Dashboard now split into user-facing Config & Setup and separate Dashboard Internals with a visual flow map"
+    ],
+    "tasks": [
+      {
+        "task": "Separate work updates from status updates in responses",
+        "difficulty": "easy",
+        "impact": "high"
+      },
+      {
+        "task": "Add PLAN.md / TODO.md / DECISIONS.md pattern for active coding projects",
+        "difficulty": "medium",
+        "impact": "high"
+      },
+      {
+        "task": "Use checkpoint-only updates (done, blocker, next, need input)",
+        "difficulty": "easy",
+        "impact": "high"
+      },
+      {
+        "task": "Reduce verbose progress narration during coding tasks",
+        "difficulty": "easy",
+        "impact": "high"
+      },
+      {
+        "task": "Create a full visual agent map / repo map for Hermes (big-picture system overview)",
+        "difficulty": "hard",
+        "impact": "medium"
+      }
     ]
   },
   {
     "id": "dashboard-rebuild",
-    "name": "Dashboard Rebuild v2",
+    "name": "Dashboard Rebuild",
     "status": "in_progress",
     "description": "Rebuild the Hermes dashboard from scratch using React + a vetted accessible design system. Goal: component-based architecture so all pages share the same templates, header, layout — no more 24 separate HTML files.",
     "category": "infrastructure",
@@ -179,63 +206,63 @@
     "tasks": [
       {
         "task": "Research phase: Research accessible design systems: Shopify Polaris, Radix UI, Adobe Spectrum, Carbon — compare a11y compliance, theming, React support",
-        "difficulty": "medium",
-        "impact": "medium"
+        "difficulty": "easy",
+        "impact": "high"
       },
       {
         "task": "Research phase: Research Storybook — evaluate if useful for this project scope",
-        "difficulty": "medium",
-        "impact": "medium"
+        "difficulty": "easy",
+        "impact": "low"
       },
       {
         "task": "Research phase: Decide: React + Vite (static, GitHub Pages) vs Next.js (needs Vercel/server)",
-        "difficulty": "medium",
-        "impact": "medium"
+        "difficulty": "easy",
+        "impact": "high"
       },
       {
         "task": "Research phase: Define teal/sea color palette as design tokens to map onto chosen system",
         "difficulty": "medium",
-        "impact": "medium"
+        "impact": "high"
       },
       {
         "task": "Research phase: Document current pages inventory: list all pages, their data sources, and component needs",
-        "difficulty": "medium",
+        "difficulty": "easy",
         "impact": "medium"
       },
       {
         "task": "Architecture & setup: Create separate dev branch or repo (e.g. hermes-dashboard-v2) — keep v1 in production",
-        "difficulty": "medium",
-        "impact": "medium"
+        "difficulty": "easy",
+        "impact": "high"
       },
       {
         "task": "Architecture & setup: Set up React + Vite project with chosen design system",
         "difficulty": "medium",
-        "impact": "medium"
+        "impact": "high"
       },
       {
         "task": "Architecture & setup: Define shared component library: PageLayout, Header, Card, StatusBadge, CodeBlock, Table",
         "difficulty": "medium",
-        "impact": "medium"
+        "impact": "high"
       },
       {
         "task": "Architecture & setup: Define routing structure (React Router or file-based)",
-        "difficulty": "medium",
+        "difficulty": "easy",
         "impact": "medium"
       },
       {
         "task": "Architecture & setup: Set up data layer: how data.js feeds React components (context, props, or store)",
-        "difficulty": "medium",
-        "impact": "medium"
+        "difficulty": "hard",
+        "impact": "high"
       },
       {
         "task": "Build core components: Build Header component (logo, status dots, restart button) — shared across all pages",
         "difficulty": "medium",
-        "impact": "medium"
+        "impact": "high"
       },
       {
         "task": "Build core components: Build PageLayout component (header + page title + body + footer)",
         "difficulty": "medium",
-        "impact": "medium"
+        "impact": "high"
       },
       {
         "task": "Build core components: Build Card component matching current bento grid cards",
@@ -244,18 +271,18 @@
       },
       {
         "task": "Build core components: Build RenderedMarkdown component (replaces renderMd() util)",
-        "difficulty": "medium",
+        "difficulty": "easy",
         "impact": "medium"
       },
       {
         "task": "Build core components: Build CodeBlock component (replaces raw-box)",
-        "difficulty": "medium",
+        "difficulty": "easy",
         "impact": "medium"
       },
       {
         "task": "Migrate pages: Migrate index.html (home/bento grid)",
-        "difficulty": "medium",
-        "impact": "medium"
+        "difficulty": "hard",
+        "impact": "high"
       },
       {
         "task": "Migrate pages: Migrate tasks.html",
@@ -274,27 +301,27 @@
       },
       {
         "task": "Migrate pages: Migrate all remaining pages (skills, memory, sessions, etc.)",
-        "difficulty": "medium",
+        "difficulty": "hard",
         "impact": "medium"
       },
       {
         "task": "QA & launch: Accessibility audit on rebuilt dashboard (axe, keyboard nav, contrast)",
         "difficulty": "medium",
-        "impact": "medium"
+        "impact": "high"
       },
       {
         "task": "QA & launch: Mobile responsiveness check on all pages",
-        "difficulty": "medium",
-        "impact": "medium"
+        "difficulty": "easy",
+        "impact": "high"
       },
       {
         "task": "QA & launch: Deploy v2 to GitHub Pages (separate URL or replace v1)",
         "difficulty": "medium",
-        "impact": "medium"
+        "impact": "high"
       },
       {
         "task": "QA & launch: Decommission v1 once v2 is stable",
-        "difficulty": "medium",
+        "difficulty": "easy",
         "impact": "medium"
       }
     ]
