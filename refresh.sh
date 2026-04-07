@@ -23,7 +23,7 @@ MEM_LEARNINGS=$(cat "$HERMES/memory/learnings.md" 2>/dev/null | python3 -c "impo
 
 # Memory usage stats
 USER_CHARS=$(wc -c < "$HERMES/memories/USER.md" 2>/dev/null || echo 0)
-USER_LIMIT=1375
+USER_LIMIT=1500
 AGENT_CHARS=$(wc -c < "$HERMES/memories/MEMORY.md" 2>/dev/null || echo 0)
 AGENT_LIMIT=2200
 USER_PCT=$((USER_CHARS * 100 / USER_LIMIT))
