@@ -88,23 +88,40 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
+  const reviews = reports.filter(r => r.type === 'review');
+  const research = reports.filter(r => r.type === 'research');
   let html = '';
-  reports.forEach((r, i) => {
-    const pills = [];
-    if (r.critical) pills.push('<span class="pill-critical">' + r.critical + ' critical</span>');
-    if (r.medium) pills.push('<span class="pill-medium">' + r.medium + ' medium</span>');
-    if (r.low) pills.push('<span class="pill-low">' + r.low + ' low</span>');
+  let idx = 0;
 
-    html += '<div class="report-card" onclick="toggleReport(' + i + ')">';
-    html += '  <div class="report-header">';
-    html += '    <div class="report-title">' + esc(r.title) + '</div>';
-    html += '    <div class="report-date">' + esc(r.date) + '</div>';
-    html += '  </div>';
-    html += '  <div class="report-preview">' + esc(r.preview) + '</div>';
-    html += '  <div class="severity-pills">' + pills.join('') + '</div>';
-    html += '  <div class="report-body" id="report-' + i + '">' + renderMarkdown(r.content) + '</div>';
-    html += '</div>';
-  });
+  function renderCard(r, i) {
+    let card = '<div class="report-card" onclick="toggleReport(' + i + ')">';
+    card += '  <div class="report-header">';
+    card += '    <div class="report-title">' + esc(r.title) + '</div>';
+    card += '    <div class="report-date">' + esc(r.date) + '</div>';
+    card += '  </div>';
+    card += '  <div class="report-preview">' + esc(r.preview) + '</div>';
+    if (r.type === 'review') {
+      const pills = [];
+      if (r.critical) pills.push('<span class="pill-critical">' + r.critical + ' critical</span>');
+      if (r.medium) pills.push('<span class="pill-medium">' + r.medium + ' medium</span>');
+      if (r.low) pills.push('<span class="pill-low">' + r.low + ' low</span>');
+      card += '  <div class="severity-pills">' + pills.join('') + '</div>';
+    } else {
+      card += '  <div class="severity-pills"><span class="pill-research" style="background:rgba(20,184,166,0.15);color:#14b8a6;font-weight:600;padding:2px 10px;border-radius:8px;font-size:.85em;">Research</span></div>';
+    }
+    card += '  <div class="report-body" id="report-' + i + '">' + renderMarkdown(r.content) + '</div>';
+    card += '</div>';
+    return card;
+  }
+
+  if (reviews.length) {
+    html += '<h2 style="margin:0 0 12px;font-size:1.15em;opacity:0.7;">Reviews</h2>';
+    reviews.forEach(r => { html += renderCard(r, idx); idx++; });
+  }
+  if (research.length) {
+    html += '<h2 style="margin:24px 0 12px;font-size:1.15em;opacity:0.7;">Research</h2>';
+    research.forEach(r => { html += renderCard(r, idx); idx++; });
+  }
 
   el.innerHTML = html;
   if (typeof lucide !== 'undefined') lucide.createIcons();

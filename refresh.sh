@@ -301,37 +301,48 @@ print(json.dumps(out))
 # Activity feed — merge recent sessions + cron outputs, sort, limit 10
 ACTIVITY_DATA=$(python3 "$DASH/activity_data.py" "$HERMES" 2>/dev/null || echo "[]")
 
-# Reports from Obsidian vault Reviews folder
+# Reports from Obsidian vault Reviews + Research folders
 REPORTS_DATA=$(python3 -c "
 import json, os, re
-vault = os.path.expanduser('~/Desktop/elli vault/Reviews')
+
+def parse_file(path, f, file_type):
+    with open(path, encoding='utf-8', errors='ignore') as fh:
+        content = fh.read()
+    title = f.replace('.md','')
+    m = re.search(r'^#\s+(.+)', content, re.M)
+    if m: title = m.group(1)
+    date_m = re.search(r'(\d{4}-\d{2}-\d{2})', f)
+    date = date_m.group(1) if date_m else ''
+    lines = content.split('\n')
+    preview = ''
+    for l in lines:
+        l = l.strip()
+        if l and not l.startswith('#') and not l.startswith('---') and not l.startswith('**Date') and not l.startswith('|'):
+            preview = l[:150]
+            break
+    result = {'file': f, 'title': title, 'date': date, 'content': content, 'preview': preview, 'type': file_type}
+    if file_type == 'review':
+        result['critical'] = len(re.findall(r'🔴', content))
+        result['medium'] = len(re.findall(r'🟠', content))
+        result['low'] = len(re.findall(r'🟡', content))
+    return result
+
 reports = []
-if os.path.isdir(vault):
-    for f in sorted(os.listdir(vault), reverse=True):
+reviews_dir = os.path.expanduser('~/Desktop/elli vault/Reviews')
+research_dir = os.path.expanduser('~/Desktop/elli vault/A11y App Research')
+
+if os.path.isdir(reviews_dir):
+    for f in sorted(os.listdir(reviews_dir), reverse=True):
         if f.endswith('.md'):
-            path = os.path.join(vault, f)
-            with open(path) as fh:
-                content = fh.read()
-            # Extract title from first # heading
-            title = f.replace('.md','')
-            m = re.search(r'^#\s+(.+)', content, re.M)
-            if m: title = m.group(1)
-            # Extract date
-            date_m = re.search(r'(\d{4}-\d{2}-\d{2})', f)
-            date = date_m.group(1) if date_m else ''
-            # Count severity markers
-            critical = len(re.findall(r'🔴', content))
-            medium = len(re.findall(r'🟠', content))
-            low = len(re.findall(r'🟡', content))
-            # Preview: first non-heading, non-empty line after ---
-            lines = content.split('\n')
-            preview = ''
-            for l in lines:
-                l = l.strip()
-                if l and not l.startswith('#') and not l.startswith('---') and not l.startswith('**Date') and not l.startswith('|'):
-                    preview = l[:120]
-                    break
-            reports.append({'file': f, 'title': title, 'date': date, 'content': content, 'preview': preview, 'critical': critical, 'medium': medium, 'low': low})
+            reports.append(parse_file(os.path.join(reviews_dir, f), f, 'review'))
+
+if os.path.isdir(research_dir):
+    for f in sorted(os.listdir(research_dir), reverse=True):
+        if f.endswith('.md'):
+            reports.append(parse_file(os.path.join(research_dir, f), f, 'research'))
+
+# Sort all by date descending
+reports.sort(key=lambda x: x['date'] or '0000', reverse=True)
 print(json.dumps(reports))
 " 2>/dev/null || echo "[]")
 
