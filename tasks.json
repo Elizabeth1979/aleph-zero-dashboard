@@ -4,417 +4,213 @@
     "task": "Pay company annual fee",
     "added": "2026-04-03",
     "due": "2026-04-12",
-    "tags": [
-      "Private"
-    ],
-    "done": false,
+    "tags": ["Private"],
     "urgent": true,
     "scope": "private",
-    "description": "Owes two years back. Payment site was down last time — try again.",
-    "status": "pending"
+    "description": "Owes two years back. Payment site was down last time — try again."
   },
   {
     "id": 3,
     "task": "Buy flight tickets to visit sister in the US",
     "added": "2026-04-04",
-    "tags": [
-      "Private"
-    ],
-    "done": false,
+    "tags": ["Private"],
     "urgent": true,
-    "scope": "private",
-    "status": "pending"
+    "scope": "private"
   },
   {
     "id": 5,
     "task": "Buy noise-reducing earbuds/headphones for misophonia",
     "added": "2026-04-04",
-    "category": "task",
-    "tags": [
-      "Buy"
-    ],
-    "done": false,
-    "urgent": false,
-    "status": "pending"
+    "tags": ["Buy"],
+    "urgent": false
   },
   {
     "id": 6,
     "task": "A11y App: Fix high contrast mode — highlight card borders & non-text UI elements (not just text)",
     "added": "2026-04-04",
-    "done": false,
     "urgent": false,
     "difficulty": "medium",
     "description": "High contrast currently only boosts text. Borders, icons, and dividers also need visible contrast.",
     "impact": "high",
-    "tags": [
-      "A11y App"
-    ],
-    "status": "pending"
+    "tags": ["A11y App"]
   },
   {
     "id": 7,
     "task": "A11y App: Add color scheme options — dark mode, light mode, custom user color picker",
     "added": "2026-04-04",
-    "done": false,
     "urgent": false,
     "difficulty": "hard",
     "description": "Let users pick their own color theme — not just dark/light but full custom palette.",
     "impact": "high",
-    "tags": [
-      "A11y App"
-    ],
-    "status": "pending"
+    "tags": ["A11y App"]
   },
   {
     "id": 9,
     "task": "A11y App: Implement AI-driven UI customization (simple language, layout switching, chart captions, text simplification)",
     "added": "2026-04-04",
-    "done": false,
     "urgent": false,
     "difficulty": "hard",
     "description": "Use AI to simplify complex text, describe charts, and adapt layout for cognitive accessibility.",
     "impact": "medium",
-    "tags": [
-      "A11y App"
-    ],
-    "status": "pending"
+    "tags": ["A11y App"]
   },
   {
     "id": 10,
     "task": "Dashboard: Add mobile breakpoints to all detail pages",
     "added": "2026-04-04",
-    "done": false,
     "urgent": false,
     "difficulty": "medium",
     "description": "Detail pages break on phone screens. Add responsive CSS so everything stacks and scales properly.",
     "impact": "high",
-    "tags": [
-      "Dashboard"
-    ],
-    "status": "pending"
+    "tags": ["Dashboard"]
   },
   {
     "id": 12,
     "task": "Dashboard: Fix --fs-xs from 13px to 14px + a11y widget font sizes",
     "added": "2026-04-04",
-    "done": false,
     "urgent": false,
     "difficulty": "easy",
     "description": "Smallest text is below the 14px minimum. Increase base sizes across the board.",
     "impact": "medium",
-    "tags": [
-      "Dashboard"
-    ],
-    "status": "pending"
+    "tags": ["Dashboard"]
   },
   {
     "id": 13,
     "task": "Dashboard: Add <main> landmarks, aria-hidden on icons, focus-visible styles",
     "added": "2026-04-04",
-    "done": false,
     "urgent": false,
     "difficulty": "easy",
     "description": "Screen readers need landmarks to navigate. Decorative icons should be hidden. Focus needs to be visible.",
     "impact": "high",
-    "tags": [
-      "Dashboard"
-    ],
-    "status": "pending"
+    "tags": ["Dashboard"]
   },
   {
     "id": 14,
     "task": "Dashboard: Security hardening — CSP, pin Lucide + SRI, Object.create(null)",
     "added": "2026-04-04",
-    "done": false,
     "urgent": false,
     "difficulty": "medium",
     "description": "Add Content Security Policy headers, pin external script versions, prevent prototype pollution.",
     "impact": "low",
-    "tags": [
-      "Dashboard"
-    ],
-    "status": "pending"
+    "tags": ["Dashboard"]
   },
   {
     "id": 15,
     "task": "Dashboard: A11y widget — 44px touch target on close btn, remove red from reset",
     "added": "2026-04-04",
-    "done": false,
     "urgent": false,
     "difficulty": "easy",
     "description": "Close button is too small for touch. Red on Reset conflicts with Elli's no-red preference.",
     "impact": "medium",
-    "tags": [
-      "Dashboard"
-    ],
-    "status": "pending"
-  },
-  {
-    "id": 16,
-    "task": "Finish onboarding this week",
-    "added": "2026-04-04",
-    "tags": [
-      "Work"
-    ],
-    "done": true,
-    "urgent": false,
-    "scope": "work",
-    "status": "completed"
+    "tags": ["Dashboard"]
   },
   {
     "id": 18,
     "task": "Dashboard: Fix Reset All button in a11y panel — verify it clears all settings and re-renders correctly",
     "added": "2026-04-05",
-    "done": false,
     "urgent": false,
     "difficulty": "easy",
     "description": "Reset button may not clear all new features (reading guide, big cursor). Verify and fix.",
     "impact": "medium",
-    "tags": [
-      "Dashboard"
-    ],
-    "status": "pending"
+    "tags": ["Dashboard"]
   },
   {
     "id": 19,
     "task": "Dashboard: A11y panel advanced settings — custom font picker (multiple fonts), custom color pickers for text, background, links/buttons",
     "added": "2026-04-05",
-    "done": false,
     "urgent": false,
     "difficulty": "hard",
     "description": "Let users choose from multiple fonts and pick exact colors for text, backgrounds, and interactive elements.",
     "impact": "high",
-    "tags": [
-      "Dashboard"
-    ],
-    "status": "pending"
+    "tags": ["Dashboard"]
   },
   {
     "id": 23,
     "task": "Build A11y Expert MCP — Publish to PyPI",
     "added": "2026-04-04",
-    "done": false,
     "urgent": false,
     "difficulty": "medium",
     "description": "Make it installable with pip so anyone can add it to their AI tools with one command.",
     "impact": "high",
-    "tags": [
-      "MCP"
-    ],
-    "status": "pending"
+    "tags": ["MCP"]
   },
   {
     "id": 24,
     "task": "Build A11y Expert MCP — Add component library research tool",
     "added": "2026-04-04",
-    "done": false,
     "urgent": false,
     "difficulty": "hard",
     "description": "A tool that looks up accessible implementations from real component libraries (Radix, Headless UI, etc.).",
     "impact": "medium",
-    "tags": [
-      "MCP"
-    ],
-    "status": "pending"
-  },
-  {
-    "id": 31,
-    "task": "Prepare Q&A about accessibility",
-    "added": "2026-04-05",
-    "tags": [
-      "Work"
-    ],
-    "done": false,
-    "urgent": false,
-    "scope": "work",
-    "description": "Questions and answers about accessibility for the knowledge base.",
-    "status": "pending"
+    "tags": ["MCP"]
   },
   {
     "id": 25,
     "task": "Find a good doctor and switch",
     "added": "2026-04-05",
-    "tags": [
-      "Private"
-    ],
-    "done": false,
+    "tags": ["Private"],
     "urgent": true,
-    "scope": "private",
-    "status": "pending"
-  },
-  {
-    "id": 26,
-    "task": "Dashboard: Remove redundant status field from tasks.json — use done (boolean) only",
-    "added": "2026-04-05",
-    "done": false,
-    "urgent": false,
-    "description": "Tasks have both 'done' and 'status' fields. Remove 'status' to keep one source of truth.",
-    "difficulty": "easy",
-    "impact": "low",
-    "tags": [
-      "Dashboard"
-    ],
-    "status": "pending"
+    "scope": "private"
   },
   {
     "id": 27,
     "task": "Build A11y Expert MCP — Remove check-form-accessibility prompt (audit-component with component_type=\"form\" does the same thing)",
     "added": "2026-04-05",
-    "done": false,
     "urgent": false,
     "description": "The check-form-accessibility prompt duplicates what audit-component already does with component_type='form'. Remove the redundant one.",
     "difficulty": "easy",
     "impact": "medium",
-    "tags": [
-      "MCP"
-    ],
-    "status": "pending"
+    "tags": ["MCP"]
   },
   {
     "id": 28,
     "task": "Dashboard: Consolidate 3 health check crons into 1",
     "added": "2026-04-05",
-    "done": false,
     "urgent": false,
     "description": "Three separate cron jobs checking the same thing. Merge into one that covers all checks.",
     "difficulty": "easy",
     "impact": "low",
-    "tags": [
-      "Dashboard"
-    ],
-    "status": "pending"
+    "tags": ["Dashboard"]
   },
   {
     "id": 29,
     "task": "Move Slack into Knowledge Base",
     "added": "2026-04-05",
-    "category": "task",
-    "tags": [
-      "Work"
-    ],
-    "done": false,
-    "urgent": false,
-    "status": "pending"
+    "tags": ["Work"],
+    "urgent": false
   },
   {
-    "id": 30,
-    "task": "Build A11y Expert MCP — Add a README",
+    "id": 31,
+    "task": "Prepare Q&A about accessibility",
     "added": "2026-04-05",
-    "done": true,
+    "tags": ["Work"],
     "urgent": false,
-    "description": "Write a proper README.md for the a11y-expert-mcp repo — what it does, installation, usage, available tools/prompts/resources.",
-    "difficulty": "easy",
-    "impact": "high",
-    "tags": [
-      "MCP"
-    ],
-    "status": "done"
+    "scope": "work",
+    "description": "Questions and answers about accessibility for the knowledge base."
   },
   {
     "id": 32,
     "task": "Decide VPS migration architecture for Hermes",
     "added": "2026-04-06",
-    "done": false,
     "urgent": false,
-    "tags": [
-      "Work"
-    ],
-    "description": "Think through whether Hermes should move to the Hostinger VPS as the source of truth. Decide: (1) keep Mac vs VPS as the real storage for config.yaml, .env, memory, sessions, cron, and dashboard files; (2) privacy model for secrets, memory, and OAuth tokens on VPS; (3) whether dashboard stays local/private or is published in sanitized form only; (4) security hardening needed before going live: SSH keys only, firewall/UFW, fail2ban, dedicated hermes user, minimal exposed ports, backups; (5) migration plan from current Mac-hosted setup and what happens to OpenClaw. Continue tomorrow before making changes.",
-    "status": "pending"
+    "tags": ["Work"],
+    "description": "Think through whether Hermes should move to the Hostinger VPS as the source of truth. Decide: (1) keep Mac vs VPS as the real storage for config.yaml, .env, memory, sessions, cron, and dashboard files; (2) privacy model for secrets, memory, and OAuth tokens on VPS; (3) whether dashboard stays local/private or is published in sanitized form only; (4) security hardening needed before going live: SSH keys only, firewall/UFW, fail2ban, dedicated hermes user, minimal exposed ports, backups; (5) migration plan from current Mac-hosted setup and what happens to OpenClaw. Continue tomorrow before making changes."
   },
   {
     "id": 33,
     "task": "Manual reviews",
     "added": "2026-04-06",
     "due": "2026-04-07",
-    "tags": [
-      "Work"
-    ],
-    "done": false,
-    "urgent": false,
-    "status": "pending"
+    "tags": ["Work"],
+    "urgent": false
   },
   {
     "id": 34,
     "task": "Plan a weekend with the family",
     "added": "2026-04-07",
-    "tags": [
-      "Private"
-    ],
-    "done": false,
+    "tags": ["Private"],
     "urgent": true,
     "scope": "private",
-    "description": "For Jonathan's birthday.",
-    "status": "pending"
-  },
-  {
-    "id": 35,
-    "task": "Hermes Agent: Separate work from status updates",
-    "added": "2026-04-07",
-    "done": false,
-    "urgent": false,
-    "difficulty": "medium",
-    "description": "Keep the main coding loop focused on doing the task, and move reporting into short structured checkpoints.",
-    "impact": "high",
-    "tags": [
-      "Hermes Agent"
-    ],
-    "status": "pending"
-  },
-  {
-    "id": 36,
-    "task": "Hermes Agent: Add PLAN.md / TODO.md / DECISIONS.md pattern for active coding projects",
-    "added": "2026-04-07",
-    "done": false,
-    "urgent": false,
-    "difficulty": "medium",
-    "description": "Store project state in files instead of making the agent keep everything in chat context.",
-    "impact": "high",
-    "tags": [
-      "Hermes Agent"
-    ],
-    "status": "pending"
-  },
-  {
-    "id": 37,
-    "task": "Hermes Agent: Use checkpoint-only updates (done, blocker, next, need input)",
-    "added": "2026-04-07",
-    "done": false,
-    "urgent": false,
-    "difficulty": "easy",
-    "description": "Replace long running narration with short update checkpoints only when needed.",
-    "impact": "high",
-    "tags": [
-      "Hermes Agent"
-    ],
-    "status": "pending"
-  },
-  {
-    "id": 38,
-    "task": "Hermes Agent: Reduce verbose progress narration during coding tasks",
-    "added": "2026-04-07",
-    "done": false,
-    "urgent": false,
-    "difficulty": "easy",
-    "description": "Default to brief, scannable progress updates unless Elli asks for more detail.",
-    "impact": "high",
-    "tags": [
-      "Hermes Agent"
-    ],
-    "status": "pending"
-  },
-  {
-    "id": 39,
-    "task": "Hermes Agent: Create a full visual agent map / repo map for Hermes (big-picture system overview)",
-    "added": "2026-04-07",
-    "done": false,
-    "urgent": false,
-    "difficulty": "hard",
-    "description": "Build a visual big-picture map of Hermes: repo structure, agent flow, skills, dashboard, memory, cron, gateway, and how they relate.",
-    "impact": "high",
-    "tags": [
-      "Hermes Agent"
-    ],
-    "status": "pending"
+    "description": "For Jonathan's birthday."
   }
 ]
