@@ -79,16 +79,5 @@
       "Work"
     ],
     "urgent": false
-  },
-  {
-    "id": 34,
-    "task": "Plan a weekend with the family",
-    "added": "2026-04-07",
-    "tags": [
-      "Private"
-    ],
-    "urgent": true,
-    "scope": "private",
-    "description": "For Jonathan's birthday."
   }
 ]
