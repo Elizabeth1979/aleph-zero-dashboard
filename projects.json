@@ -347,6 +347,11 @@
         "impact": "high"
       },
       {
+        "task": "Add docs/design-guide.md and docs/dev-guide.md to toolkit repo (based on a11y-design and a11y-dev Hermes skills)",
+        "difficulty": "easy",
+        "impact": "medium"
+      },
+      {
         "task": "Module: GitHub Actions workflow — run axe-core on every push, fail on WCAG AA violations",
         "difficulty": "medium",
         "impact": "high",
