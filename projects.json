@@ -126,11 +126,6 @@
         "impact": "medium"
       },
       {
-        "task": "A11y widget — 44px touch target on close btn, remove red from reset",
-        "difficulty": "easy",
-        "impact": "medium"
-      },
-      {
         "task": "A11y panel — custom font picker, color pickers for text/background/links",
         "difficulty": "hard",
         "impact": "medium"
