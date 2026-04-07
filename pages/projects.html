@@ -355,9 +355,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Meta
     const metaItems = [];
-    if (p.started) {
-      metaItems.push(`<span class="meta-item"><i data-lucide="calendar" style="width:13px;height:13px"></i>${esc(p.started)}</span>`);
-    }
     if (p.repo) {
       metaItems.push(`<span class="meta-item"><i data-lucide="folder" style="width:13px;height:13px"></i>${esc(p.repo)}</span>`);
     }
