@@ -360,6 +360,86 @@
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
 
+  /* --- Search Bar --- */
+  .search-wrap {
+    position: relative;
+    margin-left: var(--s3);
+  }
+  .search-input {
+    width: 220px;
+    padding: 6px 12px 6px 32px;
+    font-family: var(--sans);
+    font-size: var(--fs-xs);
+    color: var(--text-1);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--r2);
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+  .search-input::placeholder { color: var(--text-3); }
+  .search-input:focus { border-color: var(--accent); }
+  .search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-3);
+    pointer-events: none;
+  }
+  .search-results {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 0;
+    width: 320px;
+    max-height: 320px;
+    overflow-y: auto;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--r2);
+    z-index: 100;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+  }
+  .search-results.open { display: block; }
+  .search-result {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+    text-decoration: none;
+    color: inherit;
+  }
+  .search-result:hover { background: rgba(255,255,255,0.04); }
+  .search-result-name {
+    font-size: var(--fs-xs);
+    color: var(--text-1);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+    min-width: 0;
+  }
+  .search-result-tag {
+    font-size: 10px;
+    color: var(--text-3);
+    margin-left: var(--s2);
+    flex-shrink: 0;
+  }
+  .search-no-results {
+    padding: 12px;
+    font-size: var(--fs-xs);
+    color: var(--text-3);
+    text-align: center;
+  }
+  @media (max-width: 600px) {
+    .search-wrap { margin-left: 0; width: 100%; }
+    .search-input { width: 100%; }
+    .search-results { width: 100%; }
+  }
+
 </style>
 <link rel="stylesheet" href="a11y-widget.css">
 
@@ -377,6 +457,11 @@
     <div class="status-row" id="status-bar"></div>
     <button id="gw-restart-btn" onclick="restartGateway(event)" class="gw-restart-btn"><i data-lucide="refresh-cw" style="width:13px;height:13px"></i> Restart</button>
     <span id="gw-restart-status" style="font-size:var(--fs-xs);color:var(--text-3)"></span>
+    <div class="search-wrap" id="search-wrap">
+      <i data-lucide="search" class="search-icon" style="width:14px;height:14px"></i>
+      <input type="text" class="search-input" id="search-input" placeholder="Search dashboard…" autocomplete="off">
+      <div class="search-results" id="search-results"></div>
+    </div>
   </div>
 
   <!-- SECTION: Action Items -->
@@ -837,8 +922,93 @@ function setupEasterEgg() {
   document.getElementById('egg-popup').addEventListener('click', close);
 }
 
+// --- Dashboard Search ---
+function setupSearch() {
+  const d = window.__DASHBOARD_DATA__;
+  if (!d) return;
+  const index = [];
+
+  // Dashboard files
+  (d.dashboard_files || []).forEach(f => {
+    index.push({
+      text: [f.file, f.label, f.description].filter(Boolean).join(' ').toLowerCase(),
+      name: f.label || f.file,
+      tag: 'Files',
+      link: null
+    });
+  });
+
+  // Skills
+  (d.skills_data || []).forEach(s => {
+    index.push({
+      text: [s.name, s.description].filter(Boolean).join(' ').toLowerCase(),
+      name: s.name,
+      tag: 'Skills',
+      link: 'pages/skills.html'
+    });
+  });
+
+  // Tasks
+  (d.tasks || []).forEach(t => {
+    index.push({
+      text: (t.task || '').toLowerCase(),
+      name: t.task,
+      tag: 'Tasks',
+      link: 'pages/tasks.html'
+    });
+  });
+
+  // Projects
+  (d.projects || []).forEach(p => {
+    const taskTexts = (p.tasks || []).map(t => t.task || '').join(' ');
+    index.push({
+      text: [p.name, p.description, taskTexts].filter(Boolean).join(' ').toLowerCase(),
+      name: p.name,
+      tag: 'Projects',
+      link: 'pages/projects.html'
+    });
+  });
+
+  const input = document.getElementById('search-input');
+  const resultsEl = document.getElementById('search-results');
+  const wrap = document.getElementById('search-wrap');
+
+  function doSearch(q) {
+    if (q.length < 2) { resultsEl.classList.remove('open'); return; }
+    const terms = q.toLowerCase().split(/\s+/).filter(Boolean);
+    const matches = index.filter(item => terms.every(t => item.text.includes(t))).slice(0, 12);
+    resultsEl.innerHTML = '';
+    if (!matches.length) {
+      resultsEl.innerHTML = '<div class="search-no-results">No results for "' + esc(q) + '"</div>';
+    } else {
+      matches.forEach(m => {
+        const el = document.createElement(m.link ? 'a' : 'div');
+        el.className = 'search-result';
+        if (m.link) el.href = m.link;
+        el.innerHTML = '<span class="search-result-name">' + esc(m.name) + '</span><span class="search-result-tag">' + esc(m.tag) + '</span>';
+        if (!m.link) el.addEventListener('click', () => resultsEl.classList.remove('open'));
+        resultsEl.appendChild(el);
+      });
+    }
+    resultsEl.classList.add('open');
+  }
+
+  input.addEventListener('input', () => doSearch(input.value.trim()));
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { resultsEl.classList.remove('open'); input.blur(); }
+    if (e.key === 'Enter') {
+      const first = resultsEl.querySelector('.search-result[href]');
+      if (first) window.location.href = first.href;
+    }
+  });
+  document.addEventListener('click', e => {
+    if (!wrap.contains(e.target)) resultsEl.classList.remove('open');
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   loadCards();
+  setupSearch();
   setTimeout(setupCardMagic, 500);
   setTimeout(setupEasterEgg, 800);
 });
