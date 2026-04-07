@@ -171,15 +171,14 @@
     font-size: var(--fs-sm);
     min-width: 480px;
   }
-  .task-mobile-meta { display: none; }
-  .score-inline { width: 22px; height: 22px; font-size: 11px; }
-
   @media (max-width: 600px) {
     .task-table-wrap { overflow-x: visible; margin: 0; padding: 0; }
-    .task-table { min-width: 0; width: 100%; }
+    .task-table { min-width: 0; table-layout: fixed; width: 100%; }
     .task-table th, .task-table td { padding: 5px 4px; font-size: var(--fs-xs); }
-    .hide-mobile { display: none; }
-    .task-mobile-meta { display: flex; align-items: center; gap: 4px; margin-top: 4px; flex-wrap: wrap; }
+    .task-table th:first-child, .task-table td:first-child { width: 50%; }
+    .task-table th:nth-child(2), .task-table td:nth-child(2),
+    .task-table th:nth-child(3), .task-table td:nth-child(3) { width: 18%; text-align: center; }
+    .task-table th:nth-child(4), .task-table td:nth-child(4) { width: 14%; text-align: center; }
     .badge { font-size: 10px; padding: 1px 5px; }
   }
   .task-table th {
@@ -431,12 +430,11 @@ document.addEventListener('DOMContentLoaded', () => {
           const impactBadge = impact ? `<span class="badge impact-${impact}">${impact}</span>` : '';
           const score = calcScore(t);
           const scoreCls = score >= 6 ? 's-high' : score >= 4 ? 's-med' : 's-low';
-          const mobileMeta = (diffBadge || impactBadge) ? `<div class="task-mobile-meta">${diffBadge}${impactBadge}<span class="score-num ${scoreCls} score-inline">${score}</span></div>` : '';
           return `<tr>
-            <td><div class="task-table-text">${esc(text)}</div>${taskDesc}${mobileMeta}</td>
-            <td class="hide-mobile">${diffBadge}</td>
-            <td class="hide-mobile">${impactBadge}</td>
-            <td class="hide-mobile"><span class="score-num ${scoreCls}">${score}</span></td>
+            <td><div class="task-table-text">${esc(text)}</div>${taskDesc}</td>
+            <td>${diffBadge}</td>
+            <td>${impactBadge}</td>
+            <td><span class="score-num ${scoreCls}">${score}</span></td>
           </tr>`;
         }).join('');
 
@@ -448,7 +446,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </button>
           <div class="completed-list" id="${todoId}">
           ${pending.length ? `<div class="task-table-wrap"><table class="task-table">
-            <thead><tr><th>Task</th><th>Difficulty</th><th>Impact</th><th>Score</th></tr></thead>
+            <thead><tr><th>Task</th><th>Diff</th><th>Impact</th><th>Score</th></tr></thead>
             <tbody>${rows}</tbody>
           </table></div>` : '<div style="font-size:var(--fs-sm);color:var(--text-3)">All done!</div>'}
           </div>
