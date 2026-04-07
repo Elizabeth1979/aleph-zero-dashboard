@@ -376,6 +376,7 @@
     background: var(--accent-muted); color: var(--accent);
     border-color: rgba(93,228,212,0.2);
   }
+  .pill.in-use { box-shadow: 0 0 6px 1px rgba(93, 228, 212, 0.35); border-color: rgba(93, 228, 212, 0.4); }
   .pill.custom::after { content: '\2605'; margin-left: 4px; font-size: 14px; color: var(--accent); }
   .skill-detail {
     margin-top: var(--s5); padding: var(--s4); background: var(--bg-inset);
