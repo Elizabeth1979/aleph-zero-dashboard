@@ -570,16 +570,16 @@
 
 
   <!-- SECTION: Reports -->
-  <div class="section-label"><i data-lucide="file-text" style="width:16px;height:16px"></i> Reports</div>
+  <div class="section-label"><i data-lucide="library" style="width:16px;height:16px"></i> Research & Resources</div>
   <div class="bento">
 
     <a href="pages/reports.html" class="card">
       <div class="card-h">
         <i data-lucide="clipboard-check"></i>
-        <h2>Reviews & Research</h2>
+        <h2>Research & Resources</h2>
         <span class="badge" id="reports-badge">0</span>
       </div>
-      <div class="card-desc">Code reviews, audits, and research reports</div>
+      <div class="card-desc">Research, articles, and saved resources</div>
       <div class="card-preview" id="reports-preview"></div>
     </a>
 
@@ -749,10 +749,15 @@ function loadCards() {
 
   // Reports
   const reports = d.reports || [];
-  document.getElementById('reports-badge').textContent = reports.length;
+  const resources = d.resources || [];
+  document.getElementById('reports-badge').textContent = reports.length + resources.length;
   if (reports.length) {
-    const latest = reports[0];
-    document.getElementById('reports-preview').textContent = latest.title || latest.file;
+    const allItems = [...reports.map(r => ({ title: r.title || r.file, date: r.date })), ...resources.map(r => ({ title: r.title, date: r.added }))];
+    allItems.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+    if (allItems.length) document.getElementById('reports-preview').textContent = allItems[0].title;
+  } else if (resources.length) {
+    const sorted = [...resources].sort((a, b) => (b.added || '').localeCompare(a.added || ''));
+    document.getElementById('reports-preview').textContent = sorted[0].title;
   }
 
   // SOUL.md preview
