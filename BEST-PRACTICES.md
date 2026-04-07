@@ -24,7 +24,13 @@ Living reference file. Updated as we build and learn.
 
 ## CSS
 
-- **Don't use large z-index values to force stacking order** — instead use `isolation: isolate` on a parent to create a scoped stacking context, and use small z-index values (1, 2, 3) within it. Large z-index is a symptom of fighting the stacking order rather than owning it. CSS animations/transforms silently create stacking contexts — always check for those when a dropdown or overlay appears behind something unexpectedly.
+- **Understand stacking before reaching for z-index.** Two rules govern layering: (1) DOM order — later elements paint on top by default. (2) z-index overrides DOM order, but only among positioned elements, and only within the same stacking context. z-index is NOT global.
+
+- **Stacking contexts trap z-index values.** Any element with `opacity < 1`, `transform`, `animation`, `filter`, `isolation: isolate`, or `position: fixed/sticky` creates a new stacking context. z-index values inside it cannot compete with elements outside it — no matter how large the number. A z-index: 9999 inside a losing context still loses to a z-index: 1 outside it.
+
+- **Don't use large z-index values to escape stacking problems** — that's fighting the layout instead of fixing it. The correct approach: use `isolation: isolate` on your main content wrapper to trap all page content z-indexes inside. Then place overlays (modals, dropdowns, floating buttons) OUTSIDE that wrapper in the DOM. DOM order gives them the win — no z-index needed.
+
+- **When z-index IS needed, keep it small and documented.** Use it only to control layering within a stacking context (e.g. a pseudo-element below its sibling). Values of 0, 1, 2, 3 cover almost every real case. If you're writing z-index: 999 or higher, that's a signal the structure is wrong.
 - Don't use interactive-looking elements (checkboxes, toggles) if they're not actionable — use passive indicators instead (dots, badges, color)
 - Use CSS custom properties (variables) for colors, spacing, fonts — single source of truth
 - Mobile-first: write base styles for small screens, add `min-width` media queries for larger
