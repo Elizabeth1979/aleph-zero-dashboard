@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     Object.keys(customCats).sort().forEach(cat => {
       html += `<div class="skill-cat"><div class="skill-cat-name">${esc(cat)}</div><div class="skill-pills">`;
       customCats[cat].forEach(s => {
-        html += `<a href="skill.html?name=${encodeURIComponent(s.name)}" class="pill custom in-use">${esc(s.name)}</a>`;
+        html += `<a href="skill.html?name=${encodeURIComponent(s.name)}" class="pill custom in-use">${esc(s.name)} <span style="color:var(--accent)">★</span></a>`;
       });
       html += '</div></div>';
     });
