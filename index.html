@@ -39,6 +39,8 @@
 
   /* --- Header --- */
   .header {
+    position: relative;
+    z-index: 200;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -98,7 +100,9 @@
 
   @media (max-width: 600px) {
     .wrap { padding: var(--s4) var(--s3); }
-    .header { flex-direction: column; align-items: flex-start; gap: var(--s3); }
+    .header {
+    position: relative;
+    z-index: 200; flex-direction: column; align-items: flex-start; gap: var(--s3); }
   }
 
   /* --- Section Label --- */
@@ -992,7 +996,7 @@ function setupSearch() {
   input.addEventListener('input', () => doSearch(input.value.trim()));
   input.addEventListener('keydown', e => {
     if (e.key === 'Escape') { resultsEl.classList.remove('open'); input.blur(); }
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter') { e.preventDefault();
       const first = resultsEl.querySelector('.search-result[href]');
       if (first) window.location.href = first.href;
     }
