@@ -91,5 +91,137 @@
       "Apply these ideas project by project instead of changing everything at once",
       "Dashboard now split into user-facing Config & Setup and separate Dashboard Internals with a visual flow map"
     ]
+  },
+  {
+    "id": "dashboard-rebuild",
+    "name": "Dashboard Rebuild v2",
+    "status": "paused",
+    "description": "Rebuild the Hermes dashboard from scratch using React + a vetted accessible design system. Goal: component-based architecture so all pages share the same templates, header, layout — no more 24 separate HTML files.",
+    "category": "infrastructure",
+    "progress": 0,
+    "features": [],
+    "milestones": [
+      {
+        "title": "Research phase",
+        "tasks": [
+          {
+            "text": "Research accessible design systems: Shopify Polaris, Radix UI, Adobe Spectrum, Carbon — compare a11y compliance, theming, React support",
+            "done": false
+          },
+          {
+            "text": "Research Storybook — evaluate if useful for this project scope",
+            "done": false
+          },
+          {
+            "text": "Decide: React + Vite (static, GitHub Pages) vs Next.js (needs Vercel/server)",
+            "done": false
+          },
+          {
+            "text": "Define teal/sea color palette as design tokens to map onto chosen system",
+            "done": false
+          },
+          {
+            "text": "Document current pages inventory: list all pages, their data sources, and component needs",
+            "done": false
+          }
+        ]
+      },
+      {
+        "title": "Architecture & setup",
+        "tasks": [
+          {
+            "text": "Create separate dev branch or repo (e.g. hermes-dashboard-v2) — keep v1 in production",
+            "done": false
+          },
+          {
+            "text": "Set up React + Vite project with chosen design system",
+            "done": false
+          },
+          {
+            "text": "Define shared component library: PageLayout, Header, Card, StatusBadge, CodeBlock, Table",
+            "done": false
+          },
+          {
+            "text": "Define routing structure (React Router or file-based)",
+            "done": false
+          },
+          {
+            "text": "Set up data layer: how data.js feeds React components (context, props, or store)",
+            "done": false
+          }
+        ]
+      },
+      {
+        "title": "Build core components",
+        "tasks": [
+          {
+            "text": "Build Header component (logo, status dots, restart button) — shared across all pages",
+            "done": false
+          },
+          {
+            "text": "Build PageLayout component (header + page title + body + footer)",
+            "done": false
+          },
+          {
+            "text": "Build Card component matching current bento grid cards",
+            "done": false
+          },
+          {
+            "text": "Build RenderedMarkdown component (replaces renderMd() util)",
+            "done": false
+          },
+          {
+            "text": "Build CodeBlock component (replaces raw-box)",
+            "done": false
+          }
+        ]
+      },
+      {
+        "title": "Migrate pages",
+        "tasks": [
+          {
+            "text": "Migrate index.html (home/bento grid)",
+            "done": false
+          },
+          {
+            "text": "Migrate tasks.html",
+            "done": false
+          },
+          {
+            "text": "Migrate projects.html",
+            "done": false
+          },
+          {
+            "text": "Migrate cron.html",
+            "done": false
+          },
+          {
+            "text": "Migrate all remaining pages (skills, memory, sessions, etc.)",
+            "done": false
+          }
+        ]
+      },
+      {
+        "title": "QA & launch",
+        "tasks": [
+          {
+            "text": "Accessibility audit on rebuilt dashboard (axe, keyboard nav, contrast)",
+            "done": false
+          },
+          {
+            "text": "Mobile responsiveness check on all pages",
+            "done": false
+          },
+          {
+            "text": "Deploy v2 to GitHub Pages (separate URL or replace v1)",
+            "done": false
+          },
+          {
+            "text": "Decommission v1 once v2 is stable",
+            "done": false
+          }
+        ]
+      }
+    ]
   }
 ]
