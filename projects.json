@@ -531,5 +531,40 @@
         "description": "Next.js + Vercel, needs env var for session/auth. Only if Loom isn't enough."
       }
     ]
+  },
+  {
+    "id": "private-rag",
+    "name": "Private RAG",
+    "status": "planned",
+    "description": "Personal private RAG system over Obsidian vault. Multilingual (Hebrew + English). Covers therapy transcripts, research, kids notes, and general knowledge.",
+    "started": "2026-04-07",
+    "milestones": [],
+    "features": [],
+    "tasks": [
+      {
+        "task": "Ingest pipeline — chunk + embed files from Obsidian vault",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "Support .md, .txt, .pdf. Tag by category (therapy, research, kids, general)."
+      },
+      {
+        "task": "Multilingual embeddings (Hebrew + English)",
+        "difficulty": "easy",
+        "impact": "high",
+        "description": "Use paraphrase-multilingual-MiniLM-L12-v2 — handles Hebrew natively, no translation needed."
+      },
+      {
+        "task": "/rag slash command",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "Query the RAG store from any Hermes session. Returns relevant chunks as context."
+      },
+      {
+        "task": "Separate ChromaDB collection",
+        "difficulty": "easy",
+        "impact": "medium",
+        "description": "Keep isolated from existing agent memory store (chroma_data)."
+      }
+    ]
   }
 ]
