@@ -34,43 +34,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const skills = d.skills_data || [];
   if (!skills.length) { document.getElementById('page-body').innerHTML = '<div class="empty">No skills</div>'; return; }
 
-  // Separate custom vs built-in, sort custom first
-  const customSkills = skills.filter(s => s.custom);
-  const builtinSkills = skills.filter(s => !s.custom);
-
-  let html = '';
-
-  // Custom skills section on top
-  if (customSkills.length) {
-    const customCats = {};
-    customSkills.forEach(s => {
-      if (!customCats[s.category]) customCats[s.category] = [];
-      customCats[s.category].push(s);
-    });
-    html += '<div style="margin-bottom:var(--s6)"><div class="skill-cat-name" style="color:var(--accent);margin-bottom:var(--s3)">My Custom Skills</div>';
-    Object.keys(customCats).sort().forEach(cat => {
-      html += `<div class="skill-cat"><div class="skill-cat-name">${esc(cat)}</div><div class="skill-pills">`;
-      customCats[cat].forEach(s => {
-        html += `<a href="skill.html?name=${encodeURIComponent(s.name)}" class="pill custom in-use">${esc(s.name)}</a>`;
-      });
-      html += '</div></div>';
-    });
-    html += '</div>';
-  }
-
-  // Built-in skills
+  // All skills grouped by category, custom ones get teal star via CSS
   const cats = {};
-  builtinSkills.forEach(s => {
+  skills.forEach(s => {
     if (!cats[s.category]) cats[s.category] = [];
     cats[s.category].push(s);
   });
-  html += '<div>';
+
+  let html = '<div>';
   Object.keys(cats).sort().forEach(cat => {
-    // Sort in-use skills first within each category
-    cats[cat].sort((a, b) => (b.in_use ? 1 : 0) - (a.in_use ? 1 : 0));
+    // Sort custom first, then in-use, then rest
+    cats[cat].sort((a, b) => (b.custom ? 1 : 0) - (a.custom ? 1 : 0) || (b.in_use ? 1 : 0) - (a.in_use ? 1 : 0));
     html += `<div class="skill-cat"><div class="skill-cat-name">${esc(cat)}</div><div class="skill-pills">`;
     cats[cat].forEach(s => {
-      const cls = s.in_use ? 'pill in-use' : 'pill';
+      const cls = s.custom ? 'pill custom in-use' : (s.in_use ? 'pill in-use' : 'pill');
       html += `<a href="skill.html?name=${encodeURIComponent(s.name)}" class="${cls}">${esc(s.name)}</a>`;
     });
     html += '</div></div>';
