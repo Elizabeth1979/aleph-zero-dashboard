@@ -85,74 +85,7 @@ function renderMd(raw) {
 
 
 
-// ── Status dots ──
-function renderStatus(html) {
-  const el = document.getElementById('status-bar');
-  if (!el || !html) return;
-  const doc = new DOMParser().parseFromString(html, 'text/html');
-  const items = doc.querySelectorAll('.config-item');
-  let out = '';
-  items.forEach(item => {
-    const k = item.querySelector('.config-key')?.textContent || '';
-    const v = item.querySelector('.config-val')?.textContent || '';
-    const on = v.includes('Online') || v.includes('\u2713');
-    out += `<div class="status-item"><span class="dot ${on?'on':'off'}"></span>${esc(k)}</div>`;
-  });
-  el.innerHTML = out;
-}
 
-// ── Gateway restart ──
-function restartGateway(e) {
-  e.preventDefault();
-  e.stopPropagation();
-  const btn = document.getElementById('gw-restart-btn');
-  const status = document.getElementById('gw-restart-status');
-  btn.disabled = true;
-  btn.style.opacity = '0.5';
-  status.textContent = 'Restarting...';
-  const hosts = ['localhost', 'Elizabeths-MacBook-Pro.local'];
-  function tryHost(i) {
-    if (i >= hosts.length) {
-      status.textContent = 'Health server not running. Use terminal: gw';
-      btn.disabled = false;
-      btn.style.opacity = '1';
-      return;
-    }
-    fetch(`http://${hosts[i]}:7865/restart`, { method: 'POST' })
-      .then(r => r.text())
-      .then(() => {
-        status.textContent = '\u2713 Restarted';
-        setTimeout(() => location.reload(), 2000);
-      })
-      .catch(() => tryHost(i + 1));
-  }
-  tryHost(0);
-}
-
-// ── Shared site header for detail pages ──
-function initSiteHeader() {
-  const el = document.getElementById('site-header');
-  if (!el) return;
-  el.innerHTML = `
-    <div class="header">
-      <a href="../index.html" class="header-left" style="text-decoration:none">
-        <img src="../logo.png" alt="Hermes">
-        <h1>Hermes <span>e11i's agent</span></h1>
-      </a>
-      <div class="status-row" id="status-bar"></div>
-      <button id="gw-restart-btn" onclick="restartGateway(event)" class="gw-restart-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-        Restart
-      </button>
-      <span id="gw-restart-status" style="font-size:var(--fs-xs);color:var(--text-3)"></span>
-    </div>`;
-  const d = window.__DASHBOARD_DATA__ || {};
-  if (d.status) renderStatus(d.status);
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  initSiteHeader();
-});
 
 function cronHuman(c) {
   if (!c) return '?';
