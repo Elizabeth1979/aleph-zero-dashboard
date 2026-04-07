@@ -305,6 +305,11 @@
   .checklist-icon.done {
     color: var(--accent-dim);
   }
+
+  /* Research links */
+  .project-research { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .research-link { display: inline-flex; align-items: center; gap: 4px; font-size: var(--fs-xs); color: var(--accent); text-decoration: none; background: rgba(93,228,212,0.08); padding: 2px 8px; border-radius: 10px; border: 1px solid rgba(93,228,212,0.2); }
+  .research-link:hover { background: rgba(93,228,212,0.15); }
 </style>
 </head>
 <body>
@@ -365,6 +370,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const linksHtml = links.length ? `<div class="project-links">${links.map(l =>
       `<a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer" class="project-link"><i data-lucide="external-link" style="width:11px;height:11px"></i>${esc(l.label)}</a>`
     ).join('')}</div>` : '';
+
+    // Research links
+    let researchHtml = '';
+    if (p.research && p.research.length) {
+      function shortTitle(file) {
+        const name = file.replace(/\.md$/, '');
+        const parts = name.replace(/\s*Research$/, '').split(/\s+/);
+        if (parts[0] === 'A11y' && parts[1] === 'Engineering') return 'A11y Toolkit';
+        if (parts[0] === 'AI-Driven' && parts[1] === 'UI') return 'AI-Driven UI';
+        return parts.slice(0, 2).join(' ');
+      }
+      researchHtml = `<div class="project-research">
+        <span style="font-size:var(--fs-xs);color:var(--text-3);margin-right:6px;">Research:</span>
+        ${p.research.map(file => `<a href="reports.html?open=${encodeURIComponent(file)}" class="research-link"><i data-lucide="book-open" style="width:11px;height:11px"></i>${esc(shortTitle(file))}</a>`).join('')}
+      </div>`;
+    }
 
     // Features — collapsible, same pattern as completed tasks
     const features = p.features || [];
@@ -441,6 +462,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ${desc}
       ${metaHtml}
       ${linksHtml}
+      ${researchHtml}
       ${featuresHtml}
       ${tasksHtml}
     </div>`;

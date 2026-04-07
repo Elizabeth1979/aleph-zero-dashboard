@@ -56,6 +56,9 @@
     "description": "Android accessibility app — helps users customize UI for their needs. High contrast, color schemes, AI-driven simplification.",
     "started": "2026-04-04",
     "links": [],
+    "research": [
+      "AI-Driven UI Customization Research.md"
+    ],
     "notes_path": "A11y App Research/",
     "milestones": [],
     "features": [
@@ -185,6 +188,9 @@
     "status": "in_progress",
     "description": "Rebuild the Hermes dashboard from scratch using React + a vetted accessible design system. Goal: component-based architecture so all pages share the same templates, header, layout — no more 24 separate HTML files.",
     "category": "infrastructure",
+    "research": [
+      "A11y Engineering Toolkit Research.md"
+    ],
     "progress": 0,
     "features": [],
     "milestones": [],
@@ -319,6 +325,11 @@
     "started": "2026-04-07",
     "repo": "",
     "links": [],
+    "research": [
+      "A11y Engineering Toolkit Research.md",
+      "Generative UI Research.md",
+      "AI-Driven UI Customization Research.md"
+    ],
     "tasks": [
       {
         "task": "Research code annotations as a11y constraints — JSDoc tags, ESLint rules, CSS comments",
