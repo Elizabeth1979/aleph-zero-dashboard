@@ -156,10 +156,10 @@
     "tags": [
       "Work"
     ],
-    "done": false,
-    "urgent": true,
+    "done": true,
+    "urgent": false,
     "scope": "work",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "id": 18,
@@ -332,6 +332,75 @@
     ],
     "done": false,
     "urgent": false,
+    "status": "pending"
+  },
+  {
+    "id": 34,
+    "task": "Plan a weekend with the family",
+    "added": "2026-04-07",
+    "tags": [
+      "Private"
+    ],
+    "done": false,
+    "urgent": true,
+    "scope": "private",
+    "description": "For Jonathan's birthday.",
+    "status": "pending"
+  },
+  {
+    "id": 35,
+    "task": "Hermes Agent: Separate work from status updates",
+    "added": "2026-04-07",
+    "done": false,
+    "urgent": false,
+    "difficulty": "medium",
+    "description": "Keep the main coding loop focused on doing the task, and move reporting into short structured checkpoints.",
+    "impact": "high",
+    "tags": [
+      "Hermes Agent"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": 36,
+    "task": "Hermes Agent: Add PLAN.md / TODO.md / DECISIONS.md pattern for active coding projects",
+    "added": "2026-04-07",
+    "done": false,
+    "urgent": false,
+    "difficulty": "medium",
+    "description": "Store project state in files instead of making the agent keep everything in chat context.",
+    "impact": "high",
+    "tags": [
+      "Hermes Agent"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": 37,
+    "task": "Hermes Agent: Use checkpoint-only updates (done, blocker, next, need input)",
+    "added": "2026-04-07",
+    "done": false,
+    "urgent": false,
+    "difficulty": "easy",
+    "description": "Replace long running narration with short update checkpoints only when needed.",
+    "impact": "high",
+    "tags": [
+      "Hermes Agent"
+    ],
+    "status": "pending"
+  },
+  {
+    "id": 38,
+    "task": "Hermes Agent: Reduce verbose progress narration during coding tasks",
+    "added": "2026-04-07",
+    "done": false,
+    "urgent": false,
+    "difficulty": "easy",
+    "description": "Default to brief, scannable progress updates unless Elli asks for more detail.",
+    "impact": "high",
+    "tags": [
+      "Hermes Agent"
+    ],
     "status": "pending"
   }
 ]

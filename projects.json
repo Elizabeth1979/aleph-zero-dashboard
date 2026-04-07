@@ -34,14 +34,14 @@
     "id": "a11y-app",
     "name": "A11y App",
     "status": "in_progress",
-    "description": "Android accessibility app \u2014 helps users customize UI for their needs. High contrast, color schemes, AI-driven simplification.",
+    "description": "Android accessibility app — helps users customize UI for their needs. High contrast, color schemes, AI-driven simplification.",
     "started": "2026-04-04",
     "links": [],
     "notes_path": "A11y App Research/",
     "task_prefix": "A11y App:",
     "milestones": [],
     "features": [
-      "Research phase \u2014 competitive analysis of 10+ Play Store apps",
+      "Research phase — competitive analysis of 10+ Play Store apps",
       "Feature matrix comparing existing accessibility tools",
       "Product plan with MVP scope defined",
       "MCP product plan for AI-powered accessibility"
@@ -51,7 +51,7 @@
     "id": "dashboard",
     "name": "Hermes Dashboard",
     "status": "in_progress",
-    "description": "Bento-grid dashboard \u2014 tasks, memory, cron, skills, projects. Elli's single source of truth.",
+    "description": "Bento-grid dashboard — tasks, memory, cron, skills, projects. Elli's single source of truth.",
     "started": "2026-04-03",
     "repo": "~/.hermes/dashboard",
     "links": [
@@ -69,6 +69,26 @@
       "Project tracker with task tables, difficulty and impact ratings",
       "Auto-refreshing data.js from JSON sources",
       "GitHub Pages deployment with git push"
+    ]
+  },
+  {
+    "id": "hermes-agent",
+    "name": "Hermes Agent",
+    "status": "in_progress",
+    "description": "Improve Hermes and specialize it for Elli's workflow: less noise, better project state, clearer coding loops.",
+    "started": "2026-04-07",
+    "repo": "~/.hermes",
+    "links": [],
+    "notes_path": "",
+    "task_prefix": "Hermes Agent:",
+    "milestones": [],
+    "features": [
+      "Active project to improve Hermes for Elli-specific workflows",
+      "Separate work from status updates to reduce context waste",
+      "Keep project state in small files like PLAN.md, TODO.md, and DECISIONS.md",
+      "Use checkpoint-only updates: done, blocker, next, need input",
+      "Reduce narration and progress spam during coding tasks",
+      "Apply these ideas project by project instead of changing everything at once"
     ]
   }
 ]
