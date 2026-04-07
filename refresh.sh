@@ -301,8 +301,8 @@ print(json.dumps(out))
 # Activity feed — merge recent sessions + cron outputs, sort, limit 10
 ACTIVITY_DATA=$(python3 "$DASH/activity_data.py" "$HERMES" 2>/dev/null || echo "[]")
 
-# Reports from Obsidian vault Reviews + Research folders
-REPORTS_DATA=$(python3 -c "
+# Reports from vault (Reviews + Research)
+python3 << 'PYEOF' > /tmp/hermes_reports.json
 import json, os, re
 
 def parse_file(path, f, file_type):
@@ -322,29 +322,28 @@ def parse_file(path, f, file_type):
             break
     result = {'file': f, 'title': title, 'date': date, 'content': content, 'preview': preview, 'type': file_type}
     if file_type == 'review':
-        result['critical'] = len(re.findall(r'🔴', content))
-        result['medium'] = len(re.findall(r'🟠', content))
-        result['low'] = len(re.findall(r'🟡', content))
+        result['critical'] = len(re.findall(r'\U0001f534', content))
+        result['medium'] = len(re.findall(r'\U0001f7e0', content))
+        result['low'] = len(re.findall(r'\U0001f7e1', content))
     return result
 
 reports = []
-reviews_dir = os.path.expanduser('~/Desktop/elli vault/Reviews')
-research_dir = os.path.expanduser('~/Desktop/elli vault/A11y App Research')
+for folder, ftype in [
+    ('~/Desktop/elli vault/Reviews', 'review'),
+    ('~/Desktop/elli vault/A11y App Research', 'research'),
+]:
+    d = os.path.expanduser(folder)
+    if os.path.isdir(d):
+        for f in sorted(os.listdir(d), reverse=True):
+            if f.endswith('.md'):
+                try:
+                    reports.append(parse_file(os.path.join(d, f), f, ftype))
+                except Exception:
+                    pass
 
-if os.path.isdir(reviews_dir):
-    for f in sorted(os.listdir(reviews_dir), reverse=True):
-        if f.endswith('.md'):
-            reports.append(parse_file(os.path.join(reviews_dir, f), f, 'review'))
-
-if os.path.isdir(research_dir):
-    for f in sorted(os.listdir(research_dir), reverse=True):
-        if f.endswith('.md'):
-            reports.append(parse_file(os.path.join(research_dir, f), f, 'research'))
-
-# Sort all by date descending
 reports.sort(key=lambda x: x['date'] or '0000', reverse=True)
 print(json.dumps(reports))
-" 2>/dev/null || echo "[]")
+PYEOF
 
 # Write data file
 # Raw config files (redact secrets)
@@ -397,7 +396,7 @@ window.__DASHBOARD_DATA__ = {
     learnings: $MEM_LEARNINGS
   },
   activity: $ACTIVITY_DATA,
-  reports: $REPORTS_DATA
+  reports: $(cat /tmp/hermes_reports.json),
 };
 JSEOF
 
