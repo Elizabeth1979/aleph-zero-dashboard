@@ -296,7 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return mon + ' ' + d.getDate();
   }
   function renderItem(t) {
-    const cls = t.done ? 'task-item done' : 'task-item';
+    const cls = 'task-item';
     const due = t.due ? `<span class="due-tag">Due ${fmtDue(t.due)}</span>` : '';
     const tags = (t.tags || []).map(tag => {
       const c = 'task-tag tag-' + tag.toLowerCase().replace(/[^a-z]/g, '');
@@ -322,12 +322,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const nonProject = tasks.filter(t => !prefixes.some(px => t.task.startsWith(px)));
 
   // Urgent vs everything else — flat list, no category sections
-  const urgent = nonProject.filter(t => !t.done && t.urgent);
-  const rest = nonProject.filter(t => !t.done && !t.urgent);
+  const urgent = nonProject.filter(t => t.urgent);
+  const rest = nonProject.filter(t => !t.urgent);
 
   // Collect all unique tags for filter bar
   const allTags = new Set();
-  nonProject.filter(t => !t.done).forEach(t => (t.tags || []).forEach(tag => allTags.add(tag)));
+  nonProject.forEach(t => (t.tags || []).forEach(tag => allTags.add(tag)));
   
   let html = '';
   if (allTags.size) {

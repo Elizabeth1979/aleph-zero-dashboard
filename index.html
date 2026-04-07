@@ -584,10 +584,9 @@ function loadCards() {
 
   // Tasks
   const tasks = d.tasks || [];
-  const openTasks = tasks.filter(t => !t.done);
-  document.getElementById('task-badge').textContent = openTasks.length;
-  if (openTasks.length) {
-    document.getElementById('task-preview').textContent = openTasks[0].task;
+  document.getElementById('task-badge').textContent = tasks.length;
+  if (tasks.length) {
+    document.getElementById('task-preview').textContent = tasks[0].task;
   } else {
     document.getElementById('task-preview').textContent = 'All clear';
   }
@@ -645,7 +644,7 @@ function loadCards() {
   const projPreview = document.getElementById('projects-preview');
   if (projects.length) {
     const prefixes = projects.map(p => p.task_prefix).filter(Boolean);
-    const totalOpen = allProjTasks.filter(t => !t.done && prefixes.some(px => t.task.startsWith(px))).length;
+    const totalOpen = allProjTasks.filter(t => prefixes.some(px => t.task.startsWith(px))).length;
     projPreview.textContent = totalOpen + ' open tasks across ' + projects.length + ' projects';
   }
 

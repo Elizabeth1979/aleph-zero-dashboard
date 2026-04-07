@@ -384,7 +384,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (p.task_prefix) {
       const projectTasks = allTasks.filter(t => t.task.startsWith(p.task_prefix));
       if (projectTasks.length) {
-        const pending = projectTasks.filter(t => !t.done);
+        const pending = projectTasks; // all tasks in file are open (done tasks get removed)
 
         // Score = (Impact × 2) + (4 - Difficulty)
         // Impact drives the score, difficulty is the tiebreaker
