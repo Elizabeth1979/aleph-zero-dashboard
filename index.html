@@ -99,8 +99,7 @@
   @media (max-width: 600px) {
     .wrap { padding: var(--s4) var(--s3); }
     .header {
-    position: relative;
-    z-index: 200; flex-direction: column; align-items: flex-start; gap: var(--s3); }
+    flex-direction: column; align-items: flex-start; gap: var(--s3); }
   }
 
   /* --- Section Label --- */
@@ -365,7 +364,6 @@
   /* --- Search Bar --- */
   .search-wrap {
     position: relative;
-    isolation: isolate;
     margin-left: var(--s3);
   }
   .search-input {
@@ -392,10 +390,7 @@
   }
   .search-results {
     display: none;
-    position: absolute;
-    top: calc(100% + 4px);
-    right: 0;
-    width: 320px;
+    position: fixed;
     max-height: 320px;
     overflow-y: auto;
     background: var(--bg-card);
@@ -1002,7 +997,16 @@ function setupSearch() {
     resultsEl.innerHTML = '';
     resultsEl.appendChild(frag);
     resultsEl.classList.add('open');
+    positionResults();
   }
+
+  function positionResults() {
+    const r = input.getBoundingClientRect();
+    resultsEl.style.top = (r.bottom + 4) + 'px';
+    resultsEl.style.left = Math.max(8, r.right - 320) + 'px';
+    resultsEl.style.width = '320px';
+  }
+  window.addEventListener('resize', () => { if (resultsEl.classList.contains('open')) positionResults(); });
 
   let debounceTimer = null;
   input.addEventListener('input', () => {

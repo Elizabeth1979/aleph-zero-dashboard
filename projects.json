@@ -347,7 +347,7 @@
         "impact": "high"
       },
       {
-        "task": "Add docs/design-guide.md and docs/dev-guide.md to toolkit repo (based on a11y-design and a11y-dev Hermes skills)",
+        "task": "Add Claude Code skills to toolkit repo (.claude/commands/) — a11y-audit, a11y-review, wcag-checklist. Anyone who installs the toolkit gets them automatically.",
         "difficulty": "easy",
         "impact": "medium"
       },
