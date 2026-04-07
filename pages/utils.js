@@ -83,18 +83,7 @@ function renderMd(raw) {
   return html;
 }
 
-// Upgrade back-links to use browser history when available
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('a.back-link').forEach(link => {
-    link.addEventListener('click', (e) => {
-      if (window.history.length > 1) {
-        e.preventDefault();
-        window.history.back();
-      }
-      // else: follow the href to ../index.html as fallback
-    });
-  });
-});
+
 
 function cronHuman(c) {
   if (!c) return '?';
