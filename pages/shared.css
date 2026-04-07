@@ -464,5 +464,11 @@
 
 
 
+  .table-wrap { overflow-x: auto; margin: 0.6em 0; }
+  .md-table { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); }
+  .md-table th { background: rgba(93,228,212,0.08); color: var(--accent); font-weight: 600; padding: 8px 12px; border: 1px solid var(--border); text-align: left; }
+  .md-table td { padding: 7px 12px; border: 1px solid var(--border); color: var(--text-2); vertical-align: top; }
+  .md-table tr:hover td { background: rgba(255,255,255,0.03); }
+
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }

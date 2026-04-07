@@ -16,11 +16,38 @@ function renderMd(raw) {
     codeBlocks.push({ lang: lang, code: code });
     return `%%CODEBLOCK_${codeBlocks.length - 1}%%`;
   });
+  // Extract markdown tables before escaping
+  const tableBlocks = [];
+  preprocessed = preprocessed.replace(/^(\|.+\|\n)((?:\|[-:| ]+\|\n))((?:\|.+\|\n?)*)/gm, function(match) {
+    tableBlocks.push(match);
+    return `%%TABLE_${tableBlocks.length - 1}%%`;
+  });
   let html = esc(preprocessed);
   // Restore code blocks with proper formatting
   html = html.replace(/%%CODEBLOCK_(\d+)%%/g, function(_, i) {
     const cb = codeBlocks[+i];
     return `<pre class="code-block"><code>${esc(cb.code)}</code></pre>`;
+  });
+  // Restore tables as HTML
+  html = html.replace(/%%TABLE_(\d+)%%/g, function(_, i) {
+    const raw = tableBlocks[+i];
+    const lines = raw.trim().split('\n').filter(l => l.trim());
+    if (lines.length < 2) return esc(raw);
+    // Header row
+    const headers = lines[0].split('|').map(c => c.trim()).filter(c => c);
+    // Skip separator row (lines[1])
+    // Body rows
+    const rows = lines.slice(2).map(line =>
+      line.split('|').map(c => c.trim()).filter(c => c)
+    );
+    let t = '<div class="table-wrap"><table class="md-table"><thead><tr>';
+    t += headers.map(h => `<th>${h}</th>`).join('');
+    t += '</tr></thead><tbody>';
+    rows.forEach(row => {
+      t += '<tr>' + row.map(cell => `<td>${cell}</td>`).join('') + '</tr>';
+    });
+    t += '</tbody></table></div>';
+    return t;
   });
   // Headings
   html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
