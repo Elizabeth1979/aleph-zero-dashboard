@@ -39,6 +39,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const s = skills.find(x => x.name === name);
   if (!s) { document.getElementById('page-body').innerHTML = `<div class="empty">Skill "${esc(name)}" not found</div>`; return; }
 
+  // Mark skill as visited in localStorage
+  const visited = JSON.parse(localStorage.getItem('hermes-visited-skills') || '[]');
+  if (!visited.includes(s.name)) { visited.push(s.name); localStorage.setItem('hermes-visited-skills', JSON.stringify(visited)); }
+
   // Update page title
   document.title = `${s.name} — Hermes`;
   document.getElementById('page-title').innerHTML = `<i data-lucide="puzzle"></i> ${esc(s.name)}`;

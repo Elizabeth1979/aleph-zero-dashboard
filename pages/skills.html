@@ -41,13 +41,16 @@ document.addEventListener('DOMContentLoaded', () => {
     cats[s.category].push(s);
   });
 
+  const visited = JSON.parse(localStorage.getItem('hermes-visited-skills') || '[]');
+
   let html = '<div>';
   Object.keys(cats).sort().forEach(cat => {
-    // Sort custom first, then in-use, then rest
-    cats[cat].sort((a, b) => (b.custom ? 1 : 0) - (a.custom ? 1 : 0) || (b.in_use ? 1 : 0) - (a.in_use ? 1 : 0));
+    // Sort custom first, then visited, then rest
+    cats[cat].sort((a, b) => (b.custom ? 1 : 0) - (a.custom ? 1 : 0) || (visited.includes(b.name) ? 1 : 0) - (visited.includes(a.name) ? 1 : 0));
     html += `<div class="skill-cat"><div class="skill-cat-name">${esc(cat)}</div><div class="skill-pills">`;
     cats[cat].forEach(s => {
-      const cls = s.custom ? 'pill custom in-use' : (s.in_use ? 'pill in-use' : 'pill');
+      const wasUsed = visited.includes(s.name);
+      const cls = ['pill', s.custom ? 'custom' : '', wasUsed ? 'visited' : ''].filter(Boolean).join(' ');
       html += `<a href="skill.html?name=${encodeURIComponent(s.name)}" class="${cls}">${esc(s.name)}</a>`;
     });
     html += '</div></div>';
