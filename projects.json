@@ -321,15 +321,33 @@
     "links": [],
     "tasks": [
       {
-        "task": "Research modular a11y toolkit architecture and CI options (axe, pa11y, Lighthouse CI)",
-        "difficulty": "easy",
-        "impact": "high",
-        "description": "Findings saved to vault A11y App Research folder."
-      },
-      {
         "task": "Research code annotations as a11y constraints — JSDoc tags, ESLint rules, CSS comments",
         "difficulty": "easy",
         "impact": "high"
+      },
+      {
+        "task": "Add pa11y-ci alongside axe in GitHub Actions — runs HTMLCS + axe together, catches more issues",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "Research finding: pa11y-ci runs both axe and HTMLCS engines. Catches things axe misses. Free and open source."
+      },
+      {
+        "task": "Evaluate IBM Equal Access Checker as a third CI layer — 400+ rules, free, open source",
+        "difficulty": "easy",
+        "impact": "medium",
+        "description": "Research finding: IBM Equal Access has broader rule coverage than axe. Worth evaluating as an audit-level check."
+      },
+      {
+        "task": "Build AI-augmented PR suggestions — axe finds violation, LLM reads HTML context, suggests fix as PR comment",
+        "difficulty": "hard",
+        "impact": "high",
+        "description": "Research finding: nobody has shipped this in production. Real gap. Architecture: axe violation → LLM reads surrounding HTML → suggests accessible name/fix → posts as PR comment. Estimated 2-3 day build."
+      },
+      {
+        "task": "Define axe rule profiles: developer profile (skip contrast) and design-review profile (contrast + color only)",
+        "difficulty": "easy",
+        "impact": "high",
+        "description": "Use axe tags (wcag2a, wcag2aa, best-practice) to create separate profiles. Developers shouldn't be blocked by contrast issues — that's a design concern."
       },
       {
         "task": "Define toolkit module list and install interface (npm, MCP, GitHub Action, CLI)",
