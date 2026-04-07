@@ -269,6 +269,35 @@ SYSTEM_SETTINGS=$(cat "$DASH/SYSTEM_SETTINGS.md" 2>/dev/null | python3 -c "impor
 # Quick commands (read from file — no hardcoding)
 COMMANDS=$(cat "$DASH/commands.json" 2>/dev/null || echo "[]")
 
+# Dashboard repo files that should be visible on the dashboard
+DASHBOARD_FILES=$(python3 -c "
+import json, os
+files = [
+  ('publish.sh', 'Dashboard Publish Script', 'Canonical refresh + commit + push path.'),
+  ('refresh.sh', 'Dashboard Refresh Script', 'Builds data.js from Hermes sources.'),
+  ('update_tasks.sh', 'Task Update Script', 'Publishes dashboard after task changes.'),
+  ('commands.json', 'Quick Commands', 'Commands shown in Config & Setup.'),
+  ('dashboard_checklist.json', 'Dashboard Checklist', 'Loop-closing checklist for dashboard changes.'),
+  ('validate_dashboard.py', 'Dashboard Validator', 'Checks that the dashboard loop is wired correctly.'),
+  ('tasks.json', 'Dashboard Tasks', 'Task data shown on the dashboard.'),
+  ('projects.json', 'Dashboard Projects', 'Project data shown on the dashboard.'),
+  ('resources.json', 'Dashboard Resources', 'Saved links and resources shown on the dashboard.'),
+  ('SYSTEM_SETTINGS.md', 'System Settings', 'Machine-level settings used by Hermes.'),
+  ('PLAN.md', 'Dashboard Plan', 'Current dashboard plan and purpose.'),
+  ('BEST-PRACTICES.md', 'Best Practices', 'Rules and best practices for dashboard code.')
+]
+out = []
+base = os.path.expanduser('$DASH')
+for rel, label, desc in files:
+    path = os.path.join(base, rel)
+    if not os.path.exists(path):
+        continue
+    with open(path, encoding='utf-8') as f:
+        content = f.read()
+    out.append({'file': rel, 'label': label, 'description': desc, 'content': content})
+print(json.dumps(out))
+" 2>/dev/null || echo "[]")
+
 # Activity feed — merge recent sessions + cron outputs, sort, limit 10
 ACTIVITY_DATA=$(python3 "$DASH/activity_data.py" "$HERMES" 2>/dev/null || echo "[]")
 
@@ -330,6 +359,7 @@ window.__DASHBOARD_DATA__ = {
   skills_data: $SKILLS_DATA,
   chroma: $CHROMA_DATA,
   commands: $COMMANDS,
+  dashboard_files: $DASHBOARD_FILES,
   tasks: $TASKS_DATA,
   resources: $RESOURCES_DATA,
   projects: $PROJECTS_DATA,

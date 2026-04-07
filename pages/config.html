@@ -24,7 +24,7 @@
   <div class="page-body" id="page-body"></div>
   <div class="page-footer">built with ❤️ by e11i</div>
 </div>
-<script src="utils.js?v=5"></script>
+<script src="utils.js"></script>
 <script src="../data.js"></script>
 <script>
 
@@ -70,6 +70,15 @@ document.addEventListener('DOMContentLoaded', () => {
   html += `<div class="cfg-row"><span class="cfg-key">OAuth Token</span><span class="cfg-val" style="color:${d.google_status === 'connected' ? 'var(--ok)' : 'var(--text-3)'}">${d.google_status === 'connected' ? '\u2713 Connected' : '\u2717 Not connected'}</span></div>`;
   html += `<div class="cfg-row"><span class="cfg-key">Client Secret</span><span class="cfg-val" style="color:${d.google_apis === 'configured' ? 'var(--ok)' : 'var(--text-3)'}">${d.google_apis === 'configured' ? '\u2713 Configured' : '\u2717 Not found'}</span></div>`;
   html += `<div style="margin-top:var(--s2);color:var(--text-3);font-size:var(--fs-xs)">APIs: Gmail, Calendar, Drive, YouTube</div>`;
+
+  // ── Dashboard Files ──
+  const dashboardFiles = d.dashboard_files || [];
+  if (dashboardFiles.length) {
+    html += '<div class="section-head"><i data-lucide="folder-code"></i> Dashboard Files</div>';
+    dashboardFiles.forEach(f => {
+      html += `<details><summary class="raw-toggle"><i data-lucide="chevron-right" style="width:14px;height:14px"></i> ${esc(f.file)} <span style="color:var(--text-3);font-weight:400">— ${esc(f.label)}</span></summary><div style="margin:0 0 var(--s2);color:var(--text-3);font-size:var(--fs-xs)">${esc(f.description || '')}</div><div class="raw-box">${esc(f.content || '')}</div></details>`;
+    });
+  }
 
   // ── Raw Files ──
   if (d.config_raw || d.env_raw) {

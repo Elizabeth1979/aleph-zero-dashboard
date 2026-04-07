@@ -1,7 +1,50 @@
 [
-  {"id": "1", "task": "Run refresh.sh (pulls memory, crons, skills, tasks, config, gateway, sessions)", "auto": true},
-  {"id": "2", "task": "Update custom_skills.json when creating/deleting a custom skill", "auto": false},
-  {"id": "3", "task": "Git commit + push after all changes", "auto": false},
-  {"id": "4", "task": "Add new aliases to Quick Commands in refresh.sh", "auto": false},
-  {"id": "5", "task": "Update dashboard HTML if new cards/sections are needed", "auto": false}
+  {
+    "id": "publish-canonical",
+    "task": "Use publish.sh as the single publish path for dashboard changes",
+    "auto": true,
+    "kind": "publish"
+  },
+  {
+    "id": "refresh-data",
+    "task": "refresh.sh regenerates data.js from live sources",
+    "auto": true,
+    "kind": "publish"
+  },
+  {
+    "id": "validate-dashboard",
+    "task": "Run validate_dashboard.py before publish to catch broken loops",
+    "auto": true,
+    "kind": "validation"
+  },
+  {
+    "id": "commands-sync",
+    "task": "If a dashboard-related alias/command is added, also add it to commands.json so it appears in Config & Setup → Quick Commands",
+    "auto": false,
+    "kind": "commands"
+  },
+  {
+    "id": "file-visibility",
+    "task": "If a dashboard file becomes important to operate the system, expose it on the dashboard in the proper page/section",
+    "auto": false,
+    "kind": "visibility"
+  },
+  {
+    "id": "raw-files-sync",
+    "task": "If a new important dashboard file is added, include it in refresh.sh dashboard_files export and render it on the Config & Setup page",
+    "auto": false,
+    "kind": "visibility"
+  },
+  {
+    "id": "page-update",
+    "task": "Update page HTML when a new section or renderer is needed",
+    "auto": false,
+    "kind": "ui"
+  },
+  {
+    "id": "publish-online",
+    "task": "Commit and push after changes so Elli can see them online immediately",
+    "auto": true,
+    "kind": "publish"
+  }
 ]
