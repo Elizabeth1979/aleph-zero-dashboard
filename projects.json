@@ -325,7 +325,7 @@
     "id": "a11y-toolkit",
     "name": "A11y Engineering Toolkit",
     "status": "in_progress",
-    "description": "Modular accessibility engineering platform. Developers install only what they need: MCP server for AI coding assistants, GitHub Actions CI pipeline, AI agents, CLI tool. Goal: make accessibility testing and enforcement easy to adopt — starting with the Hermes dashboard, then Melio.",
+    "description": "Modular accessibility engineering platform for developers, QA, and product designers. Modules are independently installable. Built for learning and demonstration — showing how to improve product accessibility through testing, visual auditing, and UX customization. Starting with Hermes dashboard, then Melio.",
     "started": "2026-04-07",
     "repo": "",
     "links": [],
@@ -391,8 +391,35 @@
         "task": "Adapt pipeline for Melio — document what changes for a React/enterprise codebase",
         "difficulty": "hard",
         "impact": "high"
+      },
+      {
+        "task": "Module: A11y Audit Panel — extract a11y-tester.js from dashboard into a standalone embeddable script (drop-in for any webpage)",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "Currently lives in the Hermes dashboard as a11y-tester.js. Package it so QA and developers can drop it into any site to run visual accessibility audits without installing anything."
+      },
+      {
+        "task": "Module: A11y UX Widget — extract a11y-widget.js from dashboard into a standalone embeddable script (contrast, fonts, motion, reading guide, color picker)",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "Currently lives in the Hermes dashboard as a11y-widget.js. Package it so product designers can demo live accessibility UX customization on any site."
+      },
+      {
+        "task": "Write educational guide: how to use the toolkit to demo a11y improvements to product designers and QA",
+        "difficulty": "easy",
+        "impact": "high",
+        "description": "Target audience: designers and QA at Melio. Show how each module works and what problems it solves visually."
+      },
+      {
+        "task": "Create demo page showing all toolkit modules in action",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "A single page that demos: audit panel, UX widget, CI results, MCP usage. For showing to Melio colleagues."
       }
     ],
-    "features": []
+    "features": [
+      "A11y Audit Panel (a11y-tester.js) — visual in-page accessibility auditor with issue highlighting",
+      "A11y UX Widget (a11y-widget.js) — floating customization panel: contrast, fonts, motion, reading guide, color blindness simulation"
+    ]
   }
 ]
