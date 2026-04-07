@@ -325,5 +325,79 @@
         "impact": "medium"
       }
     ]
+  },
+  {
+    "id": "a11y-toolkit",
+    "name": "A11y Engineering Toolkit",
+    "status": "in_progress",
+    "description": "Modular accessibility engineering platform. Developers install only what they need: MCP server for AI coding assistants, GitHub Actions CI pipeline, AI agents, CLI tool. Goal: make accessibility testing and enforcement easy to adopt — starting with the Hermes dashboard, then Melio.",
+    "started": "2026-04-07",
+    "repo": "",
+    "links": [],
+    "tasks": [
+      {
+        "task": "Research modular a11y toolkit architecture and CI options (axe, pa11y, Lighthouse CI)",
+        "difficulty": "easy",
+        "impact": "high",
+        "description": "Findings saved to vault A11y App Research folder."
+      },
+      {
+        "task": "Research code annotations as a11y constraints — JSDoc tags, ESLint rules, CSS comments",
+        "difficulty": "easy",
+        "impact": "high"
+      },
+      {
+        "task": "Define toolkit module list and install interface (npm, MCP, GitHub Action, CLI)",
+        "difficulty": "medium",
+        "impact": "high"
+      },
+      {
+        "task": "Set up GitHub repo for a11y-engineering-toolkit",
+        "difficulty": "easy",
+        "impact": "high"
+      },
+      {
+        "task": "Module: GitHub Actions workflow — run axe-core on every push, fail on WCAG AA violations",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "Start with Hermes dashboard GitHub Pages URL as test target. Reusable workflow so Melio can adopt it."
+      },
+      {
+        "task": "Module: GitHub Actions — add PR comment with a11y violation report",
+        "difficulty": "medium",
+        "impact": "high"
+      },
+      {
+        "task": "Module: MCP server — integrate existing a11y-expert-mcp as toolkit module",
+        "difficulty": "easy",
+        "impact": "high"
+      },
+      {
+        "task": "Module: CLI tool — run a11y audit from terminal on any URL",
+        "difficulty": "medium",
+        "impact": "medium"
+      },
+      {
+        "task": "Module: AI agent prompts — reusable agent workflows for a11y review, ARIA fix, contrast check",
+        "difficulty": "medium",
+        "impact": "medium"
+      },
+      {
+        "task": "Write README with module installation docs",
+        "difficulty": "easy",
+        "impact": "high"
+      },
+      {
+        "task": "Test full pipeline on Hermes dashboard — prove it works end to end",
+        "difficulty": "medium",
+        "impact": "high"
+      },
+      {
+        "task": "Adapt pipeline for Melio — document what changes for a React/enterprise codebase",
+        "difficulty": "hard",
+        "impact": "high"
+      }
+    ],
+    "features": []
   }
 ]
