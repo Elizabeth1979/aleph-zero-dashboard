@@ -35,6 +35,7 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    isolation: isolate;
   }
 
   /* --- Header --- */
@@ -323,7 +324,6 @@
     padding: var(--s5) var(--s6);
     max-width: 340px;
     text-align: center;
-    z-index: 52;
     opacity: 0;
     transition: all 0.3s ease;
     pointer-events: none;
@@ -350,7 +350,6 @@
     position: fixed;
     inset: 0;
     background: rgba(0,0,0,0.5);
-    z-index: 51;
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
@@ -396,7 +395,6 @@
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--r2);
-    z-index: 100;
     box-shadow: 0 12px 32px rgba(0,0,0,0.4);
   }
   .search-results.open { display: block; }
@@ -465,7 +463,6 @@
     <div class="search-wrap" id="search-wrap">
       <i data-lucide="search" class="search-icon" style="width:14px;height:14px"></i>
       <input type="text" class="search-input" id="search-input" placeholder="Search dashboard…" autocomplete="off">
-      <div class="search-results" id="search-results"></div>
     </div>
   </div>
 
@@ -648,13 +645,15 @@
   </div>
 
   <div class="footer" id="footer">built with ❤️ by e11i</div>
-  <div class="egg-overlay" id="egg-overlay"></div>
-  <div class="egg-popup" id="egg-popup">
-    <div class="egg-icon" id="egg-popup-icon"></div>
-    <div class="egg-text" id="egg-popup-text"></div>
-    <div class="egg-label">daily surprise</div>
-  </div>
 
+</div>
+
+<div class="search-results" id="search-results"></div>
+<div class="egg-overlay" id="egg-overlay"></div>
+<div class="egg-popup" id="egg-popup">
+  <div class="egg-icon" id="egg-popup-icon"></div>
+  <div class="egg-text" id="egg-popup-text"></div>
+  <div class="egg-label">daily surprise</div>
 </div>
 
 <script src="pages/utils.js"></script>

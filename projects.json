@@ -111,11 +111,6 @@
         "impact": "high"
       },
       {
-        "task": "Fix --fs-xs from 13px to 14px + a11y widget font sizes",
-        "difficulty": "easy",
-        "impact": "medium"
-      },
-      {
         "task": "Add main landmarks, aria-hidden on icons, focus-visible styles",
         "difficulty": "easy",
         "impact": "medium"
