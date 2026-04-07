@@ -12,6 +12,210 @@
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <link rel="stylesheet" href="shared.css">
 <link rel="stylesheet" href="../a11y-widget.css">
+<style>
+/* --- Reports card grid + modal --- */
+.section-label {
+  font-size: 1.1em;
+  font-weight: 600;
+  color: var(--text, #e2e8f0);
+  opacity: 0.7;
+  margin: 28px 0 12px;
+  letter-spacing: 0.02em;
+}
+.section-label:first-child { margin-top: 0; }
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 8px;
+}
+@media (max-width: 960px) { .card-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .card-grid { grid-template-columns: 1fr; } }
+
+.report-card {
+  background: var(--card-bg, #1e293b);
+  border: 1px solid var(--border, #334155);
+  border-radius: 12px;
+  height: 220px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  position: relative;
+}
+.report-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent, #818cf8);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+}
+
+.card-accent {
+  height: 4px;
+  flex-shrink: 0;
+}
+.card-accent.review { background: #f59e0b; }
+.card-accent.research { background: #14b8a6; }
+
+.card-body {
+  padding: 14px 16px 12px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.card-icon-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.card-icon-row i { color: var(--text-muted, #94a3b8); }
+
+.type-badge {
+  font-size: 0.72em;
+  font-weight: 600;
+  padding: 2px 9px;
+  border-radius: 8px;
+  letter-spacing: 0.02em;
+}
+.type-badge.review { background: rgba(245,158,11,0.15); color: #f59e0b; }
+.type-badge.research { background: rgba(20,184,166,0.15); color: #14b8a6; }
+
+.card-title {
+  font-weight: 700;
+  font-size: 0.97em;
+  color: var(--text, #e2e8f0);
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 2px;
+}
+
+.card-date {
+  font-size: 0.78em;
+  color: var(--text-muted, #94a3b8);
+  margin-bottom: 6px;
+}
+
+.card-preview {
+  font-size: 0.84em;
+  color: var(--text-muted, #94a3b8);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1;
+  min-height: 0;
+}
+
+.card-pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: 6px;
+}
+.card-pills span {
+  font-size: 0.75em;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 8px;
+}
+.pill-critical { background: rgba(239,68,68,0.15); color: #ef4444; }
+.pill-medium  { background: rgba(245,158,11,0.15); color: #f59e0b; }
+.pill-low     { background: rgba(34,197,94,0.15);  color: #22c55e; }
+
+/* --- Modal --- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-box {
+  background: var(--card-bg, #1e293b);
+  border: 1px solid var(--border, #334155);
+  border-radius: 14px;
+  width: 92vw;
+  max-width: 800px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  transform: scale(0.95);
+  transition: transform 0.2s ease;
+  overflow: hidden;
+}
+.modal-overlay.open .modal-box { transform: scale(1); }
+
+.modal-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 20px 24px 14px;
+  border-bottom: 1px solid var(--border, #334155);
+  flex-shrink: 0;
+}
+.modal-header-info { flex: 1; min-width: 0; }
+.modal-header-title {
+  font-size: 1.15em;
+  font-weight: 700;
+  color: var(--text, #e2e8f0);
+  margin-bottom: 4px;
+  word-break: break-word;
+}
+.modal-header-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.82em;
+  color: var(--text-muted, #94a3b8);
+}
+.modal-close {
+  background: none;
+  border: none;
+  color: var(--text-muted, #94a3b8);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
+.modal-close:hover { color: var(--text, #e2e8f0); }
+
+.modal-body {
+  padding: 20px 24px 24px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  color: var(--text, #e2e8f0);
+  font-size: 0.95em;
+  line-height: 1.65;
+}
+.modal-body h1, .modal-body h2, .modal-body h3 { margin: 18px 0 8px; color: var(--text, #e2e8f0); }
+.modal-body pre { background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; overflow-x: auto; font-size: 0.88em; }
+.modal-body code { font-family: 'JetBrains Mono', monospace; font-size: 0.9em; }
+.modal-body table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+.modal-body th, .modal-body td { padding: 6px 10px; border: 1px solid var(--border, #334155); text-align: left; font-size: 0.9em; }
+.modal-body ul { padding-left: 20px; }
+.modal-body li { margin-bottom: 4px; }
+</style>
 </head>
 <body>
 <div class="page-wrap">
@@ -22,61 +226,30 @@
     <h1 class="page-title"><i data-lucide="file-text"></i> Reports</h1>
   </div>
   <div id="page-body"></div>
+</div>
 
+<!-- Modal overlay -->
+<div class="modal-overlay" id="report-modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-header-info">
+        <div class="modal-header-title" id="modal-title"></div>
+        <div class="modal-header-meta">
+          <span id="modal-date"></span>
+          <span class="type-badge" id="modal-badge"></span>
+        </div>
+      </div>
+      <button class="modal-close" id="modal-close-btn" aria-label="Close">
+        <i data-lucide="x" style="width:20px;height:20px"></i>
+      </button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
 </div>
 
 <script src="utils.js?v=5"></script>
 <script src="../data.js"></script>
 <script>
-
-function renderMarkdown(md) {
-  // Simple markdown to HTML
-  let html = esc(md);
-
-  // Code blocks first (before other rules)
-  html = html.replace(/```(\w*)\n([\s\S]*?)```/g, (_, lang, code) => {
-    return '<pre><code>' + code.trim() + '</code></pre>';
-  });
-
-  // Inline code
-  html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
-
-  // Headers
-  html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
-  html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
-  html = html.replace(/^# (.+)$/gm, '<h1>$1</h1>');
-
-  // Bold
-  html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-
-  // Tables
-  html = html.replace(/^(\|.+\|)\n(\|[-| :]+\|)\n((?:\|.+\|\n?)*)/gm, (_, header, sep, rows) => {
-    const ths = header.split('|').filter(c => c.trim()).map(c => '<th>' + c.trim() + '</th>').join('');
-    const trs = rows.trim().split('\n').map(row => {
-      const tds = row.split('|').filter(c => c.trim()).map(c => '<td>' + c.trim() + '</td>').join('');
-      return '<tr>' + tds + '</tr>';
-    }).join('');
-    return '<table><thead><tr>' + ths + '</tr></thead><tbody>' + trs + '</tbody></table>';
-  });
-
-  // Unordered lists
-  html = html.replace(/^- \[ \] (.+)$/gm, '<li>☐ $1</li>');
-  html = html.replace(/^- \[x\] (.+)$/gm, '<li>☑ $1</li>');
-  html = html.replace(/^- (.+)$/gm, '<li>$1</li>');
-  html = html.replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>');
-
-  // Ordered lists
-  html = html.replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
-
-  // Horizontal rules
-  html = html.replace(/^---$/gm, '<hr>');
-
-  // Clean up extra newlines
-  html = html.replace(/\n{3,}/g, '\n\n');
-
-  return html;
-}
-
 document.addEventListener('DOMContentLoaded', () => {
   const d = window.__DASHBOARD_DATA__ || {};
   const reports = d.reports || [];
@@ -90,47 +263,94 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const reviews = reports.filter(r => r.type === 'review');
   const research = reports.filter(r => r.type === 'research');
-  let html = '';
-  let idx = 0;
 
-  function renderCard(r, i) {
-    let card = '<div class="report-card" onclick="toggleReport(' + i + ')">';
-    card += '  <div class="report-header">';
-    card += '    <div class="report-title">' + esc(r.title) + '</div>';
-    card += '    <div class="report-date">' + esc(r.date) + '</div>';
-    card += '  </div>';
-    card += '  <div class="report-preview">' + esc(r.preview) + '</div>';
-    if (r.type === 'review') {
-      const pills = [];
-      if (r.critical) pills.push('<span class="pill-critical">' + r.critical + ' critical</span>');
-      if (r.medium) pills.push('<span class="pill-medium">' + r.medium + ' medium</span>');
-      if (r.low) pills.push('<span class="pill-low">' + r.low + ' low</span>');
-      card += '  <div class="severity-pills">' + pills.join('') + '</div>';
-    } else {
-      card += '  <div class="severity-pills"><span class="pill-research" style="background:rgba(20,184,166,0.15);color:#14b8a6;font-weight:600;padding:2px 10px;border-radius:8px;font-size:.85em;">Research</span></div>';
+  function buildCard(r, idx) {
+    const isReview = r.type === 'review';
+    const accentCls = isReview ? 'review' : 'research';
+    const icon = isReview ? 'file-search' : 'book-open';
+    const badgeLabel = isReview ? 'Code Review' : 'Research';
+
+    let pills = '';
+    if (isReview) {
+      const parts = [];
+      if (r.critical) parts.push('<span class="pill-critical">' + r.critical + ' critical</span>');
+      if (r.medium) parts.push('<span class="pill-medium">' + r.medium + ' medium</span>');
+      if (r.low) parts.push('<span class="pill-low">' + r.low + ' low</span>');
+      pills = parts.join('');
     }
-    card += '  <div class="report-body" id="report-' + i + '">' + renderMarkdown(r.content) + '</div>';
-    card += '</div>';
-    return card;
+
+    return '<div class="report-card" data-idx="' + idx + '">'
+      + '<div class="card-accent ' + accentCls + '"></div>'
+      + '<div class="card-body">'
+      + '  <div class="card-icon-row">'
+      + '    <i data-lucide="' + icon + '" style="width:22px;height:22px"></i>'
+      + '    <span class="type-badge ' + accentCls + '">' + badgeLabel + '</span>'
+      + '  </div>'
+      + '  <div class="card-title">' + esc(r.title) + '</div>'
+      + '  <div class="card-date">' + esc(r.date) + '</div>'
+      + '  <div class="card-preview">' + esc(r.preview || '') + '</div>'
+      + (pills ? '  <div class="card-pills">' + pills + '</div>' : '')
+      + '</div></div>';
   }
 
+  let html = '';
   if (reviews.length) {
-    html += '<h2 style="margin:0 0 12px;font-size:1.15em;opacity:0.7;">Reviews</h2>';
-    reviews.forEach(r => { html += renderCard(r, idx); idx++; });
+    html += '<div class="section-label">Reviews</div>';
+    html += '<div class="card-grid">';
+    reviews.forEach(r => { html += buildCard(r, reports.indexOf(r)); });
+    html += '</div>';
   }
   if (research.length) {
-    html += '<h2 style="margin:24px 0 12px;font-size:1.15em;opacity:0.7;">Research</h2>';
-    research.forEach(r => { html += renderCard(r, idx); idx++; });
+    html += '<div class="section-label">Research</div>';
+    html += '<div class="card-grid">';
+    research.forEach(r => { html += buildCard(r, reports.indexOf(r)); });
+    html += '</div>';
   }
 
   el.innerHTML = html;
   if (typeof lucide !== 'undefined') lucide.createIcons();
-});
 
-function toggleReport(i) {
-  const body = document.getElementById('report-' + i);
-  if (body) body.classList.toggle('show');
-}
+  // --- Modal logic ---
+  const overlay = document.getElementById('report-modal');
+  const modalTitle = document.getElementById('modal-title');
+  const modalDate = document.getElementById('modal-date');
+  const modalBadge = document.getElementById('modal-badge');
+  const modalBody = document.getElementById('modal-body');
+  const closeBtn = document.getElementById('modal-close-btn');
+
+  function openModal(r) {
+    const isReview = r.type === 'review';
+    modalTitle.textContent = r.title;
+    modalDate.textContent = r.date;
+    modalBadge.textContent = isReview ? 'Code Review' : 'Research';
+    modalBadge.className = 'type-badge ' + (isReview ? 'review' : 'research');
+    modalBody.innerHTML = renderMd(r.content);
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Card clicks
+  el.addEventListener('click', (e) => {
+    const card = e.target.closest('.report-card');
+    if (!card) return;
+    const idx = parseInt(card.dataset.idx, 10);
+    if (reports[idx]) openModal(reports[idx]);
+  });
+
+  // Close handlers
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+  });
+});
 </script>
 <link rel="stylesheet" href="../a11y-tester.css">
 <script src="../a11y-widget.js"></script>
