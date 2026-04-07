@@ -1,0 +1,107 @@
+<!-- AGENT RULE: Only change what Elli explicitly asks for. No extra improvements, no removing elements, no unsolicited cleanup. Apply changes to ALL instances, not just the first one. -->
+<!-- AGENT: Read BEST-PRACTICES.md before writing HTML/CSS/JS. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>Hermes Agent Map — Hermes</title>
+<link rel="stylesheet" href="../theme.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<link rel="stylesheet" href="shared.css">
+<link rel="stylesheet" href="../a11y-widget.css">
+<style>
+.canvas-wrap { overflow:auto; margin-top:var(--s4); padding-bottom:var(--s2); }
+.canvas { min-width:1400px; display:grid; grid-template-columns:260px 80px 260px 80px 260px 80px 260px; gap:0; align-items:start; }
+.lane { display:flex; flex-direction:column; gap:var(--s3); }
+.lane-label { font-size:var(--fs-xs); text-transform:uppercase; letter-spacing:.08em; color:var(--text-3); border-bottom:1px solid var(--border); padding-bottom:var(--s1); margin-bottom:var(--s2); }
+.node { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--r2); padding:var(--s4); box-shadow:0 6px 20px rgba(0,0,0,.18); }
+.node h3 { margin:0 0 var(--s2); font-size:var(--fs-sm); color:var(--accent); }
+.node p { margin:0; color:var(--text-3); font-size:var(--fs-sm); line-height:1.5; }
+.node ul { margin:var(--s2) 0 0; padding-left:1.1rem; color:var(--text-3); font-size:var(--fs-sm); }
+.node li { margin:4px 0; }
+.arrow-col { display:flex; align-items:center; justify-content:center; color:var(--accent); font-size:30px; padding-top:90px; }
+.mini-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:var(--s3); margin-top:var(--s4); }
+.mini-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--r2); padding:var(--s4); }
+.mini-card strong { display:block; color:var(--text); margin-bottom:6px; }
+.mini-card span { color:var(--text-3); font-size:var(--fs-sm); }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <a href="dashboard_internals.html" class="back-link">
+      <i data-lucide="arrow-left" style="width:16px;height:16px"></i> Dashboard Internals
+    </a>
+    <h1 class="page-title"><i data-lucide="map"></i> Hermes Agent Map</h1>
+  </div>
+  <div class="page-body" id="page-body"></div>
+  <div class="page-footer">built with ❤️ by e11i</div>
+</div>
+<script src="utils.js"></script>
+<script src="../data.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const d = window.__DASHBOARD_DATA__;
+  const body = document.getElementById('page-body');
+  let html = '';
+
+  html += '<div class="section-head"><i data-lucide="sparkles"></i> Big-picture view</div>';
+  html += '<div class="cfg-row"><span class="cfg-key">What this is</span><span class="cfg-val">A visual map of Hermes: inputs, brain, storage, automations, and outputs.</span></div>';
+
+  html += '<div class="canvas-wrap"><div class="canvas">';
+  html += '<div class="lane"><div class="lane-label">Inputs</div>';
+  html += '<div class="node"><h3>Elli</h3><p>Chat, tasks, ideas, dashboard feedback, project direction.</p></div>';
+  html += '<div class="node"><h3>External inputs</h3><p>Web pages, repos, docs, files, Obsidian notes, Google data, Discord messages.</p></div>';
+  html += '</div>';
+  html += '<div class="arrow-col">→</div>';
+
+  html += '<div class="lane"><div class="lane-label">Agent Runtime</div>';
+  html += '<div class="node"><h3>Hermes core</h3><p>Main agent loop with tools, memory, planning, coding, browser, and automation.</p><ul><li>responds to chat</li><li>uses tools</li><li>updates files</li></ul></div>';
+  html += '<div class="node"><h3>Skills</h3><p>Reusable procedures loaded for special jobs.</p></div>';
+  html += '<div class="node"><h3>Subagents</h3><p>Parallel workers for coding, research, and review.</p></div>';
+  html += '</div>';
+  html += '<div class="arrow-col">→</div>';
+
+  html += '<div class="lane"><div class="lane-label">State & Storage</div>';
+  html += '<div class="node"><h3>Memory</h3><p>USER.md, MEMORY.md, detail files, learnings.</p></div>';
+  html += '<div class="node"><h3>Project files</h3><p>Repos, plans, tasks, project notes, config files.</p></div>';
+  html += '<div class="node"><h3>Dashboard data</h3><p>tasks.json, projects.json, resources.json, commands.json, data.js.</p></div>';
+  html += '</div>';
+  html += '<div class="arrow-col">→</div>';
+
+  html += '<div class="lane"><div class="lane-label">Automation & Delivery</div>';
+  html += '<div class="node"><h3>Cron & routines</h3><p>Scheduled jobs, reminders, memory cleanup, reports.</p></div>';
+  html += '<div class="node"><h3>Gateway & integrations</h3><p>Discord, Google, MCP tools, browser, GitHub, shell.</p></div>';
+  html += '<div class="node"><h3>Dashboard publish loop</h3><p>validate_dashboard.py → refresh.sh → publish.sh → GitHub Pages.</p></div>';
+  html += '</div>';
+  html += '<div class="arrow-col">→</div>';
+
+  html += '<div class="lane"><div class="lane-label">Outputs</div>';
+  html += '<div class="node"><h3>Chat replies</h3><p>Answers, plans, summaries, coding help.</p></div>';
+  html += '<div class="node"><h3>Dashboard</h3><p>Visual source of truth for projects, tasks, memory, setup, and internals.</p></div>';
+  html += '<div class="node"><h3>Artifacts</h3><p>Code changes, reports, notes, reviews, tasks, and published pages.</p></div>';
+  html += '</div>';
+  html += '</div></div>';
+
+  html += '<div class="section-head"><i data-lucide="boxes"></i> Important clusters</div>';
+  html += '<div class="mini-grid">';
+  html += '<div class="mini-card"><strong>Dashboard</strong><span>Visual layer on top of Hermes state. Not the source of truth — a view over it.</span></div>';
+  html += '<div class="mini-card"><strong>Memory</strong><span>Long-lived preferences, rules, and environment details.</span></div>';
+  html += '<div class="mini-card"><strong>Projects</strong><span>Where ideas turn into plans, tasks, repos, and implementation.</span></div>';
+  html += '<div class="mini-card"><strong>Skills</strong><span>Reusable playbooks that reduce repeated steering.</span></div>';
+  html += '<div class="mini-card"><strong>Automations</strong><span>Routines that keep things moving without manual babysitting.</span></div>';
+  html += '<div class="mini-card"><strong>Integrations</strong><span>Discord, Google, MCP, browser, terminal, and GitHub.</span></div>';
+  html += '</div>';
+
+  body.innerHTML = html;
+  if (typeof lucide !== 'undefined') lucide.createIcons();
+});
+</script>
+<link rel="stylesheet" href="../a11y-tester.css">
+<script src="../a11y-widget.js"></script>
+<script src="../a11y-tester.js"></script>
+</body>
+</html>

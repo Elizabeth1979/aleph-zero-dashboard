@@ -18,19 +18,38 @@
 .map-card h3 { margin:0 0 var(--s2); font-size:var(--fs-md); color:var(--text); }
 .map-card p { margin:0; color:var(--text-3); font-size:var(--fs-sm); }
 .flow-wrap { margin-top:var(--s4); overflow:auto; padding-bottom:var(--s2); }
-.flow-canvas { min-width:980px; display:grid; grid-template-columns:repeat(5,1fr); gap:var(--s4); align-items:start; }
+.flow-canvas { min-width:1040px; display:grid; grid-template-columns:repeat(5,1fr); gap:var(--s4); align-items:start; }
 .flow-col { display:flex; flex-direction:column; gap:var(--s3); }
 .flow-label { font-size:var(--fs-xs); text-transform:uppercase; letter-spacing:.08em; color:var(--text-3); border-bottom:1px solid var(--border); padding-bottom:var(--s1); }
 .flow-box { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--r2); padding:var(--s3); }
 .flow-box strong { display:block; color:var(--accent); margin-bottom:4px; }
 .flow-box span { color:var(--text-3); font-size:var(--fs-sm); }
-.flow-arrow { text-align:center; color:var(--accent); font-size:22px; padding-top:42px; }
 .link-list { display:grid; gap:var(--s2); margin-top:var(--s3); }
 .link-row { display:flex; justify-content:space-between; gap:var(--s3); padding:var(--s2) 0; border-bottom:1px solid var(--border); }
 .link-row:last-child { border-bottom:none; }
 .link-name { font-family:var(--mono); color:var(--accent); font-size:var(--fs-sm); }
 .link-desc { color:var(--text-3); font-size:var(--fs-sm); text-align:right; }
-.quick-link { display:inline-flex; align-items:center; gap:8px; margin-top:var(--s3); color:var(--accent); text-decoration:none; font-size:var(--fs-sm); }
+.quick-links { display:flex; flex-wrap:wrap; gap:var(--s3); margin-top:var(--s3); }
+.quick-link { display:inline-flex; align-items:center; gap:8px; color:var(--accent); text-decoration:none; font-size:var(--fs-sm); }
+.file-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:var(--s3); margin-top:var(--s3); }
+.file-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--r2); padding:var(--s4); cursor:pointer; transition:border-color .15s ease, transform .15s ease; }
+.file-card:hover { border-color:var(--accent); transform:translateY(-2px); }
+.file-name { font-family:var(--mono); color:var(--accent); font-size:var(--fs-sm); margin-bottom:6px; }
+.file-label { color:var(--text); font-weight:600; font-size:var(--fs-sm); margin-bottom:6px; }
+.file-desc { color:var(--text-3); font-size:var(--fs-sm); }
+.file-hint { color:var(--text-3); font-size:var(--fs-xs); margin-top:8px; }
+.prompt-overlay { position:fixed; inset:0; background:rgba(0,0,0,.6); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); z-index:1000; display:flex; align-items:center; justify-content:center; padding:var(--s6); opacity:0; visibility:hidden; transition:opacity .2s ease, visibility .2s ease; }
+.prompt-overlay.open { opacity:1; visibility:visible; }
+.prompt-modal { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--r2); padding:var(--s5); max-width:860px; width:100%; max-height:85vh; overflow-y:auto; display:flex; flex-direction:column; gap:var(--s3); transform:translateY(8px); transition:transform .2s ease; }
+.prompt-overlay.open .prompt-modal { transform:translateY(0); }
+.prompt-modal-header { display:flex; align-items:center; justify-content:space-between; gap:var(--s3); }
+.prompt-modal-header h2 { font-size:var(--fs-sm); font-weight:600; color:var(--text); margin:0; }
+.prompt-modal-close { background:none; border:none; color:var(--text-3); cursor:pointer; padding:4px; border-radius:4px; display:flex; align-items:center; }
+.prompt-modal-close:hover { color:var(--text); }
+.prompt-modal-body { font-size:var(--fs-sm); color:var(--text-2); word-break:break-word; line-height:1.6; padding:var(--s4); background:var(--bg-inset); border-radius:var(--r1); }
+.prompt-modal-body pre.code-block { background:rgba(0,0,0,0.3); padding:var(--s3); border-radius:var(--r1); overflow-x:auto; margin:0; }
+.prompt-modal-body code { font-family:var(--mono); font-size:.9em; }
+.canvas-note { color:var(--text-3); font-size:var(--fs-xs); margin-top:var(--s2); }
 </style>
 </head>
 <body>
@@ -44,6 +63,17 @@
   <div class="page-body" id="page-body"></div>
   <div class="page-footer">built with ❤️ by e11i</div>
 </div>
+<div class="prompt-overlay" id="file-overlay" aria-hidden="true">
+  <div class="prompt-modal" role="dialog" aria-modal="true" aria-labelledby="file-modal-title">
+    <div class="prompt-modal-header">
+      <h2 id="file-modal-title">File</h2>
+      <button class="prompt-modal-close" id="file-modal-close" aria-label="Close file modal">
+        <i data-lucide="x" style="width:18px;height:18px"></i>
+      </button>
+    </div>
+    <div class="prompt-modal-body" id="file-modal-body"></div>
+  </div>
+</div>
 <script src="utils.js"></script>
 <script src="../data.js"></script>
 <script>
@@ -52,17 +82,24 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!d) return;
   const files = d.dashboard_files || [];
   const body = document.getElementById('page-body');
+  const overlay = document.getElementById('file-overlay');
+  const modalTitle = document.getElementById('file-modal-title');
+  const modalBody = document.getElementById('file-modal-body');
+  const closeBtn = document.getElementById('file-modal-close');
 
   let html = '';
   html += '<div class="section-head"><i data-lucide="info"></i> What this page is for</div>';
-  html += '<div class="cfg-row"><span class="cfg-key">Purpose</span><span class="cfg-val">Shows how the dashboard works: files, flow, validation, and publish loop.</span></div>';
+  html += '<div class="cfg-row"><span class="cfg-key">Purpose</span><span class="cfg-val">Shows how the dashboard works: files, flow, validation, publish loop, and where to inspect the internals.</span></div>';
+  html += '<div class="quick-links">';
   html += '<a class="quick-link" href="config.html"><i data-lucide="sliders-horizontal" style="width:14px;height:14px"></i>Back to Config & Setup</a>';
+  html += '<a class="quick-link" href="agent_map.html"><i data-lucide="map" style="width:14px;height:14px"></i>Open full visual agent map</a>';
+  html += '</div>';
 
   html += '<div class="section-head"><i data-lucide="git-branch"></i> What affects what</div>';
   html += '<div class="map-grid">';
   html += '<div class="map-card"><h3>Data sources</h3><p>tasks.json, projects.json, resources.json, commands.json, Hermes config, memory, cron, sessions.</p></div>';
   html += '<div class="map-card"><h3>Builder</h3><p>refresh.sh reads those sources and rebuilds data.js.</p></div>';
-  html += '<div class="map-card"><h3>Pages</h3><p>HTML pages read data.js and render the cards and detail pages.</p></div>';
+  html += '<div class="map-card"><h3>Pages</h3><p>HTML pages read data.js and render cards and detail pages.</p></div>';
   html += '<div class="map-card"><h3>Validation</h3><p>validate_dashboard.py checks the important loops before publish.</p></div>';
   html += '<div class="map-card"><h3>Publish</h3><p>publish.sh runs validation, refreshes, commits, and pushes GitHub Pages.</p></div>';
   html += '</div>';
@@ -72,14 +109,17 @@ document.addEventListener('DOMContentLoaded', () => {
   html += '<div class="flow-col"><div class="flow-label">Source files</div><div class="flow-box"><strong>commands.json</strong><span>Quick Commands</span></div><div class="flow-box"><strong>tasks.json</strong><span>Tasks page + home card</span></div><div class="flow-box"><strong>projects.json</strong><span>Projects page + home card</span></div><div class="flow-box"><strong>resources.json</strong><span>Resources page</span></div><div class="flow-box"><strong>config.yaml / .env</strong><span>Models and raw config</span></div></div>';
   html += '<div class="flow-col"><div class="flow-label">Build layer</div><div class="flow-box"><strong>refresh.sh</strong><span>Collects data and writes data.js</span></div><div class="flow-box"><strong>validate_dashboard.py</strong><span>Checks loop integrity</span></div><div class="flow-box"><strong>dashboard_checklist.json</strong><span>Definition of done for dashboard changes</span></div></div>';
   html += '<div class="flow-col"><div class="flow-label">Data bundle</div><div class="flow-box"><strong>data.js</strong><span>Single bundle used by the dashboard pages</span></div><div class="flow-box"><strong>shared.css + utils.js</strong><span>Shared rendering and behavior</span></div></div>';
-  html += '<div class="flow-col"><div class="flow-label">UI pages</div><div class="flow-box"><strong>index.html</strong><span>Home cards and previews</span></div><div class="flow-box"><strong>config.html</strong><span>User-facing config and setup</span></div><div class="flow-box"><strong>dashboard_internals.html</strong><span>Repo map and internal relationships</span></div><div class="flow-box"><strong>Other pages</strong><span>Tasks, projects, skills, workflows, reports, memory pages</span></div></div>';
+  html += '<div class="flow-col"><div class="flow-label">UI pages</div><div class="flow-box"><strong>index.html</strong><span>Home cards and previews</span></div><div class="flow-box"><strong>config.html</strong><span>User-facing config and setup</span></div><div class="flow-box"><strong>dashboard_internals.html</strong><span>Repo map and internal relationships</span></div><div class="flow-box"><strong>agent_map.html</strong><span>Big visual Hermes map</span></div><div class="flow-box"><strong>Other pages</strong><span>Tasks, projects, skills, workflows, reports, memory pages</span></div></div>';
   html += '<div class="flow-col"><div class="flow-label">Ship layer</div><div class="flow-box"><strong>publish.sh</strong><span>Validate → refresh → commit → push</span></div><div class="flow-box"><strong>GitHub Pages</strong><span>Live dashboard visible online</span></div><div class="flow-box"><strong>dashboard-publish</strong><span>Shell alias for the canonical publish path</span></div></div>';
   html += '</div></div>';
+  html += '<div class="canvas-note">For the full big-picture Hermes map, open the dedicated visual agent map page.</div>';
 
   html += '<div class="section-head"><i data-lucide="folder-code"></i> Dashboard Files</div>';
-  files.forEach(f => {
-    html += `<details><summary class="raw-toggle"><i data-lucide="chevron-right" style="width:14px;height:14px"></i> ${esc(f.file)} <span style="color:var(--text-3);font-weight:400">— ${esc(f.label)}</span></summary><div style="margin:0 0 var(--s2);color:var(--text-3);font-size:var(--fs-xs)">${esc(f.description || '')}</div><div class="raw-box">${esc(f.content || '')}</div></details>`;
+  html += '<div class="file-grid">';
+  files.forEach((f, i) => {
+    html += `<div class="file-card" data-file-index="${i}" role="button" tabindex="0" aria-label="Open ${esc(f.file)}"><div class="file-name">${esc(f.file)}</div><div class="file-label">${esc(f.label)}</div><div class="file-desc">${esc(f.description || '')}</div><div class="file-hint">Click to open file preview</div></div>`;
   });
+  html += '</div>';
 
   html += '<div class="section-head"><i data-lucide="link-2"></i> Key relationships</div>';
   html += '<div class="link-list">';
@@ -92,15 +132,40 @@ document.addEventListener('DOMContentLoaded', () => {
   html += '</div>';
 
   body.innerHTML = html;
-  document.querySelectorAll('details').forEach(det => {
-    det.addEventListener('toggle', () => {
-      if (det.open) {
-        document.querySelectorAll('details').forEach(other => {
-          if (other !== det) other.removeAttribute('open');
-        });
+
+  function openFileModal(index) {
+    const f = files[index];
+    if (!f) return;
+    modalTitle.textContent = `${f.file} — ${f.label}`;
+    modalBody.innerHTML = `<div style="margin-bottom:var(--s3);color:var(--text-3);font-size:var(--fs-xs)">${esc(f.description || '')}</div><pre class="code-block"><code>${esc(f.content || '')}</code></pre>`;
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden', 'false');
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+  }
+
+  function closeFileModal() {
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden', 'true');
+  }
+
+  document.querySelectorAll('.file-card').forEach(card => {
+    card.addEventListener('click', () => openFileModal(card.dataset.fileIndex));
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openFileModal(card.dataset.fileIndex);
       }
     });
   });
+
+  closeBtn.addEventListener('click', closeFileModal);
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeFileModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) closeFileModal();
+  });
+
   if (typeof lucide !== 'undefined') lucide.createIcons();
 });
 </script>

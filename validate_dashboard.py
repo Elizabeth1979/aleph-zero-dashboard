@@ -44,9 +44,14 @@ must('dashboard-publish' in commands_text, 'commands.json must include dashboard
 internals_page = read_text(DASH / 'pages' / 'dashboard_internals.html')
 
 must('dashboard_files:' in refresh_text, 'refresh.sh must export dashboard_files into data.js')
+agent_map_page = read_text(DASH / 'pages' / 'agent_map.html')
+
 must('dashboard_internals.html' in config_page, 'Config page must link to Dashboard Internals')
 must('dashboard_files' in internals_page, 'Dashboard Internals page must read dashboard_files data')
 must('Visual Flow Map' in internals_page, 'Dashboard Internals page must include the visual flow map section')
+must('file-overlay' in internals_page, 'Dashboard Internals page must include clickable file modal overlay')
+must('agent_map.html' in internals_page, 'Dashboard Internals page must link to the full visual agent map')
+must('Big-picture view' in agent_map_page, 'Agent map page must include the big-picture visual overview')
 
 try:
     commands = json.loads(commands_text)
