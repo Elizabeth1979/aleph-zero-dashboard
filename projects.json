@@ -131,11 +131,6 @@
         "impact": "medium"
       },
       {
-        "task": "Fix Reset All button in a11y panel",
-        "difficulty": "easy",
-        "impact": "medium"
-      },
-      {
         "task": "A11y panel — custom font picker, color pickers for text/background/links",
         "difficulty": "hard",
         "impact": "medium"
