@@ -55,6 +55,12 @@ function renderMd(raw) {
   html = html.replace(/^# (.+)$/gm, '<h1>$1</h1>');
   // Bold & inline code
   html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  // Italic
+  html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+  // Standard markdown links [text](url)
+  html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="md-link">$1</a>');
+  // Bare URLs (not already in an href)
+  html = html.replace(/(?<!href="|href=')(https?:\/\/[^\s<"']+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" class="md-link">$1</a>');
   html = html.replace(/`([^`]+)`/g, function(_, inner) {
     // Linkify known file paths
     const memMatch = inner.match(/~\/.hermes\/memory\/(.+\.md)/);

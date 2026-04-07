@@ -230,6 +230,8 @@
   .rendered-md li { margin: 0.2em 0; line-height: 1.5; }
   .rendered-md hr { border: none; border-top: 1px solid var(--border); margin: 0.8em 0; }
   .rendered-md hr.section-sep { border-top: 1px dashed var(--border); margin: 0.6em 0; }
+  .rendered-md a, .md-link { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; word-break: break-all; }
+  .rendered-md a:hover, .md-link:hover { opacity: 0.8; }
   .file-link {
     color: var(--accent); text-decoration: none;
     border-bottom: 1px dashed rgba(93,228,212,0.4);
