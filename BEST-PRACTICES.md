@@ -24,6 +24,7 @@ Living reference file. Updated as we build and learn.
 
 ## CSS
 
+- **Don't use large z-index values to force stacking order** — instead use `isolation: isolate` on a parent to create a scoped stacking context, and use small z-index values (1, 2, 3) within it. Large z-index is a symptom of fighting the stacking order rather than owning it. CSS animations/transforms silently create stacking contexts — always check for those when a dropdown or overlay appears behind something unexpectedly.
 - Don't use interactive-looking elements (checkboxes, toggles) if they're not actionable — use passive indicators instead (dots, badges, color)
 - Use CSS custom properties (variables) for colors, spacing, fonts — single source of truth
 - Mobile-first: write base styles for small screens, add `min-width` media queries for larger
