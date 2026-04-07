@@ -420,12 +420,18 @@ document.addEventListener('DOMContentLoaded', () => {
           </tr>`;
         }).join('');
 
+        const todoId = 'todo-' + p.id.replace(/[^a-z0-9]/g, '');
         tasksHtml = `<div class="card-section">
-          <div class="card-section-title">To Do</div>
+          <button class="completed-toggle" onclick="this.classList.toggle('open');document.getElementById('${todoId}').classList.toggle('open')" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            To Do (${pending.length})
+          </button>
+          <div class="completed-list" id="${todoId}">
           ${pending.length ? `<div class="task-table-wrap"><table class="task-table">
             <thead><tr><th>Task</th><th>Difficulty</th><th>Impact</th><th>Score</th></tr></thead>
             <tbody>${rows}</tbody>
           </table></div>` : '<div style="font-size:var(--fs-sm);color:var(--text-3)">All done!</div>'}
+          </div>
         </div>`;
       }
     }
@@ -438,8 +444,8 @@ document.addEventListener('DOMContentLoaded', () => {
       ${desc}
       ${metaHtml}
       ${linksHtml}
-      ${tasksHtml}
       ${featuresHtml}
+      ${tasksHtml}
     </div>`;
   }
 
