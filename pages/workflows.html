@@ -197,7 +197,7 @@
     <h1 class="page-title"><i data-lucide="route"></i> Workflows</h1>
   </div>
 
-  <p class="page-subtitle">9 active workflows — how we work together</p>
+  <p class="page-subtitle">10 active workflows — how we work together</p>
 
   <div class="wf-grid" id="page-body"></div>
 
@@ -326,6 +326,19 @@ const WORKFLOWS = [
     you: 'Drop a link and say "save this" in any thread.',
     bot: 'Adds it to resources.json with a title, category, and note. Appears on the dashboard.',
     view: 'Dashboard → Resources card',
+  },
+  {
+    id: 'research-linking',
+    icon: 'book-open',
+    title: 'Research & Projects',
+    badge: 'manual',
+    badgeLabel: 'You + Bot',
+    desc: 'Research reports saved to the vault appear automatically on the Reviews & Research page. Link them to projects so they\'re accessible from the Projects page too.',
+    schedule: null,
+    howto: 'To link a new research file to a project: add the filename to the project\'s `research` array in projects.json. Example: "research": ["My Research File.md"]. The Projects page will show a teal pill linking directly to that report.',
+    you: 'Save research markdown files to ~/Desktop/elli vault/A11y App Research/. Tell the bot to link it to a project.',
+    bot: 'Adds the filename to the correct project\'s research array in projects.json, runs refresh.sh, and pushes.',
+    view: 'Dashboard → Reviews & Research',
   },
 ];
 
