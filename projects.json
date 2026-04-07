@@ -417,82 +417,82 @@
         "description": "A single page that demos: audit panel, UX widget, CI results, MCP usage. For showing to Melio colleagues."
       }
     ],
-    \"features\": [
-      \"A11y Audit Panel (a11y-tester.js) — visual in-page accessibility auditor with issue highlighting\",
-      \"A11y UX Widget (a11y-widget.js) — floating customization panel: contrast, fonts, motion, reading guide, color blindness simulation\"
+    "features": [
+      "A11y Audit Panel (a11y-tester.js) — visual in-page accessibility auditor with issue highlighting",
+      "A11y UX Widget (a11y-widget.js) — floating customization panel: contrast, fonts, motion, reading guide, color blindness simulation"
     ]
   },
   {
-    \"id\": \"melio-chat-mvp\",
-    \"name\": \"Melio Conversational UI (MVP)\",
-    \"status\": \"in_progress\",
-    \"description\": \"Voice/chat interface on top of Melio's app — lets users ask in plain language: what's outstanding, pay this, add a bank account. Accessibility play: removes the need to navigate complex tables. No internal repo used — built on top of public-facing Melio API calls captured via DevTools.\",
-    \"started\": \"2026-04-07\",
-    \"repo\": \"\",
-    \"links\": [],
-    \"notes_path\": \"\",
-    \"milestones\": [],
-    \"features\": [],
-    \"tasks\": [
+    "id": "melio-chat-mvp",
+    "name": "Melio Conversational UI (MVP)",
+    "status": "in_progress",
+    "description": "Voice/chat interface on top of Melio's app — lets users ask in plain language: what's outstanding, pay this, add a bank account. Accessibility play: removes the need to navigate complex tables. No internal repo used — built on top of public-facing Melio API calls captured via DevTools.",
+    "started": "2026-04-07",
+    "repo": "",
+    "links": [],
+    "notes_path": "",
+    "milestones": [],
+    "features": [],
+    "tasks": [
       {
-        \"task\": \"Research: Find and install Chrome DevTools MCP — enables agent to inspect network calls, DOM, console directly from browser\",
-        \"difficulty\": \"easy\",
-        \"impact\": \"high\",
-        \"description\": \"Candidate: AgentDeskAI/browser-tools-mcp or similar. Search npm/GitHub, install, configure in Hermes config.yaml.\"
+        "task": "Research: Find and install Chrome DevTools MCP — enables agent to inspect network calls, DOM, console directly from browser",
+        "difficulty": "easy",
+        "impact": "high",
+        "description": "Candidate: AgentDeskAI/browser-tools-mcp or similar. Search npm/GitHub, install, configure in Hermes config.yaml."
       },
       {
-        \"task\": \"Research: Check if Melio has a public API or developer docs\",
-        \"difficulty\": \"easy\",
-        \"impact\": \"high\",
-        \"description\": \"Check melio.com/developers, app.melio.com network tab, and any public API docs. No internal repo.\"
+        "task": "Research: Check if Melio has a public API or developer docs",
+        "difficulty": "easy",
+        "impact": "high",
+        "description": "Check melio.com/developers, app.melio.com network tab, and any public API docs. No internal repo."
       },
       {
-        \"task\": \"Research: Map Melio's key API endpoints via DevTools network tab\",
-        \"difficulty\": \"easy\",
-        \"impact\": \"high\",
-        \"description\": \"Log into Melio, open DevTools Network tab, perform actions (view bills, initiate payment, add account), capture endpoint shapes. Document in vault.\"
+        "task": "Research: Map Melio's key API endpoints via DevTools network tab",
+        "difficulty": "easy",
+        "impact": "high",
+        "description": "Log into Melio, open DevTools Network tab, perform actions (view bills, initiate payment, add account), capture endpoint shapes. Document in vault."
       },
       {
-        \"task\": \"Research: Check Melio's ToS for automated access / scripting restrictions\",
-        \"difficulty\": \"easy\",
-        \"impact\": \"high\",
-        \"description\": \"Quick read of melio.com/terms — flag anything that blocks local MVP use.\"
+        "task": "Research: Check Melio's ToS for automated access / scripting restrictions",
+        "difficulty": "easy",
+        "impact": "high",
+        "description": "Quick read of melio.com/terms — flag anything that blocks local MVP use."
       },
       {
-        \"task\": \"Research: Check if Melio already has a conversational/chat feature — and what it can do\",
-        \"difficulty\": \"easy\",
-        \"impact\": \"medium\",
-        \"description\": \"Is it a support bot or action-taking? What gaps does the MVP fill?\"
+        "task": "Research: Check if Melio already has a conversational/chat feature — and what it can do",
+        "difficulty": "easy",
+        "impact": "medium",
+        "description": "Is it a support bot or action-taking? What gaps does the MVP fill?"
       },
       {
-        \"task\": \"Build: MCP agent layer — tools wrapping Melio API calls (get_outstanding, pay_bill, add_bank_account, add_card)\",
-        \"difficulty\": \"medium\",
-        \"impact\": \"high\",
-        \"description\": \"Python MCP server. Tools call Melio endpoints with user's session token. Use Claude Opus via delegate_task.\"
+        "task": "Build: MCP agent layer — tools wrapping Melio API calls (get_outstanding, pay_bill, add_bank_account, add_card)",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "Python MCP server. Tools call Melio endpoints with user's session token. Use Claude Opus via delegate_task."
       },
       {
-        \"task\": \"Build: Simple chat UI — text input, plain language responses\",
-        \"difficulty\": \"medium\",
-        \"impact\": \"high\",
-        \"description\": \"Next.js or plain HTML+JS. Connects to MCP agent. Runs locally first.\"
+        "task": "Build: Simple chat UI — text input, plain language responses",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "Next.js or plain HTML+JS. Connects to MCP agent. Runs locally first."
       },
       {
-        \"task\": \"Build: Add voice input — Web Speech API (browser STT, no extra cost)\",
-        \"difficulty\": \"easy\",
-        \"impact\": \"high\",
-        \"description\": \"Press-to-talk button, transcript fed to the same chat handler. Works in Chrome.\"
+        "task": "Build: Add voice input — Web Speech API (browser STT, no extra cost)",
+        "difficulty": "easy",
+        "impact": "high",
+        "description": "Press-to-talk button, transcript fed to the same chat handler. Works in Chrome."
       },
       {
-        \"task\": \"Demo: Record a Loom of the full flow — ask, pay, add account\",
-        \"difficulty\": \"easy\",
-        \"impact\": \"high\",
-        \"description\": \"Show it running locally. Use real Melio account. Prepare 2-min demo script.\"
+        "task": "Demo: Record a Loom of the full flow — ask, pay, add account",
+        "difficulty": "easy",
+        "impact": "high",
+        "description": "Show it running locally. Use real Melio account. Prepare 2-min demo script."
       },
       {
-        \"task\": \"Demo: Optional — deploy to Vercel for a shareable link\",
-        \"difficulty\": \"easy\",
-        \"impact\": \"medium\",
-        \"description\": \"Next.js + Vercel, needs env var for session/auth. Only if Loom isn't enough.\"
+        "task": "Demo: Optional — deploy to Vercel for a shareable link",
+        "difficulty": "easy",
+        "impact": "medium",
+        "description": "Next.js + Vercel, needs env var for session/auth. Only if Loom isn't enough."
       }
     ]
   }
