@@ -39,8 +39,6 @@
 
   /* --- Header --- */
   .header {
-    position: relative;
-    z-index: 200;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -367,6 +365,7 @@
   /* --- Search Bar --- */
   .search-wrap {
     position: relative;
+    isolation: isolate;
     margin-left: var(--s3);
   }
   .search-input {
@@ -934,7 +933,7 @@ function setupSearch() {
       text: [f.file, f.label, f.description].filter(Boolean).join(' ').toLowerCase(),
       name: f.label || f.file,
       tag: 'Files',
-      link: null
+      link: 'pages/dashboard_internals.html'
     });
   });
 
@@ -977,32 +976,44 @@ function setupSearch() {
     if (q.length < 2) { resultsEl.classList.remove('open'); return; }
     const terms = q.toLowerCase().split(/\s+/).filter(Boolean);
     const matches = index.filter(item => terms.every(t => item.text.includes(t))).slice(0, 12);
-    resultsEl.innerHTML = '';
+    const frag = document.createDocumentFragment();
     if (!matches.length) {
-      resultsEl.innerHTML = '<div class="search-no-results">No results for "' + esc(q) + '"</div>';
+      const noRes = document.createElement('div');
+      noRes.className = 'search-no-results';
+      noRes.textContent = 'No results for \u201c' + q + '\u201d';
+      frag.appendChild(noRes);
     } else {
       matches.forEach(m => {
-        const el = document.createElement(m.link ? 'a' : 'div');
+        const el = document.createElement('button');
+        el.type = 'button';
         el.className = 'search-result';
-        if (m.link) el.href = m.link;
-        el.innerHTML = '<span class="search-result-name">' + esc(m.name) + '</span><span class="search-result-tag">' + esc(m.tag) + '</span>';
-        if (!m.link) el.addEventListener('click', () => resultsEl.classList.remove('open'));
-        resultsEl.appendChild(el);
+        el.innerHTML = '<span class="search-result-name">' + esc(m.name || m.tag) + '</span><span class="search-result-tag">' + esc(m.tag) + '</span>';
+        el.addEventListener('click', () => { if (m.link) window.location.href = m.link; });
+        frag.appendChild(el);
       });
     }
+    resultsEl.innerHTML = '';
+    resultsEl.appendChild(frag);
     resultsEl.classList.add('open');
   }
 
-  input.addEventListener('input', () => doSearch(input.value.trim()));
+  let debounceTimer = null;
+  input.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => doSearch(input.value.trim()), 120);
+  });
   input.addEventListener('keydown', e => {
     if (e.key === 'Escape') { resultsEl.classList.remove('open'); input.blur(); }
-    if (e.key === 'Enter') { e.preventDefault();
-      const first = resultsEl.querySelector('.search-result[href]');
-      if (first) window.location.href = first.href;
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const first = resultsEl.querySelector('.search-result');
+      if (first) first.click();
     }
   });
   document.addEventListener('click', e => {
-    if (!wrap.contains(e.target)) resultsEl.classList.remove('open');
+    if (resultsEl.classList.contains('open') && !wrap.contains(e.target)) {
+      resultsEl.classList.remove('open');
+    }
   });
 }
 
