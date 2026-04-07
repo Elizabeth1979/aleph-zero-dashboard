@@ -347,7 +347,7 @@
         "impact": "high"
       },
       {
-        "task": "Add Claude Code skills to toolkit repo (.claude/commands/) — a11y-audit, a11y-review, wcag-checklist. Anyone who installs the toolkit gets them automatically.",
+        "task": "Research Claude Code skills format, then build two focused skills for the toolkit: one for designers (visual, contrast, color, typography) and one for developers (keyboard, ARIA, screen reader, semantic HTML). Add to .claude/commands/ in toolkit repo.",
         "difficulty": "easy",
         "impact": "medium"
       },
