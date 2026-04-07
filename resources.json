@@ -105,5 +105,20 @@
       "Always validate tinted colors with WCAG or APCA checker"
     ],
     "added": "2026-04-07"
+  },
+  {
+    "id": "8",
+    "title": "Git Worktrees \u2014 Multiple Working Directories (Video)",
+    "url": "https://youtu.be/jmAJQEooFhg?si=qvdh2x8leurr4hQJ",
+    "category": "dev-tools",
+    "status": "processed",
+    "note": "Git Worktrees let you have multiple working directories for the same repo. Context-switch between tasks without stashing or throwaway commits.",
+    "takeaways": [
+      "git worktree add <name> <branch> \u2014 create a clean workspace from any branch instantly",
+      "Each worktree is just a folder \u2014 cd in/out to switch, no special command",
+      "Same branch cannot be checked out in two worktrees simultaneously",
+      "Useful for reviewing PRs, hotfixes, or running parallel AI agents on the same repo"
+    ],
+    "added": "2026-04-07"
   }
 ]

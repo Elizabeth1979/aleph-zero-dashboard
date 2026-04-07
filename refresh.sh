@@ -331,6 +331,7 @@ reports = []
 for folder, ftype in [
     ('~/Desktop/elli vault/Reviews', 'review'),
     ('~/Desktop/elli vault/A11y App Research', 'research'),
+    ('~/Desktop/elli vault/Research', 'research'),
 ]:
     d = os.path.expanduser(folder)
     if os.path.isdir(d):
