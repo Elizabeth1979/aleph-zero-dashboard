@@ -415,6 +415,18 @@
         "difficulty": "medium",
         "impact": "high",
         "description": "A single page that demos: audit panel, UX widget, CI results, MCP usage. For showing to Melio colleagues."
+      },
+      {
+        "task": "Research Generative UI — understand how it works, existing implementations, accessibility angle",
+        "difficulty": "easy",
+        "impact": "high",
+        "description": "Starting point: https://research.google/blog/generative-ui-a-rich-custom-visual-interactive-user-experience-for-any-prompt/ — Research saved to vault A11y App Research folder. Key questions: can it run on any site? Vercel AI SDK streamUI? Accessibility use case (user-directed UI regeneration)."
+      },
+      {
+        "task": "Module: Generative UI — let users say 'show this differently' and regenerate the layout using AI",
+        "difficulty": "hard",
+        "impact": "high",
+        "description": "AI-driven UI customization: user describes their preference and the interface adapts. Explore: Vercel AI SDK for own sites, browser extension approach for any site. Strong a11y use case — users with cognitive/visual needs can request simpler layouts, larger spacing, plain language."
       }
     ],
     "features": [
