@@ -402,5 +402,19 @@
       "Hermes Agent"
     ],
     "status": "pending"
+  },
+  {
+    "id": 39,
+    "task": "Hermes Agent: Create a full visual agent map / repo map for Hermes (big-picture system overview)",
+    "added": "2026-04-07",
+    "done": false,
+    "urgent": false,
+    "difficulty": "hard",
+    "description": "Build a visual big-picture map of Hermes: repo structure, agent flow, skills, dashboard, memory, cron, gateway, and how they relate.",
+    "impact": "high",
+    "tags": [
+      "Hermes Agent"
+    ],
+    "status": "pending"
   }
 ]

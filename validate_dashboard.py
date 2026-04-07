@@ -41,9 +41,12 @@ must('bash ~/.hermes/dashboard/publish.sh' in refresh_text, 'refresh.sh must poi
 must('bash ~/.hermes/dashboard/publish.sh' in update_tasks_text, 'update_tasks.sh must delegate to publish.sh')
 must('alias dashboard-publish=' in zshrc_text, '.zshrc must expose dashboard-publish alias')
 must('dashboard-publish' in commands_text, 'commands.json must include dashboard-publish')
-must('Dashboard Files' in config_page, 'Config page must render a Dashboard Files section')
-must('dashboard_files' in config_page, 'Config page must read dashboard_files data')
+internals_page = read_text(DASH / 'pages' / 'dashboard_internals.html')
+
 must('dashboard_files:' in refresh_text, 'refresh.sh must export dashboard_files into data.js')
+must('dashboard_internals.html' in config_page, 'Config page must link to Dashboard Internals')
+must('dashboard_files' in internals_page, 'Dashboard Internals page must read dashboard_files data')
+must('Visual Flow Map' in internals_page, 'Dashboard Internals page must include the visual flow map section')
 
 try:
     commands = json.loads(commands_text)

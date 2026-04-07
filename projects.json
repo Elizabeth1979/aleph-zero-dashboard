@@ -88,7 +88,8 @@
       "Keep project state in small files like PLAN.md, TODO.md, and DECISIONS.md",
       "Use checkpoint-only updates: done, blocker, next, need input",
       "Reduce narration and progress spam during coding tasks",
-      "Apply these ideas project by project instead of changing everything at once"
+      "Apply these ideas project by project instead of changing everything at once",
+      "Dashboard now split into user-facing Config & Setup and separate Dashboard Internals with a visual flow map"
     ]
   }
 ]

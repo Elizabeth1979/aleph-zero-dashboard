@@ -504,6 +504,15 @@
       <div class="card-preview" style="margin-top:8px;font-size:var(--fs-xs);color:var(--text-3)">Morning Brief · Task Tracking · Thread Pinger · more</div>
     </a>
 
+    <a href="pages/dashboard_internals.html" class="card">
+      <div class="card-h">
+        <i data-lucide="workflow"></i>
+        <h2>Dashboard Internals</h2>
+      </div>
+      <div class="card-desc">Repo structure, publish loop, and file relationships</div>
+      <div class="card-preview" id="dashboard-internals-preview"></div>
+    </a>
+
   </div>
 
   <!-- SECTION: Settings -->
@@ -567,6 +576,11 @@ function loadCards() {
   // Config
   const model = extractConfig(d.config, 'Main Model') || extractConfig(d.config, 'Model') || '?';
   document.getElementById('cfg-preview').textContent = model;
+
+  // Dashboard internals
+  const dashboardFiles = d.dashboard_files || [];
+  const internalsPreview = document.getElementById('dashboard-internals-preview');
+  if (internalsPreview) internalsPreview.textContent = `${dashboardFiles.length} files · publish loop · visual map`;
 
   // Tasks
   const tasks = d.tasks || [];

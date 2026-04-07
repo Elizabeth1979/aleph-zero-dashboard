@@ -1,0 +1,111 @@
+<!-- AGENT RULE: Only change what Elli explicitly asks for. No extra improvements, no removing elements, no unsolicited cleanup. Apply changes to ALL instances, not just the first one. -->
+<!-- AGENT: Read BEST-PRACTICES.md before writing HTML/CSS/JS. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>Dashboard Internals — Hermes</title>
+<link rel="stylesheet" href="../theme.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<link rel="stylesheet" href="shared.css">
+<link rel="stylesheet" href="../a11y-widget.css">
+<style>
+.map-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:var(--s3); margin-top:var(--s4); }
+.map-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--r2); padding:var(--s4); }
+.map-card h3 { margin:0 0 var(--s2); font-size:var(--fs-md); color:var(--text); }
+.map-card p { margin:0; color:var(--text-3); font-size:var(--fs-sm); }
+.flow-wrap { margin-top:var(--s4); overflow:auto; padding-bottom:var(--s2); }
+.flow-canvas { min-width:980px; display:grid; grid-template-columns:repeat(5,1fr); gap:var(--s4); align-items:start; }
+.flow-col { display:flex; flex-direction:column; gap:var(--s3); }
+.flow-label { font-size:var(--fs-xs); text-transform:uppercase; letter-spacing:.08em; color:var(--text-3); border-bottom:1px solid var(--border); padding-bottom:var(--s1); }
+.flow-box { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--r2); padding:var(--s3); }
+.flow-box strong { display:block; color:var(--accent); margin-bottom:4px; }
+.flow-box span { color:var(--text-3); font-size:var(--fs-sm); }
+.flow-arrow { text-align:center; color:var(--accent); font-size:22px; padding-top:42px; }
+.link-list { display:grid; gap:var(--s2); margin-top:var(--s3); }
+.link-row { display:flex; justify-content:space-between; gap:var(--s3); padding:var(--s2) 0; border-bottom:1px solid var(--border); }
+.link-row:last-child { border-bottom:none; }
+.link-name { font-family:var(--mono); color:var(--accent); font-size:var(--fs-sm); }
+.link-desc { color:var(--text-3); font-size:var(--fs-sm); text-align:right; }
+.quick-link { display:inline-flex; align-items:center; gap:8px; margin-top:var(--s3); color:var(--accent); text-decoration:none; font-size:var(--fs-sm); }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <a href="../index.html" class="back-link">
+      <i data-lucide="arrow-left" style="width:16px;height:16px"></i> Dashboard
+    </a>
+    <h1 class="page-title"><i data-lucide="workflow"></i> Dashboard Internals</h1>
+  </div>
+  <div class="page-body" id="page-body"></div>
+  <div class="page-footer">built with ❤️ by e11i</div>
+</div>
+<script src="utils.js"></script>
+<script src="../data.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const d = window.__DASHBOARD_DATA__;
+  if (!d) return;
+  const files = d.dashboard_files || [];
+  const body = document.getElementById('page-body');
+
+  let html = '';
+  html += '<div class="section-head"><i data-lucide="info"></i> What this page is for</div>';
+  html += '<div class="cfg-row"><span class="cfg-key">Purpose</span><span class="cfg-val">Shows how the dashboard works: files, flow, validation, and publish loop.</span></div>';
+  html += '<a class="quick-link" href="config.html"><i data-lucide="sliders-horizontal" style="width:14px;height:14px"></i>Back to Config & Setup</a>';
+
+  html += '<div class="section-head"><i data-lucide="git-branch"></i> What affects what</div>';
+  html += '<div class="map-grid">';
+  html += '<div class="map-card"><h3>Data sources</h3><p>tasks.json, projects.json, resources.json, commands.json, Hermes config, memory, cron, sessions.</p></div>';
+  html += '<div class="map-card"><h3>Builder</h3><p>refresh.sh reads those sources and rebuilds data.js.</p></div>';
+  html += '<div class="map-card"><h3>Pages</h3><p>HTML pages read data.js and render the cards and detail pages.</p></div>';
+  html += '<div class="map-card"><h3>Validation</h3><p>validate_dashboard.py checks the important loops before publish.</p></div>';
+  html += '<div class="map-card"><h3>Publish</h3><p>publish.sh runs validation, refreshes, commits, and pushes GitHub Pages.</p></div>';
+  html += '</div>';
+
+  html += '<div class="section-head"><i data-lucide="map"></i> Visual Flow Map</div>';
+  html += '<div class="flow-wrap"><div class="flow-canvas">';
+  html += '<div class="flow-col"><div class="flow-label">Source files</div><div class="flow-box"><strong>commands.json</strong><span>Quick Commands</span></div><div class="flow-box"><strong>tasks.json</strong><span>Tasks page + home card</span></div><div class="flow-box"><strong>projects.json</strong><span>Projects page + home card</span></div><div class="flow-box"><strong>resources.json</strong><span>Resources page</span></div><div class="flow-box"><strong>config.yaml / .env</strong><span>Models and raw config</span></div></div>';
+  html += '<div class="flow-col"><div class="flow-label">Build layer</div><div class="flow-box"><strong>refresh.sh</strong><span>Collects data and writes data.js</span></div><div class="flow-box"><strong>validate_dashboard.py</strong><span>Checks loop integrity</span></div><div class="flow-box"><strong>dashboard_checklist.json</strong><span>Definition of done for dashboard changes</span></div></div>';
+  html += '<div class="flow-col"><div class="flow-label">Data bundle</div><div class="flow-box"><strong>data.js</strong><span>Single bundle used by the dashboard pages</span></div><div class="flow-box"><strong>shared.css + utils.js</strong><span>Shared rendering and behavior</span></div></div>';
+  html += '<div class="flow-col"><div class="flow-label">UI pages</div><div class="flow-box"><strong>index.html</strong><span>Home cards and previews</span></div><div class="flow-box"><strong>config.html</strong><span>User-facing config and setup</span></div><div class="flow-box"><strong>dashboard_internals.html</strong><span>Repo map and internal relationships</span></div><div class="flow-box"><strong>Other pages</strong><span>Tasks, projects, skills, workflows, reports, memory pages</span></div></div>';
+  html += '<div class="flow-col"><div class="flow-label">Ship layer</div><div class="flow-box"><strong>publish.sh</strong><span>Validate → refresh → commit → push</span></div><div class="flow-box"><strong>GitHub Pages</strong><span>Live dashboard visible online</span></div><div class="flow-box"><strong>dashboard-publish</strong><span>Shell alias for the canonical publish path</span></div></div>';
+  html += '</div></div>';
+
+  html += '<div class="section-head"><i data-lucide="folder-code"></i> Dashboard Files</div>';
+  files.forEach(f => {
+    html += `<details><summary class="raw-toggle"><i data-lucide="chevron-right" style="width:14px;height:14px"></i> ${esc(f.file)} <span style="color:var(--text-3);font-weight:400">— ${esc(f.label)}</span></summary><div style="margin:0 0 var(--s2);color:var(--text-3);font-size:var(--fs-xs)">${esc(f.description || '')}</div><div class="raw-box">${esc(f.content || '')}</div></details>`;
+  });
+
+  html += '<div class="section-head"><i data-lucide="link-2"></i> Key relationships</div>';
+  html += '<div class="link-list">';
+  html += '<div class="link-row"><div class="link-name">commands.json → config.html</div><div class="link-desc">Quick Commands section</div></div>';
+  html += '<div class="link-row"><div class="link-name">tasks.json → tasks.html</div><div class="link-desc">Task list and home card counts</div></div>';
+  html += '<div class="link-row"><div class="link-name">projects.json → projects.html</div><div class="link-desc">Project cards and scores</div></div>';
+  html += '<div class="link-row"><div class="link-name">resources.json → resources.html</div><div class="link-desc">Saved links and notes</div></div>';
+  html += '<div class="link-row"><div class="link-name">refresh.sh → data.js</div><div class="link-desc">Build step for all pages</div></div>';
+  html += '<div class="link-row"><div class="link-name">publish.sh → GitHub Pages</div><div class="link-desc">Makes changes visible online</div></div>';
+  html += '</div>';
+
+  body.innerHTML = html;
+  document.querySelectorAll('details').forEach(det => {
+    det.addEventListener('toggle', () => {
+      if (det.open) {
+        document.querySelectorAll('details').forEach(other => {
+          if (other !== det) other.removeAttribute('open');
+        });
+      }
+    });
+  });
+  if (typeof lucide !== 'undefined') lucide.createIcons();
+});
+</script>
+<link rel="stylesheet" href="../a11y-tester.css">
+<script src="../a11y-widget.js"></script>
+<script src="../a11y-tester.js"></script>
+</body>
+</html>
