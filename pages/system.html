@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const d = window.__DASHBOARD_DATA__;
   if (!d) return;
   if (!d.system_settings) { document.getElementById('page-body').innerHTML = '<div class="empty">No system settings documented</div>'; return; }
-  document.getElementById('page-body').innerHTML = `<div class="raw-box">${esc(d.system_settings)}</div>`;
+  document.getElementById('page-body').innerHTML = `<div class="rendered-md">${renderMd(d.system_settings)}</div>`;
   if (typeof lucide !== 'undefined') lucide.createIcons();
 });
 
