@@ -93,3 +93,27 @@ Living reference file. Updated as we build and learn.
 ---
 
 *Last updated: 2026-04-04 (added: px vs rem scaling, font-size toggle patterns, underline links scope)*
+
+---
+
+## Agent Rules — What NEVER to Remove
+
+These UI elements are protected. Do not remove them unless Elli explicitly says so:
+
+### projects.html
+- `.task-table` — task table with Difficulty, Impact, Score columns. Most critical UI element.
+- `.project-card` — project cards with status badge, description, links, features
+- `renderProject()`, `calcScore()`, `renderChecklist()` — core JS functions
+- `p.tasks` data read — if changing data source, always verify table still renders
+
+### index.html
+- `.header` — logo, status dots, restart button
+- `.bento` grid — all cards
+- `renderStatus()`, `restartGateway()` — gateway functions
+
+### General Rules
+- **Data source changes break UI silently.** Before removing/moving data (tasks.json, projects.json fields), check every JS file that reads that data.
+- **Never remove a JS function** without grepping for all call sites first.
+- **Never restructure JSON schema** without updating every HTML file that reads it.
+- **Test the render**: after any change to data or JS, mentally trace what the page will show.
+- **Prefer adding over removing** — if something seems redundant, flag it to Elli instead of deleting.

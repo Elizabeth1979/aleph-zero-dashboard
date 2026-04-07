@@ -1,5 +1,12 @@
 <!-- AGENT RULE: Only change what Elli explicitly asks for. No extra improvements, no removing elements, no unsolicited cleanup. Apply changes to ALL instances, not just the first one. -->
 <!-- AGENT: Read BEST-PRACTICES.md before writing HTML/CSS/JS. -->
+<!-- LOCKED ELEMENTS — NEVER REMOVE without explicit instruction:
+     - .task-table (task table with Difficulty / Impact / Score columns) — this is the most important UI element on this page
+     - .project-card elements and all their children
+     - .feature-list (completed features list)
+     - renderChecklist(), renderProject(), calcScore() functions in <script>
+     - The p.tasks data read in JS — if changing data source, verify table still renders
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
