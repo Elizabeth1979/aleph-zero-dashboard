@@ -19,7 +19,7 @@
   },
   {
     "id": "commands-sync",
-    "task": "If a dashboard-related alias/command is added, also add it to commands.json so it appears in Config & Setup → Quick Commands",
+    "task": "If a dashboard-related alias/command is added, also add it to commands.json so it appears in Config & Setup \u2192 Quick Commands",
     "auto": false,
     "kind": "commands"
   },
@@ -46,5 +46,11 @@
     "task": "Commit and push after changes so Elli can see them online immediately",
     "auto": true,
     "kind": "publish"
+  },
+  {
+    "id": "skill-update",
+    "task": "After updating any skill (create/patch/edit), run publish.sh so the Skills page reflects the latest content",
+    "auto": false,
+    "kind": "skills"
   }
 ]
