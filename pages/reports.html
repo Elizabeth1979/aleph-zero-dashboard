@@ -208,13 +208,6 @@
   font-size: 0.95em;
   line-height: 1.65;
 }
-.modal-body h1, .modal-body h2, .modal-body h3 { margin: 18px 0 8px; color: var(--text, #e2e8f0); }
-.modal-body pre { background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; overflow-x: auto; font-size: 0.88em; }
-.modal-body code { font-family: 'JetBrains Mono', monospace; font-size: 0.9em; }
-.modal-body table { width: 100%; border-collapse: collapse; margin: 12px 0; }
-.modal-body th, .modal-body td { padding: 6px 10px; border: 1px solid var(--border, #334155); text-align: left; font-size: 0.9em; }
-.modal-body ul { padding-left: 20px; }
-.modal-body li { margin-bottom: 4px; }
 </style>
 </head>
 <body>
@@ -243,7 +236,7 @@
         <i data-lucide="x" style="width:20px;height:20px"></i>
       </button>
     </div>
-    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-body rendered-md" id="modal-body"></div>
   </div>
 </div>
 
@@ -251,6 +244,16 @@
 <script src="../data.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+  function stripMd(text) {
+    return (text || '')
+      .replace(/\*\*(.+?)\*\*/g, '$1')
+      .replace(/\*(.+?)\*/g, '$1')
+      .replace(/`([^`]+)`/g, '$1')
+      .replace(/^#+\s*/gm, '')
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+      .trim();
+  }
+
   const d = window.__DASHBOARD_DATA__ || {};
   const reports = d.reports || [];
   const el = document.getElementById('page-body');
@@ -288,7 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
       + '  </div>'
       + '  <div class="card-title">' + esc(r.title) + '</div>'
       + '  <div class="card-date">' + esc(r.date) + '</div>'
-      + '  <div class="card-preview">' + esc(r.preview || '') + '</div>'
+      + '  <div class="card-preview">' + esc(stripMd(r.preview || '')) + '</div>'
       + (pills ? '  <div class="card-pills">' + pills + '</div>' : '')
       + '</div></div>';
   }
