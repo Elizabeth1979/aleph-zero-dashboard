@@ -79,6 +79,20 @@ try:
         for s in (j.get('skills') or []): cron_skills.add(s)
 except: pass
 
+# Detect skills actually used in sessions (skill_view tool calls)
+used_skills = set()
+try:
+    for session_path in glob.glob('$HERMES/sessions/*.jsonl'):
+        for line in open(session_path):
+            msg = json.loads(line)
+            if msg.get('role') == 'assistant':
+                for tc in msg.get('tool_calls', []):
+                    if 'skill' in tc.get('function', {}).get('name', '').lower():
+                        args = json.loads(tc['function'].get('arguments', '{}'))
+                        name = args.get('name')
+                        if name: used_skills.add(name)
+except: pass
+
 skills = []
 base = '$HERMES/skills'
 for skill_md in sorted(glob.glob(base + '/*/*/SKILL.md')):
@@ -91,7 +105,9 @@ for skill_md in sorted(glob.glob(base + '/*/*/SKILL.md')):
     custom = bool(re.search(r'^custom:\s*true', content, re.MULTILINE))
     # Mark as in_use if custom or referenced in cron jobs
     in_use = custom or name in cron_skills
-    skills.append({'category': cat, 'name': name, 'path': cat + '/' + name, 'content': content, 'custom': custom, 'in_use': in_use})
+    # Mark as used if actually loaded in a session
+    used = name in used_skills
+    skills.append({'category': cat, 'name': name, 'path': cat + '/' + name, 'content': content, 'custom': custom, 'in_use': in_use, 'used': used})
 print(json.dumps(skills))
 " 2>/dev/null || echo "[]")
 
