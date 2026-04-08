@@ -749,6 +749,18 @@
         "description": "Super admin only. Powers nobody else has: fly (move freely through air, ignore gravity), disappear (invisible to other players, can still see and interact), telekinesis (pick up and move any object or character from a distance), plus room for more. Triggered via a hidden god mode panel only visible to the super admin account. Can be used in any server."
       },
       {
+        "task": "Phase 3 — Super admin oversight dashboard: see all servers, reports, and bans platform-wide",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "Super admin only. One dashboard showing: all active servers, all open reports across every server, all bans issued by any admin. Can override any local admin decision, issue platform-wide bans, or close any server. Server admins only see their own server. Super admin sees everything."
+      },
+      {
+        "task": "Phase 3 — Moderation hierarchy: server admin handles own server, super admin overrides all",
+        "difficulty": "easy",
+        "impact": "high",
+        "description": "Clear role rules: server owner = local admin, can kick/ban within their server only. Super admin = platform authority, can intervene in any server, override any decision, ban platform-wide. If a server admin ignores a report or is the problem, super admin steps in. Enforced at the permission level in Firebase."
+      },
+      {
         "task": "Phase 3 — Super admin role: owner can demote or block rogue admins",
         "difficulty": "medium",
         "impact": "high",
