@@ -383,7 +383,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       researchHtml = `<div class="project-research">
         <span style="font-size:var(--fs-xs);color:var(--text-3);margin-right:6px;">Research:</span>
-        ${p.research.map(file => `<a href="reports.html?open=${encodeURIComponent(file)}" class="research-link"><i data-lucide="book-open" style="width:11px;height:11px"></i>${esc(shortTitle(file))}</a>`).join('')}
+        ${p.research.map(file => `<a href="knowledge.html?open=${encodeURIComponent(file)}" class="research-link"><i data-lucide="book-open" style="width:11px;height:11px"></i>${esc(shortTitle(file))}</a>`).join('')}
       </div>`;
     }
 
