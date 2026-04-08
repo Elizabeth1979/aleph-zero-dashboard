@@ -575,10 +575,22 @@
         "description": "Serialize scene to JSON, save to localStorage. Load on return. Multiple save slots."
       },
       {
+        "task": "Phase 1 — Camera controls: zoom in/out, pan, rotate around the house",
+        "difficulty": "easy",
+        "impact": "high",
+        "description": "Three.js OrbitControls. Mouse scroll to zoom, drag to rotate, right-click to pan. Touch support for mobile too."
+      },
+      {
         "task": "Phase 1 — Share via link: encode scene as URL or export JSON file",
         "difficulty": "medium",
         "impact": "medium",
         "description": "View-only share link. Either URL-encoded state or download/upload JSON file. No backend needed."
+      },
+      {
+        "task": "Phase 2 — Character gestures and emotes: flips, celebrations, dances",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "Characters can perform emotes — Ronaldo-style celebrations, flips, dances, flicks. Player triggers via emote menu. Animations built with Three.js AnimationMixer. Start with 5-10 emotes, expandable as add-ons or purchasable with coins."
       },
       {
         "task": "Phase 2 — Simple NPC characters walking around",
