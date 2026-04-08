@@ -11,7 +11,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <link rel="stylesheet" href="shared.css">
-<link rel="stylesheet" href="../a11y-widget.css">
 <style>
   /* ── Workflow grid ───────────────────────────────────────── */
   .wf-grid {
@@ -205,9 +204,6 @@
 
 <script src="utils.js?v=5"></script>
 <script src="../data.js"></script>
-<link rel="stylesheet" href="../a11y-tester.css">
-<script src="../a11y-widget.js"></script>
-<script src="../a11y-tester.js"></script>
 <script>
 const WORKFLOWS = [
   {
@@ -391,5 +387,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (typeof lucide !== 'undefined') lucide.createIcons();
 });
 </script>
+<script src="https://elizabeth1979.github.io/a11y-engineering-toolkit/ux-widget.iife.js"></script>
+<script src="https://elizabeth1979.github.io/a11y-engineering-toolkit/audit-panel.iife.js"></script>
 </body>
 </html>
