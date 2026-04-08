@@ -535,11 +535,20 @@
   {
     "id": "fun-building",
     "name": "Fun Building",
-    "status": "planned",
+    "status": "in_progress",
     "description": "A web-based house builder game for kids. Place rooms, add furniture, paint everything. Built by Elli + kid together, AI writes the code. Phase 1: static 3D builder with localStorage saves. Phase 2: NPCs, time/seasons, avatars, in-game coins.",
     "started": "2026-04-08",
-    "repo": "",
-    "links": [],
+    "repo": "~/fun-building",
+    "links": [
+      {
+        "label": "GitHub repo",
+        "url": "https://github.com/Elizabeth1979/fun-building"
+      },
+      {
+        "label": "Live site",
+        "url": "https://elizabeth1979.github.io/fun-building/"
+      }
+    ],
     "notes_path": "",
     "milestones": [],
     "features": [],
