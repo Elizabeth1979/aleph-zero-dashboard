@@ -496,6 +496,12 @@
         "difficulty": "medium",
         "impact": "high",
         "description": "Treat Melio conversational UI work as part of the broader accessibility toolkit roadmap."
+      },
+      {
+        "task": "Inventory all accessibility-related portfolio items and include them in the shared toolkit scope",
+        "difficulty": "easy",
+        "impact": "high",
+        "description": "Anything accessibility-related in the portfolio should be shareable through the Home \u2192 Work bridge, not only the first UI tools."
       }
     ],
     "features": [
