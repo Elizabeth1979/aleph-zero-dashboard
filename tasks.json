@@ -1,5 +1,8 @@
 [
   {
+    "_instructions": "After ANY edit to this file, run: bash ~/.hermes/dashboard/publish.sh"
+  },
+  {
     "id": 2,
     "task": "Pay company annual fee",
     "added": "2026-04-03",
