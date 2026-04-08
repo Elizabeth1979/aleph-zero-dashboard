@@ -478,6 +478,24 @@
         "difficulty": "easy",
         "impact": "high",
         "description": "Lock the actual scope of the toolkit before building the Home \u2192 Work bridge so we share the whole accessibility system, not just two UI modules."
+      },
+      {
+        "task": "Make toolkit docs/resources/research pages shareable in the local Home \u2192 Work bridge",
+        "difficulty": "easy",
+        "impact": "high",
+        "description": "Share research/docs/resources as modules too, not just code."
+      },
+      {
+        "task": "Make toolkit skills shareable \u2014 designer and developer skill bundles for work use",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "Package the accessibility skills/commands so they can be used in the work environment too."
+      },
+      {
+        "task": "Include Melio Conversational UI MVP as a shareable accessibility module in the toolkit plan",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "Treat Melio conversational UI work as part of the broader accessibility toolkit roadmap."
       }
     ],
     "features": [
