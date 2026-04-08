@@ -581,6 +581,12 @@
         "description": "Serialize scene to JSON, save to localStorage. Load on return. Multiple save slots."
       },
       {
+        "task": "Phase 1 \u2014 Secret god mode: hidden shortcut unlocks super admin powers for testing",
+        "difficulty": "easy",
+        "impact": "high",
+        "description": "Hardcoded secret \u2014 a hidden keyboard shortcut or URL parameter (e.g. ?god=true) that unlocks super admin mode with no login needed. Shows a god mode indicator only visible to the super admin. Used for testing powers (fly, disappear, telekinesis) during Phase 1 and 2. Replaced by real Supabase role-based auth in Phase 3 \u2014 same powers, proper login."
+      },
+      {
         "task": "Phase 1 \u2014 Input abstraction layer: unified input system for all device types",
         "difficulty": "medium",
         "impact": "high",
