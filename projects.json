@@ -743,6 +743,12 @@
         "description": "Admin sees report queue. Can warn, kick, or permanently ban a player. Banned players cannot join rooms or log in."
       },
       {
+        "task": "Phase 3 — Super admin god mode: fly, disappear, telekinesis, and exclusive powers",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "Super admin only. Powers nobody else has: fly (move freely through air, ignore gravity), disappear (invisible to other players, can still see and interact), telekinesis (pick up and move any object or character from a distance), plus room for more. Triggered via a hidden god mode panel only visible to the super admin account. Can be used in any server."
+      },
+      {
         "task": "Phase 3 — Super admin role: owner can demote or block rogue admins",
         "difficulty": "medium",
         "impact": "high",
