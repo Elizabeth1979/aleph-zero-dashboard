@@ -326,8 +326,17 @@
     "status": "in_progress",
     "description": "Modular accessibility toolkit for developers, QA, product designers, and AI agents. Includes MCP, embeddable UI tools, skills/commands, docs, prompts, and research assets. Starting with Hermes dashboard, then work use and Melio.",
     "started": "2026-04-07",
-    "repo": "",
-    "links": [],
+    "repo": "~/Projects/a11y-engineering-toolkit",
+    "links": [
+      {
+        "label": "Toolkit page",
+        "url": "https://elizabeth1979.github.io/a11y-engineering-toolkit/"
+      },
+      {
+        "label": "GitHub repo",
+        "url": "https://github.com/Elizabeth1979/a11y-engineering-toolkit"
+      }
+    ],
     "research": [
       "A11y Engineering Toolkit Research.md",
       "Generative UI Research.md",
