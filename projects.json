@@ -324,7 +324,7 @@
     "id": "a11y-toolkit",
     "name": "A11y Engineering Toolkit",
     "status": "in_progress",
-    "description": "Modular accessibility engineering platform for developers, QA, and product designers. Modules are independently installable. Built for learning and demonstration \u2014 showing how to improve product accessibility through testing, visual auditing, and UX customization. Starting with Hermes dashboard, then Melio.",
+    "description": "Modular accessibility toolkit for developers, QA, product designers, and AI agents. Includes MCP, embeddable UI tools, skills/commands, docs, prompts, and research assets. Starting with Hermes dashboard, then work use and Melio.",
     "started": "2026-04-07",
     "repo": "",
     "links": [],
@@ -472,11 +472,20 @@
         "difficulty": "medium",
         "impact": "high",
         "description": "Use one real module first: the A11y Audit Panel or the A11y UX Widget. Confirm local-only execution and explicit export only."
+      },
+      {
+        "task": "Define A11y Toolkit v1 module inventory \u2014 MCP, audit panel, UX widget, designer skill, developer skill, Android app research/docs",
+        "difficulty": "easy",
+        "impact": "high",
+        "description": "Lock the actual scope of the toolkit before building the Home \u2192 Work bridge so we share the whole accessibility system, not just two UI modules."
       }
     ],
     "features": [
       "A11y Audit Panel (a11y-tester.js) \u2014 visual in-page accessibility auditor with issue highlighting",
-      "A11y UX Widget (a11y-widget.js) \u2014 floating customization panel: contrast, fonts, motion, reading guide, color blindness simulation"
+      "A11y UX Widget (a11y-widget.js) \u2014 floating customization panel: contrast, fonts, motion, reading guide, color blindness simulation",
+      "Accessibility MCP foundation \u2014 a11y-expert-mcp as a core toolkit module",
+      "Accessibility skills/commands for designers and developers",
+      "Android accessibility app research as future toolkit input"
     ]
   },
   {
