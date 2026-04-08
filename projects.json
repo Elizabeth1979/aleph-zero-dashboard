@@ -590,13 +590,19 @@
         "task": "Phase 2 — Character gestures and emotes: flips, celebrations, dances",
         "difficulty": "medium",
         "impact": "high",
-        "description": "Characters perform full root-motion emotes — the whole body moves through 3D space, not in-place wiggling. Ronaldo flip = character launches, rotates fully in the air, lands. Face follows the body through the entire motion (no floating head). Built with Three.js AnimationMixer + root motion bone translation. Feels like watching it happen in real life, not like Roblox body-only loops. Start with 5-10 emotes, expandable as add-ons or purchasable with coins."
+        "description": "Phase A: in-place animations first — character flips, dances, celebrates on the spot. Looks good, simpler to build. Phase B upgrade: add root motion so the whole body moves through 3D space — character launches, rotates in air, lands. Face follows body throughout. No rebuild needed, root motion is layered on top. Built with Three.js AnimationMixer. Start with 5-10 emotes, expandable as add-ons or purchasable with coins."
       },
       {
         "task": "Phase 2 — Simple NPC characters walking around",
         "difficulty": "hard",
         "impact": "medium",
         "description": "Basic animated characters with simple pathfinding inside the house. Not AI-driven, just scripted routines."
+      },
+      {
+        "task": "Phase 2 — Graphics quality toggle: simple mode vs realistic mode",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "One button or slider in settings. Simple mode: flat colors, no shadows, fast on any device. Realistic mode: dynamic shadows, better lighting, ambient occlusion, reflections. Three.js supports both — shadows and post-processing are just toggled on/off. Default is simple so the game runs well for everyone."
       },
       {
         "task": "Phase 2 — Day/night lighting cycle",
