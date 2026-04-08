@@ -53,7 +53,7 @@
     "id": "a11y-app",
     "name": "A11y App",
     "status": "in_progress",
-    "description": "Android accessibility app — helps users customize UI for their needs. High contrast, color schemes, AI-driven simplification.",
+    "description": "Android accessibility app \u2014 helps users customize UI for their needs. High contrast, color schemes, AI-driven simplification.",
     "started": "2026-04-04",
     "links": [],
     "research": [
@@ -62,19 +62,19 @@
     "notes_path": "A11y App Research/",
     "milestones": [],
     "features": [
-      "Research phase — competitive analysis of 10+ Play Store apps",
+      "Research phase \u2014 competitive analysis of 10+ Play Store apps",
       "Feature matrix comparing existing accessibility tools",
       "Product plan with MVP scope defined",
       "MCP product plan for AI-powered accessibility"
     ],
     "tasks": [
       {
-        "task": "Fix high contrast mode — highlight card borders & non-text UI elements",
+        "task": "Fix high contrast mode \u2014 highlight card borders & non-text UI elements",
         "difficulty": "medium",
         "impact": "high"
       },
       {
-        "task": "Add color scheme options — dark mode, light mode, custom user color picker",
+        "task": "Add color scheme options \u2014 dark mode, light mode, custom user color picker",
         "difficulty": "medium",
         "impact": "high"
       },
@@ -89,7 +89,7 @@
     "id": "dashboard",
     "name": "Hermes Dashboard",
     "status": "in_progress",
-    "description": "Bento-grid dashboard — tasks, memory, cron, skills, projects. Elli's single source of truth.",
+    "description": "Bento-grid dashboard \u2014 tasks, memory, cron, skills, projects. Elli's single source of truth.",
     "started": "2026-04-03",
     "repo": "~/.hermes/dashboard",
     "links": [
@@ -119,12 +119,12 @@
         "impact": "medium"
       },
       {
-        "task": "Security hardening — CSP, pin Lucide + SRI, Object.create(null)",
+        "task": "Security hardening \u2014 CSP, pin Lucide + SRI, Object.create(null)",
         "difficulty": "medium",
         "impact": "medium"
       },
       {
-        "task": "A11y panel — custom font picker, color pickers for text/background/links",
+        "task": "A11y panel \u2014 custom font picker, color pickers for text/background/links",
         "difficulty": "hard",
         "impact": "medium"
       },
@@ -186,7 +186,7 @@
     "id": "dashboard-rebuild",
     "name": "Dashboard Rebuild",
     "status": "in_progress",
-    "description": "Rebuild the Hermes dashboard from scratch using React + a vetted accessible design system. Goal: component-based architecture so all pages share the same templates, header, layout — no more 24 separate HTML files.",
+    "description": "Rebuild the Hermes dashboard from scratch using React + a vetted accessible design system. Goal: component-based architecture so all pages share the same templates, header, layout \u2014 no more 24 separate HTML files.",
     "category": "infrastructure",
     "research": [
       "A11y Engineering Toolkit Research.md"
@@ -196,12 +196,12 @@
     "milestones": [],
     "tasks": [
       {
-        "task": "Research phase: Research accessible design systems: Shopify Polaris, Radix UI, Adobe Spectrum, Carbon — compare a11y compliance, theming, React support",
+        "task": "Research phase: Research accessible design systems: Shopify Polaris, Radix UI, Adobe Spectrum, Carbon \u2014 compare a11y compliance, theming, React support",
         "difficulty": "easy",
         "impact": "high"
       },
       {
-        "task": "Research phase: Research Storybook — evaluate if useful for this project scope",
+        "task": "Research phase: Research Storybook \u2014 evaluate if useful for this project scope",
         "difficulty": "easy",
         "impact": "low"
       },
@@ -221,7 +221,7 @@
         "impact": "medium"
       },
       {
-        "task": "Architecture & setup: Create separate dev branch or repo (e.g. hermes-dashboard-v2) — keep v1 in production",
+        "task": "Architecture & setup: Create separate dev branch or repo (e.g. hermes-dashboard-v2) \u2014 keep v1 in production",
         "difficulty": "easy",
         "impact": "high"
       },
@@ -246,7 +246,7 @@
         "impact": "high"
       },
       {
-        "task": "Build core components: Build Header component (logo, status dots, restart button) — shared across all pages",
+        "task": "Build core components: Build Header component (logo, status dots, restart button) \u2014 shared across all pages",
         "difficulty": "medium",
         "impact": "high"
       },
@@ -321,7 +321,7 @@
     "id": "a11y-toolkit",
     "name": "A11y Engineering Toolkit",
     "status": "in_progress",
-    "description": "Modular accessibility engineering platform for developers, QA, and product designers. Modules are independently installable. Built for learning and demonstration — showing how to improve product accessibility through testing, visual auditing, and UX customization. Starting with Hermes dashboard, then Melio.",
+    "description": "Modular accessibility engineering platform for developers, QA, and product designers. Modules are independently installable. Built for learning and demonstration \u2014 showing how to improve product accessibility through testing, visual auditing, and UX customization. Starting with Hermes dashboard, then Melio.",
     "started": "2026-04-07",
     "repo": "",
     "links": [],
@@ -332,33 +332,33 @@
     ],
     "tasks": [
       {
-        "task": "Research code annotations as a11y constraints — JSDoc tags, ESLint rules, CSS comments",
+        "task": "Research code annotations as a11y constraints \u2014 JSDoc tags, ESLint rules, CSS comments",
         "difficulty": "easy",
         "impact": "high"
       },
       {
-        "task": "Add pa11y-ci alongside axe in GitHub Actions — runs HTMLCS + axe together, catches more issues",
+        "task": "Add pa11y-ci alongside axe in GitHub Actions \u2014 runs HTMLCS + axe together, catches more issues",
         "difficulty": "medium",
         "impact": "high",
         "description": "Research finding: pa11y-ci runs both axe and HTMLCS engines. Catches things axe misses. Free and open source."
       },
       {
-        "task": "Evaluate IBM Equal Access Checker as a third CI layer — 400+ rules, free, open source",
+        "task": "Evaluate IBM Equal Access Checker as a third CI layer \u2014 400+ rules, free, open source",
         "difficulty": "easy",
         "impact": "medium",
         "description": "Research finding: IBM Equal Access has broader rule coverage than axe. Worth evaluating as an audit-level check."
       },
       {
-        "task": "Build AI-augmented PR suggestions — axe finds violation, LLM reads HTML context, suggests fix as PR comment",
+        "task": "Build AI-augmented PR suggestions \u2014 axe finds violation, LLM reads HTML context, suggests fix as PR comment",
         "difficulty": "hard",
         "impact": "high",
-        "description": "Research finding: nobody has shipped this in production. Real gap. Architecture: axe violation → LLM reads surrounding HTML → suggests accessible name/fix → posts as PR comment. Estimated 2-3 day build."
+        "description": "Research finding: nobody has shipped this in production. Real gap. Architecture: axe violation \u2192 LLM reads surrounding HTML \u2192 suggests accessible name/fix \u2192 posts as PR comment. Estimated 2-3 day build."
       },
       {
         "task": "Define axe rule profiles: developer profile (skip contrast) and design-review profile (contrast + color only)",
         "difficulty": "easy",
         "impact": "high",
-        "description": "Use axe tags (wcag2a, wcag2aa, best-practice) to create separate profiles. Developers shouldn't be blocked by contrast issues — that's a design concern."
+        "description": "Use axe tags (wcag2a, wcag2aa, best-practice) to create separate profiles. Developers shouldn't be blocked by contrast issues \u2014 that's a design concern."
       },
       {
         "task": "Define toolkit module list and install interface (npm, MCP, GitHub Action, CLI)",
@@ -376,28 +376,28 @@
         "impact": "medium"
       },
       {
-        "task": "Module: GitHub Actions workflow — run axe-core on every push, fail on WCAG AA violations",
+        "task": "Module: GitHub Actions workflow \u2014 run axe-core on every push, fail on WCAG AA violations",
         "difficulty": "medium",
         "impact": "high",
         "description": "Start with Hermes dashboard GitHub Pages URL as test target. Reusable workflow so Melio can adopt it."
       },
       {
-        "task": "Module: GitHub Actions — add PR comment with a11y violation report",
+        "task": "Module: GitHub Actions \u2014 add PR comment with a11y violation report",
         "difficulty": "medium",
         "impact": "high"
       },
       {
-        "task": "Module: MCP server — integrate existing a11y-expert-mcp as toolkit module",
+        "task": "Module: MCP server \u2014 integrate existing a11y-expert-mcp as toolkit module",
         "difficulty": "easy",
         "impact": "high"
       },
       {
-        "task": "Module: CLI tool — run a11y audit from terminal on any URL",
+        "task": "Module: CLI tool \u2014 run a11y audit from terminal on any URL",
         "difficulty": "medium",
         "impact": "medium"
       },
       {
-        "task": "Module: AI agent prompts — reusable agent workflows for a11y review, ARIA fix, contrast check",
+        "task": "Module: AI agent prompts \u2014 reusable agent workflows for a11y review, ARIA fix, contrast check",
         "difficulty": "medium",
         "impact": "medium"
       },
@@ -407,23 +407,23 @@
         "impact": "high"
       },
       {
-        "task": "Test full pipeline on Hermes dashboard — prove it works end to end",
+        "task": "Test full pipeline on Hermes dashboard \u2014 prove it works end to end",
         "difficulty": "medium",
         "impact": "high"
       },
       {
-        "task": "Adapt pipeline for Melio — document what changes for a React/enterprise codebase",
+        "task": "Adapt pipeline for Melio \u2014 document what changes for a React/enterprise codebase",
         "difficulty": "hard",
         "impact": "high"
       },
       {
-        "task": "Module: A11y Audit Panel — extract a11y-tester.js from dashboard into a standalone embeddable script (drop-in for any webpage)",
+        "task": "Module: A11y Audit Panel \u2014 extract a11y-tester.js from dashboard into a standalone embeddable script (drop-in for any webpage)",
         "difficulty": "medium",
         "impact": "high",
         "description": "Currently lives in the Hermes dashboard as a11y-tester.js. Package it so QA and developers can drop it into any site to run visual accessibility audits without installing anything."
       },
       {
-        "task": "Module: A11y UX Widget — extract a11y-widget.js from dashboard into a standalone embeddable script (contrast, fonts, motion, reading guide, color picker)",
+        "task": "Module: A11y UX Widget \u2014 extract a11y-widget.js from dashboard into a standalone embeddable script (contrast, fonts, motion, reading guide, color picker)",
         "difficulty": "medium",
         "impact": "high",
         "description": "Currently lives in the Hermes dashboard as a11y-widget.js. Package it so product designers can demo live accessibility UX customization on any site."
@@ -441,28 +441,28 @@
         "description": "A single page that demos: audit panel, UX widget, CI results, MCP usage. For showing to Melio colleagues."
       },
       {
-        "task": "Research Generative UI — understand how it works, existing implementations, accessibility angle",
+        "task": "Research Generative UI \u2014 understand how it works, existing implementations, accessibility angle",
         "difficulty": "easy",
         "impact": "high",
-        "description": "Starting point: https://research.google/blog/generative-ui-a-rich-custom-visual-interactive-user-experience-for-any-prompt/ — Research saved to vault A11y App Research folder. Key questions: can it run on any site? Vercel AI SDK streamUI? Accessibility use case (user-directed UI regeneration)."
+        "description": "Starting point: https://research.google/blog/generative-ui-a-rich-custom-visual-interactive-user-experience-for-any-prompt/ \u2014 Research saved to vault A11y App Research folder. Key questions: can it run on any site? Vercel AI SDK streamUI? Accessibility use case (user-directed UI regeneration)."
       },
       {
-        "task": "Module: Generative UI — let users say 'show this differently' and regenerate the layout using AI",
+        "task": "Module: Generative UI \u2014 let users say 'show this differently' and regenerate the layout using AI",
         "difficulty": "hard",
         "impact": "high",
-        "description": "AI-driven UI customization: user describes their preference and the interface adapts. Explore: Vercel AI SDK for own sites, browser extension approach for any site. Strong a11y use case — users with cognitive/visual needs can request simpler layouts, larger spacing, plain language."
+        "description": "AI-driven UI customization: user describes their preference and the interface adapts. Explore: Vercel AI SDK for own sites, browser extension approach for any site. Strong a11y use case \u2014 users with cognitive/visual needs can request simpler layouts, larger spacing, plain language."
       }
     ],
     "features": [
-      "A11y Audit Panel (a11y-tester.js) — visual in-page accessibility auditor with issue highlighting",
-      "A11y UX Widget (a11y-widget.js) — floating customization panel: contrast, fonts, motion, reading guide, color blindness simulation"
+      "A11y Audit Panel (a11y-tester.js) \u2014 visual in-page accessibility auditor with issue highlighting",
+      "A11y UX Widget (a11y-widget.js) \u2014 floating customization panel: contrast, fonts, motion, reading guide, color blindness simulation"
     ]
   },
   {
     "id": "melio-chat-mvp",
     "name": "Melio Conversational UI (MVP)",
     "status": "in_progress",
-    "description": "Voice/chat interface on top of Melio's app — lets users ask in plain language: what's outstanding, pay this, add a bank account. Accessibility play: removes the need to navigate complex tables. No internal repo used — built on top of public-facing Melio API calls captured via DevTools.",
+    "description": "Voice/chat interface on top of Melio's app \u2014 lets users ask in plain language: what's outstanding, pay this, add a bank account. Accessibility play: removes the need to navigate complex tables. No internal repo used \u2014 built on top of public-facing Melio API calls captured via DevTools.",
     "started": "2026-04-07",
     "repo": "",
     "links": [],
@@ -471,7 +471,7 @@
     "features": [],
     "tasks": [
       {
-        "task": "Research: Find and install Chrome DevTools MCP — enables agent to inspect network calls, DOM, console directly from browser",
+        "task": "Research: Find and install Chrome DevTools MCP \u2014 enables agent to inspect network calls, DOM, console directly from browser",
         "difficulty": "easy",
         "impact": "high",
         "description": "Candidate: AgentDeskAI/browser-tools-mcp or similar. Search npm/GitHub, install, configure in Hermes config.yaml."
@@ -492,40 +492,40 @@
         "task": "Research: Check Melio's ToS for automated access / scripting restrictions",
         "difficulty": "easy",
         "impact": "high",
-        "description": "Quick read of melio.com/terms — flag anything that blocks local MVP use."
+        "description": "Quick read of melio.com/terms \u2014 flag anything that blocks local MVP use."
       },
       {
-        "task": "Research: Check if Melio already has a conversational/chat feature — and what it can do",
+        "task": "Research: Check if Melio already has a conversational/chat feature \u2014 and what it can do",
         "difficulty": "easy",
         "impact": "medium",
         "description": "Is it a support bot or action-taking? What gaps does the MVP fill?"
       },
       {
-        "task": "Build: MCP agent layer — tools wrapping Melio API calls (get_outstanding, pay_bill, add_bank_account, add_card)",
+        "task": "Build: MCP agent layer \u2014 tools wrapping Melio API calls (get_outstanding, pay_bill, add_bank_account, add_card)",
         "difficulty": "medium",
         "impact": "high",
         "description": "Python MCP server. Tools call Melio endpoints with user's session token. Use Claude Opus via delegate_task."
       },
       {
-        "task": "Build: Simple chat UI — text input, plain language responses",
+        "task": "Build: Simple chat UI \u2014 text input, plain language responses",
         "difficulty": "medium",
         "impact": "high",
         "description": "Next.js or plain HTML+JS. Connects to MCP agent. Runs locally first."
       },
       {
-        "task": "Build: Add voice input — Web Speech API (browser STT, no extra cost)",
+        "task": "Build: Add voice input \u2014 Web Speech API (browser STT, no extra cost)",
         "difficulty": "easy",
         "impact": "high",
         "description": "Press-to-talk button, transcript fed to the same chat handler. Works in Chrome."
       },
       {
-        "task": "Demo: Record a Loom of the full flow — ask, pay, add account",
+        "task": "Demo: Record a Loom of the full flow \u2014 ask, pay, add account",
         "difficulty": "easy",
         "impact": "high",
         "description": "Show it running locally. Use real Melio account. Prepare 2-min demo script."
       },
       {
-        "task": "Demo: Optional — deploy to Vercel for a shareable link",
+        "task": "Demo: Optional \u2014 deploy to Vercel for a shareable link",
         "difficulty": "easy",
         "impact": "medium",
         "description": "Next.js + Vercel, needs env var for session/auth. Only if Loom isn't enough."
@@ -545,232 +545,172 @@
     "features": [],
     "tasks": [
       {
-        "task": "Phase 1 — Set up project: Vite + Three.js + GitHub Pages",
+        "task": "Phase 1 \u2014 Set up project: Vite + Three.js + GitHub Pages",
         "difficulty": "easy",
         "impact": "high",
         "description": "Scaffold the repo. Vite for build, Three.js for 3D rendering, deploy to GitHub Pages. No backend."
       },
       {
-        "task": "Phase 1 — 3D room builder: drag to place and resize rooms",
+        "task": "Phase 1 \u2014 3D room builder: drag to place and resize rooms",
         "difficulty": "hard",
         "impact": "high",
         "description": "Core mechanic. Click to add rooms, drag to resize, snap to grid. Three.js with raycasting for interaction."
       },
       {
-        "task": "Phase 1 — Furniture library: drag and drop items into rooms",
+        "task": "Phase 1 \u2014 Furniture library: drag and drop items into rooms",
         "difficulty": "medium",
         "impact": "high",
         "description": "Panel of furniture items. Drag into scene, place on floors. Start with simple box-style 3D models."
       },
       {
-        "task": "Phase 1 — Color picker: paint walls, floors, furniture, and exterior",
+        "task": "Phase 1 \u2014 Color picker: paint walls, floors, furniture, and exterior",
         "difficulty": "medium",
         "impact": "high",
         "description": "Click any surface to paint it. Custom color picker (not just presets). Interior + exterior walls separate."
       },
       {
-        "task": "Phase 1 — Save and load: persist project to localStorage",
+        "task": "Phase 1 \u2014 Save and load: persist project to localStorage",
         "difficulty": "easy",
         "impact": "high",
         "description": "Serialize scene to JSON, save to localStorage. Load on return. Multiple save slots."
       },
       {
-        "task": "Phase 1 — Input abstraction layer: unified input system for all device types",
+        "task": "Phase 1 \u2014 Input abstraction layer: unified input system for all device types",
         "difficulty": "medium",
         "impact": "high",
-        "description": "Build one input layer that translates all inputs into the same game commands. Game never checks 'is this a keyboard?' — it just receives 'move left', 'select', 'cancel'. Mouse + keyboard supported in Phase 1. Touch and gamepad plug in on top in Phase 2 with no rewiring needed."
+        "description": "Build one input layer that translates all inputs into the same game commands. Game never checks 'is this a keyboard?' \u2014 it just receives 'move left', 'select', 'cancel'. Mouse + keyboard supported in Phase 1. Touch and gamepad plug in on top in Phase 2 with no rewiring needed."
       },
       {
-        "task": "Phase 1 — Keyboard and mouse input: WASD/arrows for movement, click to interact",
+        "task": "Phase 1 \u2014 Keyboard and mouse input: WASD/arrows for movement, click to interact",
         "difficulty": "easy",
         "impact": "high",
         "description": "Basic keyboard controls (WASD, arrows, hotkeys) and mouse (click, drag, scroll). Feeds into the input abstraction layer."
       },
       {
-        "task": "Phase 1 — Camera controls: zoom in/out, pan, rotate around the house",
+        "task": "Phase 1 \u2014 Camera controls: zoom in/out, pan, rotate around the house",
         "difficulty": "easy",
         "impact": "high",
         "description": "Three.js OrbitControls. Mouse scroll to zoom, drag to rotate, right-click to pan. Touch support for mobile too."
       },
       {
-        "task": "Phase 1 — Share via link: encode scene as URL or export JSON file",
+        "task": "Phase 1 \u2014 Share via link: encode scene as URL or export JSON file",
         "difficulty": "medium",
         "impact": "medium",
         "description": "View-only share link. Either URL-encoded state or download/upload JSON file. No backend needed."
       },
       {
-        "task": "Phase 2 — Touch input: mobile and tablet support with tap, swipe, pinch-to-zoom",
+        "task": "Phase 2 \u2014 Touch input: mobile and tablet support with tap, swipe, pinch-to-zoom",
         "difficulty": "medium",
         "impact": "high",
         "description": "Plug touch events into the input abstraction layer. Tap = click, swipe = move, pinch = zoom. UI buttons sized for fingers. Works on any phone or tablet browser."
       },
       {
-        "task": "Phase 2 — Gamepad/joystick input: Web Gamepad API support",
+        "task": "Phase 2 \u2014 Gamepad/joystick input: Web Gamepad API support",
         "difficulty": "medium",
         "impact": "medium",
-        "description": "Browser Gamepad API — works in Chrome and Firefox. Left stick = move, buttons = actions. Plug into input abstraction layer. Works with most USB and Bluetooth controllers (Xbox, PlayStation, generic joysticks)."
+        "description": "Browser Gamepad API \u2014 works in Chrome and Firefox. Left stick = move, buttons = actions. Plug into input abstraction layer. Works with most USB and Bluetooth controllers (Xbox, PlayStation, generic joysticks)."
       },
       {
-        "task": "Phase 2 — Character gestures and emotes: flips, celebrations, dances",
+        "task": "Phase 2 \u2014 Character gestures and emotes: flips, celebrations, dances",
         "difficulty": "medium",
         "impact": "high",
-        "description": "Phase A: in-place animations first — character flips, dances, celebrates on the spot. Looks good, simpler to build. Phase B upgrade: add root motion so the whole body moves through 3D space — character launches, rotates in air, lands. Face follows body throughout. No rebuild needed, root motion is layered on top. Built with Three.js AnimationMixer. Start with 5-10 emotes, expandable as add-ons or purchasable with coins."
+        "description": "Phase A: in-place animations first \u2014 character flips, dances, celebrates on the spot. Looks good, simpler to build. Phase B upgrade: add root motion so the whole body moves through 3D space \u2014 character launches, rotates in air, lands. Face follows body throughout. No rebuild needed, root motion is layered on top. Built with Three.js AnimationMixer. Start with 5-10 emotes, expandable as add-ons or purchasable with coins."
       },
       {
-        "task": "Phase 2 — Simple NPC characters walking around",
+        "task": "Phase 2 \u2014 Simple NPC characters walking around",
         "difficulty": "hard",
         "impact": "medium",
         "description": "Basic animated characters with simple pathfinding inside the house. Not AI-driven, just scripted routines."
       },
       {
-        "task": "Phase 2 — Graphics quality toggle: simple mode vs realistic mode",
+        "task": "Phase 2 \u2014 Graphics quality toggle: simple mode vs realistic mode",
         "difficulty": "medium",
         "impact": "high",
-        "description": "One button or slider in settings. Simple mode: flat colors, no shadows, fast on any device. Realistic mode: dynamic shadows, better lighting, ambient occlusion, reflections. Three.js supports both — shadows and post-processing are just toggled on/off. Default is simple so the game runs well for everyone."
+        "description": "One button or slider in settings. Simple mode: flat colors, no shadows, fast on any device. Realistic mode: dynamic shadows, better lighting, ambient occlusion, reflections. Three.js supports both \u2014 shadows and post-processing are just toggled on/off. Default is simple so the game runs well for everyone."
       },
       {
-        "task": "Phase 2 — Day/night lighting cycle",
+        "task": "Phase 2 \u2014 Day/night lighting cycle",
         "difficulty": "medium",
         "impact": "medium",
         "description": "Three.js directional light + ambient. Sky color + light intensity shift over in-game time."
       },
       {
-        "task": "Phase 2 — Days of week and seasons",
+        "task": "Phase 2 \u2014 Days of week and seasons",
         "difficulty": "easy",
         "impact": "medium",
         "description": "In-game calendar. Season changes ambient color + environment. Days shown in UI."
       },
       {
-        "task": "Phase 2 — Game clock with pause, play, and speed controls",
+        "task": "Phase 2 \u2014 Game clock with pause, play, and speed controls",
         "difficulty": "medium",
         "impact": "medium",
         "description": "Player can pause, play, or skip time. Fast clock mode. Controls shown in HUD."
       },
       {
-        "task": "Phase 2 — Avatar system: pick and assign characters to houses",
+        "task": "Phase 2 \u2014 Avatar system: pick and assign characters to houses",
         "difficulty": "medium",
         "impact": "high",
         "description": "Kid can design avatar sets. Players pick from available avatars. Assign to household."
       },
       {
-        "task": "Phase 2 — Visual aging: characters change appearance over in-game time",
+        "task": "Phase 2 \u2014 Visual aging: characters change appearance over in-game time",
         "difficulty": "hard",
         "impact": "high",
         "description": "Kids become adults visually. Multiple life stages. Tied to fast game clock."
       },
       {
-        "task": "Phase 2 — In-game coin and token system",
+        "task": "Phase 2 \u2014 In-game coin and token system",
         "difficulty": "medium",
         "impact": "medium",
         "description": "Earn coins by playing. Spend on avatars and furniture. No real money yet."
       },
       {
-        "task": "Phase 2 — Avatar marketplace: buy avatars with in-game coins",
+        "task": "Phase 2 \u2014 Avatar marketplace: buy avatars with in-game coins",
         "difficulty": "hard",
         "impact": "high",
         "description": "Kid-designed avatars listed in a shop. Players buy with coins. Eventually real money too."
       },
       {
-        "task": "Phase 2 — 2D floor plan view alongside 3D",
+        "task": "Phase 2 \u2014 2D floor plan view alongside 3D",
         "difficulty": "hard",
         "impact": "medium",
         "description": "Toggle between top-down 2D plan and 3D walkthrough. Edits sync both views."
       },
       {
-        "task": "Phase 2 — Add-on: Basic needs system (hunger, hygiene, bathroom, health)",
+        "task": "Phase 2 \u2014 Add-on: Basic needs system (hunger, hygiene, bathroom, health)",
         "difficulty": "medium",
         "impact": "high",
-        "description": "Characters have need bars: hunger, hygiene, bathroom, health. Bars drain over time. Player must fulfill them — eat food, shower, use bathroom, take medicine when sick. If ignored, character gets debuffs (stinky, weak, sick). Keeps players engaged and returning."
+        "description": "Characters have need bars: hunger, hygiene, bathroom, health. Bars drain over time. Player must fulfill them \u2014 eat food, shower, use bathroom, take medicine when sick. If ignored, character gets debuffs (stinky, weak, sick). Keeps players engaged and returning."
       },
       {
-        "task": "Phase 2 — Add-on: Sickness and medicine system",
+        "task": "Phase 2 \u2014 Add-on: Sickness and medicine system",
         "difficulty": "easy",
         "impact": "medium",
         "description": "Characters can get sick (low health + untreated needs). Need medicine items placed in the house (cabinet, pharmacy run). Ties into the needs system."
       },
       {
-        "task": "Phase 2 — Add-on: Game modes (Hunger Games, Survival, Normal)",
+        "task": "Phase 2 \u2014 Add-on: Game modes (Hunger Games, Survival, Normal)",
         "difficulty": "medium",
         "impact": "high",
         "description": "Switchable modes on server creation. Normal: relaxed life sim. Survival: needs drain faster, sickness spreads. Hunger Games: last one standing, competitive. Mode is set per server, not per player."
       },
       {
-        "task": "Phase 2 — Add-on: Age-appropriate content system — base game is always kid-safe",
+        "task": "Phase 2 \u2014 Add-on: Age-appropriate content system \u2014 base game is always kid-safe",
         "difficulty": "easy",
         "impact": "high",
         "description": "Base game has zero violence, no weapons, safe for all ages by default. Content rating visible on every server. Super admin can enforce platform-wide content limits."
       },
       {
-        "task": "Phase 2 — Add-on: Combat and weapons mod (off by default, server owner opt-in)",
-        "difficulty": "hard",
-        "impact": "medium",
-        "description": "Optional mod enabled only by server owner at room creation. Adds weapons, combat, GTA-style action — non-realistic, cartoon style, no gore. Not accessible in Normal or kid-safe servers. Admin can disable this mod platform-wide."
-      },
-      {
-        "task": "Phase 3 — Firebase auth and cloud saves",
+        "task": "Phase 3 \u2014 Firebase auth and cloud saves",
         "difficulty": "medium",
         "impact": "high",
         "description": "User accounts. Save projects to cloud. Friends can view each other's builds. Share link becomes persistent."
       },
       {
-        "task": "Phase 3 — Friends can edit shared builds",
-        "difficulty": "hard",
-        "impact": "medium",
-        "description": "Multiplayer editing. Real-time or async. Needs Firebase or similar backend."
-      },
-      {
-        "task": "Phase 3 — Private server rooms: create or join a room with a code",
-        "difficulty": "hard",
-        "impact": "high",
-        "description": "Each player can create a private room and share a join code with friends. Like Minecraft realms or Among Us lobbies. Firebase Realtime DB or websockets. Other players see the same world in real time."
-      },
-      {
-        "task": "Phase 3 — Single-player vs multiplayer mode toggle",
-        "difficulty": "medium",
-        "impact": "high",
-        "description": "On game start, player picks: play solo or join/create a room. Solo uses localStorage only. Multiplayer connects to the server room."
-      },
-      {
-        "task": "Phase 3 — Report system: players can flag/report others for bad behavior",
-        "difficulty": "medium",
-        "impact": "high",
-        "description": "Any player can report another. Report goes to admin queue with reason + timestamp. Reports stored in Firebase."
-      },
-      {
-        "task": "Phase 3 — Admin panel: review reports and ban/block players",
-        "difficulty": "medium",
-        "impact": "high",
-        "description": "Admin sees report queue. Can warn, kick, or permanently ban a player. Banned players cannot join rooms or log in."
-      },
-      {
-        "task": "Phase 3 — Super admin god mode: fly, disappear, telekinesis, and exclusive powers",
+        "task": "Phase 3 \u2014 Super admin god mode: fly, disappear, telekinesis, and exclusive powers",
         "difficulty": "medium",
         "impact": "high",
         "description": "Super admin only. Powers nobody else has: fly (move freely through air, ignore gravity), disappear (invisible to other players, can still see and interact), telekinesis (pick up and move any object or character from a distance), plus room for more. Triggered via a hidden god mode panel only visible to the super admin account. Can be used in any server."
-      },
-      {
-        "task": "Phase 3 — Super admin oversight dashboard: see all servers, reports, and bans platform-wide",
-        "difficulty": "medium",
-        "impact": "high",
-        "description": "Super admin only. One dashboard showing: all active servers, all open reports across every server, all bans issued by any admin. Can override any local admin decision, issue platform-wide bans, or close any server. Server admins only see their own server. Super admin sees everything."
-      },
-      {
-        "task": "Phase 3 — Moderation hierarchy: server admin handles own server, super admin overrides all",
-        "difficulty": "easy",
-        "impact": "high",
-        "description": "Clear role rules: server owner = local admin, can kick/ban within their server only. Super admin = platform authority, can intervene in any server, override any decision, ban platform-wide. If a server admin ignores a report or is the problem, super admin steps in. Enforced at the permission level in Firebase."
-      },
-      {
-        "task": "Phase 3 — Super admin role: owner can demote or block rogue admins",
-        "difficulty": "medium",
-        "impact": "high",
-        "description": "One super admin account (the game owner). Can remove admin privileges from any admin. Prevents admin abuse. Super admin cannot be blocked by regular admins."
-      },
-      {
-        "task": "Phase 3 — Self-service server creation: any player can open their own server instantly",
-        "difficulty": "medium",
-        "impact": "high",
-        "description": "No permission needed. Any logged-in player can create a named private server, share a join code, and become that server's owner. Admin and super admin can still shut down the server or ban the owner if they break rules."
       }
     ]
   },
@@ -784,7 +724,7 @@
     "features": [],
     "tasks": [
       {
-        "task": "Ingest pipeline — chunk + embed files from Obsidian vault",
+        "task": "Ingest pipeline \u2014 chunk + embed files from Obsidian vault",
         "difficulty": "medium",
         "impact": "high",
         "description": "Support .md, .txt, .pdf. Tag by category (therapy, research, kids, general)."
@@ -793,7 +733,7 @@
         "task": "Multilingual embeddings (Hebrew + English)",
         "difficulty": "easy",
         "impact": "high",
-        "description": "Use paraphrase-multilingual-MiniLM-L12-v2 — handles Hebrew natively, no translation needed."
+        "description": "Use paraphrase-multilingual-MiniLM-L12-v2 \u2014 handles Hebrew natively, no translation needed."
       },
       {
         "task": "/rag slash command",
