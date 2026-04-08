@@ -635,6 +635,24 @@
         "description": "Toggle between top-down 2D plan and 3D walkthrough. Edits sync both views."
       },
       {
+        "task": "Phase 2 — Add-on: Basic needs system (hunger, hygiene, bathroom, health)",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "Characters have need bars: hunger, hygiene, bathroom, health. Bars drain over time. Player must fulfill them — eat food, shower, use bathroom, take medicine when sick. If ignored, character gets debuffs (stinky, weak, sick). Keeps players engaged and returning."
+      },
+      {
+        "task": "Phase 2 — Add-on: Sickness and medicine system",
+        "difficulty": "easy",
+        "impact": "medium",
+        "description": "Characters can get sick (low health + untreated needs). Need medicine items placed in the house (cabinet, pharmacy run). Ties into the needs system."
+      },
+      {
+        "task": "Phase 2 — Add-on: Game modes (Hunger Games, Survival, Normal)",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "Switchable modes on server creation. Normal: relaxed life sim. Survival: needs drain faster, sickness spreads. Hunger Games: last one standing, competitive. Mode is set per server, not per player."
+      },
+      {
         "task": "Phase 3 — Firebase auth and cloud saves",
         "difficulty": "medium",
         "impact": "high",
