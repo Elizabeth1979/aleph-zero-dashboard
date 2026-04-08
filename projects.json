@@ -657,6 +657,24 @@
         "difficulty": "medium",
         "impact": "high",
         "description": "On game start, player picks: play solo or join/create a room. Solo uses localStorage only. Multiplayer connects to the server room."
+      },
+      {
+        "task": "Phase 3 — Report system: players can flag/report others for bad behavior",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "Any player can report another. Report goes to admin queue with reason + timestamp. Reports stored in Firebase."
+      },
+      {
+        "task": "Phase 3 — Admin panel: review reports and ban/block players",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "Admin sees report queue. Can warn, kick, or permanently ban a player. Banned players cannot join rooms or log in."
+      },
+      {
+        "task": "Phase 3 — Super admin role: owner can demote or block rogue admins",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "One super admin account (the game owner). Can remove admin privileges from any admin. Prevents admin abuse. Super admin cannot be blocked by regular admins."
       }
     ]
   },
