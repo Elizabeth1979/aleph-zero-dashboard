@@ -590,7 +590,7 @@
         "task": "Phase 2 — Character gestures and emotes: flips, celebrations, dances",
         "difficulty": "medium",
         "impact": "high",
-        "description": "Characters can perform emotes — Ronaldo-style celebrations, flips, dances, flicks. Player triggers via emote menu. Animations built with Three.js AnimationMixer. Start with 5-10 emotes, expandable as add-ons or purchasable with coins."
+        "description": "Characters perform full root-motion emotes — the whole body moves through 3D space, not in-place wiggling. Ronaldo flip = character launches, rotates fully in the air, lands. Face follows the body through the entire motion (no floating head). Built with Three.js AnimationMixer + root motion bone translation. Feels like watching it happen in real life, not like Roblox body-only loops. Start with 5-10 emotes, expandable as add-ons or purchasable with coins."
       },
       {
         "task": "Phase 2 — Simple NPC characters walking around",
