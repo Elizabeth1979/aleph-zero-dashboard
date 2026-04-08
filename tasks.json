@@ -82,6 +82,15 @@
     "description": "Figure out what I want the agent to do when triggered from my work dashboard. Once clear, set up Tailscale so home and work computers can talk privately."
   },
   {
+    "id": 35,
+    "task": "Talk to boss about 2-week vacation Oct 24 – Nov 5",
+    "added": "2026-04-08",
+    "tags": ["Private"],
+    "urgent": false,
+    "scope": "private",
+    "description": "Ask for 2 weeks off Oct 24 (Thu) – Nov 5 (Thu). Found El Al tickets to LAX for the family — need approval before booking."
+  },
+  {
     "id": 33,
     "task": "Manual reviews",
     "added": "2026-04-06",
