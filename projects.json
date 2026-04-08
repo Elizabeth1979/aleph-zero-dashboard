@@ -722,7 +722,7 @@
         "task": "Phase 2 \u2014 Procedural city generator: auto-generate a city based on chosen location style",
         "difficulty": "hard",
         "impact": "high",
-        "description": "Phase A: location-themed generation \u2014 desert city, arctic village, dense urban grid, tropical town. Game generates roads, blocks, and buildings in that style so players don't have to build from scratch. Phase B upgrade: pull real street layouts from OpenStreetMap so LA actually looks like LA. Phase A first, Phase B later."
+        "description": "Phase A: location-themed generation \u2014 desert city, arctic village, dense urban grid, tropical town. Game generates roads, blocks, and buildings in that style so players don't have to build from scratch. Phase B upgrade: pull real street layouts from OpenStreetMap so LA actually looks like LA. Phase A first, Phase B later. After generation, the world is fully editable \u2014 delete any building, road, or object, and add anything from the furniture/building library on top. The generated city is just a starting point, not locked."
       }
     ]
   },
