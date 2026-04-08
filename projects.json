@@ -575,6 +575,18 @@
         "description": "Serialize scene to JSON, save to localStorage. Load on return. Multiple save slots."
       },
       {
+        "task": "Phase 1 — Input abstraction layer: unified input system for all device types",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "Build one input layer that translates all inputs into the same game commands. Game never checks 'is this a keyboard?' — it just receives 'move left', 'select', 'cancel'. Mouse + keyboard supported in Phase 1. Touch and gamepad plug in on top in Phase 2 with no rewiring needed."
+      },
+      {
+        "task": "Phase 1 — Keyboard and mouse input: WASD/arrows for movement, click to interact",
+        "difficulty": "easy",
+        "impact": "high",
+        "description": "Basic keyboard controls (WASD, arrows, hotkeys) and mouse (click, drag, scroll). Feeds into the input abstraction layer."
+      },
+      {
         "task": "Phase 1 — Camera controls: zoom in/out, pan, rotate around the house",
         "difficulty": "easy",
         "impact": "high",
@@ -585,6 +597,18 @@
         "difficulty": "medium",
         "impact": "medium",
         "description": "View-only share link. Either URL-encoded state or download/upload JSON file. No backend needed."
+      },
+      {
+        "task": "Phase 2 — Touch input: mobile and tablet support with tap, swipe, pinch-to-zoom",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "Plug touch events into the input abstraction layer. Tap = click, swipe = move, pinch = zoom. UI buttons sized for fingers. Works on any phone or tablet browser."
+      },
+      {
+        "task": "Phase 2 — Gamepad/joystick input: Web Gamepad API support",
+        "difficulty": "medium",
+        "impact": "medium",
+        "description": "Browser Gamepad API — works in Chrome and Firefox. Left stick = move, buttons = actions. Plug into input abstraction layer. Works with most USB and Bluetooth controllers (Xbox, PlayStation, generic joysticks)."
       },
       {
         "task": "Phase 2 — Character gestures and emotes: flips, celebrations, dances",
