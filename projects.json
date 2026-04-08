@@ -675,6 +675,12 @@
         "difficulty": "medium",
         "impact": "high",
         "description": "One super admin account (the game owner). Can remove admin privileges from any admin. Prevents admin abuse. Super admin cannot be blocked by regular admins."
+      },
+      {
+        "task": "Phase 3 — Self-service server creation: any player can open their own server instantly",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "No permission needed. Any logged-in player can create a named private server, share a join code, and become that server's owner. Admin and super admin can still shut down the server or ban the owner if they break rules."
       }
     ]
   },
