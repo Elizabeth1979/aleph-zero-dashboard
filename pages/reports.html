@@ -304,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
         + '<div class="card-accent resource"></div>'
         + '<div class="card-body">'
         + '  <div class="card-icon-row">'
-        + '    <i data-lucide="bookmark" style="width:22px;height:22px"></i>'
+        + '    <i data-lucide="' + (r.type === 'video' ? 'play-circle' : 'link') + '" style="width:22px;height:22px"></i>'
         + (r.status ? '    <span class="type-badge resource">' + esc(r.status) + '</span>' : '')
         + '  </div>'
         + '  <div class="card-title">' + titleHtml + '</div>'

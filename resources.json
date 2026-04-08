@@ -6,6 +6,7 @@
     "id": "1",
     "title": "50 Days of OpenClaw — Real Use Cases",
     "url": "https://www.youtube.com/watch?v=NZ1mKAWJPr4",
+    "type": "video",
     "category": "inspiration",
     "status": "processed",
     "note": "Power user walkthrough of always-on AI agent after 50 days. Discord channel architecture, per-channel model routing, markdown-first workflows.",
@@ -21,6 +22,7 @@
     "id": "2",
     "title": "oh-my-codex — Multi-agent orchestration for Codex CLI",
     "url": "https://yeachan-heo.github.io/oh-my-codex-website/",
+    "type": "article",
     "category": "ai-tools",
     "status": "archived",
     "note": "Orchestration layer for OpenAI Codex CLI. Team worktrees, staged pipelines, role prompts.",
@@ -33,6 +35,7 @@
     "id": "3",
     "title": "Claude Code Source Leak: What's Worth Learning for AI Agents (Blog)",
     "url": "https://thoughts.jock.pl/p/claude-code-source-leak-what-to-learn-ai-agents-2026",
+    "type": "article",
     "category": "ai-tools",
     "status": "processed",
     "note": "Deep analysis of leaked Claude Code source. Three-layer memory, autoDream consolidation, skeptical memory, adversarial verification, frustration detection.",
@@ -50,6 +53,7 @@
     "id": "4",
     "title": "Claude Code Source Leak: 12 Engineering Primitives (Video)",
     "url": "https://youtu.be/FtCdYhspm7w",
+    "type": "video",
     "category": "ai-tools",
     "status": "processed",
     "note": "Nate Herk's analysis of Claude Code leak. 12 primitives in 3 tiers: tool registry, permissions, session persistence, workflow state, token budgets, streaming events, system logging, verification, tool pool assembly, compaction, permission audit trail, agent type system.",
@@ -67,6 +71,7 @@
     "id": "5",
     "title": "opensource by Vercel — Give AI Agents Perfect Framework Context",
     "url": "https://youtu.be/KYOg81dfac8?si=ndLH04UcyvMfzv8P",
+    "type": "video",
     "category": "ai-tools",
     "status": "new",
     "note": "NPM CLI tool that downloads entire source code of any npm package or GitHub repo into your project (.opensource/ folder, auto-gitignored). Gives AI agents the actual framework codebase as context — the ultimate source of truth for new/updated libraries the model wasn't trained on.",
@@ -83,6 +88,7 @@
     "id": "6",
     "title": "Automated accessible text with contrast-color()",
     "url": "https://una.im/contrast-color",
+    "type": "article",
     "category": "css",
     "status": "new",
     "note": "New native CSS function landing in Chrome 147, Firefox 146, Safari 26. Takes any color, returns black or white — whichever hits WCAG 2 AA (4.5:1). One line replaces all manual dark/light text logic in design systems.",
@@ -98,6 +104,7 @@
     "id": "7",
     "title": "contrast-color() beyond black & white",
     "url": "https://una.im/advanced-contrast-color",
+    "type": "article",
     "category": "css",
     "status": "new",
     "note": "Follow-up to contrast-color() basics. Two methods to go beyond black/white: (1) tint with color-mix() in oklch, 10-25% for light colors, 30-40% for dark; (2) style queries + @property + if() for full custom palette branching. Chrome 137+/Safari 26+ only for method 2.",
@@ -113,6 +120,7 @@
     "id": "8",
     "title": "Git Worktrees — Multiple Working Directories (Video)",
     "url": "https://youtu.be/jmAJQEooFhg?si=qvdh2x8leurr4hQJ",
+    "type": "video",
     "category": "dev-tools",
     "status": "processed",
     "note": "Git Worktrees let you have multiple working directories for the same repo. Context-switch between tasks without stashing or throwaway commits.",
@@ -123,5 +131,22 @@
       "Useful for reviewing PRs, hotfixes, or running parallel AI agents on the same repo"
     ],
     "added": "2026-04-07"
+  },
+  {
+    "id": "9",
+    "title": "A Continuous Integration System — 500 Lines or Less",
+    "url": "https://aosabook.org/en/500L/a-continuous-integration-system.html",
+    "type": "article",
+    "category": "dev-tools",
+    "status": "new",
+    "note": "Malini Das builds a bare-bones distributed CI system in Python, under 500 lines. Three processes (observer, dispatcher, test runner) communicate over sockets. Designed for extensibility and fault tolerance.",
+    "takeaways": [
+      "CI = observer + dispatcher + runner — each as an independent process for parallelism and fault isolation",
+      "Processes communicate via sockets — enables running each on a separate networked machine",
+      "Polling observer pattern (not webhooks) — simpler to model locally",
+      "Results stored as flat files — no UI needed for a minimal system",
+      "Load handling via multiple test runner instances in parallel"
+    ],
+    "added": "2026-04-08"
   }
 ]
