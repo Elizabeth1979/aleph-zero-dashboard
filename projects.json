@@ -645,6 +645,18 @@
         "difficulty": "hard",
         "impact": "medium",
         "description": "Multiplayer editing. Real-time or async. Needs Firebase or similar backend."
+      },
+      {
+        "task": "Phase 3 — Private server rooms: create or join a room with a code",
+        "difficulty": "hard",
+        "impact": "high",
+        "description": "Each player can create a private room and share a join code with friends. Like Minecraft realms or Among Us lobbies. Firebase Realtime DB or websockets. Other players see the same world in real time."
+      },
+      {
+        "task": "Phase 3 — Single-player vs multiplayer mode toggle",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "On game start, player picks: play solo or join/create a room. Solo uses localStorage only. Multiplayer connects to the server room."
       }
     ]
   },
