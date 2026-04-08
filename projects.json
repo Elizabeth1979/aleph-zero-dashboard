@@ -711,6 +711,18 @@
         "difficulty": "medium",
         "impact": "high",
         "description": "Super admin only. Powers nobody else has: fly (move freely through air, ignore gravity), disappear (invisible to other players, can still see and interact), telekinesis (pick up and move any object or character from a distance), plus room for more. Triggered via a hidden god mode panel only visible to the super admin account. Can be used in any server."
+      },
+      {
+        "task": "Phase 2 \u2014 Location picker: choose any place on the planet as your starting world",
+        "difficulty": "easy",
+        "impact": "high",
+        "description": "Search or browse a world map to pick a location \u2014 LA, New York, Antarctica, Tokyo, anywhere. The game uses that location's climate zone, terrain type, and architecture style to set the starting environment. No real map data yet, just themed generation."
+      },
+      {
+        "task": "Phase 2 \u2014 Procedural city generator: auto-generate a city based on chosen location style",
+        "difficulty": "hard",
+        "impact": "high",
+        "description": "Phase A: location-themed generation \u2014 desert city, arctic village, dense urban grid, tropical town. Game generates roads, blocks, and buildings in that style so players don't have to build from scratch. Phase B upgrade: pull real street layouts from OpenStreetMap so LA actually looks like LA. Phase A first, Phase B later."
       }
     ]
   },
