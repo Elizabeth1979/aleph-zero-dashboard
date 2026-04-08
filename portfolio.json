@@ -1,7 +1,10 @@
 [
   {
+    "_instructions": "After ANY edit to this file, run: bash ~/.hermes/dashboard/publish.sh"
+  },
+  {
     "name": "hermes-dashboard",
-    "description": "Hermes AI assistant dashboard \u2014 tasks, memory, crons, projects",
+    "description": "Hermes AI assistant dashboard — tasks, memory, crons, projects",
     "url": "https://github.com/Elizabeth1979/hermes-dashboard",
     "category": "personal",
     "updated": "2026-04-04",

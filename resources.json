@@ -1,28 +1,31 @@
 [
   {
+    "_instructions": "After ANY edit to this file, run: bash ~/.hermes/dashboard/publish.sh"
+  },
+  {
     "id": "1",
-    "title": "50 Days of OpenClaw \u2014 Real Use Cases",
+    "title": "50 Days of OpenClaw — Real Use Cases",
     "url": "https://www.youtube.com/watch?v=NZ1mKAWJPr4",
     "category": "inspiration",
     "status": "processed",
     "note": "Power user walkthrough of always-on AI agent after 50 days. Discord channel architecture, per-channel model routing, markdown-first workflows.",
     "takeaways": [
-      "Separate Discord channels per workflow for context isolation \u2014 not needed for us yet (no per-channel model routing in Hermes)",
-      "Markdown-first storage \u2014 we already do this with memory detail files",
-      "Match model to task for cost savings \u2014 revisit when Hermes adds channel routing",
-      "Weekly bookmark inbox channel that auto-enriches links \u2014 inspired our Resources system"
+      "Separate Discord channels per workflow for context isolation — not needed for us yet (no per-channel model routing in Hermes)",
+      "Markdown-first storage — we already do this with memory detail files",
+      "Match model to task for cost savings — revisit when Hermes adds channel routing",
+      "Weekly bookmark inbox channel that auto-enriches links — inspired our Resources system"
     ],
     "added": "2026-04-03"
   },
   {
     "id": "2",
-    "title": "oh-my-codex \u2014 Multi-agent orchestration for Codex CLI",
+    "title": "oh-my-codex — Multi-agent orchestration for Codex CLI",
     "url": "https://yeachan-heo.github.io/oh-my-codex-website/",
     "category": "ai-tools",
     "status": "archived",
     "note": "Orchestration layer for OpenAI Codex CLI. Team worktrees, staged pipelines, role prompts.",
     "takeaways": [
-      "Not relevant \u2014 Codex CLI only, we use Claude Code + Hermes"
+      "Not relevant — Codex CLI only, we use Claude Code + Hermes"
     ],
     "added": "2026-04-03"
   },
@@ -34,12 +37,12 @@
     "status": "processed",
     "note": "Deep analysis of leaked Claude Code source. Three-layer memory, autoDream consolidation, skeptical memory, adversarial verification, frustration detection.",
     "takeaways": [
-      "Three-layer memory (index \u2192 topic files \u2192 raw search) \u2014 DONE: built today",
-      "Skeptical memory: treat memory as hint, verify before acting \u2014 DONE: added to behavior.md",
-      "autoDream nightly consolidation of memory files \u2014 DONE: expanded nightly cron job",
-      "Adversarial verification: post-task check step \u2014 DONE: added to behavior.md",
-      "Frustration detection with tiered response \u2014 DONE: added to behavior.md",
-      "Semantic memory merging catches contradictions \u2014 DONE: nightly cron now checks for contradictions"
+      "Three-layer memory (index → topic files → raw search) — DONE: built today",
+      "Skeptical memory: treat memory as hint, verify before acting — DONE: added to behavior.md",
+      "autoDream nightly consolidation of memory files — DONE: expanded nightly cron job",
+      "Adversarial verification: post-task check step — DONE: added to behavior.md",
+      "Frustration detection with tiered response — DONE: added to behavior.md",
+      "Semantic memory merging catches contradictions — DONE: nightly cron now checks for contradictions"
     ],
     "added": "2026-04-03"
   },
@@ -51,27 +54,27 @@
     "status": "processed",
     "note": "Nate Herk's analysis of Claude Code leak. 12 primitives in 3 tiers: tool registry, permissions, session persistence, workflow state, token budgets, streaming events, system logging, verification, tool pool assembly, compaction, permission audit trail, agent type system.",
     "takeaways": [
-      "Tool registry with metadata-first design \u2014 Hermes handles this internally, not actionable for us",
-      "Session persistence that survives crashes \u2014 Hermes already does this",
-      "Workflow state \u2260 conversation state \u2014 good principle, not directly implementable in Hermes",
-      "Token budget hard stops \u2014 Hermes has compression config, could investigate further",
-      "Agent type system (explore/plan/verify/guide) with constrained tools \u2014 interesting for future multi-agent work",
-      "Released a skill to evaluate agentic harnesses \u2014 TODO: could run against our Hermes setup for fun"
+      "Tool registry with metadata-first design — Hermes handles this internally, not actionable for us",
+      "Session persistence that survives crashes — Hermes already does this",
+      "Workflow state ≠ conversation state — good principle, not directly implementable in Hermes",
+      "Token budget hard stops — Hermes has compression config, could investigate further",
+      "Agent type system (explore/plan/verify/guide) with constrained tools — interesting for future multi-agent work",
+      "Released a skill to evaluate agentic harnesses — TODO: could run against our Hermes setup for fun"
     ],
     "added": "2026-04-03"
   },
   {
     "id": "5",
-    "title": "opensource by Vercel \u2014 Give AI Agents Perfect Framework Context",
+    "title": "opensource by Vercel — Give AI Agents Perfect Framework Context",
     "url": "https://youtu.be/KYOg81dfac8?si=ndLH04UcyvMfzv8P",
     "category": "ai-tools",
     "status": "new",
-    "note": "NPM CLI tool that downloads entire source code of any npm package or GitHub repo into your project (.opensource/ folder, auto-gitignored). Gives AI agents the actual framework codebase as context \u2014 the ultimate source of truth for new/updated libraries the model wasn't trained on.",
+    "note": "NPM CLI tool that downloads entire source code of any npm package or GitHub repo into your project (.opensource/ folder, auto-gitignored). Gives AI agents the actual framework codebase as context — the ultimate source of truth for new/updated libraries the model wasn't trained on.",
     "takeaways": [
-      "Source code > docs for AI agent context \u2014 code is the ultimate source of truth",
+      "Source code > docs for AI agent context — code is the ultimate source of truth",
       "Solves the 'model trained on old version' problem without copy-pasting docs or Context7 MCP",
       "Usage: npx opensource <github-url> or npx opensource <package-name>",
-      "Auto-gitignored \u2014 won't bloat your repo",
+      "Auto-gitignored — won't bloat your repo",
       "Could be useful for our web dev work when using newer framework features"
     ],
     "added": "2026-04-04"
@@ -82,9 +85,9 @@
     "url": "https://una.im/contrast-color",
     "category": "css",
     "status": "new",
-    "note": "New native CSS function landing in Chrome 147, Firefox 146, Safari 26. Takes any color, returns black or white \u2014 whichever hits WCAG 2 AA (4.5:1). One line replaces all manual dark/light text logic in design systems.",
+    "note": "New native CSS function landing in Chrome 147, Firefox 146, Safari 26. Takes any color, returns black or white — whichever hits WCAG 2 AA (4.5:1). One line replaces all manual dark/light text logic in design systems.",
     "takeaways": [
-      "color: contrast-color(var(--brand-color)) \u2014 one line for always-accessible text",
+      "color: contrast-color(var(--brand-color)) — one line for always-accessible text",
       "Works with prefers-color-scheme for auto dark mode text",
       "Mid-tones are still a weak spot for the WCAG 2 algorithm",
       "No JS or Sass hacks needed anymore"
@@ -99,23 +102,23 @@
     "status": "new",
     "note": "Follow-up to contrast-color() basics. Two methods to go beyond black/white: (1) tint with color-mix() in oklch, 10-25% for light colors, 30-40% for dark; (2) style queries + @property + if() for full custom palette branching. Chrome 137+/Safari 26+ only for method 2.",
     "takeaways": [
-      "color-mix(in oklch, var(--bg) 10%, contrast-color(var(--bg))) \u2014 branded tinted text",
+      "color-mix(in oklch, var(--bg) 10%, contrast-color(var(--bg))) — branded tinted text",
       "Register --contrast-color as @property <color>, then branch with if() or @container style()",
-      "Style queries not in Firefox yet but are Interop 2026 \u2014 landing soon",
+      "Style queries not in Firefox yet but are Interop 2026 — landing soon",
       "Always validate tinted colors with WCAG or APCA checker"
     ],
     "added": "2026-04-07"
   },
   {
     "id": "8",
-    "title": "Git Worktrees \u2014 Multiple Working Directories (Video)",
+    "title": "Git Worktrees — Multiple Working Directories (Video)",
     "url": "https://youtu.be/jmAJQEooFhg?si=qvdh2x8leurr4hQJ",
     "category": "dev-tools",
     "status": "processed",
     "note": "Git Worktrees let you have multiple working directories for the same repo. Context-switch between tasks without stashing or throwaway commits.",
     "takeaways": [
-      "git worktree add <name> <branch> \u2014 create a clean workspace from any branch instantly",
-      "Each worktree is just a folder \u2014 cd in/out to switch, no special command",
+      "git worktree add <name> <branch> — create a clean workspace from any branch instantly",
+      "Each worktree is just a folder — cd in/out to switch, no special command",
       "Same branch cannot be checked out in two worktrees simultaneously",
       "Useful for reviewing PRs, hotfixes, or running parallel AI agents on the same repo"
     ],

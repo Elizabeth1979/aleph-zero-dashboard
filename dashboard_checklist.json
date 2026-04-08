@@ -1,5 +1,8 @@
 [
   {
+    "_instructions": "After ANY edit to this file, run: bash ~/.hermes/dashboard/publish.sh"
+  },
+  {
     "id": "publish-canonical",
     "task": "Use publish.sh as the single publish path for dashboard changes",
     "auto": true,
@@ -19,7 +22,7 @@
   },
   {
     "id": "commands-sync",
-    "task": "If a dashboard-related alias/command is added, also add it to commands.json so it appears in Config & Setup \u2192 Quick Commands",
+    "task": "If a dashboard-related alias/command is added, also add it to commands.json so it appears in Config & Setup → Quick Commands",
     "auto": false,
     "kind": "commands"
   },

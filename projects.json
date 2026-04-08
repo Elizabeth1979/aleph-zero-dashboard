@@ -1,4 +1,5 @@
 [
+  {"_instructions": "After ANY edit to this file, run: bash ~/.hermes/dashboard/publish.sh"},
   {
     "id": "a11y-mcp",
     "name": "A11y Expert MCP",
