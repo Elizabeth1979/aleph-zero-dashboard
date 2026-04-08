@@ -1,5 +1,7 @@
 [
-  {"_instructions": "After ANY edit to this file, run: bash ~/.hermes/dashboard/publish.sh"},
+  {
+    "_instructions": "After ANY edit to this file, run: bash ~/.hermes/dashboard/publish.sh"
+  },
   {
     "id": "a11y-mcp",
     "name": "A11y Expert MCP",
@@ -452,6 +454,24 @@
         "difficulty": "hard",
         "impact": "high",
         "description": "AI-driven UI customization: user describes their preference and the interface adapts. Explore: Vercel AI SDK for own sites, browser extension approach for any site. Strong a11y use case \u2014 users with cognitive/visual needs can request simpler layouts, larger spacing, plain language."
+      },
+      {
+        "task": "Integration: Local Home \u2192 Work bridge for A11y Toolkit \u2014 share the A11y Audit Panel and A11y UX Widget with the Work Dashboard using a one-way local toolkit folder",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "Keep everything local. Home publishes toolkit code/assets only. Work imports and runs them locally. No automatic Work \u2192 Home sync."
+      },
+      {
+        "task": "MVP: Create shared-toolkit folder structure + publish/import scripts for toolkit modules",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "Create ~/shared-toolkit, manifest.json, publish-tool.sh, and import-tools.sh so the Work Dashboard can import toolkit modules safely."
+      },
+      {
+        "task": "Verify end-to-end on Work Dashboard \u2014 import toolkit modules, run locally, and confirm no work results flow back home by default",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "Use one real module first: the A11y Audit Panel or the A11y UX Widget. Confirm local-only execution and explicit export only."
       }
     ],
     "features": [
