@@ -533,6 +533,122 @@
     ]
   },
   {
+    "id": "fun-building",
+    "name": "Fun Building",
+    "status": "planned",
+    "description": "A web-based house builder game for kids. Place rooms, add furniture, paint everything. Built by Elli + kid together, AI writes the code. Phase 1: static 3D builder with localStorage saves. Phase 2: NPCs, time/seasons, avatars, in-game coins.",
+    "started": "2026-04-08",
+    "repo": "",
+    "links": [],
+    "notes_path": "",
+    "milestones": [],
+    "features": [],
+    "tasks": [
+      {
+        "task": "Phase 1 — Set up project: Vite + Three.js + GitHub Pages",
+        "difficulty": "easy",
+        "impact": "high",
+        "description": "Scaffold the repo. Vite for build, Three.js for 3D rendering, deploy to GitHub Pages. No backend."
+      },
+      {
+        "task": "Phase 1 — 3D room builder: drag to place and resize rooms",
+        "difficulty": "hard",
+        "impact": "high",
+        "description": "Core mechanic. Click to add rooms, drag to resize, snap to grid. Three.js with raycasting for interaction."
+      },
+      {
+        "task": "Phase 1 — Furniture library: drag and drop items into rooms",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "Panel of furniture items. Drag into scene, place on floors. Start with simple box-style 3D models."
+      },
+      {
+        "task": "Phase 1 — Color picker: paint walls, floors, furniture, and exterior",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "Click any surface to paint it. Custom color picker (not just presets). Interior + exterior walls separate."
+      },
+      {
+        "task": "Phase 1 — Save and load: persist project to localStorage",
+        "difficulty": "easy",
+        "impact": "high",
+        "description": "Serialize scene to JSON, save to localStorage. Load on return. Multiple save slots."
+      },
+      {
+        "task": "Phase 1 — Share via link: encode scene as URL or export JSON file",
+        "difficulty": "medium",
+        "impact": "medium",
+        "description": "View-only share link. Either URL-encoded state or download/upload JSON file. No backend needed."
+      },
+      {
+        "task": "Phase 2 — Simple NPC characters walking around",
+        "difficulty": "hard",
+        "impact": "medium",
+        "description": "Basic animated characters with simple pathfinding inside the house. Not AI-driven, just scripted routines."
+      },
+      {
+        "task": "Phase 2 — Day/night lighting cycle",
+        "difficulty": "medium",
+        "impact": "medium",
+        "description": "Three.js directional light + ambient. Sky color + light intensity shift over in-game time."
+      },
+      {
+        "task": "Phase 2 — Days of week and seasons",
+        "difficulty": "easy",
+        "impact": "medium",
+        "description": "In-game calendar. Season changes ambient color + environment. Days shown in UI."
+      },
+      {
+        "task": "Phase 2 — Game clock with pause, play, and speed controls",
+        "difficulty": "medium",
+        "impact": "medium",
+        "description": "Player can pause, play, or skip time. Fast clock mode. Controls shown in HUD."
+      },
+      {
+        "task": "Phase 2 — Avatar system: pick and assign characters to houses",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "Kid can design avatar sets. Players pick from available avatars. Assign to household."
+      },
+      {
+        "task": "Phase 2 — Visual aging: characters change appearance over in-game time",
+        "difficulty": "hard",
+        "impact": "high",
+        "description": "Kids become adults visually. Multiple life stages. Tied to fast game clock."
+      },
+      {
+        "task": "Phase 2 — In-game coin and token system",
+        "difficulty": "medium",
+        "impact": "medium",
+        "description": "Earn coins by playing. Spend on avatars and furniture. No real money yet."
+      },
+      {
+        "task": "Phase 2 — Avatar marketplace: buy avatars with in-game coins",
+        "difficulty": "hard",
+        "impact": "high",
+        "description": "Kid-designed avatars listed in a shop. Players buy with coins. Eventually real money too."
+      },
+      {
+        "task": "Phase 2 — 2D floor plan view alongside 3D",
+        "difficulty": "hard",
+        "impact": "medium",
+        "description": "Toggle between top-down 2D plan and 3D walkthrough. Edits sync both views."
+      },
+      {
+        "task": "Phase 3 — Firebase auth and cloud saves",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "User accounts. Save projects to cloud. Friends can view each other's builds. Share link becomes persistent."
+      },
+      {
+        "task": "Phase 3 — Friends can edit shared builds",
+        "difficulty": "hard",
+        "impact": "medium",
+        "description": "Multiplayer editing. Real-time or async. Needs Firebase or similar backend."
+      }
+    ]
+  },
+  {
     "id": "private-rag",
     "name": "Private RAG",
     "status": "planned",
