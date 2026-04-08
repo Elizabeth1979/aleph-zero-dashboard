@@ -723,6 +723,18 @@
         "difficulty": "hard",
         "impact": "high",
         "description": "Phase A: location-themed generation \u2014 desert city, arctic village, dense urban grid, tropical town. Game generates roads, blocks, and buildings in that style so players don't have to build from scratch. Phase B upgrade: pull real street layouts from OpenStreetMap so LA actually looks like LA. Phase A first, Phase B later. After generation, the world is fully editable \u2014 delete any building, road, or object, and add anything from the furniture/building library on top. The generated city is just a starting point, not locked."
+      },
+      {
+        "task": "Phase 3 \u2014 Supabase: auth + cloud saves + real-time multiplayer via invite link",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "Supabase replaces localStorage for saves. Each player has a simple account. Friends join the same world via an invite link \u2014 no public lobby, no strangers, just people you share the link with. Real-time presence so players see each other moving. Supabase has an MCP server so the agent can build and manage the database directly."
+      },
+      {
+        "task": "Phase 3 \u2014 Friend invite system: share a link, friends join your world",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "Generate a unique invite link per world. Anyone with the link can join and play together in real time. No public listing, no matchmaking, no strangers. Small group only \u2014 just the kid and his friends."
       }
     ]
   },
