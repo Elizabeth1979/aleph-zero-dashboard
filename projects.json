@@ -563,6 +563,12 @@
         "description": "Panel of furniture items. Drag into scene, place on floors. Start with simple box-style 3D models."
       },
       {
+        "task": "Phase 1 \u2014 Build mode vs Play mode: free placement in build, gravity on play",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "Two modes toggled by a Play button. Build mode: no physics, place objects anywhere including mid-air \u2014 full creative freedom. Play mode: gravity switches on, unsupported objects fall and settle realistically. Uses Three.js + a lightweight physics library (Rapier or Cannon.js). Switching back to Build mode freezes physics so you can keep editing."
+      },
+      {
         "task": "Phase 1 \u2014 Color picker: paint walls, floors, furniture, and exterior",
         "difficulty": "medium",
         "impact": "high",
