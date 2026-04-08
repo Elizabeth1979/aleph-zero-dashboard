@@ -653,6 +653,18 @@
         "description": "Switchable modes on server creation. Normal: relaxed life sim. Survival: needs drain faster, sickness spreads. Hunger Games: last one standing, competitive. Mode is set per server, not per player."
       },
       {
+        "task": "Phase 2 — Add-on: Age-appropriate content system — base game is always kid-safe",
+        "difficulty": "easy",
+        "impact": "high",
+        "description": "Base game has zero violence, no weapons, safe for all ages by default. Content rating visible on every server. Super admin can enforce platform-wide content limits."
+      },
+      {
+        "task": "Phase 2 — Add-on: Combat and weapons mod (off by default, server owner opt-in)",
+        "difficulty": "hard",
+        "impact": "medium",
+        "description": "Optional mod enabled only by server owner at room creation. Adds weapons, combat, GTA-style action — non-realistic, cartoon style, no gore. Not accessible in Normal or kid-safe servers. Admin can disable this mod platform-wide."
+      },
+      {
         "task": "Phase 3 — Firebase auth and cloud saves",
         "difficulty": "medium",
         "impact": "high",
