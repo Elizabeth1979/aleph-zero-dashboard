@@ -21,7 +21,7 @@
     "tags": [
       "Private"
     ],
-    "urgent": true,
+    "urgent": false,
     "scope": "private"
   },
   {
@@ -86,7 +86,7 @@
     "task": "Talk to boss about 2-week vacation Oct 24 – Nov 5",
     "added": "2026-04-08",
     "tags": ["Private"],
-    "urgent": false,
+    "urgent": true,
     "scope": "private",
     "description": "Ask for 2 weeks off Oct 24 (Thu) – Nov 5 (Thu). Found El Al tickets to LAX for the family — need approval before booking."
   },
