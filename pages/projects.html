@@ -116,6 +116,73 @@
     background: rgba(93, 228, 212, 0.2);
   }
 
+  .toolkit-visual {
+    background: linear-gradient(180deg, rgba(93, 228, 212, 0.08), rgba(93, 228, 212, 0.03));
+    border: 1px solid rgba(93, 228, 212, 0.14);
+    border-radius: var(--r2);
+    padding: var(--s4);
+    margin-bottom: var(--s4);
+  }
+  .toolkit-visual-label {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: var(--s3);
+  }
+  .toolkit-visual-core {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 10px 14px;
+    border-radius: 14px;
+    background: rgba(93, 228, 212, 0.12);
+    border: 1px solid rgba(93, 228, 212, 0.2);
+    color: var(--text);
+    font-weight: 600;
+    margin-bottom: var(--s3);
+  }
+  .toolkit-visual-groups {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s3);
+  }
+  .toolkit-visual-group {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: var(--s3);
+  }
+  .toolkit-visual-group-title {
+    font-size: var(--fs-xs);
+    color: var(--text-3);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .toolkit-visual-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .toolkit-visual-pill {
+    display: inline-flex;
+    align-items: center;
+    min-height: 30px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(93, 228, 212, 0.08);
+    border: 1px solid rgba(93, 228, 212, 0.14);
+    color: var(--text-2);
+    font-size: var(--fs-xs);
+    line-height: 1.3;
+  }
+  @media (max-width: 640px) {
+    .toolkit-visual-groups { grid-template-columns: 1fr; }
+  }
+
   /* Section divider inside card */
   .card-section {
     border-top: 1px solid var(--border);
@@ -352,9 +419,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }).join('');
   }
 
+  function renderToolkitVisual(p) {
+    if (!p.visual) return '';
+    const groups = (p.visual.groups || []).map(group => `
+      <div class="toolkit-visual-group">
+        <div class="toolkit-visual-group-title">${esc(group.label || '')}</div>
+        <div class="toolkit-visual-items">${(group.items || []).map(item => `<span class="toolkit-visual-pill">${esc(item)}</span>`).join('')}</div>
+      </div>
+    `).join('');
+    return `<div class="toolkit-visual">
+      <div class="toolkit-visual-label">${esc(p.visual.title || 'Toolkit architecture')}</div>
+      <div class="toolkit-visual-core">${esc(p.visual.center || p.name || p.id)}</div>
+      <div class="toolkit-visual-groups">${groups}</div>
+    </div>`;
+  }
+
   function renderProject(p) {
     const status = p.status || 'in_progress';
     const badge = `<span class="status-badge ${status}">${statusLabel[status] || status}</span>`;
+    const visualHtml = renderToolkitVisual(p);
     const desc = p.description ? `<div class="project-desc">${esc(p.description)}</div>` : '';
 
     // Meta
@@ -458,6 +541,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <span class="project-name">${esc(p.name || p.id)}</span>
         ${badge}
       </div>
+      ${visualHtml}
       ${desc}
       ${metaHtml}
       ${linksHtml}

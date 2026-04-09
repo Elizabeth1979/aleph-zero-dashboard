@@ -514,7 +514,27 @@
       "Accessibility skills/commands for designers and developers",
       "Android accessibility app research as future toolkit input",
       "Accessibility portfolio inventory added to toolkit scope \u2014 portfolio-backed modules, docs, workflows, and research now mapped in the toolkit repo"
-    ]
+    ],
+    "visual": {
+      "title": "Toolkit architecture",
+      "center": "A11y Engineering Toolkit",
+      "groups": [
+        {
+          "label": "Lives in toolkit repo",
+          "items": [
+            "A11y Audit Panel",
+            "A11y UX Widget"
+          ]
+        },
+        {
+          "label": "Linked module repos",
+          "items": [
+            "a11y-expert-mcp",
+            "a11y-skills"
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "melio-chat-mvp",
