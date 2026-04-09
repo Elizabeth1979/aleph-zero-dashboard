@@ -4,7 +4,7 @@
   },
   {
     "name": "hermes-dashboard",
-    "description": "Hermes AI assistant dashboard — tasks, memory, crons, projects",
+    "description": "Hermes AI assistant dashboard \u2014 tasks, memory, crons, projects",
     "url": "https://github.com/Elizabeth1979/hermes-dashboard",
     "category": "personal",
     "updated": "2026-04-04",
@@ -192,6 +192,14 @@
     "url": "https://github.com/Elizabeth1979/english-for-kids",
     "category": "apps",
     "updated": "2022-11-17",
+    "stars": 0
+  },
+  {
+    "name": "a11y-engineering-toolkit",
+    "description": "Modular accessibility engineering toolkit for developers, QA, designers, and AI agents",
+    "url": "https://github.com/Elizabeth1979/a11y-engineering-toolkit",
+    "category": "a11y",
+    "updated": "2026-04-09",
     "stars": 0
   },
   {
