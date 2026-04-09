@@ -1,0 +1,457 @@
+<!-- AGENT RULE: Only change what Elli explicitly asks for. No extra improvements, no removing elements, no unsolicited cleanup. Apply changes to ALL instances, not just the first one. -->
+<!-- AGENT: Read BEST-PRACTICES.md before writing HTML/CSS/JS. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>Cheat Sheets — Hermes</title>
+<link rel="stylesheet" href="../theme.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<link rel="stylesheet" href="shared.css">
+<style>
+  /* ── Cheat sheet sections ──────────────────────────────────── */
+  .cs-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--r2);
+    margin-bottom: var(--s4);
+    overflow: hidden;
+  }
+
+  /* ── Section header (accordion toggle) ───────────────────── */
+  .cs-header {
+    display: flex;
+    align-items: center;
+    gap: var(--s3);
+    padding: var(--s4) var(--s5);
+    cursor: pointer;
+    user-select: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition), background var(--transition);
+  }
+  .cs-header:hover {
+    background: var(--bg-card-hover);
+  }
+  .cs-section.open .cs-header {
+    border-bottom-color: var(--border);
+  }
+  .cs-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--r1);
+    background: var(--accent-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .cs-icon svg {
+    width: 16px;
+    height: 16px;
+    color: var(--accent);
+  }
+  .cs-title {
+    font-size: var(--fs-base);
+    font-weight: 600;
+    color: var(--text);
+    flex: 1;
+  }
+  .cs-count {
+    font-size: var(--fs-xs);
+    color: var(--accent-dim);
+    font-family: var(--mono);
+    margin-right: var(--s2);
+  }
+  .cs-chevron {
+    width: 16px;
+    height: 16px;
+    color: var(--text-3);
+    transition: transform 0.2s ease;
+  }
+  .cs-section.open .cs-chevron {
+    transform: rotate(90deg);
+  }
+
+  /* ── Section body ─────────────────────────────────────────── */
+  .cs-body {
+    display: none;
+    padding: var(--s4) var(--s5);
+  }
+  .cs-section.open .cs-body {
+    display: block;
+  }
+
+  /* ── Description under section title ─────────────────────── */
+  .cs-desc {
+    font-size: var(--fs-sm);
+    color: var(--text-3);
+    margin-bottom: var(--s4);
+  }
+
+  /* ── Sub-groups within a section ─────────────────────────── */
+  .cs-group {
+    margin-bottom: var(--s5);
+  }
+  .cs-group:last-child {
+    margin-bottom: 0;
+  }
+  .cs-group-title {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: var(--s2);
+    padding-bottom: var(--s1);
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ── Shortcut table ───────────────────────────────────────── */
+  .cs-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .cs-table tr {
+    border-bottom: 1px solid var(--border);
+  }
+  .cs-table tr:last-child {
+    border-bottom: none;
+  }
+  .cs-table td {
+    padding: 7px var(--s2);
+    vertical-align: top;
+  }
+  .cs-table td:first-child {
+    width: 42%;
+    padding-right: var(--s3);
+  }
+
+  /* ── Key badges ──────────────────────────────────────────── */
+  .key {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--accent);
+    background: var(--accent-muted);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 6px;
+    white-space: nowrap;
+    margin-right: 3px;
+    line-height: 1.6;
+  }
+
+  /* ── Description text ────────────────────────────────────── */
+  .cs-desc-cell {
+    font-size: var(--fs-sm);
+    color: var(--text-2);
+    line-height: 1.5;
+  }
+  .cs-desc-cell small {
+    display: block;
+    font-size: var(--fs-xs);
+    color: var(--text-3);
+    margin-top: 2px;
+  }
+
+  /* ── Note callout ────────────────────────────────────────── */
+  .cs-note {
+    font-size: var(--fs-xs);
+    color: var(--text-3);
+    background: var(--bg-inset);
+    border: 1px solid var(--border);
+    border-radius: var(--r1);
+    padding: var(--s2) var(--s3);
+    margin-top: var(--s3);
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-body">
+
+    <a href="../index.html" class="back-link">
+      <i data-lucide="arrow-left"></i> Dashboard
+    </a>
+
+    <div class="page-title">
+      <i data-lucide="book-open-check"></i>
+      <h1>Cheat Sheets</h1>
+    </div>
+
+    <div id="cs-container">
+      <!-- Rendered by JS below -->
+    </div>
+
+  </div>
+
+  <footer class="page-footer">built with ❤️ by e11i</footer>
+</div>
+
+<link rel="stylesheet" href="../a11y-widget.css">
+<script src="../a11y-widget.js"></script>
+<link rel="stylesheet" href="../a11y-tester.css">
+<script src="../a11y-tester.js"></script>
+
+<script>
+/* ── Cheat sheet data ──────────────────────────────────────────
+   Add new sections here. Each section has:
+     icon    — Lucide icon name
+     title   — Section heading
+     desc    — One-line description (optional)
+     groups  — Array of sub-groups, each with:
+       title   — Sub-group heading (optional — omit for ungrouped)
+       rows    — Array of { keys: ['Cmd','K'], desc: '...', note: '...' }
+                 keys: array of strings shown as <kbd> badges
+                 desc: what it does
+                 note: (optional) extra context shown below desc
+─────────────────────────────────────────────────────────────── */
+const SHEETS = [
+  {
+    icon: 'terminal-square',
+    title: 'Claude Code',
+    desc: 'Slash commands and special modes in the Hermes CLI.',
+    groups: [
+      {
+        title: 'Session',
+        rows: [
+          { keys: ['/new'],       desc: 'Start a fresh conversation' },
+          { keys: ['/history'],   desc: 'Browse past sessions' },
+          { keys: ['/search'],    desc: 'Search across all past sessions' },
+          { keys: ['/resume'],    desc: 'Resume the last session' },
+          { keys: ['/save'],      desc: 'Save the current session with a name' },
+          { keys: ['/export'],    desc: 'Export session to a file' },
+          { keys: ['/compact'],   desc: 'Compress context to save tokens' },
+        ]
+      },
+      {
+        title: 'Tools & Skills',
+        rows: [
+          { keys: ['/skills'],    desc: 'Browse, search, and install skills' },
+          { keys: ['/tools'],     desc: 'List enabled tools' },
+          { keys: ['/model'],     desc: 'Switch the active model' },
+          { keys: ['/background'], desc: 'Run a prompt in the background' },
+        ]
+      },
+      {
+        title: 'Info & Exit',
+        rows: [
+          { keys: ['/help'],      desc: 'Show all available slash commands' },
+          { keys: ['/memory'],    desc: 'Show current memory stats' },
+          { keys: ['/clear'],     desc: 'Clear the terminal screen' },
+          { keys: ['/exit'],      desc: 'Quit the CLI' },
+          { keys: ['Ctrl', 'C'], desc: 'Interrupt the current response' },
+        ]
+      }
+    ]
+  },
+  {
+    icon: 'command',
+    title: 'Mac Keyboard Shortcuts',
+    desc: 'General macOS shortcuts worth remembering.',
+    groups: [
+      {
+        title: 'System',
+        rows: [
+          { keys: ['Cmd', 'Space'],         desc: 'Spotlight search' },
+          { keys: ['Cmd', 'Tab'],           desc: 'Switch between apps' },
+          { keys: ['Cmd', '`'],             desc: 'Switch windows within the same app' },
+          { keys: ['Cmd', 'H'],             desc: 'Hide current app' },
+          { keys: ['Cmd', 'M'],             desc: 'Minimize window' },
+          { keys: ['Cmd', 'Q'],             desc: 'Quit app' },
+          { keys: ['Cmd', 'W'],             desc: 'Close window or tab' },
+          { keys: ['Cmd', 'Shift', '3'],    desc: 'Screenshot — full screen' },
+          { keys: ['Cmd', 'Shift', '4'],    desc: 'Screenshot — area selection' },
+          { keys: ['Cmd', 'Shift', '4', 'Space'], desc: 'Screenshot — specific window' },
+          { keys: ['Cmd', 'Shift', '5'],    desc: 'Screenshot + screen recording controls' },
+        ]
+      },
+      {
+        title: 'Text Editing',
+        rows: [
+          { keys: ['Cmd', 'Z'],             desc: 'Undo' },
+          { keys: ['Cmd', 'Shift', 'Z'],    desc: 'Redo' },
+          { keys: ['Cmd', 'A'],             desc: 'Select all' },
+          { keys: ['Cmd', 'F'],             desc: 'Find' },
+          { keys: ['Cmd', 'G'],             desc: 'Find next' },
+          { keys: ['Cmd', 'Shift', 'G'],    desc: 'Find previous' },
+          { keys: ['Option', '←'],          desc: 'Move cursor one word left' },
+          { keys: ['Option', '→'],          desc: 'Move cursor one word right' },
+          { keys: ['Cmd', '←'],             desc: 'Move to start of line' },
+          { keys: ['Cmd', '→'],             desc: 'Move to end of line' },
+          { keys: ['Fn', 'Delete'],         desc: 'Forward delete (delete character to the right)' },
+          { keys: ['Option', 'Delete'],     desc: 'Delete the whole word to the left' },
+        ]
+      },
+      {
+        title: 'Finder',
+        rows: [
+          { keys: ['Cmd', 'N'],             desc: 'New Finder window' },
+          { keys: ['Cmd', 'Shift', 'N'],    desc: 'New folder' },
+          { keys: ['Cmd', 'Delete'],        desc: 'Move to Trash' },
+          { keys: ['Cmd', 'Shift', 'Delete'], desc: 'Empty Trash' },
+          { keys: ['Cmd', 'I'],             desc: 'Get Info for selected item' },
+          { keys: ['Space'],                desc: 'Quick Look (preview file)' },
+          { keys: ['Cmd', 'Shift', '.'],    desc: 'Show/hide hidden files' },
+        ]
+      }
+    ]
+  },
+  {
+    icon: 'accessibility',
+    title: 'VoiceOver (Mac)',
+    desc: 'VoiceOver is the built-in screen reader on macOS. VO = Control + Option.',
+    groups: [
+      {
+        title: 'Starting & Stopping',
+        rows: [
+          { keys: ['Cmd', 'F5'],        desc: 'Turn VoiceOver on or off' },
+          { keys: ['VO', 'F8'],         desc: 'Open VoiceOver Utility (settings)' },
+          { keys: ['VO', 'F7'],         desc: 'Open VoiceOver Help menu' },
+        ]
+      },
+      {
+        title: 'Navigation',
+        rows: [
+          { keys: ['VO', '→'],          desc: 'Move to next item' },
+          { keys: ['VO', '←'],          desc: 'Move to previous item' },
+          { keys: ['VO', '↑'],          desc: 'Interact with / move up in an element' },
+          { keys: ['VO', '↓'],          desc: 'Move down in an element' },
+          { keys: ['VO', 'Shift', '↓'], desc: 'Enter a group or container' },
+          { keys: ['VO', 'Shift', '↑'], desc: 'Exit a group or container' },
+          { keys: ['Tab'],              desc: 'Move to next focusable element (links, buttons, inputs)' },
+          { keys: ['Shift', 'Tab'],     desc: 'Move to previous focusable element' },
+        ]
+      },
+      {
+        title: 'Reading',
+        rows: [
+          { keys: ['VO', 'A'],          desc: 'Read all content from current position' },
+          { keys: ['VO', 'B'],          desc: 'Read from top of page' },
+          { keys: ['VO', 'S'],          desc: 'Read current sentence' },
+          { keys: ['VO', 'W'],          desc: 'Read current word' },
+          { keys: ['VO', 'C'],          desc: 'Read current character' },
+          { keys: ['Ctrl'],             desc: 'Stop reading' },
+        ]
+      },
+      {
+        title: 'Web Navigation',
+        rows: [
+          { keys: ['VO', 'U'],          desc: 'Open Rotor (headings, links, form controls, landmarks)', note: 'Use arrow keys to select category, then navigate' },
+          { keys: ['H'],                desc: 'Jump to next heading (in web pages)' },
+          { keys: ['Shift', 'H'],       desc: 'Jump to previous heading' },
+          { keys: ['1–6'],              desc: 'Jump to next heading at that level (H1–H6)' },
+          { keys: ['L'],                desc: 'Jump to next list' },
+          { keys: ['T'],                desc: 'Jump to next table' },
+          { keys: ['B'],                desc: 'Jump to next button' },
+          { keys: ['F'],                desc: 'Jump to next form field' },
+        ]
+      },
+      {
+        title: 'Actions',
+        rows: [
+          { keys: ['VO', 'Space'],      desc: 'Activate current element (click)' },
+          { keys: ['Return'],           desc: 'Activate links and buttons' },
+          { keys: ['VO', 'Shift', 'M'], desc: 'Open context menu for current item' },
+        ]
+      }
+    ]
+  },
+  {
+    icon: 'smartphone',
+    title: 'TalkBack (Android)',
+    desc: 'TalkBack is the built-in screen reader on Android. Swipe gestures for navigation.',
+    groups: [
+      {
+        title: 'Basic Navigation',
+        rows: [
+          { keys: ['Swipe Right'],      desc: 'Move to next element' },
+          { keys: ['Swipe Left'],       desc: 'Move to previous element' },
+          { keys: ['Double-tap'],       desc: 'Activate the focused element' },
+          { keys: ['Swipe Up then Down'], desc: 'Move to first item on screen' },
+          { keys: ['Swipe Down then Up'], desc: 'Move to last item on screen' },
+        ]
+      },
+      {
+        title: 'Reading & Granularity',
+        rows: [
+          { keys: ['Swipe Up'],         desc: 'Change reading granularity (character, word, line, paragraph)' },
+          { keys: ['Swipe Down'],       desc: 'Change reading granularity (other direction)' },
+          { keys: ['Swipe Right (granularity)'], desc: 'Move forward by current granularity unit' },
+          { keys: ['Swipe Left (granularity)'],  desc: 'Move backward by current granularity unit' },
+        ]
+      },
+      {
+        title: 'Global Context Menu',
+        rows: [
+          { keys: ['Swipe Down then Right'], desc: 'Open global context menu (Reading Controls, TalkBack Settings, etc.)' },
+          { keys: ['Swipe Up then Right'],   desc: 'Open local context menu (actions for current element)' },
+        ]
+      }
+    ]
+  }
+];
+
+/* ── Render ──────────────────────────────────────────────────── */
+function keysHtml(keys) {
+  return keys.map(k => `<span class="key">${esc(k)}</span>`).join('');
+}
+
+function esc(s) {
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function renderSheets() {
+  const container = document.getElementById('cs-container');
+
+  container.innerHTML = SHEETS.map((sheet, si) => {
+    const totalRows = sheet.groups.reduce((n, g) => n + g.rows.length, 0);
+
+    const groupsHtml = sheet.groups.map(g => {
+      const titleHtml = g.title ? `<div class="cs-group-title">${esc(g.title)}</div>` : '';
+      const rowsHtml = g.rows.map(r => `
+        <tr>
+          <td>${keysHtml(r.keys)}</td>
+          <td class="cs-desc-cell">${esc(r.desc)}${r.note ? `<small>${esc(r.note)}</small>` : ''}</td>
+        </tr>`).join('');
+      return `<div class="cs-group">${titleHtml}<table class="cs-table"><tbody>${rowsHtml}</tbody></table></div>`;
+    }).join('');
+
+    const descHtml = sheet.desc ? `<p class="cs-desc">${esc(sheet.desc)}</p>` : '';
+
+    return `
+      <div class="cs-section${si === 0 ? ' open' : ''}" data-index="${si}">
+        <div class="cs-header" onclick="toggleSection(this.parentElement)">
+          <div class="cs-icon"><i data-lucide="${sheet.icon}"></i></div>
+          <span class="cs-title">${esc(sheet.title)}</span>
+          <span class="cs-count">${totalRows} shortcuts</span>
+          <svg class="cs-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </div>
+        <div class="cs-body">
+          ${descHtml}
+          ${groupsHtml}
+        </div>
+      </div>`;
+  }).join('');
+
+  if (typeof lucide !== 'undefined') lucide.createIcons();
+}
+
+function toggleSection(el) {
+  const wasOpen = el.classList.contains('open');
+  // accordion — close others
+  document.querySelectorAll('.cs-section.open').forEach(s => s.classList.remove('open'));
+  if (!wasOpen) el.classList.add('open');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderSheets();
+  if (typeof lucide !== 'undefined') lucide.createIcons();
+});
+</script>
+</body>
+</html>
