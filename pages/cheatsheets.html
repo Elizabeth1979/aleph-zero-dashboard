@@ -491,7 +491,7 @@ function renderSheets() {
     const descHtml = sheet.desc ? `<p class="cs-desc">${esc(sheet.desc)}</p>` : '';
 
     return `
-      <div class="cs-section${si === 0 ? ' open' : ''}" data-index="${si}">
+      <div class="cs-section" data-index="${si}">
         <div class="cs-header" onclick="toggleSection(this.parentElement)">
           <div class="cs-icon"><i data-lucide="${sheet.icon}"></i></div>
           <span class="cs-title">${esc(sheet.title)}</span>
