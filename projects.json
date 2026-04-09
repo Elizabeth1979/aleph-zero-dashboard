@@ -505,12 +505,6 @@
         "difficulty": "medium",
         "impact": "high",
         "description": "Treat Melio conversational UI work as part of the broader accessibility toolkit roadmap."
-      },
-      {
-        "task": "Inventory all accessibility-related portfolio items and include them in the shared toolkit scope",
-        "difficulty": "easy",
-        "impact": "high",
-        "description": "Anything accessibility-related in the portfolio should be shareable through the Home \u2192 Work bridge, not only the first UI tools."
       }
     ],
     "features": [
@@ -518,7 +512,8 @@
       "A11y UX Widget (a11y-widget.js) \u2014 floating customization panel: contrast, fonts, motion, reading guide, color blindness simulation",
       "Accessibility MCP foundation \u2014 a11y-expert-mcp as a core toolkit module",
       "Accessibility skills/commands for designers and developers",
-      "Android accessibility app research as future toolkit input"
+      "Android accessibility app research as future toolkit input",
+      "Accessibility portfolio inventory added to toolkit scope \u2014 portfolio-backed modules, docs, workflows, and research now mapped in the toolkit repo"
     ]
   },
   {
