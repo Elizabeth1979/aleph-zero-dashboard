@@ -362,6 +362,73 @@ const SHEETS = [
     ]
   },
   {
+    icon: 'book-marked',
+    title: 'Obsidian',
+    desc: 'Markdown syntax and keyboard shortcuts for Obsidian (Mac).',
+    groups: [
+      {
+        title: 'Markdown Syntax',
+        rows: [
+          { keys: ['# H1'],           desc: 'Heading 1 (use ## for H2, ### H3, etc.)' },
+          { keys: ['**text**'],       desc: 'Bold' },
+          { keys: ['_text_'],         desc: 'Italic' },
+          { keys: ['***text***'],     desc: 'Bold italic' },
+          { keys: ['~~text~~'],       desc: 'Strikethrough' },
+          { keys: ['==text=='],       desc: 'Highlight' },
+          { keys: ['- item'],         desc: 'Unordered list (also works with * or +)' },
+          { keys: ['1. item'],        desc: 'Ordered list' },
+          { keys: ['- [x] task'],     desc: 'Completed task checkbox' },
+          { keys: ['- [ ] task'],     desc: 'Incomplete task checkbox' },
+          { keys: ['> text'],         desc: 'Blockquote' },
+          { keys: ['---'],            desc: 'Horizontal rule / separator' },
+          { keys: ['`code`'],         desc: 'Inline code' },
+          { keys: ['```code```'],     desc: 'Code block (use triple backticks)' },
+          { keys: ['[[note name]]'],  desc: 'Internal link to another note' },
+          { keys: ['![[note name]]'], desc: 'Embed another note' },
+          { keys: ['[text](url)'],    desc: 'External link' },
+          { keys: ['![alt](url)'],    desc: 'Embed image' },
+          { keys: ['[^1]'],           desc: 'Footnote reference (define with [^1]: text at bottom)' },
+          { keys: ['> [!note]'],      desc: 'Callout — note style', note: 'Also: [!tip], [!warning], [!info], [!important]' },
+        ]
+      },
+      {
+        title: 'General Shortcuts (Mac)',
+        rows: [
+          { keys: ['Cmd', 'P'],             desc: 'Open command palette / search notes' },
+          { keys: ['Cmd', 'O'],             desc: 'Open quick switcher' },
+          { keys: ['Cmd', 'N'],             desc: 'Create a new note' },
+          { keys: ['Cmd', 'S'],             desc: 'Save the file' },
+          { keys: ['Cmd', 'Shift', 'F'],    desc: 'Search in all files' },
+          { keys: ['Cmd', 'F'],             desc: 'Search in current file' },
+          { keys: ['Cmd', 'H'],             desc: 'Find and replace in current file' },
+          { keys: ['Cmd', 'E'],             desc: 'Toggle edit / preview mode' },
+          { keys: ['Cmd', 'G'],             desc: 'Open graph view' },
+          { keys: ['Cmd', 'Alt', '←'],      desc: 'Navigate back' },
+          { keys: ['Cmd', 'Alt', '→'],      desc: 'Navigate forward' },
+          { keys: ['Cmd', ','],             desc: 'Open settings' },
+          { keys: ['Ctrl', 'Tab'],          desc: 'Next tab' },
+          { keys: ['Ctrl', 'Shift', 'Tab'], desc: 'Previous tab' },
+        ]
+      },
+      {
+        title: 'Editing Shortcuts (Mac)',
+        rows: [
+          { keys: ['Cmd', 'B'],             desc: 'Bold selected text' },
+          { keys: ['Cmd', 'I'],             desc: 'Italicize selected text' },
+          { keys: ['Cmd', 'K'],             desc: 'Insert external link' },
+          { keys: ['Cmd', ']'],             desc: 'Indent' },
+          { keys: ['Cmd', '['],             desc: 'Unindent' },
+          { keys: ['Cmd', 'D'],             desc: 'Delete current line' },
+          { keys: ['Cmd', 'V'],             desc: 'Duplicate current line' },
+          { keys: ['Cmd', 'Click'],         desc: 'Open note in current pane' },
+          { keys: ['Cmd', 'Shift', 'Click'], desc: 'Open note in new pane' },
+          { keys: ['Cmd', 'Shift', 'D'],    desc: 'Create a daily note' },
+          { keys: ['Cmd', '/'],             desc: 'Toggle comment' },
+        ]
+      }
+    ]
+  },
+  {
     icon: 'smartphone',
     title: 'TalkBack (Android)',
     desc: 'TalkBack is the built-in screen reader on Android. Swipe gestures for navigation.',
