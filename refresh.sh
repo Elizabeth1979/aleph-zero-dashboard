@@ -81,4 +81,8 @@ window.__DASHBOARD_DATA__ = {
 };
 DATAEOF
 
+# Cache-bust data.js references in HTML files
+CACHE_V=$(date +%s)
+sed -i '' "s/data\.js?v=[0-9]*/data.js?v=$CACHE_V/g; s/data\.js\"/data.js?v=$CACHE_V\"/g" "$DASH/index.html" "$DASH"/pages/*.html 2>/dev/null
+
 echo "Dashboard refreshed at $(date)"
