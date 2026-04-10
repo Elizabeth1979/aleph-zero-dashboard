@@ -1,9 +1,9 @@
 /**
- * HERMES DASHBOARD — Accessibility Widget
+ * ALEPH ZERO DASHBOARD — Accessibility Widget
  * a11y-widget.js
  *
  * Self-contained. No external dependencies.
- * Reads/writes state to localStorage key: hermes-a11y
+ * Reads/writes state to localStorage key: aleph-zero-a11y
  * Applies classes to document.documentElement.
  */
 
@@ -13,8 +13,8 @@
   /* ----------------------------------------------------------
      Constants
   ---------------------------------------------------------- */
-  const LS_KEY = 'hermes-a11y';
-  const LS_SEEN_KEY = 'hermes-a11y-seen';
+  const LS_KEY = 'aleph-zero-a11y';
+  const LS_SEEN_KEY = 'aleph-zero-a11y-seen';
 
   const FONT_CYCLE = ['default', 'lg', 'xl'];
   const FONT_LABELS = { default: 'Default', lg: 'Large', xl: 'XL' };

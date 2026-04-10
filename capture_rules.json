@@ -1,9 +1,0 @@
-{
-  "_instructions": "After ANY edit to this file, run: bash ~/.hermes/dashboard/publish.sh",
-  "auto_urgent": [
-    "Money — payments, bills, subscriptions, fees",
-    "Health — doctor, dentist, medical appointments",
-    "Deadlines — anything with an explicit date or time pressure",
-    "Work obligations — meetings, deliverables, boss requests"
-  ]
-}

@@ -39,8 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!s) { document.getElementById('page-body').innerHTML = `<div class="empty">Skill "${esc(name)}" not found</div>`; return; }
 
   // Mark skill as visited in localStorage
-  const visited = JSON.parse(localStorage.getItem('hermes-visited-skills') || '[]');
-  if (!visited.includes(s.name)) { visited.push(s.name); localStorage.setItem('hermes-visited-skills', JSON.stringify(visited)); }
+  const visited = JSON.parse(localStorage.getItem('aleph-zero-visited-skills') || '[]');
+  if (!visited.includes(s.name)) { visited.push(s.name); localStorage.setItem('aleph-zero-visited-skills', JSON.stringify(visited)); }
 
   // Update page title
   document.title = `${s.name} — Hermes`;
