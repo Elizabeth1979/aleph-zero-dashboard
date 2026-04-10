@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const name = params.get('name');
   if (!name) { document.getElementById('page-body').innerHTML = '<div class="empty">No skill specified</div>'; return; }
 
-  const skills = d.skills_data || [];
+  const skills = d.skills || [];
   const s = skills.find(x => x.name === name);
   if (!s) { document.getElementById('page-body').innerHTML = `<div class="empty">Skill "${esc(name)}" not found</div>`; return; }
 

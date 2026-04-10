@@ -28,7 +28,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const d = window.__DASHBOARD_DATA__;
   if (!d) return;
-  const skills = d.skills_data || [];
+  const skills = d.skills || [];
   if (!skills.length) { document.getElementById('page-body').innerHTML = '<div class="empty">No skills</div>'; return; }
 
   // All skills grouped by category, custom ones get teal star via CSS
