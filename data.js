@@ -1118,6 +1118,6 @@ window.__DASHBOARD_DATA__ = {
   }
 }},
   skills: [],
-  agent: {"status":"ok","timestamp":"2026-04-10T17:19:00.810Z"},
-  generated: "2026-04-10T17:19:00Z"
+  agent: {"status":"ok","timestamp":"2026-04-10T18:06:29.174Z"},
+  generated: "2026-04-10T18:06:29Z"
 };

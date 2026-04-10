@@ -1,7 +1,5 @@
-<!-- AGENT RULE: Only change what Elli explicitly asks for. No extra improvements, no removing elements, no unsolicited cleanup. Apply changes to ALL instances, not just the first one. -->
-<!-- AGENT: Read BEST-PRACTICES.md before writing HTML/CSS/JS. -->
 <!-- LOCKED ELEMENTS — NEVER REMOVE without explicit instruction:
-     - .header (logo, status dots, restart button)
+     - .header (logo, status dots)
      - .bento grid and all .card elements
      - All <script> tags and their contents
      - data.js reference
@@ -272,24 +270,6 @@
   .usage-fill.warn { background: var(--warn); }
   .usage-fill.danger { background: var(--danger); }
 
-  /* --- Gateway restart button in header --- */
-  .gw-restart-btn {
-    background: var(--accent-muted);
-    color: var(--accent);
-    border: 1px solid rgba(93,228,212,0.2);
-    padding: 4px 12px;
-    border-radius: var(--r2);
-    font-family: var(--sans);
-    font-size: var(--fs-xs);
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-  }
-  .gw-restart-btn:hover { background: rgba(93,228,212,0.2); }
-
   /* --- Footer --- */
   .footer {
     text-align: center;
@@ -529,7 +509,7 @@
         <h2>Long-Term Memory</h2>
         <span class="badge" id="chroma-badge">0</span>
       </div>
-      <div class="card-desc">ChromaDB persistent store</div>
+      <div class="card-desc">MemPalace persistent store</div>
       <div class="card-preview" id="chroma-preview"></div>
     </a>
 
@@ -595,8 +575,17 @@ function loadCards() {
   const d = window.__DASHBOARD_DATA__;
   if (!d) return;
 
-  // Status bar
-  renderStatus(d.status);
+  // Agent status
+  const agent = d.agent || {};
+  const statusBar = document.getElementById('status-bar');
+  statusBar.textContent = '';
+  const statusDiv = document.createElement('div');
+  statusDiv.className = 'status-item';
+  const dot = document.createElement('span');
+  dot.className = agent.status === 'ok' ? 'dot on' : 'dot off';
+  statusDiv.appendChild(dot);
+  statusDiv.appendChild(document.createTextNode(agent.status === 'ok' ? 'Agent Online' : 'Agent Offline'));
+  statusBar.appendChild(statusDiv);
 
   // Tasks
   const tasks = d.tasks || [];
@@ -607,78 +596,54 @@ function loadCards() {
     document.getElementById('task-preview').textContent = 'All clear';
   }
 
-  // Learnings
-  const learningsRaw = (d.memory_files && d.memory_files.learnings) || '';
-  const learningEntries = learningsRaw.split(/^## /m).filter(e => e.trim() && !e.startsWith('#'));
-  document.getElementById('learnings-badge').textContent = learningEntries.length;
-  if (learningEntries.length) {
-    const latest = learningEntries[learningEntries.length - 1].split('\n')[0].trim();
-    document.getElementById('learnings-preview').textContent = latest;
-  }
-
   // Cron
-  const jobs = d.cron_jobs || [];
-  document.getElementById('cron-badge').textContent = jobs.length;
-  if (jobs.length) {
-    document.getElementById('cron-preview').textContent = jobs.map(j => j.name || j.job_id || 'Unnamed').slice(0,2).join(', ');
+  const cronJobs = (d.cron && d.cron.jobs) || [];
+  document.getElementById('cron-badge').textContent = cronJobs.length;
+  if (cronJobs.length) {
+    document.getElementById('cron-preview').textContent = cronJobs.map(j => j.name).slice(0,2).join(', ');
   }
 
-  // Chroma
-  const chroma = d.chroma || {};
-  document.getElementById('chroma-badge').textContent = chroma.count || 0;
-  if (chroma.memories && chroma.memories.length) {
-    const cats = [...new Set(chroma.memories.map(m => m.category || 'general'))];
-    document.getElementById('chroma-preview').textContent = cats.length + ' categories, ' + chroma.count + ' entries';
-  }
+  // Long-Term Memory (MemPalace)
+  const mem = d.memory || {};
+  const totalDrawers = mem.total_drawers || 0;
+  document.getElementById('chroma-badge').textContent = totalDrawers;
+  const wings = mem.wings ? Object.keys(mem.wings).length : 0;
+  const rooms = mem.rooms ? Object.keys(mem.rooms).length : 0;
+  document.getElementById('chroma-preview').textContent = wings + ' wings, ' + rooms + ' rooms, ' + totalDrawers + ' drawers';
+
+  // Learnings (not available in new pipeline yet)
+  document.getElementById('learnings-badge').textContent = '\u2014';
+  document.getElementById('learnings-preview').textContent = 'Coming soon';
 
   // Skills
-  const skills = d.skills_data || [];
+  const skills = d.skills || [];
   document.getElementById('skill-badge').textContent = skills.length;
-  const cats = [...new Set(skills.map(s => s.category))];
-  document.getElementById('skill-preview').textContent = cats.length + ' categories';
+  if (skills.length) {
+    const skillCats = [...new Set(skills.map(s => s.category))];
+    document.getElementById('skill-preview').textContent = skillCats.length + ' categories';
+  } else {
+    document.getElementById('skill-preview').textContent = 'No skills loaded';
+  }
 
   // Projects
   const projects = (d.projects || []).filter(p => p.status !== 'done');
-  const allProjTasks = d.tasks || [];
   document.getElementById('projects-badge').textContent = projects.length;
-  const projPreview = document.getElementById('projects-preview');
-
 
   // Portfolio
   const portfolio = d.portfolio || [];
   document.getElementById('portfolio-badge').textContent = portfolio.length;
   const a11yCount = portfolio.filter(r => r.category === 'a11y').length;
-  document.getElementById('portfolio-preview').textContent = a11yCount + ' accessibility · ' + (portfolio.length - a11yCount) + ' other';
+  document.getElementById('portfolio-preview').textContent = a11yCount + ' accessibility \u00b7 ' + (portfolio.length - a11yCount) + ' other';
 
-  // Reports
-  const reports = d.reports || [];
+  // Knowledge / Resources
   const resources = d.resources || [];
-  document.getElementById('reports-badge').textContent = reports.length + resources.length;
-  if (reports.length) {
-    const allItems = [...reports.map(r => ({ title: r.title || r.file, date: r.date })), ...resources.map(r => ({ title: r.title, date: r.added }))];
-    allItems.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
-    if (allItems.length) document.getElementById('reports-preview').textContent = allItems[0].title;
-  } else if (resources.length) {
+  document.getElementById('reports-badge').textContent = resources.length;
+  if (resources.length) {
     const sorted = [...resources].sort((a, b) => (b.added || '').localeCompare(a.added || ''));
     document.getElementById('reports-preview').textContent = sorted[0].title;
   }
 
   if (typeof lucide !== 'undefined') lucide.createIcons();
-}
-
-function renderStatus(html) {
-  const el = document.getElementById('status-bar');
-  if (!html) return;
-  const doc = new DOMParser().parseFromString(html, 'text/html');
-  const items = doc.querySelectorAll('.config-item');
-  let out = '';
-  items.forEach(item => {
-    const k = item.querySelector('.config-key')?.textContent || '';
-    const v = item.querySelector('.config-val')?.textContent || '';
-    const on = v.includes('Online') || v.includes('\u2713');
-    out += `<div class="status-item"><span class="dot ${on?'on':'off'}"></span>${esc(k)}</div>`;
-  });
-  el.innerHTML = out;
 }
 
 // ── 3D Tilt & Mouse Glow ──
