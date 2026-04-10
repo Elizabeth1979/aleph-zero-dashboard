@@ -63,16 +63,15 @@ function renderMd(raw) {
   html = html.replace(/(?<!href="|href=')(https?:\/\/[^\s<"']+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" class="md-link">$1</a>');
   html = html.replace(/`([^`]+)`/g, function(_, inner) {
     // Linkify known file paths
-    const memMatch = inner.match(/~\/.hermes\/memory\/(.+\.md)/);
+    const memMatch = inner.match(/~\/(\.mempalace|elli-agent)\/(.+\.md)/);
     if (memMatch) {
-      const key = memMatch[1].replace('.md','').replace(/-/g,'_');
+      const key = memMatch[2].replace('.md','').replace(/-/g,'_');
       return `<a href="#detail-${key}" class="file-link" data-detail="${key}"><code>${inner}</code></a>`;
     }
-    const dashMatch = inner.match(/~\/.hermes\/dashboard\/(.+)\.(json|html)/);
+    const dashMatch = inner.match(/~\/aleph-zero-dashboard\/(.+)\.(json|html)/);
     if (dashMatch) {
       const pageMap = {
-        'tasks': 'tasks.html', 'commands': 'commands.html',
-        'config': 'config.html', 'data': null
+        'tasks': 'tasks.html', 'data': null
       };
       const page = pageMap[dashMatch[1]];
       if (page) return `<a href="${page}" class="file-link"><code>${inner}</code></a>`;
@@ -80,14 +79,13 @@ function renderMd(raw) {
     return `<code>${inner}</code>`;
   });
   // Linkify bare file paths (not already inside a tag)
-  html = html.replace(/(~\/.hermes\/memory\/)([\w-]+\.md)/g, function(_, prefix, file) {
+  html = html.replace(/(~\/(\.mempalace|elli-agent)\/)([\w-]+\.md)/g, function(_, prefix, _dir, file) {
     const key = file.replace('.md','').replace(/-/g,'_');
     return `<a href="#detail-${key}" class="file-link" data-detail="${key}"><code>${prefix}${file}</code></a>`;
   });
-  html = html.replace(/(~\/.hermes\/dashboard\/)([\w-]+)\.(json|html|sh)/g, function(_, prefix, name, ext) {
+  html = html.replace(/(~\/aleph-zero-dashboard\/)([\w-]+)\.(json|html|sh)/g, function(_, prefix, name, ext) {
     const pageMap = {
-      'tasks': 'tasks.html', 'commands': 'commands.html',
-      'config': 'config.html'
+      'tasks': 'tasks.html'
     };
     const page = pageMap[name];
     if (page) return `<a href="${page}" class="file-link"><code>${prefix}${name}.${ext}</code></a>`;
