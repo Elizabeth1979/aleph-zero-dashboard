@@ -1,5 +1,3 @@
-<!-- AGENT RULE: Only change what Elli explicitly asks for. No extra improvements, no removing elements, no unsolicited cleanup. Apply changes to ALL instances, not just the first one. -->
-<!-- AGENT: Read BEST-PRACTICES.md before writing HTML/CSS/JS. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,82 +29,50 @@
 document.addEventListener('DOMContentLoaded', () => {
   const d = window.__DASHBOARD_DATA__;
   if (!d) return;
-  const chroma = d.chroma || {};
-  if (!chroma.memories || !chroma.memories.length) {
-    document.getElementById('page-body').innerHTML = '<div class="empty">No long-term memories</div>';
+  const mem = d.memory || {};
+  const el = document.getElementById('page-body');
+
+  if (!mem.total_drawers) {
+    el.textContent = 'No memories indexed yet';
     return;
   }
-  const cats = {};
-  chroma.memories.forEach(m => {
-    const c = m.category || 'general';
-    if (!cats[c]) cats[c] = [];
-    cats[c].push(m);
+
+  // Hide the view toggle — not needed for summary view
+  const toggle = document.getElementById('view-toggle');
+  if (toggle) toggle.style.display = 'none';
+
+  const wings = mem.wings || {};
+  const rooms = mem.rooms || {};
+
+  let html = '';
+
+  // Summary stats
+  html += '<div class="modal-chroma-cat">Overview</div>';
+  html += '<div class="modal-chroma-entry">';
+  html += '<strong>' + mem.total_drawers + '</strong> total drawers across ';
+  html += '<strong>' + Object.keys(wings).length + '</strong> wings and ';
+  html += '<strong>' + Object.keys(rooms).length + '</strong> rooms';
+  html += '</div>';
+
+  // Wings
+  html += '<div class="modal-chroma-cat">Wings</div>';
+  Object.entries(wings).sort((a,b) => b[1] - a[1]).forEach(function(entry) {
+    html += '<div class="modal-chroma-entry">';
+    html += '<strong>' + esc(entry[0]) + '</strong>: ' + entry[1] + ' drawers';
+    html += '</div>';
   });
 
-  let rawMode = false;
-
-  let activeFilter = 'all';
-  const catNames = Object.keys(cats).sort();
-
-  function render() {
-    let html = '';
-    if (!rawMode) {
-      // Simple view: grouped by category
-      catNames.forEach(cat => {
-        html += `<div class="modal-chroma-cat">${esc(cat)} (${cats[cat].length})</div>`;
-        cats[cat].forEach(m => {
-          html += `<div class="modal-chroma-entry">${esc(m.text)}</div>`;
-        });
-      });
-    } else {
-      // Raw view: filter pills + table
-      html += `<div class="chroma-filters">`;
-      html += `<button class="pill${activeFilter === 'all' ? ' active' : ''}" data-cat="all">All (${chroma.memories.length})</button>`;
-      catNames.forEach(cat => {
-        html += `<button class="pill${activeFilter === cat ? ' active' : ''}" data-cat="${esc(cat)}">${esc(cat)} (${cats[cat].length})</button>`;
-      });
-      html += `</div>`;
-
-      const filtered = activeFilter === 'all'
-        ? chroma.memories.slice().sort((a, b) => (a.category || '').localeCompare(b.category || ''))
-        : cats[activeFilter] || [];
-
-      html += `<div class="chroma-table-wrap"><table class="chroma-table">`;
-      html += `<thead><tr><th>ID</th><th>Category</th><th>Text</th><th>Created</th></tr></thead><tbody>`;
-      filtered.forEach(m => {
-        const ts = m.timestamp ? m.timestamp.slice(0, 10) : '—';
-        html += `<tr>`;
-        html += `<td class="chroma-td-id">${esc(m.id)}</td>`;
-        html += `<td class="chroma-td-cat">${esc(m.category || 'general')}</td>`;
-        html += `<td>${esc(m.text)}</td>`;
-        html += `<td class="chroma-td-ts">${esc(ts)}</td>`;
-        html += `</tr>`;
-      });
-      html += `</tbody></table></div>`;
-    }
-    document.getElementById('page-body').innerHTML = html;
-    if (typeof lucide !== 'undefined') lucide.createIcons();
-
-    // Attach filter click handlers
-    document.querySelectorAll('.chroma-filters .pill').forEach(btn => {
-      btn.addEventListener('click', () => {
-        activeFilter = btn.dataset.cat;
-        render();
-      });
-    });
-  }
-
-  document.getElementById('view-toggle').addEventListener('click', () => {
-    rawMode = !rawMode;
-    const btn = document.getElementById('view-toggle');
-    btn.innerHTML = rawMode
-      ? '<i data-lucide="list" style="width:13px;height:13px"></i> Simple View'
-      : '<i data-lucide="rows-3" style="width:13px;height:13px"></i> Raw View';
-    if (typeof lucide !== 'undefined') lucide.createIcons();
-    render();
+  // Rooms
+  html += '<div class="modal-chroma-cat">Rooms (' + Object.keys(rooms).length + ')</div>';
+  Object.entries(rooms).sort((a,b) => b[1] - a[1]).forEach(function(entry) {
+    html += '<div class="modal-chroma-entry">';
+    html += '<strong>' + esc(entry[0]) + '</strong>: ' + entry[1] + ' drawers';
+    html += '</div>';
   });
 
-  render();
+  el.textContent = '';
+  el.insertAdjacentHTML('beforeend', html);
+  if (typeof lucide !== 'undefined') lucide.createIcons();
 });
 
 </script>

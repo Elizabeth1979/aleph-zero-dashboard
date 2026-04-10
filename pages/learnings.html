@@ -1,5 +1,3 @@
-<!-- AGENT RULE: Only change what Elli explicitly asks for. No extra improvements, no removing elements, no unsolicited cleanup. Apply changes to ALL instances, not just the first one. -->
-<!-- AGENT: Read BEST-PRACTICES.md before writing HTML/CSS/JS. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -86,7 +84,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const d = window.__DASHBOARD_DATA__;
   if (!d) return;
-  const raw = (d.memory_files && d.memory_files.learnings) || '';
+  const raw = '';
   
   // Parse entries (split on ## headings)
   const entries = [];
