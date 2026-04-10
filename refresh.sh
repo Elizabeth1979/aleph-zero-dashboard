@@ -45,6 +45,24 @@ if [ -d "$SKILLS_DIR" ]; then
 fi
 SKILLS+=']'
 
+# Portfolio — fetch public repos from GitHub
+PORTFOLIO=$(gh api users/Elizabeth1979/repos --paginate --jq '[.[] | select(.fork == false and .private == false) | {
+  name: .name,
+  description: .description,
+  url: .html_url,
+  updated: .updated_at,
+  language: .language,
+  topics: .topics,
+  category: (
+    if (.topics | index("accessibility")) or (.name | test("a11y|accessibility|visua11y|screen-reader|wcag|sr-"; "i"))
+    then "a11y"
+    elif (.name | test("fun-building|kids-games|english-for-kids|family-travels|grandma-war"; "i"))
+    then "personal"
+    else "apps"
+    end
+  )
+}]' 2>/dev/null || echo '[]')
+
 # Agent health
 HEALTH=$(curl -s http://localhost:3141/health 2>/dev/null || echo '{"status":"offline"}')
 
@@ -57,6 +75,7 @@ window.__DASHBOARD_DATA__ = {
   memory: $MEMORY_STATUS,
   cron: {jobs: $CRON_JOBS, state: $CRON_STATE},
   skills: $SKILLS,
+  portfolio: $PORTFOLIO,
   agent: $HEALTH,
   generated: "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 };
