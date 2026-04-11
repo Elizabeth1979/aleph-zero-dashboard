@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+    <title>CLI Reference — Aleph Zero</title>
+    <link rel="stylesheet" href="../theme.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <link rel="stylesheet" href="shared.css" />
+    <style>
+      .cli-hero {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--r3);
+        padding: var(--s5) var(--s6);
+        margin-bottom: var(--s6);
+        overflow-x: auto;
+      }
+      .cli-hero pre {
+        font-family: var(--mono);
+        font-size: 13px;
+        line-height: 1.4;
+        color: var(--accent);
+        margin: 0;
+        white-space: pre;
+      }
+      .cli-setup {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--r2);
+        padding: var(--s4) var(--s5);
+        margin-bottom: var(--s6);
+      }
+      .cli-setup-title {
+        font-size: var(--fs-sm);
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: var(--s3);
+      }
+      .cli-setup code {
+        display: block;
+        font-family: var(--mono);
+        font-size: var(--fs-sm);
+        color: var(--accent);
+        background: var(--bg-inset);
+        border: 1px solid var(--border);
+        border-radius: var(--r1);
+        padding: var(--s2) var(--s3);
+        margin-bottom: var(--s2);
+      }
+      .cli-setup .hint {
+        font-size: var(--fs-xs);
+        color: var(--text-3);
+      }
+      .cmd-section {
+        margin-bottom: var(--s6);
+      }
+      .cmd-section-title {
+        font-size: var(--fs-xs);
+        font-weight: 600;
+        color: var(--text-3);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        margin-bottom: var(--s3);
+        padding-bottom: var(--s2);
+        border-bottom: 1px solid var(--border);
+      }
+      .cmd-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--r2);
+        padding: var(--s4) var(--s5);
+        margin-bottom: var(--s3);
+        transition: border-color 0.2s ease;
+      }
+      .cmd-card:hover {
+        border-color: rgba(var(--accent-rgb), 0.4);
+      }
+      .cmd-header {
+        display: flex;
+        align-items: baseline;
+        gap: var(--s3);
+        margin-bottom: var(--s2);
+      }
+      .cmd-name {
+        font-family: var(--mono);
+        font-weight: 600;
+        font-size: var(--fs-sm);
+        color: var(--accent);
+      }
+      .cmd-aliases {
+        font-family: var(--mono);
+        font-size: var(--fs-xs);
+        color: var(--text-3);
+      }
+      .cmd-desc {
+        font-size: var(--fs-sm);
+        color: var(--text-2);
+        line-height: 1.5;
+        margin-bottom: var(--s2);
+      }
+      .cmd-usage {
+        font-family: var(--mono);
+        font-size: var(--fs-xs);
+        color: var(--text-3);
+        background: var(--bg-inset);
+        border-radius: var(--r1);
+        padding: var(--s1) var(--s2);
+        display: inline-block;
+      }
+      .cmd-example {
+        font-family: var(--mono);
+        font-size: var(--fs-xs);
+        color: var(--text-2);
+        background: var(--bg-inset);
+        border: 1px solid var(--border);
+        border-radius: var(--r1);
+        padding: var(--s2) var(--s3);
+        margin-top: var(--s2);
+        white-space: pre-wrap;
+      }
+      .cmd-example .prompt {
+        color: var(--accent);
+      }
+      .cmd-example .comment {
+        color: var(--text-3);
+      }
+      .interfaces {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: var(--s3);
+        margin-bottom: var(--s6);
+      }
+      .interface-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--r2);
+        padding: var(--s4);
+        text-align: center;
+      }
+      .interface-card svg {
+        width: 24px;
+        height: 24px;
+        color: var(--accent);
+        margin-bottom: var(--s2);
+      }
+      .interface-name {
+        font-size: var(--fs-sm);
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: var(--s1);
+      }
+      .interface-desc {
+        font-size: var(--fs-xs);
+        color: var(--text-3);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-wrap">
+      <div class="page-header">
+        <a href="../index.html" class="back-link">
+          <i data-lucide="arrow-left" style="width: 16px; height: 16px"></i>
+          Dashboard
+        </a>
+        <h1 class="page-title"><i data-lucide="terminal"></i> CLI Reference</h1>
+      </div>
+      <div class="page-body">
+        <!-- ASCII logo -->
+        <div class="cli-hero">
+          <pre>
+    ___    __    __________  __  __   _____  __________  ____
+   /   |  / /   / ____/ __ \/ / / /  /__  / / ____/ __ \/ __ \
+  / /| | / /   / __/ / /_/ / /_/ /     / / / __/ / /_/ / / / /
+ / ___ |/ /___/ /___/ ____/ __  /     / /_/ /___/ _, _/ /_/ /
+/_/  |_/_____/_____/_/   /_/ /_/     /___/_____/_/ |_|\____/</pre
+          >
+        </div>
+
+        <!-- Quick start -->
+        <div class="cli-setup">
+          <div class="cli-setup-title">Quick Start</div>
+          <code>aleph</code>
+          <div class="hint">
+            Opens the interactive CLI. The
+            <code style="display: inline; padding: 1px 4px; margin: 0"
+              >aleph</code
+            >
+            alias is configured in your shell.
+          </div>
+        </div>
+
+        <!-- Interfaces -->
+        <div class="cmd-section-title">Interfaces</div>
+        <div class="interfaces">
+          <div class="interface-card">
+            <i data-lucide="terminal"></i>
+            <div class="interface-name">Interactive CLI</div>
+            <div class="interface-desc">
+              Type
+              <code style="display: inline; font-size: 11px; padding: 1px 4px"
+                >aleph</code
+              >
+              in terminal
+            </div>
+          </div>
+          <div class="interface-card">
+            <i data-lucide="message-circle"></i>
+            <div class="interface-name">Discord</div>
+            <div class="interface-desc">Message Aleph Zero bot</div>
+          </div>
+          <div class="interface-card">
+            <i data-lucide="globe"></i>
+            <div class="interface-name">HTTP API</div>
+            <div class="interface-desc">POST localhost:3141/chat</div>
+          </div>
+          <div class="interface-card">
+            <i data-lucide="code"></i>
+            <div class="interface-name">One-shot CLI</div>
+            <div class="interface-desc">
+              <code style="display: inline; font-size: 11px; padding: 1px 4px"
+                >npm run cli -- &lt;cmd&gt;</code
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Commands -->
+        <div class="cmd-section">
+          <div class="cmd-section-title">Agent</div>
+
+          <div class="cmd-card">
+            <div class="cmd-header">
+              <span class="cmd-name">ask</span>
+              <span class="cmd-aliases">default</span>
+            </div>
+            <div class="cmd-desc">
+              Ask the agent anything. This is the default — just type your
+              question without a command.
+            </div>
+            <div class="cmd-example">
+              <span class="prompt">aleph &gt;</span> what do my notes say about
+              color contrast?
+              <span class="comment"
+                ># Uses search_vault, search_memory, or answers directly</span
+              >
+            </div>
+          </div>
+
+          <div class="cmd-card">
+            <div class="cmd-header">
+              <span class="cmd-name">health</span>
+              <span class="cmd-aliases">status</span>
+            </div>
+            <div class="cmd-desc">Check agent, Ollama, and server status.</div>
+            <div class="cmd-example">
+              <span class="prompt">aleph &gt;</span> health
+              <span class="comment"> Agent: running (pid 12345)</span>
+              <span class="comment"> Ollama: online (3 models)</span>
+              <span class="comment"> Model: gemma4:e4b</span>
+              <span class="comment"> Server: http://localhost:3141</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cmd-section">
+          <div class="cmd-section-title">Tasks</div>
+
+          <div class="cmd-card">
+            <div class="cmd-header">
+              <span class="cmd-name">tasks</span>
+              <span class="cmd-aliases">t, todo</span>
+            </div>
+            <div class="cmd-desc">List all tasks with urgency and tags.</div>
+          </div>
+
+          <div class="cmd-card">
+            <div class="cmd-header">
+              <span class="cmd-name">add</span>
+            </div>
+            <div class="cmd-desc">Add a new task.</div>
+            <div class="cmd-usage">
+              add &lt;description&gt; [--urgent] [--tags work,private]
+            </div>
+            <div class="cmd-example">
+              <span class="prompt">aleph &gt;</span> add Review PR for button
+              component --tags Work
+            </div>
+          </div>
+        </div>
+
+        <div class="cmd-section">
+          <div class="cmd-section-title">Memory</div>
+
+          <div class="cmd-card">
+            <div class="cmd-header">
+              <span class="cmd-name">memory</span>
+              <span class="cmd-aliases">mem, m</span>
+            </div>
+            <div class="cmd-desc">
+              Show MemPalace status — total drawers, wings, and rooms.
+            </div>
+          </div>
+        </div>
+
+        <div class="cmd-section">
+          <div class="cmd-section-title">Utility</div>
+
+          <div class="cmd-card">
+            <div class="cmd-header">
+              <span class="cmd-name">help</span>
+              <span class="cmd-aliases">h, ?</span>
+            </div>
+            <div class="cmd-desc">Show all available commands.</div>
+          </div>
+
+          <div class="cmd-card">
+            <div class="cmd-header">
+              <span class="cmd-name">clear</span>
+              <span class="cmd-aliases">cls</span>
+            </div>
+            <div class="cmd-desc">Clear the screen and reprint the header.</div>
+          </div>
+
+          <div class="cmd-card">
+            <div class="cmd-header">
+              <span class="cmd-name">exit</span>
+              <span class="cmd-aliases">quit, q</span>
+            </div>
+            <div class="cmd-desc">Exit the interactive CLI.</div>
+          </div>
+        </div>
+      </div>
+      <div class="page-footer">built with &#10084;&#65039; by e11i</div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        if (typeof lucide !== "undefined") lucide.createIcons();
+      });
+    </script>
+  </body>
+</html>
