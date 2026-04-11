@@ -54,11 +54,13 @@ PORTFOLIO=$(gh api users/Elizabeth1979/repos --paginate --jq '[.[] | select(.for
   language: .language,
   topics: .topics,
   category: (
-    if (.topics | index("accessibility")) or (.name | test("a11y|accessibility|visua11y|screen-reader|wcag|sr-"; "i"))
+    if (.topics | index("accessibility")) or (.name | test("a11y|accessib|visua11y|screen-reader|wcag|sr-|alt-generation|^TTS$"; "i"))
     then "a11y"
     elif (.name | test("fun-building|kids-games|english-for-kids|family-travels|grandma-war"; "i"))
     then "personal"
-    else "apps"
+    elif (.name | test("^Elizabeth1979$|^Elizabeth1979\\.github\\.io$|^e11i-garden$"; "i"))
+    then "meta"
+    else "tools"
     end
   )
 }]' 2>/dev/null || echo '[]')
