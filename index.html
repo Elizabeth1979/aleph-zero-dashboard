@@ -4,876 +4,1145 @@
      - All <script> tags and their contents
      - data.js reference
 -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
-<title>Aleph Zero — e11i's dashboard</title>
-<link rel="stylesheet" href="theme.css">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <title>Aleph Zero — e11i's dashboard</title>
+    <link rel="stylesheet" href="theme.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-  html, body {
-    font-family: var(--sans);
-    font-size: var(--fs-base);
-    color: var(--text);
-    background: var(--bg);
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-  }
+      html,
+      body {
+        font-family: var(--sans);
+        font-size: var(--fs-base);
+        color: var(--text);
+        background: var(--bg);
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+      }
 
-  .wrap {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: var(--s6) var(--s6) var(--s4);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    isolation: isolate;
-  }
+      .wrap {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: var(--s6) var(--s6) var(--s4);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        isolation: isolate;
+      }
 
-  /* --- Header --- */
-  .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: var(--s5);
-    flex-shrink: 0;
-  }
-  .header-left {
-    display: flex;
-    align-items: center;
-    gap: var(--s4);
-  }
-  .header-left img {
-    height: 48px;
-    border-radius: var(--r2);
-  }
-  .header-left h1 {
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--text);
-    letter-spacing: -0.5px;
-  }
-  .header-left h1 span {
-    color: var(--accent);
-    font-weight: 400;
-    font-size: 16px;
-    letter-spacing: 0.02em;
-    display: block;
-    margin-top: -2px;
-  }
-  .status-row {
-    display: flex;
-    align-items: center;
-    gap: var(--s5);
-  }
-  .status-item {
-    display: flex;
-    align-items: center;
-    gap: var(--s2);
-    font-size: var(--fs-xs);
-    color: var(--text-2);
-  }
-  .dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-  .dot.on { background: var(--ok); }
-  .dot.off { background: var(--text-3); }
+      /* --- Header --- */
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: var(--s5);
+        flex-shrink: 0;
+      }
+      .header-left {
+        display: flex;
+        align-items: center;
+        gap: var(--s4);
+      }
+      .header-left img {
+        height: 48px;
+        border-radius: var(--r2);
+      }
+      .header-left h1 {
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--text);
+        letter-spacing: -0.5px;
+      }
+      .header-left h1 span {
+        color: var(--accent);
+        font-weight: 400;
+        font-size: 16px;
+        letter-spacing: 0.02em;
+        display: block;
+        margin-top: -2px;
+      }
+      .status-row {
+        display: flex;
+        align-items: center;
+        gap: var(--s5);
+      }
+      .status-item {
+        display: flex;
+        align-items: center;
+        gap: var(--s2);
+        font-size: var(--fs-xs);
+        color: var(--text-2);
+      }
+      .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .dot.on {
+        background: var(--ok);
+      }
+      .dot.off {
+        background: var(--text-3);
+      }
 
-  /* --- Bento Grid — fluid columns --- */
-  .bento {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: var(--s4);
-  }
+      /* --- Bento Grid — fluid columns --- */
+      .bento {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: var(--s4);
+      }
 
-  @media (max-width: 600px) {
-    .wrap { padding: var(--s4) var(--s3); }
-    .header {
-    flex-direction: column; align-items: flex-start; gap: var(--s3); }
-  }
+      @media (max-width: 600px) {
+        .wrap {
+          padding: var(--s4) var(--s3);
+        }
+        .header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: var(--s3);
+        }
+      }
 
-  /* --- Section Label --- */
-  .section-label {
-    display: flex;
-    align-items: center;
-    gap: var(--s2);
-    font-size: var(--fs-sm);
-    font-weight: 600;
-    color: var(--text-3);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: var(--s4);
-    margin-top: var(--s6);
-    padding-bottom: var(--s2);
-    border-bottom: 1px solid var(--border);
-  }
-  .section-label:first-of-type { margin-top: 0; }
-  .section-label svg { color: var(--accent); }
+      /* --- Section Label --- */
+      .section-label {
+        display: flex;
+        align-items: center;
+        gap: var(--s2);
+        font-size: var(--fs-sm);
+        font-weight: 600;
+        color: var(--text-3);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        margin-bottom: var(--s4);
+        margin-top: var(--s6);
+        padding-bottom: var(--s2);
+        border-bottom: 1px solid var(--border);
+      }
+      .section-label:first-of-type {
+        margin-top: 0;
+      }
+      .section-label svg {
+        color: var(--accent);
+      }
 
-  /* --- Card --- */
-  a.card { text-decoration: none; color: inherit; }
-  .card {
-    background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 30%),
-      var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--r3);
-    padding: var(--s5);
-    cursor: pointer;
-    transition:
-      border-color 0.3s ease,
-      transform 0.5s var(--ease-out-quint),
-      box-shadow 0.5s ease;
-    animation: fadeIn 0.4s ease both;
-    display: flex;
-    flex-direction: column;
-    min-height: 120px;
-    position: relative;
-    transform-style: preserve-3d;
-    overflow: hidden;
-  }
+      /* --- Card --- */
+      a.card {
+        text-decoration: none;
+        color: inherit;
+      }
+      .card {
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 30%),
+          var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--r3);
+        padding: var(--s5);
+        cursor: pointer;
+        transition:
+          border-color 0.3s ease,
+          transform 0.5s var(--ease-out-quint),
+          box-shadow 0.5s ease;
+        animation: fadeIn 0.4s ease both;
+        display: flex;
+        flex-direction: column;
+        min-height: 120px;
+        position: relative;
+        transform-style: preserve-3d;
+        overflow: hidden;
+      }
 
-  /* Radial glow that follows the mouse */
-  .card::before {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    border-radius: inherit;
-    background: radial-gradient(
-      600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-      rgba(var(--accent-rgb), 0.12),
-      transparent 40%
-    );
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    pointer-events: none;
-    z-index: 0;
-  }
+      /* Radial glow that follows the mouse */
+      .card::before {
+        content: "";
+        position: absolute;
+        inset: -1px;
+        border-radius: inherit;
+        background: radial-gradient(
+          600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+          rgba(var(--accent-rgb), 0.12),
+          transparent 40%
+        );
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        pointer-events: none;
+        z-index: 0;
+      }
 
-  /* Top accent line on hover */
-  .card::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--accent-dim), var(--accent));
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    border-radius: var(--r3) var(--r3) 0 0;
-    z-index: 1;
-  }
+      /* Top accent line on hover */
+      .card::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--accent-dim), var(--accent));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        border-radius: var(--r3) var(--r3) 0 0;
+        z-index: 1;
+      }
 
-  .card:hover {
-    border-color: rgba(var(--accent-rgb), 0.4);
-    box-shadow:
-      0 20px 40px rgba(0, 0, 0, 0.3),
-      0 0 20px rgba(var(--accent-rgb), 0.08);
-  }
-  .card:hover::before { opacity: 1; }
-  .card:hover::after { opacity: 1; }
+      .card:hover {
+        border-color: rgba(var(--accent-rgb), 0.4);
+        box-shadow:
+          0 20px 40px rgba(0, 0, 0, 0.3),
+          0 0 20px rgba(var(--accent-rgb), 0.08);
+      }
+      .card:hover::before {
+        opacity: 1;
+      }
+      .card:hover::after {
+        opacity: 1;
+      }
 
-  /* Card contents stay above the glow */
-  .card > * { position: relative; z-index: 1; }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .card:nth-child(1) { animation-delay: 0s; }
-  .card:nth-child(2) { animation-delay: 0.03s; }
-  .card:nth-child(3) { animation-delay: 0.06s; }
-  .card:nth-child(4) { animation-delay: 0.09s; }
-  .card:nth-child(5) { animation-delay: 0.12s; }
-  .card:nth-child(6) { animation-delay: 0.15s; }
-  .card:nth-child(7) { animation-delay: 0.18s; }
-  .card:nth-child(8) { animation-delay: 0.21s; }
-  .card:nth-child(9) { animation-delay: 0.24s; }
+      /* Card contents stay above the glow */
+      .card > * {
+        position: relative;
+        z-index: 1;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .card:nth-child(1) {
+        animation-delay: 0s;
+      }
+      .card:nth-child(2) {
+        animation-delay: 0.03s;
+      }
+      .card:nth-child(3) {
+        animation-delay: 0.06s;
+      }
+      .card:nth-child(4) {
+        animation-delay: 0.09s;
+      }
+      .card:nth-child(5) {
+        animation-delay: 0.12s;
+      }
+      .card:nth-child(6) {
+        animation-delay: 0.15s;
+      }
+      .card:nth-child(7) {
+        animation-delay: 0.18s;
+      }
+      .card:nth-child(8) {
+        animation-delay: 0.21s;
+      }
+      .card:nth-child(9) {
+        animation-delay: 0.24s;
+      }
 
-  /* --- Card Header --- */
-  .card-h {
-    display: flex;
-    align-items: center;
-    gap: var(--s3);
-    margin-bottom: var(--s3);
-  }
-  .card-h svg {
-    width: 18px;
-    height: 18px;
-    color: var(--accent);
-    flex-shrink: 0;
-    transition: transform 0.5s var(--ease-out-quint);
-  }
-  .card:hover .card-h svg {
-    transform: translateZ(40px) scale(1.15);
-  }
-  .card-h h2 {
-    font-size: var(--fs-sm);
-    font-weight: 600;
-    color: var(--text);
-    letter-spacing: -0.01em;
-  }
-  .card-h .badge {
-    margin-left: auto;
-    font-size: var(--fs-xs);
-    font-family: var(--mono);
-    font-weight: 600;
-    color: var(--accent);
-    background: var(--accent-muted);
-    padding: 2px 8px;
-    border-radius: var(--pill);
-  }
+      /* --- Card Header --- */
+      .card-h {
+        display: flex;
+        align-items: center;
+        gap: var(--s3);
+        margin-bottom: var(--s3);
+      }
+      .card-h svg {
+        width: 18px;
+        height: 18px;
+        color: var(--accent);
+        flex-shrink: 0;
+        transition: transform 0.5s var(--ease-out-quint);
+      }
+      .card:hover .card-h svg {
+        transform: translateZ(40px) scale(1.15);
+      }
+      .card-h h2 {
+        font-size: var(--fs-sm);
+        font-weight: 600;
+        color: var(--text);
+        letter-spacing: -0.01em;
+      }
+      .card-h .badge {
+        margin-left: auto;
+        font-size: var(--fs-xs);
+        font-family: var(--mono);
+        font-weight: 600;
+        color: var(--accent);
+        background: var(--accent-muted);
+        padding: 2px 8px;
+        border-radius: var(--pill);
+      }
 
-  /* --- Card Description --- */
-  .card-desc {
-    font-size: var(--fs-xs);
-    color: var(--text-3);
-    line-height: 1.5;
-    flex: 1;
-  }
+      /* --- Card Description --- */
+      .card-desc {
+        font-size: var(--fs-xs);
+        color: var(--text-3);
+        line-height: 1.5;
+        flex: 1;
+      }
 
-  /* --- Card Footer / Preview --- */
-  .card-preview {
-    margin-top: auto;
-    padding-top: var(--s3);
-    font-size: var(--fs-xs);
-    color: var(--text-2);
-    font-family: var(--mono);
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
+      /* --- Card Footer / Preview --- */
+      .card-preview {
+        margin-top: auto;
+        padding-top: var(--s3);
+        font-size: var(--fs-xs);
+        color: var(--text-2);
+        font-family: var(--mono);
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
 
-  /* --- Usage bar (for memory cards) --- */
-  .usage-bar {
-    height: 4px;
-    background: rgba(255,255,255,0.04);
-    border-radius: var(--pill);
-    margin-top: var(--s3);
-    overflow: hidden;
-  }
-  .usage-fill {
-    height: 100%;
-    border-radius: var(--pill);
-    transition: width 0.8s ease;
-  }
-  .usage-fill.ok { background: var(--ok); }
-  .usage-fill.warn { background: var(--warn); }
-  .usage-fill.danger { background: var(--danger); }
+      /* --- Usage bar (for memory cards) --- */
+      .usage-bar {
+        height: 4px;
+        background: rgba(255, 255, 255, 0.04);
+        border-radius: var(--pill);
+        margin-top: var(--s3);
+        overflow: hidden;
+      }
+      .usage-fill {
+        height: 100%;
+        border-radius: var(--pill);
+        transition: width 0.8s ease;
+      }
+      .usage-fill.ok {
+        background: var(--ok);
+      }
+      .usage-fill.warn {
+        background: var(--warn);
+      }
+      .usage-fill.danger {
+        background: var(--danger);
+      }
 
-  /* --- Footer --- */
-  .footer {
-    text-align: center;
-    font-size: var(--fs-xs);
-    color: var(--text-3);
-    padding: var(--s5) 0 var(--s3);
-    flex-shrink: 0;
-    margin-top: auto;
-  }
+      /* --- Footer --- */
+      .footer {
+        text-align: center;
+        font-size: var(--fs-xs);
+        color: var(--text-3);
+        padding: var(--s5) 0 var(--s3);
+        flex-shrink: 0;
+        margin-top: auto;
+      }
 
-  /* --- Easter Egg --- */
-  .egg {
-    position: absolute;
-    width: 14px; height: 14px;
-    cursor: pointer;
-    opacity: 0.08;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    z-index: 10;
-    font-size: 12px;
-    line-height: 14px;
-    text-align: center;
-    user-select: none;
-  }
-  .egg:hover { opacity: 0.5; transform: scale(1.8); }
-  .egg-popup {
-    position: fixed;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%) scale(0.8);
-    background: var(--bg-card);
-    border: 1px solid var(--accent);
-    border-radius: var(--r3);
-    padding: var(--s5) var(--s6);
-    max-width: 340px;
-    text-align: center;
-    opacity: 0;
-    transition: all 0.3s ease;
-    pointer-events: none;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 30px rgba(var(--accent-rgb), 0.15);
-  }
-  .egg-popup.show {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-    pointer-events: auto;
-  }
-  .egg-popup .egg-icon { font-size: 32px; margin-bottom: var(--s3); }
-  .egg-popup .egg-text {
-    font-size: var(--fs-sm);
-    color: var(--text);
-    line-height: 1.6;
-  }
-  .egg-popup .egg-label {
-    font-size: var(--fs-xs);
-    color: var(--accent-dim);
-    margin-top: var(--s3);
-    font-family: var(--mono);
-  }
-  .egg-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.5);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-  }
-  .egg-overlay.show { opacity: 1; pointer-events: auto; }
+      /* --- Easter Egg --- */
+      .egg {
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        cursor: pointer;
+        opacity: 0.08;
+        transition:
+          opacity 0.3s ease,
+          transform 0.3s ease;
+        z-index: 10;
+        font-size: 12px;
+        line-height: 14px;
+        text-align: center;
+        user-select: none;
+      }
+      .egg:hover {
+        opacity: 0.5;
+        transform: scale(1.8);
+      }
+      .egg-popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.8);
+        background: var(--bg-card);
+        border: 1px solid var(--accent);
+        border-radius: var(--r3);
+        padding: var(--s5) var(--s6);
+        max-width: 340px;
+        text-align: center;
+        opacity: 0;
+        transition: all 0.3s ease;
+        pointer-events: none;
+        box-shadow:
+          0 20px 60px rgba(0, 0, 0, 0.6),
+          0 0 30px rgba(var(--accent-rgb), 0.15);
+      }
+      .egg-popup.show {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        pointer-events: auto;
+      }
+      .egg-popup .egg-icon {
+        font-size: 32px;
+        margin-bottom: var(--s3);
+      }
+      .egg-popup .egg-text {
+        font-size: var(--fs-sm);
+        color: var(--text);
+        line-height: 1.6;
+      }
+      .egg-popup .egg-label {
+        font-size: var(--fs-xs);
+        color: var(--accent-dim);
+        margin-top: var(--s3);
+        font-family: var(--mono);
+      }
+      .egg-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+      }
+      .egg-overlay.show {
+        opacity: 1;
+        pointer-events: auto;
+      }
 
-  /* --- Scrollbar --- */
-  ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
+      /* --- Scrollbar --- */
+      ::-webkit-scrollbar {
+        width: 4px;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 2px;
+      }
 
-  /* --- Search Bar --- */
-  .search-wrap {
-    position: relative;
-    margin-left: var(--s3);
-  }
-  .search-input {
-    width: 220px;
-    padding: 6px 12px 6px 32px;
-    font-family: var(--sans);
-    font-size: var(--fs-xs);
-    color: var(--text-1);
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--r2);
-    outline: none;
-    transition: border-color 0.2s ease;
-  }
-  .search-input::placeholder { color: var(--text-3); }
-  .search-input:focus { border-color: var(--accent); }
-  .search-icon {
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-3);
-    pointer-events: none;
-  }
-  .search-results {
-    display: none;
-    position: fixed;
-    max-height: 320px;
-    overflow-y: auto;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--r2);
-    box-shadow: 0 12px 32px rgba(0,0,0,0.4);
-  }
-  .search-results.open { display: block; }
-  .search-result {
-    -webkit-appearance: none;
-    appearance: none;
-    background: transparent;
-    border: none;
-    width: 100%;
-    font-family: inherit;
-    text-align: left;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 12px;
-    cursor: pointer;
-    transition: background 0.15s ease;
-    text-decoration: none;
-    color: inherit;
-  }
-  .search-result:hover { background: rgba(255,255,255,0.04); }
-  .search-result-name {
-    font-size: var(--fs-xs);
-    color: var(--text-1);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    flex: 1;
-    min-width: 0;
-  }
-  .search-result-tag {
-    font-size: 10px;
-    color: var(--text-3);
-    margin-left: var(--s2);
-    flex-shrink: 0;
-  }
-  .search-no-results {
-    padding: 12px;
-    font-size: var(--fs-xs);
-    color: var(--text-3);
-    text-align: center;
-  }
-  @media (max-width: 600px) {
-    .search-wrap { margin-left: 0; width: 100%; }
-    .search-input { width: 100%; }
-    .search-results { width: 100%; }
-  }
+      /* --- Search Bar --- */
+      .search-wrap {
+        position: relative;
+        margin-left: var(--s3);
+      }
+      .search-input {
+        width: 220px;
+        padding: 6px 12px 6px 32px;
+        font-family: var(--sans);
+        font-size: var(--fs-xs);
+        color: var(--text-1);
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--r2);
+        outline: none;
+        transition: border-color 0.2s ease;
+      }
+      .search-input::placeholder {
+        color: var(--text-3);
+      }
+      .search-input:focus {
+        border-color: var(--accent);
+      }
+      .search-icon {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-3);
+        pointer-events: none;
+      }
+      .search-results {
+        display: none;
+        position: fixed;
+        max-height: 320px;
+        overflow-y: auto;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--r2);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+      }
+      .search-results.open {
+        display: block;
+      }
+      .search-result {
+        -webkit-appearance: none;
+        appearance: none;
+        background: transparent;
+        border: none;
+        width: 100%;
+        font-family: inherit;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 12px;
+        cursor: pointer;
+        transition: background 0.15s ease;
+        text-decoration: none;
+        color: inherit;
+      }
+      .search-result:hover {
+        background: rgba(255, 255, 255, 0.04);
+      }
+      .search-result-name {
+        font-size: var(--fs-xs);
+        color: var(--text-1);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        flex: 1;
+        min-width: 0;
+      }
+      .search-result-tag {
+        font-size: 10px;
+        color: var(--text-3);
+        margin-left: var(--s2);
+        flex-shrink: 0;
+      }
+      .search-no-results {
+        padding: 12px;
+        font-size: var(--fs-xs);
+        color: var(--text-3);
+        text-align: center;
+      }
+      @media (max-width: 600px) {
+        .search-wrap {
+          margin-left: 0;
+          width: 100%;
+        }
+        .search-input {
+          width: 100%;
+        }
+        .search-results {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <!-- Header -->
+      <div class="header">
+        <div class="header-left">
+          <img src="logo.png" alt="Aleph Zero" />
+          <h1>Aleph Zero <span>e11i's dashboard</span></h1>
+        </div>
+        <div class="status-row" id="status-bar"></div>
+        <div class="search-wrap" id="search-wrap">
+          <i
+            data-lucide="search"
+            class="search-icon"
+            style="width: 14px; height: 14px"
+          ></i>
+          <input
+            type="text"
+            class="search-input"
+            id="search-input"
+            placeholder="Search dashboard…"
+            autocomplete="off"
+          />
+        </div>
+      </div>
 
-</style>
+      <!-- SECTION: Action Items -->
+      <div class="section-label">
+        <i data-lucide="zap" style="width: 16px; height: 16px"></i> Action Items
+      </div>
+      <div class="bento">
+        <a href="pages/tasks.html" class="card">
+          <div class="card-h">
+            <i data-lucide="check-circle-2"></i>
+            <h2>Tasks</h2>
+            <span class="badge" id="task-badge">0</span>
+          </div>
+          <div class="card-desc">Your personal to-do list</div>
+          <div class="card-preview" id="task-preview"></div>
+        </a>
 
-</head>
-<body>
+        <a href="pages/projects.html" class="card">
+          <div class="card-h">
+            <i data-lucide="rocket"></i>
+            <h2>Active Projects</h2>
+            <span class="badge" id="projects-badge">0</span>
+          </div>
+          <div class="card-desc">Ongoing projects and open tasks</div>
+          <div id="projects-preview" style="margin-top: 8px"></div>
+        </a>
 
-<div class="wrap">
+        <a href="pages/portfolio.html" class="card">
+          <div class="card-h">
+            <i data-lucide="folder-git-2"></i>
+            <h2>Portfolio</h2>
+            <span class="badge" id="portfolio-badge">0</span>
+          </div>
+          <div class="card-desc">
+            All public repos — accessibility, apps, personal
+          </div>
+          <div
+            id="portfolio-preview"
+            style="
+              margin-top: 8px;
+              font-size: var(--fs-xs);
+              color: var(--text-3);
+            "
+          ></div>
+        </a>
 
-  <!-- Header -->
-  <div class="header">
-    <div class="header-left">
-      <img src="logo.png" alt="Aleph Zero">
-      <h1>Aleph Zero <span>e11i's dashboard</span></h1>
+        <a href="pages/cron.html" class="card">
+          <div class="card-h">
+            <i data-lucide="clock"></i>
+            <h2>Scheduled Jobs</h2>
+            <span class="badge" id="cron-badge">0</span>
+          </div>
+          <div class="card-desc">Cron jobs and automations</div>
+          <div class="card-preview" id="cron-preview"></div>
+        </a>
+
+        <a href="pages/knowledge.html" class="card">
+          <div class="card-h">
+            <i data-lucide="library"></i>
+            <h2>Knowledge</h2>
+            <span class="badge" id="reports-badge">0</span>
+          </div>
+          <div class="card-desc">Research, articles, and saved resources</div>
+          <div class="card-preview" id="reports-preview"></div>
+        </a>
+      </div>
+
+      <!-- SECTION: Memory -->
+      <div class="section-label">
+        <i data-lucide="brain" style="width: 16px; height: 16px"></i> Memory
+      </div>
+      <div class="bento">
+        <a href="pages/longterm.html" class="card">
+          <div class="card-h">
+            <i data-lucide="database"></i>
+            <h2>Long-Term Memory</h2>
+            <span class="badge" id="chroma-badge">0</span>
+          </div>
+          <div class="card-desc">MemPalace persistent store</div>
+          <div class="card-preview" id="chroma-preview"></div>
+        </a>
+      </div>
+
+      <!-- SECTION: Settings -->
+      <div class="section-label">
+        <i data-lucide="settings" style="width: 16px; height: 16px"></i>
+        Settings
+      </div>
+      <div class="bento">
+        <a href="pages/skills.html" class="card">
+          <div class="card-h">
+            <i data-lucide="puzzle"></i>
+            <h2>Skills</h2>
+            <span class="badge" id="skill-badge">0</span>
+          </div>
+          <div class="card-desc">Reusable workflows and procedures</div>
+          <div class="card-preview" id="skill-preview"></div>
+        </a>
+
+        <a href="pages/cheatsheets.html" class="card">
+          <div class="card-h">
+            <i data-lucide="book-open-check"></i>
+            <h2>Cheat Sheets</h2>
+          </div>
+          <div class="card-desc">
+            Commands, keyboard shortcuts, screen reader keys
+          </div>
+          <div
+            class="card-preview"
+            style="
+              margin-top: 8px;
+              font-size: var(--fs-xs);
+              color: var(--text-3);
+            "
+          >
+            Claude Code · Mac · Obsidian · VoiceOver · TalkBack
+          </div>
+        </a>
+
+        <a href="pages/cli.html" class="card">
+          <div class="card-h">
+            <i data-lucide="terminal"></i>
+            <h2>CLI Reference</h2>
+          </div>
+          <div class="card-desc">
+            Interactive terminal commands for Aleph Zero
+          </div>
+          <div
+            class="card-preview"
+            style="
+              margin-top: 8px;
+              font-size: var(--fs-xs);
+              color: var(--text-3);
+            "
+          >
+            aleph &mdash; ask, tasks, memory, health
+          </div>
+        </a>
+      </div>
+
+      <div class="footer" id="footer">built with ❤️ by e11i</div>
     </div>
-    <div class="status-row" id="status-bar"></div>
-    <div class="search-wrap" id="search-wrap">
-      <i data-lucide="search" class="search-icon" style="width:14px;height:14px"></i>
-      <input type="text" class="search-input" id="search-input" placeholder="Search dashboard…" autocomplete="off">
+
+    <div class="search-results" id="search-results"></div>
+    <div class="egg-overlay" id="egg-overlay"></div>
+    <div class="egg-popup" id="egg-popup">
+      <div class="egg-icon" id="egg-popup-icon"></div>
+      <div class="egg-text" id="egg-popup-text"></div>
+      <div class="egg-label">daily surprise</div>
     </div>
-  </div>
 
-  <!-- SECTION: Action Items -->
-  <div class="section-label"><i data-lucide="zap" style="width:16px;height:16px"></i> Action Items</div>
-  <div class="bento">
+    <script src="pages/utils.js"></script>
+    <script src="data.js?v=1775884267"></script>
+    <script>
+      // --- Card previews (compact summaries) ---
 
-    <a href="pages/tasks.html" class="card">
-      <div class="card-h">
-        <i data-lucide="check-circle-2"></i>
-        <h2>Tasks</h2>
-        <span class="badge" id="task-badge">0</span>
-      </div>
-      <div class="card-desc">Your personal to-do list</div>
-      <div class="card-preview" id="task-preview"></div>
-    </a>
+      function loadCards() {
+        const d = window.__DASHBOARD_DATA__;
+        if (!d) return;
 
-    <a href="pages/projects.html" class="card">
-      <div class="card-h">
-        <i data-lucide="rocket"></i>
-        <h2>Active Projects</h2>
-        <span class="badge" id="projects-badge">0</span>
-      </div>
-      <div class="card-desc">Ongoing projects and open tasks</div>
-      <div id="projects-preview" style="margin-top:8px"></div>
-    </a>
+        // Agent status
+        const agent = d.agent || {};
+        const statusBar = document.getElementById("status-bar");
+        statusBar.textContent = "";
+        const statusDiv = document.createElement("div");
+        statusDiv.className = "status-item";
+        const dot = document.createElement("span");
+        dot.className = agent.status === "ok" ? "dot on" : "dot off";
+        statusDiv.appendChild(dot);
+        statusDiv.appendChild(
+          document.createTextNode(
+            agent.status === "ok" ? "Agent Online" : "Agent Offline",
+          ),
+        );
+        statusBar.appendChild(statusDiv);
 
-    <a href="pages/portfolio.html" class="card">
-      <div class="card-h">
-        <i data-lucide="folder-git-2"></i>
-        <h2>Portfolio</h2>
-        <span class="badge" id="portfolio-badge">0</span>
-      </div>
-      <div class="card-desc">All public repos — accessibility, apps, personal</div>
-      <div id="portfolio-preview" style="margin-top:8px;font-size:var(--fs-xs);color:var(--text-3)"></div>
-    </a>
+        // Tasks
+        const tasks = d.tasks || [];
+        document.getElementById("task-badge").textContent = tasks.length;
+        if (tasks.length) {
+          document.getElementById("task-preview").textContent = tasks[0].task;
+        } else {
+          document.getElementById("task-preview").textContent = "All clear";
+        }
 
-    <a href="pages/cron.html" class="card">
-      <div class="card-h">
-        <i data-lucide="clock"></i>
-        <h2>Scheduled Jobs</h2>
-        <span class="badge" id="cron-badge">0</span>
-      </div>
-      <div class="card-desc">Cron jobs and automations</div>
-      <div class="card-preview" id="cron-preview"></div>
-    </a>
+        // Cron
+        const cronJobs = (d.cron && d.cron.jobs) || [];
+        document.getElementById("cron-badge").textContent = cronJobs.length;
+        if (cronJobs.length) {
+          document.getElementById("cron-preview").textContent = cronJobs
+            .map((j) => j.name)
+            .slice(0, 2)
+            .join(", ");
+        }
 
-    <a href="pages/knowledge.html" class="card">
-      <div class="card-h">
-        <i data-lucide="library"></i>
-        <h2>Knowledge</h2>
-        <span class="badge" id="reports-badge">0</span>
-      </div>
-      <div class="card-desc">Research, articles, and saved resources</div>
-      <div class="card-preview" id="reports-preview"></div>
-    </a>
+        // Long-Term Memory (MemPalace)
+        const mem = d.memory || {};
+        const totalDrawers = mem.total_drawers || 0;
+        document.getElementById("chroma-badge").textContent = totalDrawers;
+        const wings = mem.wings ? Object.keys(mem.wings).length : 0;
+        const rooms = mem.rooms ? Object.keys(mem.rooms).length : 0;
+        document.getElementById("chroma-preview").textContent =
+          wings + " wings, " + rooms + " rooms, " + totalDrawers + " drawers";
 
-  </div>
+        // Skills
+        const skills = d.skills || [];
+        document.getElementById("skill-badge").textContent = skills.length;
+        if (skills.length) {
+          const skillCats = [...new Set(skills.map((s) => s.category))];
+          document.getElementById("skill-preview").textContent =
+            skillCats.length + " categories";
+        } else {
+          document.getElementById("skill-preview").textContent =
+            "No skills loaded";
+        }
 
-  <!-- SECTION: Memory -->
-  <div class="section-label"><i data-lucide="brain" style="width:16px;height:16px"></i> Memory</div>
-  <div class="bento">
+        // Projects
+        const projects = (d.projects || []).filter((p) => p.status !== "done");
+        document.getElementById("projects-badge").textContent = projects.length;
 
-    <a href="pages/longterm.html" class="card">
-      <div class="card-h">
-        <i data-lucide="database"></i>
-        <h2>Long-Term Memory</h2>
-        <span class="badge" id="chroma-badge">0</span>
-      </div>
-      <div class="card-desc">MemPalace persistent store</div>
-      <div class="card-preview" id="chroma-preview"></div>
-    </a>
+        // Portfolio
+        const portfolio = d.portfolio || [];
+        document.getElementById("portfolio-badge").textContent =
+          portfolio.length;
+        const a11yCount = portfolio.filter((r) => r.category === "a11y").length;
+        const toolsCount = portfolio.filter(
+          (r) => r.category === "tools",
+        ).length;
+        const personalCount = portfolio.filter(
+          (r) => r.category === "personal",
+        ).length;
+        document.getElementById("portfolio-preview").textContent =
+          a11yCount +
+          " accessibility \u00b7 " +
+          toolsCount +
+          " tools \u00b7 " +
+          personalCount +
+          " personal";
 
-    <a href="pages/learnings.html" class="card">
-      <div class="card-h">
-        <i data-lucide="lightbulb"></i>
-        <h2>Learnings</h2>
-        <span class="badge" id="learnings-badge">0</span>
-      </div>
-      <div class="card-desc">Things we discovered along the way</div>
-      <div class="card-preview" id="learnings-preview"></div>
-    </a>
+        // Knowledge / Resources
+        const resources = d.resources || [];
+        document.getElementById("reports-badge").textContent = resources.length;
+        if (resources.length) {
+          const sorted = [...resources].sort((a, b) =>
+            (b.added || "").localeCompare(a.added || ""),
+          );
+          document.getElementById("reports-preview").textContent =
+            sorted[0].title;
+        }
 
-  </div>
+        if (typeof lucide !== "undefined") lucide.createIcons();
+      }
 
+      // ── 3D Tilt & Mouse Glow ──
+      function setupCardMagic() {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+          return;
 
+        document.querySelectorAll(".card").forEach((card) => {
+          let frameId = null;
 
-  <!-- SECTION: Settings -->
-  <div class="section-label"><i data-lucide="settings" style="width:16px;height:16px"></i> Settings</div>
-  <div class="bento">
+          card.addEventListener("mousemove", (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
 
-    <a href="pages/skills.html" class="card">
-      <div class="card-h">
-        <i data-lucide="puzzle"></i>
-        <h2>Skills</h2>
-        <span class="badge" id="skill-badge">0</span>
-      </div>
-      <div class="card-desc">Reusable workflows and procedures</div>
-      <div class="card-preview" id="skill-preview"></div>
-    </a>
+            // Mouse position for radial glow
+            const pctX = (x / rect.width) * 100;
+            const pctY = (y / rect.height) * 100;
 
-    <a href="pages/cheatsheets.html" class="card">
-      <div class="card-h">
-        <i data-lucide="book-open-check"></i>
-        <h2>Cheat Sheets</h2>
-      </div>
-      <div class="card-desc">Commands, keyboard shortcuts, screen reader keys</div>
-      <div class="card-preview" style="margin-top:8px;font-size:var(--fs-xs);color:var(--text-3)">Claude Code · Mac · Obsidian · VoiceOver · TalkBack</div>
-    </a>
+            // 3D rotation (max ±4 degrees)
+            const rotateX = ((y - centerY) / centerY) * -4;
+            const rotateY = ((x - centerX) / centerX) * 4;
 
-  </div>
+            if (frameId) cancelAnimationFrame(frameId);
+            frameId = requestAnimationFrame(() => {
+              card.style.setProperty("--mouse-x", pctX + "%");
+              card.style.setProperty("--mouse-y", pctY + "%");
+              card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+            });
+          });
 
-  <div class="footer" id="footer">built with ❤️ by e11i</div>
+          card.addEventListener("mouseleave", () => {
+            if (frameId) {
+              cancelAnimationFrame(frameId);
+              frameId = null;
+            }
+            card.style.transform = "";
+          });
+        });
+      }
 
-</div>
+      // ── Daily Easter Egg ──
+      function setupEasterEgg() {
+        const surprises = [
+          { icon: "🦊", text: "A fox has no boss. Neither do you." },
+          {
+            icon: "🌊",
+            text: "The ocean is just a big bowl of soup that nobody ordered.",
+          },
+          {
+            icon: "🧠",
+            text: "Your brain uses 20% of your energy. The other 80% goes to worrying about stuff that never happens.",
+          },
+          {
+            icon: "🐙",
+            text: "An octopus has three hearts. You only need one, but you use it well.",
+          },
+          {
+            icon: "✨",
+            text: "You found me! That makes you officially more observant than 99% of humans.",
+          },
+          {
+            icon: "🎵",
+            text: "The song stuck in your head right now? That's your brain's screensaver.",
+          },
+          {
+            icon: "🌙",
+            text: "The moon is slowly drifting away from Earth. Relatable.",
+          },
+          {
+            icon: "🔮",
+            text: "Prediction: you will close this popup within 5 seconds.",
+          },
+          {
+            icon: "🐈",
+            text: "Cats sleep 70% of their lives. They figured it out before us.",
+          },
+          {
+            icon: "💡",
+            text: 'A group of flamingos is called a "flamboyance." You\'re welcome.',
+          },
+          {
+            icon: "🧊",
+            text: "Hot water freezes faster than cold water. Nobody knows why. Science is wild.",
+          },
+          {
+            icon: "🎯",
+            text: "You found today's secret. Tomorrow it moves. Good luck.",
+          },
+          {
+            icon: "🦑",
+            text: "Squids have a donut-shaped brain. Their food passes through it. Literally brain food.",
+          },
+          {
+            icon: "🌿",
+            text: "Trees talk to each other through fungi. The original social network.",
+          },
+          {
+            icon: "🐝",
+            text: "Bees can recognize human faces. Somewhere, a bee remembers you.",
+          },
+          {
+            icon: "🎪",
+            text: "A jiffy is an actual unit of time: 1/100th of a second. Now you know.",
+          },
+          {
+            icon: "🦜",
+            text: "Parrots name their children. The parents choose a unique call for each chick.",
+          },
+          {
+            icon: "🌋",
+            text: "There are more possible chess games than atoms in the universe. Your move.",
+          },
+          {
+            icon: "🐋",
+            text: "Whale songs get a little different every year. They're composing.",
+          },
+          {
+            icon: "🍕",
+            text: "There's a mathematical theorem named after pizza cutting. Math is delicious.",
+          },
+          {
+            icon: "🦔",
+            text: "Hedgehogs are immune to most snake venom. Tiny tanks.",
+          },
+          {
+            icon: "🧲",
+            text: "The Earth's magnetic field flips every 200,000-300,000 years. We're overdue.",
+          },
+          {
+            icon: "🎭",
+            text: 'The word "sarcasm" comes from Greek, meaning "to tear flesh." So yeah, it\'s always been intense.',
+          },
+          {
+            icon: "🌸",
+            text: "Cherry blossoms bloom for about one week. That's the point.",
+          },
+          {
+            icon: "🐢",
+            text: "Some turtles breathe through their butts. Evolution is... creative.",
+          },
+          {
+            icon: "🎹",
+            text: "A piano has more possible combinations of notes than there are particles in the observable universe.",
+          },
+          {
+            icon: "🦉",
+            text: "Owls can't move their eyeballs. That's why they rotate their heads. Commitment.",
+          },
+          {
+            icon: "🌀",
+            text: "Your DNA could stretch to Pluto and back. You're literally astronomical.",
+          },
+          {
+            icon: "🍯",
+            text: "Honey never spoils. Archaeologists found 3000-year-old honey in Egyptian tombs. Still good.",
+          },
+          {
+            icon: "🐧",
+            text: "Penguins propose with pebbles. The smoothest rock = the best partner. Simple.",
+          },
+          {
+            icon: "🎲",
+            text: "The odds of you existing are 1 in 10^2,685,000. You beat those odds. Today is a bonus round.",
+          },
+        ];
 
-<div class="search-results" id="search-results"></div>
-<div class="egg-overlay" id="egg-overlay"></div>
-<div class="egg-popup" id="egg-popup">
-  <div class="egg-icon" id="egg-popup-icon"></div>
-  <div class="egg-text" id="egg-popup-text"></div>
-  <div class="egg-label">daily surprise</div>
-</div>
+        const today = new Date();
+        const dayOfYear = Math.floor(
+          (today - new Date(today.getFullYear(), 0, 0)) / 86400000,
+        );
+        const seed = dayOfYear + today.getFullYear() * 367;
+        const surprise = surprises[seed % surprises.length];
 
-<script src="pages/utils.js"></script>
-<script src="data.js?v=1775847552"></script>
-<script>
+        // Pick which card to hide in (based on day)
+        const cards = document.querySelectorAll(".card");
+        if (!cards.length) return;
+        const cardIndex = seed % cards.length;
+        const card = cards[cardIndex];
 
+        // Pick position within card
+        const positions = [
+          { bottom: "8px", right: "8px" },
+          { top: "8px", right: "8px" },
+          { bottom: "8px", left: "8px" },
+          { top: "8px", left: "40px" },
+          { bottom: "12px", right: "40px" },
+          { top: "12px", right: "40px" },
+        ];
+        const pos = positions[(seed * 7) % positions.length];
 
-// --- Card previews (compact summaries) ---
+        // Pick a subtle icon for the hidden element
+        const hiddenIcons = ["·", "⋅", "∘", "◦", "•", "⊹", "✦", "⟡"];
+        const hiddenIcon = hiddenIcons[(seed * 13) % hiddenIcons.length];
 
-function loadCards() {
-  const d = window.__DASHBOARD_DATA__;
-  if (!d) return;
+        const egg = document.createElement("div");
+        egg.className = "egg";
+        egg.textContent = hiddenIcon;
+        Object.assign(egg.style, pos);
 
-  // Agent status
-  const agent = d.agent || {};
-  const statusBar = document.getElementById('status-bar');
-  statusBar.textContent = '';
-  const statusDiv = document.createElement('div');
-  statusDiv.className = 'status-item';
-  const dot = document.createElement('span');
-  dot.className = agent.status === 'ok' ? 'dot on' : 'dot off';
-  statusDiv.appendChild(dot);
-  statusDiv.appendChild(document.createTextNode(agent.status === 'ok' ? 'Agent Online' : 'Agent Offline'));
-  statusBar.appendChild(statusDiv);
+        egg.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          document.getElementById("egg-popup-icon").textContent = surprise.icon;
+          document.getElementById("egg-popup-text").textContent = surprise.text;
+          document.getElementById("egg-overlay").classList.add("show");
+          document.getElementById("egg-popup").classList.add("show");
+        });
 
-  // Tasks
-  const tasks = d.tasks || [];
-  document.getElementById('task-badge').textContent = tasks.length;
-  if (tasks.length) {
-    document.getElementById('task-preview').textContent = tasks[0].task;
-  } else {
-    document.getElementById('task-preview').textContent = 'All clear';
-  }
+        card.appendChild(egg);
 
-  // Cron
-  const cronJobs = (d.cron && d.cron.jobs) || [];
-  document.getElementById('cron-badge').textContent = cronJobs.length;
-  if (cronJobs.length) {
-    document.getElementById('cron-preview').textContent = cronJobs.map(j => j.name).slice(0,2).join(', ');
-  }
+        // Close popup
+        const close = () => {
+          document.getElementById("egg-overlay").classList.remove("show");
+          document.getElementById("egg-popup").classList.remove("show");
+        };
+        document.getElementById("egg-overlay").addEventListener("click", close);
+        document.getElementById("egg-popup").addEventListener("click", close);
+      }
 
-  // Long-Term Memory (MemPalace)
-  const mem = d.memory || {};
-  const totalDrawers = mem.total_drawers || 0;
-  document.getElementById('chroma-badge').textContent = totalDrawers;
-  const wings = mem.wings ? Object.keys(mem.wings).length : 0;
-  const rooms = mem.rooms ? Object.keys(mem.rooms).length : 0;
-  document.getElementById('chroma-preview').textContent = wings + ' wings, ' + rooms + ' rooms, ' + totalDrawers + ' drawers';
+      // --- Dashboard Search ---
+      function setupSearch() {
+        const d = window.__DASHBOARD_DATA__;
+        if (!d) return;
+        const index = [];
 
-  // Learnings (not available in new pipeline yet)
-  document.getElementById('learnings-badge').textContent = '\u2014';
-  document.getElementById('learnings-preview').textContent = 'Coming soon';
+        // Skills
+        (d.skills_data || []).forEach((s) => {
+          index.push({
+            text: [s.name, s.description]
+              .filter(Boolean)
+              .join(" ")
+              .toLowerCase(),
+            name: s.name,
+            tag: "Skills",
+            link: "pages/skills.html",
+          });
+        });
 
-  // Skills
-  const skills = d.skills || [];
-  document.getElementById('skill-badge').textContent = skills.length;
-  if (skills.length) {
-    const skillCats = [...new Set(skills.map(s => s.category))];
-    document.getElementById('skill-preview').textContent = skillCats.length + ' categories';
-  } else {
-    document.getElementById('skill-preview').textContent = 'No skills loaded';
-  }
+        // Tasks
+        (d.tasks || []).forEach((t) => {
+          index.push({
+            text: (t.task || "").toLowerCase(),
+            name: t.task,
+            tag: "Tasks",
+            link: "pages/tasks.html",
+          });
+        });
 
-  // Projects
-  const projects = (d.projects || []).filter(p => p.status !== 'done');
-  document.getElementById('projects-badge').textContent = projects.length;
+        // Projects
+        (d.projects || []).forEach((p) => {
+          const taskTexts = (p.tasks || []).map((t) => t.task || "").join(" ");
+          index.push({
+            text: [p.name, p.description, taskTexts]
+              .filter(Boolean)
+              .join(" ")
+              .toLowerCase(),
+            name: p.name,
+            tag: "Projects",
+            link: "pages/projects.html",
+          });
+        });
 
-  // Portfolio
-  const portfolio = d.portfolio || [];
-  document.getElementById('portfolio-badge').textContent = portfolio.length;
-  const a11yCount = portfolio.filter(r => r.category === 'a11y').length;
-  document.getElementById('portfolio-preview').textContent = a11yCount + ' accessibility \u00b7 ' + (portfolio.length - a11yCount) + ' other';
+        const input = document.getElementById("search-input");
+        const resultsEl = document.getElementById("search-results");
+        const wrap = document.getElementById("search-wrap");
 
-  // Knowledge / Resources
-  const resources = d.resources || [];
-  document.getElementById('reports-badge').textContent = resources.length;
-  if (resources.length) {
-    const sorted = [...resources].sort((a, b) => (b.added || '').localeCompare(a.added || ''));
-    document.getElementById('reports-preview').textContent = sorted[0].title;
-  }
+        function doSearch(q) {
+          if (q.length < 2) {
+            resultsEl.classList.remove("open");
+            return;
+          }
+          const terms = q.toLowerCase().split(/\s+/).filter(Boolean);
+          const matches = index
+            .filter((item) => terms.every((t) => item.text.includes(t)))
+            .slice(0, 12);
+          const frag = document.createDocumentFragment();
+          if (!matches.length) {
+            const noRes = document.createElement("div");
+            noRes.className = "search-no-results";
+            noRes.textContent = "No results for \u201c" + q + "\u201d";
+            frag.appendChild(noRes);
+          } else {
+            matches.forEach((m) => {
+              const el = document.createElement("button");
+              el.type = "button";
+              el.className = "search-result";
+              el.innerHTML =
+                '<span class="search-result-name">' +
+                esc(m.name || m.tag) +
+                '</span><span class="search-result-tag">' +
+                esc(m.tag) +
+                "</span>";
+              el.addEventListener("click", () => {
+                if (m.link) window.location.href = m.link;
+              });
+              frag.appendChild(el);
+            });
+          }
+          resultsEl.innerHTML = "";
+          resultsEl.appendChild(frag);
+          resultsEl.classList.add("open");
+          positionResults();
+        }
 
-  if (typeof lucide !== 'undefined') lucide.createIcons();
-}
+        function positionResults() {
+          const r = input.getBoundingClientRect();
+          resultsEl.style.top = r.bottom + 4 + "px";
+          resultsEl.style.left = Math.max(8, r.right - 320) + "px";
+          resultsEl.style.width = "320px";
+        }
+        window.addEventListener("resize", () => {
+          if (resultsEl.classList.contains("open")) positionResults();
+        });
 
-// ── 3D Tilt & Mouse Glow ──
-function setupCardMagic() {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        let debounceTimer = null;
+        input.addEventListener("input", () => {
+          clearTimeout(debounceTimer);
+          debounceTimer = setTimeout(() => doSearch(input.value.trim()), 120);
+        });
+        input.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") {
+            resultsEl.classList.remove("open");
+            input.blur();
+          }
+          if (e.key === "Enter") {
+            e.preventDefault();
+            const first = resultsEl.querySelector(".search-result");
+            if (first) first.click();
+          }
+        });
+        document.addEventListener("click", (e) => {
+          if (
+            resultsEl.classList.contains("open") &&
+            !wrap.contains(e.target)
+          ) {
+            resultsEl.classList.remove("open");
+          }
+        });
+      }
 
-  document.querySelectorAll('.card').forEach(card => {
-    let frameId = null;
-
-    card.addEventListener('mousemove', e => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-
-      // Mouse position for radial glow
-      const pctX = (x / rect.width) * 100;
-      const pctY = (y / rect.height) * 100;
-
-      // 3D rotation (max ±4 degrees)
-      const rotateX = ((y - centerY) / centerY) * -4;
-      const rotateY = ((x - centerX) / centerX) * 4;
-
-      if (frameId) cancelAnimationFrame(frameId);
-      frameId = requestAnimationFrame(() => {
-        card.style.setProperty('--mouse-x', pctX + '%');
-        card.style.setProperty('--mouse-y', pctY + '%');
-        card.style.transform =
-          `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+      document.addEventListener("DOMContentLoaded", () => {
+        loadCards();
+        setupSearch();
+        setTimeout(setupCardMagic, 500);
+        setTimeout(setupEasterEgg, 800);
       });
-    });
-
-    card.addEventListener('mouseleave', () => {
-      if (frameId) { cancelAnimationFrame(frameId); frameId = null; }
-      card.style.transform = '';
-    });
-  });
-}
-
-// ── Daily Easter Egg ──
-function setupEasterEgg() {
-  const surprises = [
-    { icon: '🦊', text: 'A fox has no boss. Neither do you.' },
-    { icon: '🌊', text: 'The ocean is just a big bowl of soup that nobody ordered.' },
-    { icon: '🧠', text: 'Your brain uses 20% of your energy. The other 80% goes to worrying about stuff that never happens.' },
-    { icon: '🐙', text: 'An octopus has three hearts. You only need one, but you use it well.' },
-    { icon: '✨', text: 'You found me! That makes you officially more observant than 99% of humans.' },
-    { icon: '🎵', text: 'The song stuck in your head right now? That\'s your brain\'s screensaver.' },
-    { icon: '🌙', text: 'The moon is slowly drifting away from Earth. Relatable.' },
-    { icon: '🔮', text: 'Prediction: you will close this popup within 5 seconds.' },
-    { icon: '🐈', text: 'Cats sleep 70% of their lives. They figured it out before us.' },
-    { icon: '💡', text: 'A group of flamingos is called a "flamboyance." You\'re welcome.' },
-    { icon: '🧊', text: 'Hot water freezes faster than cold water. Nobody knows why. Science is wild.' },
-    { icon: '🎯', text: 'You found today\'s secret. Tomorrow it moves. Good luck.' },
-    { icon: '🦑', text: 'Squids have a donut-shaped brain. Their food passes through it. Literally brain food.' },
-    { icon: '🌿', text: 'Trees talk to each other through fungi. The original social network.' },
-    { icon: '🐝', text: 'Bees can recognize human faces. Somewhere, a bee remembers you.' },
-    { icon: '🎪', text: 'A jiffy is an actual unit of time: 1/100th of a second. Now you know.' },
-    { icon: '🦜', text: 'Parrots name their children. The parents choose a unique call for each chick.' },
-    { icon: '🌋', text: 'There are more possible chess games than atoms in the universe. Your move.' },
-    { icon: '🐋', text: 'Whale songs get a little different every year. They\'re composing.' },
-    { icon: '🍕', text: 'There\'s a mathematical theorem named after pizza cutting. Math is delicious.' },
-    { icon: '🦔', text: 'Hedgehogs are immune to most snake venom. Tiny tanks.' },
-    { icon: '🧲', text: 'The Earth\'s magnetic field flips every 200,000-300,000 years. We\'re overdue.' },
-    { icon: '🎭', text: 'The word "sarcasm" comes from Greek, meaning "to tear flesh." So yeah, it\'s always been intense.' },
-    { icon: '🌸', text: 'Cherry blossoms bloom for about one week. That\'s the point.' },
-    { icon: '🐢', text: 'Some turtles breathe through their butts. Evolution is... creative.' },
-    { icon: '🎹', text: 'A piano has more possible combinations of notes than there are particles in the observable universe.' },
-    { icon: '🦉', text: 'Owls can\'t move their eyeballs. That\'s why they rotate their heads. Commitment.' },
-    { icon: '🌀', text: 'Your DNA could stretch to Pluto and back. You\'re literally astronomical.' },
-    { icon: '🍯', text: 'Honey never spoils. Archaeologists found 3000-year-old honey in Egyptian tombs. Still good.' },
-    { icon: '🐧', text: 'Penguins propose with pebbles. The smoothest rock = the best partner. Simple.' },
-    { icon: '🎲', text: 'The odds of you existing are 1 in 10^2,685,000. You beat those odds. Today is a bonus round.' },
-  ];
-
-  const today = new Date();
-  const dayOfYear = Math.floor((today - new Date(today.getFullYear(),0,0)) / 86400000);
-  const seed = dayOfYear + today.getFullYear() * 367;
-  const surprise = surprises[seed % surprises.length];
-
-  // Pick which card to hide in (based on day)
-  const cards = document.querySelectorAll('.card');
-  if (!cards.length) return;
-  const cardIndex = seed % cards.length;
-  const card = cards[cardIndex];
-
-  // Pick position within card
-  const positions = [
-    { bottom: '8px', right: '8px' },
-    { top: '8px', right: '8px' },
-    { bottom: '8px', left: '8px' },
-    { top: '8px', left: '40px' },
-    { bottom: '12px', right: '40px' },
-    { top: '12px', right: '40px' },
-  ];
-  const pos = positions[(seed * 7) % positions.length];
-
-  // Pick a subtle icon for the hidden element
-  const hiddenIcons = ['·', '⋅', '∘', '◦', '•', '⊹', '✦', '⟡'];
-  const hiddenIcon = hiddenIcons[(seed * 13) % hiddenIcons.length];
-
-  const egg = document.createElement('div');
-  egg.className = 'egg';
-  egg.textContent = hiddenIcon;
-  Object.assign(egg.style, pos);
-
-  egg.addEventListener('click', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    document.getElementById('egg-popup-icon').textContent = surprise.icon;
-    document.getElementById('egg-popup-text').textContent = surprise.text;
-    document.getElementById('egg-overlay').classList.add('show');
-    document.getElementById('egg-popup').classList.add('show');
-  });
-
-  card.appendChild(egg);
-
-  // Close popup
-  const close = () => {
-    document.getElementById('egg-overlay').classList.remove('show');
-    document.getElementById('egg-popup').classList.remove('show');
-  };
-  document.getElementById('egg-overlay').addEventListener('click', close);
-  document.getElementById('egg-popup').addEventListener('click', close);
-}
-
-// --- Dashboard Search ---
-function setupSearch() {
-  const d = window.__DASHBOARD_DATA__;
-  if (!d) return;
-  const index = [];
-
-  // Skills
-  (d.skills_data || []).forEach(s => {
-    index.push({
-      text: [s.name, s.description].filter(Boolean).join(' ').toLowerCase(),
-      name: s.name,
-      tag: 'Skills',
-      link: 'pages/skills.html'
-    });
-  });
-
-  // Tasks
-  (d.tasks || []).forEach(t => {
-    index.push({
-      text: (t.task || '').toLowerCase(),
-      name: t.task,
-      tag: 'Tasks',
-      link: 'pages/tasks.html'
-    });
-  });
-
-  // Projects
-  (d.projects || []).forEach(p => {
-    const taskTexts = (p.tasks || []).map(t => t.task || '').join(' ');
-    index.push({
-      text: [p.name, p.description, taskTexts].filter(Boolean).join(' ').toLowerCase(),
-      name: p.name,
-      tag: 'Projects',
-      link: 'pages/projects.html'
-    });
-  });
-
-  const input = document.getElementById('search-input');
-  const resultsEl = document.getElementById('search-results');
-  const wrap = document.getElementById('search-wrap');
-
-  function doSearch(q) {
-    if (q.length < 2) { resultsEl.classList.remove('open'); return; }
-    const terms = q.toLowerCase().split(/\s+/).filter(Boolean);
-    const matches = index.filter(item => terms.every(t => item.text.includes(t))).slice(0, 12);
-    const frag = document.createDocumentFragment();
-    if (!matches.length) {
-      const noRes = document.createElement('div');
-      noRes.className = 'search-no-results';
-      noRes.textContent = 'No results for \u201c' + q + '\u201d';
-      frag.appendChild(noRes);
-    } else {
-      matches.forEach(m => {
-        const el = document.createElement('button');
-        el.type = 'button';
-        el.className = 'search-result';
-        el.innerHTML = '<span class="search-result-name">' + esc(m.name || m.tag) + '</span><span class="search-result-tag">' + esc(m.tag) + '</span>';
-        el.addEventListener('click', () => { if (m.link) window.location.href = m.link; });
-        frag.appendChild(el);
-      });
-    }
-    resultsEl.innerHTML = '';
-    resultsEl.appendChild(frag);
-    resultsEl.classList.add('open');
-    positionResults();
-  }
-
-  function positionResults() {
-    const r = input.getBoundingClientRect();
-    resultsEl.style.top = (r.bottom + 4) + 'px';
-    resultsEl.style.left = Math.max(8, r.right - 320) + 'px';
-    resultsEl.style.width = '320px';
-  }
-  window.addEventListener('resize', () => { if (resultsEl.classList.contains('open')) positionResults(); });
-
-  let debounceTimer = null;
-  input.addEventListener('input', () => {
-    clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(() => doSearch(input.value.trim()), 120);
-  });
-  input.addEventListener('keydown', e => {
-    if (e.key === 'Escape') { resultsEl.classList.remove('open'); input.blur(); }
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      const first = resultsEl.querySelector('.search-result');
-      if (first) first.click();
-    }
-  });
-  document.addEventListener('click', e => {
-    if (resultsEl.classList.contains('open') && !wrap.contains(e.target)) {
-      resultsEl.classList.remove('open');
-    }
-  });
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  loadCards();
-  setupSearch();
-  setTimeout(setupCardMagic, 500);
-  setTimeout(setupEasterEgg, 800);
-});
-
-</script>
-
-</body>
+    </script>
+  </body>
 </html>
