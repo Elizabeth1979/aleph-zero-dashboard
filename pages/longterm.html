@@ -1,80 +1,531 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/svg+xml" href="../favicon.svg">
-<title>Long-Term Memory — Aleph Zero</title>
-<link rel="stylesheet" href="../theme.css">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-<link rel="stylesheet" href="shared.css">
-</head>
-<body>
-<div class="page-wrap" style="max-width:1100px">
-  <div class="page-header">
-    <a href="../index.html" class="back-link">
-      <i data-lucide="arrow-left" style="width:16px;height:16px"></i> Dashboard
-    </a>
-    <h1 class="page-title"><i data-lucide="database"></i> Long-Term Memory</h1>
-  </div>
-    <button id="view-toggle" class="btn btn-save" style="margin-left:auto;font-size:var(--fs-xs)"><i data-lucide="rows-3" style="width:13px;height:13px"></i> Raw View</button>
-  <div class="page-body" id="page-body"></div>
-  <div class="page-footer">built with ❤️ by e11i</div>
-</div>
-<script src="utils.js?v=5"></script>
-<script src="../data.js?v=1775884267"></script>
-<script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+    <title>Long-Term Memory — Aleph Zero</title>
+    <link rel="stylesheet" href="../theme.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="vis-network.min.js"></script>
+    <link rel="stylesheet" href="shared.css" />
+    <style>
+      #memory-graph {
+        width: 100%;
+        height: 500px;
+        background: var(--bg-inset);
+        border: 1px solid var(--border);
+        border-radius: var(--r2);
+        margin-bottom: var(--s4);
+        position: relative;
+      }
+      #graph-loading {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: var(--text-3);
+        font-size: var(--fs-sm);
+        display: none;
+        align-items: center;
+        gap: var(--s2);
+        z-index: 10;
+      }
+      #graph-loading.show {
+        display: flex;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .spinner {
+        width: 16px;
+        height: 16px;
+        border: 2px solid var(--border);
+        border-top-color: var(--accent);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+      }
+      #detail-panel {
+        background: var(--bg-inset);
+        border: 1px solid var(--border);
+        border-radius: var(--r2);
+        padding: var(--s4);
+        display: none;
+        margin-bottom: var(--s4);
+      }
+      #detail-panel.show {
+        display: block;
+      }
+      .detail-room-name {
+        font-size: var(--fs-lg);
+        font-weight: 600;
+        color: var(--accent);
+        margin-bottom: var(--s2);
+      }
+      .detail-stats {
+        font-size: var(--fs-sm);
+        color: var(--text-2);
+        margin-bottom: var(--s3);
+      }
+      .related-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .related-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: var(--s2) 0;
+        border-bottom: 1px solid var(--border);
+        font-size: var(--fs-sm);
+      }
+      .related-item:last-child {
+        border-bottom: none;
+      }
+      .related-name {
+        color: var(--text);
+        cursor: pointer;
+        transition: color 0.15s ease;
+      }
+      .related-name:hover {
+        color: var(--accent);
+      }
+      .detail-wing-dot {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-right: var(--s2);
+        vertical-align: middle;
+      }
+      .related-sim {
+        font-family: var(--mono);
+        font-size: var(--fs-xs);
+        color: var(--text-3);
+      }
+      #graph-error {
+        color: var(--danger);
+        font-size: var(--fs-sm);
+        padding: var(--s3);
+        display: none;
+      }
+      #graph-error.show {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-wrap" style="max-width: 1100px">
+      <div class="page-header">
+        <a href="../index.html" class="back-link">
+          <i data-lucide="arrow-left" style="width: 16px; height: 16px"></i>
+          Dashboard
+        </a>
+        <h1 class="page-title">
+          <i data-lucide="database"></i> Long-Term Memory
+        </h1>
+      </div>
 
-document.addEventListener('DOMContentLoaded', () => {
-  const d = window.__DASHBOARD_DATA__;
-  if (!d) return;
-  const mem = d.memory || {};
-  const el = document.getElementById('page-body');
+      <div id="summary-stats"></div>
 
-  if (!mem.total_drawers) {
-    el.textContent = 'No memories indexed yet';
-    return;
-  }
+      <div class="modal-chroma-cat" style="margin-top: var(--s5)">
+        Memory Graph
+      </div>
+      <div style="position: relative">
+        <div id="graph-loading">
+          <div class="spinner"></div>
+          <span>Loading graph...</span>
+        </div>
+        <div id="memory-graph"></div>
+      </div>
+      <div id="graph-error"></div>
 
-  // Hide the view toggle — not needed for summary view
-  const toggle = document.getElementById('view-toggle');
-  if (toggle) toggle.style.display = 'none';
+      <div id="detail-panel">
+        <div class="detail-room-name" id="detail-room-name"></div>
+        <div class="detail-stats" id="detail-stats"></div>
+        <div class="modal-chroma-cat" style="font-size: var(--fs-xs)">
+          Related Rooms
+        </div>
+        <ul class="related-list" id="related-list"></ul>
+      </div>
 
-  const wings = mem.wings || {};
-  const rooms = mem.rooms || {};
+      <div class="page-footer">built with &hearts; by e11i</div>
+    </div>
+    <script src="utils.js?v=5"></script>
+    <script>
+      var API_BASE = "http://localhost:3141";
 
-  let html = '';
+      var WING_COLORS = [
+        "#5de4d4",
+        "#f0b866",
+        "#e06c75",
+        "#61afef",
+        "#c678dd",
+        "#98c379",
+        "#d19a66",
+        "#56b6c2",
+      ];
 
-  // Summary stats
-  html += '<div class="modal-chroma-cat">Overview</div>';
-  html += '<div class="modal-chroma-entry">';
-  html += '<strong>' + mem.total_drawers + '</strong> total drawers across ';
-  html += '<strong>' + Object.keys(wings).length + '</strong> wings and ';
-  html += '<strong>' + Object.keys(rooms).length + '</strong> rooms';
-  html += '</div>';
+      var network = null;
+      var nodes = null;
+      var edges = null;
+      var wingColorMap = {};
+      var roomDrawerCounts = {};
+      var exploredRooms = {};
+      var relatedCache = {};
+      var roomNodeIds = {};
 
-  // Wings
-  html += '<div class="modal-chroma-cat">Wings</div>';
-  Object.entries(wings).sort((a,b) => b[1] - a[1]).forEach(function(entry) {
-    html += '<div class="modal-chroma-entry">';
-    html += '<strong>' + esc(entry[0]) + '</strong>: ' + entry[1] + ' drawers';
-    html += '</div>';
-  });
+      document.addEventListener("DOMContentLoaded", function () {
+        if (typeof lucide !== "undefined") lucide.createIcons();
+        loadGraph();
+      });
 
-  // Rooms
-  html += '<div class="modal-chroma-cat">Rooms (' + Object.keys(rooms).length + ')</div>';
-  Object.entries(rooms).sort((a,b) => b[1] - a[1]).forEach(function(entry) {
-    html += '<div class="modal-chroma-entry">';
-    html += '<strong>' + esc(entry[0]) + '</strong>: ' + entry[1] + ' drawers';
-    html += '</div>';
-  });
+      function loadGraph() {
+        var loadingEl = document.getElementById("graph-loading");
+        var errorEl = document.getElementById("graph-error");
+        loadingEl.classList.add("show");
+        errorEl.classList.remove("show");
 
-  el.textContent = '';
-  el.insertAdjacentHTML('beforeend', html);
-  if (typeof lucide !== 'undefined') lucide.createIcons();
-});
+        fetch(API_BASE + "/api/taxonomy")
+          .then(function (res) {
+            if (!res.ok) throw new Error("Failed to fetch taxonomy");
+            return res.json();
+          })
+          .then(function (data) {
+            if (data.error) throw new Error(data.error);
+            renderSummary(data);
+            buildGraph(data);
+            loadingEl.classList.remove("show");
+          })
+          .catch(function (err) {
+            loadingEl.classList.remove("show");
+            errorEl.textContent = "Could not load memory graph: " + err.message;
+            errorEl.classList.add("show");
+            fallbackToStaticData();
+          });
+      }
 
-</script>
-</body>
+      function fallbackToStaticData() {
+        var script = document.createElement("script");
+        script.src = "../data.js?v=" + Date.now();
+        script.onload = function () {
+          var d = window.__DASHBOARD_DATA__;
+          if (!d || !d.memory || !d.memory.total_drawers) return;
+          var mem = d.memory;
+          var el = document.getElementById("summary-stats");
+          var p = document.createElement("div");
+          p.className = "modal-chroma-cat";
+          p.textContent = "Overview";
+          el.appendChild(p);
+          var entry = document.createElement("div");
+          entry.className = "modal-chroma-entry";
+          entry.textContent =
+            mem.total_drawers +
+            " total drawers across " +
+            Object.keys(mem.wings || {}).length +
+            " wings and " +
+            Object.keys(mem.rooms || {}).length +
+            " rooms";
+          el.appendChild(entry);
+        };
+        document.head.appendChild(script);
+      }
+
+      function renderSummary(data) {
+        var el = document.getElementById("summary-stats");
+        var taxonomy = data.taxonomy || {};
+        var wingCount = Object.keys(taxonomy).length;
+        var roomCount = 0;
+        Object.values(taxonomy).forEach(function (wing) {
+          roomCount += Object.keys(wing).length;
+        });
+
+        var cat = document.createElement("div");
+        cat.className = "modal-chroma-cat";
+        cat.textContent = "Overview";
+        el.appendChild(cat);
+
+        var entry = document.createElement("div");
+        entry.className = "modal-chroma-entry";
+        entry.textContent =
+          data.total_drawers +
+          " total drawers across " +
+          wingCount +
+          " wings and " +
+          roomCount +
+          " rooms";
+        el.appendChild(entry);
+      }
+
+      function buildGraph(data) {
+        var taxonomy = data.taxonomy || {};
+        var wingNames = Object.keys(taxonomy).sort();
+
+        wingNames.forEach(function (wing, i) {
+          wingColorMap[wing] = WING_COLORS[i % WING_COLORS.length];
+        });
+
+        var nodeArray = [];
+        var edgeArray = [];
+        var nodeId = 1;
+
+        wingNames.forEach(function (wing) {
+          var wingId = nodeId++;
+          var rooms = taxonomy[wing];
+          var wingDrawers = 0;
+          Object.values(rooms).forEach(function (c) {
+            wingDrawers += c;
+          });
+          var color = wingColorMap[wing];
+
+          nodeArray.push({
+            id: wingId,
+            label: wing,
+            group: wing,
+            shape: "box",
+            font: { color: "#e8eaed", face: "Inter", size: 14 },
+            color: {
+              background: color + "22",
+              border: color,
+              highlight: { background: color + "44", border: color },
+            },
+            borderWidth: 2,
+            margin: 10,
+            title: wing + ": " + wingDrawers + " drawers",
+            isWing: true,
+          });
+
+          Object.keys(rooms).forEach(function (room) {
+            var count = rooms[room];
+            var rid = nodeId++;
+            roomNodeIds[room] = rid;
+            roomDrawerCounts[room] = count;
+
+            var size = Math.max(
+              8,
+              Math.min(25, 6 + Math.log2(count + 1) * 2.5),
+            );
+
+            nodeArray.push({
+              id: rid,
+              label: room + "\n(" + count + ")",
+              group: wing,
+              shape: "dot",
+              size: size,
+              font: { color: "#e8eaed", face: "Inter", size: 12 },
+              color: {
+                background: color + "66",
+                border: color,
+                highlight: { background: color, border: "#ffffff" },
+                hover: { background: color + "99", border: color },
+              },
+              borderWidth: 1.5,
+              title: room + ": " + count + " drawers (" + wing + " wing)",
+              roomName: room,
+              wingName: wing,
+            });
+
+            edgeArray.push({
+              from: wingId,
+              to: rid,
+              color: { color: color + "44", highlight: color },
+              width: 1,
+              smooth: { type: "cubicBezier" },
+            });
+          });
+        });
+
+        nodes = new vis.DataSet(nodeArray);
+        edges = new vis.DataSet(edgeArray);
+
+        var container = document.getElementById("memory-graph");
+        var groups = {};
+        wingNames.forEach(function (wing) {
+          groups[wing] = {
+            color: {
+              background: wingColorMap[wing] + "66",
+              border: wingColorMap[wing],
+            },
+          };
+        });
+
+        network = new vis.Network(
+          container,
+          { nodes: nodes, edges: edges },
+          {
+            layout: { improvedLayout: true },
+            physics: {
+              barnesHut: {
+                gravitationalConstant: -3000,
+                centralGravity: 0.4,
+                springLength: 120,
+                springConstant: 0.04,
+                damping: 0.09,
+              },
+              stabilization: { iterations: 150 },
+            },
+            interaction: {
+              hover: true,
+              tooltipDelay: 200,
+              keyboard: { enabled: true, bindToWindow: false },
+              zoomSpeed: 0.3,
+              zoomView: true,
+            },
+            groups: groups,
+          },
+        );
+
+        network.once("stabilizationIterationsDone", function () {
+          network.fit({
+            animation: { duration: 500, easingFunction: "easeInOutQuad" },
+          });
+        });
+
+        network.on("click", function (params) {
+          if (params.nodes.length === 0) {
+            document.getElementById("detail-panel").classList.remove("show");
+            return;
+          }
+          var clickedId = params.nodes[0];
+          var node = nodes.get(clickedId);
+          if (!node || node.isWing) return;
+          exploreRoom(node.roomName, clickedId, node.wingName);
+        });
+      }
+
+      function exploreRoom(roomName, nodeId, wingName) {
+        var panel = document.getElementById("detail-panel");
+        var nameEl = document.getElementById("detail-room-name");
+        var statsEl = document.getElementById("detail-stats");
+        var listEl = document.getElementById("related-list");
+        var loadingEl = document.getElementById("graph-loading");
+        var loadingText = loadingEl.querySelector("span");
+
+        nameEl.textContent = "";
+        var dot = document.createElement("span");
+        dot.className = "detail-wing-dot";
+        dot.style.backgroundColor = wingColorMap[wingName] || "#5de4d4";
+        nameEl.appendChild(dot);
+        nameEl.appendChild(document.createTextNode(roomName));
+        statsEl.textContent =
+          (roomDrawerCounts[roomName] || 0) +
+          " drawers in " +
+          wingName +
+          " wing";
+        listEl.textContent = "";
+        panel.classList.add("show");
+
+        if (exploredRooms[roomName]) {
+          renderRelatedList(relatedCache[roomName] || []);
+          return;
+        }
+
+        if (loadingText)
+          loadingText.textContent = "Exploring " + roomName + "...";
+        loadingEl.classList.add("show");
+
+        fetch(API_BASE + "/api/explore?room=" + encodeURIComponent(roomName))
+          .then(function (res) {
+            if (!res.ok) throw new Error("Explore request failed");
+            return res.json();
+          })
+          .then(function (data) {
+            if (data.error) throw new Error(data.error);
+            exploredRooms[roomName] = true;
+            var related = data.related_rooms || [];
+            relatedCache[roomName] = related;
+
+            var sourceId = roomNodeIds[roomName];
+            if (sourceId) {
+              related.forEach(function (rel) {
+                var targetId = roomNodeIds[rel.room];
+                if (!targetId) return;
+                var width = Math.max(1, Math.min(5, rel.avg_similarity * 7));
+                var opacityHex = Math.round(
+                  Math.max(0.3, Math.min(0.9, rel.avg_similarity)) * 255,
+                )
+                  .toString(16)
+                  .padStart(2, "0");
+                edges.add({
+                  from: sourceId,
+                  to: targetId,
+                  color: {
+                    color: "#969ca3" + opacityHex,
+                    highlight: "#5de4d4",
+                  },
+                  width: width,
+                  dashes: true,
+                  smooth: { type: "curvedCW", roundness: 0.2 },
+                  title:
+                    "Similarity: " +
+                    (rel.avg_similarity * 100).toFixed(1) +
+                    "%",
+                });
+              });
+            }
+
+            renderRelatedList(related);
+            loadingEl.classList.remove("show");
+          })
+          .catch(function (err) {
+            loadingEl.classList.remove("show");
+            var li = document.createElement("li");
+            li.className = "related-item";
+            li.style.color = "var(--danger)";
+            li.textContent = err.message;
+            listEl.appendChild(li);
+          });
+      }
+
+      function renderRelatedList(related) {
+        var listEl = document.getElementById("related-list");
+        listEl.textContent = "";
+
+        if (related.length === 0) {
+          var li = document.createElement("li");
+          li.className = "related-item";
+          li.style.color = "var(--text-3)";
+          li.textContent = "No similar rooms found";
+          listEl.appendChild(li);
+          return;
+        }
+
+        related.forEach(function (rel) {
+          var li = document.createElement("li");
+          li.className = "related-item";
+
+          var nameSpan = document.createElement("span");
+          nameSpan.className = "related-name";
+          nameSpan.textContent = rel.room;
+          nameSpan.addEventListener("click", function () {
+            var id = roomNodeIds[rel.room];
+            if (id) {
+              network.selectNodes([id]);
+              var node = nodes.get(id);
+              exploreRoom(rel.room, id, node ? node.wingName : "");
+            }
+          });
+
+          var simSpan = document.createElement("span");
+          simSpan.className = "related-sim";
+          simSpan.textContent =
+            (rel.avg_similarity * 100).toFixed(1) +
+            "% similar \u00B7 " +
+            rel.hits +
+            " hits";
+
+          li.appendChild(nameSpan);
+          li.appendChild(simSpan);
+          listEl.appendChild(li);
+        });
+      }
+    </script>
+  </body>
 </html>
