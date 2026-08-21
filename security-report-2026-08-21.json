@@ -1,0 +1,104 @@
+{
+  "version": "1.0",
+  "date": "2026-08-21T15:33:40Z",
+  "mode": "daily",
+  "scope": {
+    "target": "/Users/elizabeth/.hermes/dashboard",
+    "deploy_target": "GitHub Pages / GitHub repo",
+    "includes": ["secrets", "supply chain", "OWASP Top 10", "CI/CD", "LLM security"]
+  },
+  "architecture_summary": "Static dashboard with many client-rendered HTML pages and a generated data.js bundle. refresh.sh assembles local Hermes files into data.js, and publish.sh commits/pushes the result to GitHub. Trust boundary is weak: local private state is serialized into a public client bundle and rendered directly in browser pages.",
+  "attack_surface": {
+    "code_surface": {
+      "public_endpoints": 27,
+      "authenticated": 0,
+      "admin_only": 0,
+      "api_endpoints": 0,
+      "file_upload_points": 0,
+      "external_integrations": 3,
+      "background_jobs": 0,
+      "websocket_channels": 0
+    },
+    "infrastructure_surface": {
+      "ci_cd_workflows": 0,
+      "webhook_receivers": 0,
+      "container_configs": 0,
+      "iac_configs": 0,
+      "deploy_targets": 2,
+      "secret_management": "local env vars serialized into generated client bundle"
+    }
+  },
+  "findings": [
+    {
+      "id": 1,
+      "title": "Public dashboard bundle exposes private local state",
+      "severity": "CRITICAL",
+      "confidence": 10,
+      "status": "VERIFIED",
+      "phase": "P2/P9",
+      "category": "Secrets / OWASP A01 / OWASP A02 / OWASP A05",
+      "file_line": [
+        "refresh.sh:367-416",
+        "pages/config.html:55-87",
+        "pages/agent.html:31-67",
+        "pages/user.html:31-40",
+        "pages/knowledge.html:263-399"
+      ],
+      "description": "The build pipeline serializes local Hermes memory, raw config, raw env content, credential inventory, reports, sessions, and other private state into data.js for client-side rendering. This is not server-side protected; it is shipped to the browser as static content.",
+      "exploit_scenario": [
+        "1. An attacker requests the public bundle from GitHub Pages or the repo raw URL.",
+        "2. They read data.js directly without authentication.",
+        "3. They extract user profile details, agent memory, config structure, integration status, report contents, skill contents, and operational metadata.",
+        "4. They use the exposed environment and architecture details to target accounts, social-engineer the operator, or pivot into other systems."
+      ],
+      "impact": "Direct information disclosure of personal data, operational internals, prompts, local file paths, and security-sensitive configuration. This materially lowers the cost of follow-on attacks.",
+      "recommendation": "Stop publishing raw local state into data.js. Move sensitive data to a private backend, publish a sanitized allowlist only, and remove config/env/memory/report dumps from client output entirely."
+    },
+    {
+      "id": 2,
+      "title": "Secret redaction is broken; most secret material remains visible",
+      "severity": "HIGH",
+      "confidence": 10,
+      "status": "VERIFIED",
+      "phase": "P2/P9",
+      "category": "Secrets / OWASP A02 / OWASP A05",
+      "file_line": [
+        "refresh.sh:368",
+        "data.js:14-15",
+        "data.js:1411-1421"
+      ],
+      "description": "refresh.sh masks only the first four characters of env values, leaving the rest of each secret intact in env_raw. The published bundle also exposes credential labels and integration status, making the leaked material easier to interpret.",
+      "exploit_scenario": [
+        "1. An attacker downloads data.js from the public repo or site.",
+        "2. They inspect env_raw and recover nearly complete token values and provider mappings.",
+        "3. They combine the leaked remainder with provider-specific formats and labels to identify which credentials to target first.",
+        "4. They attempt token abuse, account recovery, or provider-specific phishing using the exposed metadata."
+      ],
+      "impact": "Substantial secret leakage. Even when a value is partially obscured, enough remains to expose structure, issuer, and most of the token body.",
+      "recommendation": "Never publish env-derived values to the client. If a diagnostic view is absolutely required, replace each secret with a fixed placeholder like <redacted> and publish only a boolean presence flag."
+    }
+  ],
+  "supply_chain_summary": {
+    "lockfiles_present": false,
+    "package_manager_manifests_found": 0,
+    "audit_tools_run": [],
+    "notes": "No package manifests or lockfiles detected in scope; supply-chain scan limited to remote scripts/CDNs in static HTML."
+  },
+  "filter_stats": {
+    "reported_findings": 2,
+    "suppressed_low_confidence": 3,
+    "daily_confidence_gate": 8
+  },
+  "totals": {
+    "critical": 1,
+    "high": 1,
+    "medium": 0
+  },
+  "trend": {
+    "prior_report_found": false,
+    "resolved": [],
+    "persistent": [],
+    "new": [1, 2]
+  },
+  "disclaimer": "This is an AI-assisted scan, not a substitute for a professional security audit. It catches common patterns but is not comprehensive or guaranteed. For production systems handling sensitive data, payments, or PII, use a qualified security firm."
+}

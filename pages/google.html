@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-<title>Skills — Hermes</title>
+<title>Google Integration — Hermes</title>
 <link rel="stylesheet" href="../theme.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
@@ -18,7 +18,7 @@
     <a href="../index.html" class="back-link">
       <i data-lucide="arrow-left" style="width:16px;height:16px"></i> Dashboard
     </a>
-    <h1 class="page-title"><i data-lucide="puzzle"></i> Skills</h1>
+    <h1 class="page-title"><i data-lucide="mail"></i> Google Integration</h1>
   </div>
   <div class="page-body" id="page-body"></div>
   <div class="page-footer">built with ❤️ by e11i</div>
@@ -30,29 +30,10 @@
 document.addEventListener('DOMContentLoaded', () => {
   const d = window.__DASHBOARD_DATA__;
   if (!d) return;
-  const skills = d.skills_data || [];
-  if (!skills.length) { document.getElementById('page-body').innerHTML = '<div class="empty">No skills</div>'; return; }
-
-  // All skills grouped by category, custom ones get teal star via CSS
-  const cats = {};
-  skills.forEach(s => {
-    if (!cats[s.category]) cats[s.category] = [];
-    cats[s.category].push(s);
-  });
-
-  let html = '<div>';
-  Object.keys(cats).sort().forEach(cat => {
-    // Sort custom first, then used, then rest
-    cats[cat].sort((a, b) => (b.custom ? 1 : 0) - (a.custom ? 1 : 0) || (b.used ? 1 : 0) - (a.used ? 1 : 0));
-    html += `<div class="skill-cat"><div class="skill-cat-name">${esc(cat)}</div><div class="skill-pills">`;
-    cats[cat].forEach(s => {
-      const cls = ['pill', s.custom ? 'custom' : '', s.used ? 'visited' : ''].filter(Boolean).join(' ');
-      html += `<a href="skill.html?name=${encodeURIComponent(s.name)}" class="${cls}">${esc(s.name)}</a>`;
-    });
-    html += '</div></div>';
-  });
-  html += '</div>';
-
+  let html = '';
+  html += `<div class="cfg-row"><span class="cfg-key">OAuth Token</span><span class="cfg-val" style="color:${d.google_status === 'connected' ? 'var(--ok)' : 'var(--text-3)'}">${d.google_status === 'connected' ? '\u2713 Connected' : '\u2717 Not connected'}</span></div>`;
+  html += `<div class="cfg-row"><span class="cfg-key">Client Secret</span><span class="cfg-val" style="color:${d.google_apis === 'configured' ? 'var(--ok)' : 'var(--text-3)'}">${d.google_apis === 'configured' ? '\u2713 Configured' : '\u2717 Not found'}</span></div>`;
+  html += `<div style="margin-top:var(--s5);color:var(--text-3);font-size:var(--fs-sm)">APIs: Gmail, Calendar, Drive, YouTube<br>Token: ~/.hermes/google_token.json</div>`;
   document.getElementById('page-body').innerHTML = html;
   if (typeof lucide !== 'undefined') lucide.createIcons();
 });

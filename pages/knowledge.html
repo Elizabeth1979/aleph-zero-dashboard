@@ -1,10 +1,12 @@
+<!-- AGENT RULE: Only change what Elli explicitly asks for. No extra improvements, no removing elements, no unsolicited cleanup. Apply changes to ALL instances, not just the first one. -->
+<!-- AGENT: Read BEST-PRACTICES.md before writing HTML/CSS/JS. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-<title>Knowledge — Aleph Zero</title>
+<title>Knowledge — Hermes</title>
 <link rel="stylesheet" href="../theme.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
@@ -245,7 +247,7 @@
 </div>
 
 <script src="utils.js?v=5"></script>
-<script src="../data.js?v=1775910938"></script>
+<script src="../data.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   function stripMd(text) {
@@ -259,106 +261,143 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const d = window.__DASHBOARD_DATA__ || {};
-  const resources = d.resources || [];
+  const reports = d.reports || [];
   const el = document.getElementById('page-body');
 
-  if (!resources.length) {
-    el.textContent = 'No resources yet';
+  if (!reports.length) {
+    el.innerHTML = '<div class="empty">No reports yet</div>';
     if (typeof lucide !== 'undefined') lucide.createIcons();
     return;
   }
 
-  let html = '';
-  html += '<div class="section-label">Resources (' + resources.length + ')</div>';
-  html += '<div class="card-grid">';
-  resources.filter(function(r) { return r.title; }).forEach(function(r, i) {
-    var titleHtml = r.url
-      ? '<a href="' + esc(r.url) + '" target="_blank" rel="noopener" class="resource-link" onclick="event.stopPropagation()">' + esc(r.title) + '</a>'
-      : esc(r.title);
-    html += '<div class="report-card" data-res-idx="' + i + '">'
-      + '<div class="card-accent resource"></div>'
+  const research = reports.filter(r => r.type === 'research');
+  const resources = d.resources || [];
+
+  function buildCard(r, idx) {
+    const accentCls = 'research';
+    const icon = 'book-open';
+    const badgeLabel = 'Research';
+
+    return '<div class="report-card" data-idx="' + idx + '">'
+      + '<div class="card-accent ' + accentCls + '"></div>'
       + '<div class="card-body">'
       + '  <div class="card-icon-row">'
-      + '    <i data-lucide="' + (r.type === 'video' ? 'play-circle' : 'link') + '" style="width:22px;height:22px"></i>'
-      + (r.status ? '    <span class="type-badge resource">' + esc(r.status) + '</span>' : '')
+      + '    <i data-lucide="' + icon + '" style="width:22px;height:22px"></i>'
+      + '    <span class="type-badge ' + accentCls + '">' + badgeLabel + '</span>'
       + '  </div>'
-      + '  <div class="card-title">' + titleHtml + '</div>'
-      + '  <div class="card-date">' + esc(r.added || '') + '</div>'
-      + '  <div class="card-preview">' + esc(r.note || '') + '</div>'
+      + '  <div class="card-title">' + esc(r.title) + '</div>'
+      + '  <div class="card-date">' + esc(r.date) + '</div>'
+      + '  <div class="card-preview">' + esc(stripMd(r.preview || '')) + '</div>'
       + '</div></div>';
-  });
-  html += '</div>';
-  el.textContent = '';
-  el.insertAdjacentHTML('beforeend', html);
+  }
+
+  let html = '';
+  if (research.length) {
+    html += '<div class="section-label">Research</div>';
+    html += '<div class="card-grid">';
+    research.forEach(r => { html += buildCard(r, reports.indexOf(r)); });
+    html += '</div>';
+  }
+  if (resources.length) {
+    const catMeta = { css: { icon: 'code', label: 'CSS' } };
+    html += '<div class="section-label">Resources</div>';
+    html += '<div class="card-grid">';
+    resources.filter(r => r.title).forEach((r, i) => {
+      const titleHtml = r.url
+        ? '<a href="' + esc(r.url) + '" target="_blank" rel="noopener" class="resource-link" onclick="event.stopPropagation()">' + esc(r.title) + '</a>'
+        : esc(r.title);
+      html += '<div class="report-card" data-res-idx="' + i + '">'
+        + '<div class="card-accent resource"></div>'
+        + '<div class="card-body">'
+        + '  <div class="card-icon-row">'
+        + '    <i data-lucide="' + (r.type === 'video' ? 'play-circle' : 'link') + '" style="width:22px;height:22px"></i>'
+        + (r.status ? '    <span class="type-badge resource">' + esc(r.status) + '</span>' : '')
+        + '  </div>'
+        + '  <div class="card-title">' + titleHtml + '</div>'
+        + '  <div class="card-date">' + esc(r.added || '') + '</div>'
+        + '  <div class="card-preview">' + esc(r.note || '') + '</div>'
+        + '</div></div>';
+    });
+    html += '</div>';
+  }
+  el.innerHTML = html;
   if (typeof lucide !== 'undefined') lucide.createIcons();
 
   // --- Modal logic ---
-  var overlay = document.getElementById('report-modal');
-  var modalTitle = document.getElementById('modal-title');
-  var modalDate = document.getElementById('modal-date');
-  var modalBadge = document.getElementById('modal-badge');
-  var modalBody = document.getElementById('modal-body');
-  var closeBtn = document.getElementById('modal-close-btn');
+  const overlay = document.getElementById('report-modal');
+  const modalTitle = document.getElementById('modal-title');
+  const modalDate = document.getElementById('modal-date');
+  const modalBadge = document.getElementById('modal-badge');
+  const modalBody = document.getElementById('modal-body');
+  const closeBtn = document.getElementById('modal-close-btn');
+
+  function openModal(r) {
+    modalTitle.textContent = r.title;
+    modalDate.textContent = r.date;
+    modalBadge.textContent = 'Research';
+    modalBadge.className = 'type-badge research';
+    modalBody.innerHTML = renderMd(r.content);
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
 
   function closeModal() {
     overlay.classList.remove('open');
     document.body.style.overflow = '';
   }
 
-  function openResourceModal(r) {
-    modalTitle.textContent = r.title;
-    modalDate.textContent = r.added || '';
-    modalBadge.textContent = r.status || 'Resource';
-    modalBadge.className = 'type-badge resource';
-    var bodyEl = document.getElementById('modal-body');
-    bodyEl.textContent = '';
-    if (r.url) {
-      var p = document.createElement('p');
-      var a = document.createElement('a');
-      a.href = r.url;
-      a.target = '_blank';
-      a.rel = 'noopener';
-      a.textContent = r.url;
-      p.appendChild(a);
-      bodyEl.appendChild(p);
-    }
-    if (r.note) {
-      var noteP = document.createElement('p');
-      noteP.textContent = r.note;
-      bodyEl.appendChild(noteP);
-    }
-    if (r.takeaways && r.takeaways.length) {
-      var ul = document.createElement('ul');
-      r.takeaways.forEach(function(t) {
-        var li = document.createElement('li');
-        li.textContent = t;
-        ul.appendChild(li);
-      });
-      bodyEl.appendChild(ul);
-    }
-    overlay.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-
   // Card clicks
-  el.addEventListener('click', function(e) {
-    var card = e.target.closest('.report-card');
+  el.addEventListener('click', (e) => {
+    const card = e.target.closest('.report-card');
     if (!card) return;
     if (card.dataset.resIdx !== undefined) {
-      var ri = parseInt(card.dataset.resIdx, 10);
-      var res = resources[ri];
+      const ri = parseInt(card.dataset.resIdx, 10);
+      const res = resources[ri];
       if (res) openResourceModal(res);
+    } else {
+      const idx = parseInt(card.dataset.idx, 10);
+      if (reports[idx]) openModal(reports[idx]);
     }
   });
 
   // Close handlers
   closeBtn.addEventListener('click', closeModal);
-  overlay.addEventListener('click', function(e) {
+  overlay.addEventListener('click', (e) => {
     if (e.target === overlay) closeModal();
   });
-  document.addEventListener('keydown', function(e) {
+  document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
   });
+
+  function openResourceModal(r) {
+    modalTitle.textContent = r.title;
+    modalDate.textContent = r.added || '';
+    modalBadge.textContent = r.status || 'Resource';
+    modalBadge.className = 'type-badge resource';
+    let bodyHtml = '';
+    if (r.url) {
+      bodyHtml += '<p><a href="' + esc(r.url) + '" target="_blank" rel="noopener">' + esc(r.url) + '</a></p>';
+    }
+    if (r.note) {
+      bodyHtml += '<p>' + esc(r.note) + '</p>';
+    }
+    if (r.takeaways && r.takeaways.length) {
+      bodyHtml += '<ul>';
+      r.takeaways.forEach(t => { bodyHtml += '<li>' + esc(t) + '</li>'; });
+      bodyHtml += '</ul>';
+    }
+    modalBody.innerHTML = bodyHtml;
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  // Auto-open modal if ?open=filename in URL
+  const params = new URLSearchParams(window.location.search);
+  const openFile = params.get('open');
+  if (openFile) {
+    const target = reports.find(r => r.file === openFile);
+    if (target) openModal(target);
+  }
 });
 </script>
 </body>
