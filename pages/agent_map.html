@@ -6,98 +6,310 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-<title>Hermes Agent Map — Hermes</title>
+<title>System Architecture — Hermes</title>
 <link rel="stylesheet" href="../theme.css">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <link rel="stylesheet" href="shared.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
-.canvas-wrap { overflow:auto; margin-top:var(--s4); padding-bottom:var(--s2); }
-.canvas { min-width:1400px; display:grid; grid-template-columns:260px 80px 260px 80px 260px 80px 260px; gap:0; align-items:start; }
-.lane { display:flex; flex-direction:column; gap:var(--s3); }
-.lane-label { font-size:var(--fs-xs); text-transform:uppercase; letter-spacing:.08em; color:var(--text-3); border-bottom:1px solid var(--border); padding-bottom:var(--s1); margin-bottom:var(--s2); }
-.node { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--r2); padding:var(--s4); box-shadow:0 6px 20px rgba(0,0,0,.18); }
-.node h3 { margin:0 0 var(--s2); font-size:var(--fs-sm); color:var(--accent); }
-.node p { margin:0; color:var(--text-3); font-size:var(--fs-sm); line-height:1.5; }
-.node ul { margin:var(--s2) 0 0; padding-left:1.1rem; color:var(--text-3); font-size:var(--fs-sm); }
-.node li { margin:4px 0; }
-.arrow-col { display:flex; align-items:center; justify-content:center; color:var(--accent); font-size:30px; padding-top:90px; }
-.mini-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:var(--s3); margin-top:var(--s4); }
-.mini-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--r2); padding:var(--s4); }
-.mini-card strong { display:block; color:var(--text); margin-bottom:6px; }
-.mini-card span { color:var(--text-3); font-size:var(--fs-sm); }
+.page-wrap {
+  max-width: 1240px;
+}
+.architecture-intro {
+  max-width: 760px;
+  margin-block: var(--s2) var(--s5);
+  color: var(--text-2);
+  font-size: var(--fs-base);
+  line-height: 1.7;
+}
+.diagram-shell {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--r3);
+  background: var(--bg-card);
+  padding: var(--s4);
+}
+.architecture-diagram {
+  display: block;
+  min-width: 980px;
+  width: 100%;
+  height: auto;
+}
+.architecture-diagram text {
+  font-family: var(--sans);
+}
+.architecture-diagram .mono {
+  font-family: var(--mono);
+}
+.architecture-diagram .lane-title {
+  fill: var(--text-2);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.architecture-diagram .node-title {
+  fill: var(--text);
+  font-size: 16px;
+  font-weight: 700;
+}
+.architecture-diagram .node-copy {
+  fill: var(--text-2);
+  font-size: 14px;
+}
+.architecture-diagram .node-meta {
+  fill: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+}
+.architecture-diagram .flow-label {
+  fill: var(--text-3);
+  font-size: 13px;
+  font-weight: 600;
+}
+.diagram-note {
+  margin-top: var(--s3);
+  color: var(--text-3);
+  font-size: var(--fs-sm);
+}
+.architecture-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--s4);
+  margin-top: var(--s5);
+}
+.architecture-card {
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  background: var(--bg-card);
+  padding: var(--s4);
+}
+.architecture-card h2 {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  margin: 0 0 var(--s3);
+  color: var(--text);
+  font-size: var(--fs-base);
+}
+.card-marker {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex: 0 0 auto;
+}
+.architecture-card ol,
+.architecture-card ul {
+  margin: 0;
+  padding-inline-start: 1.2rem;
+  color: var(--text-2);
+  font-size: var(--fs-sm);
+  line-height: 1.65;
+}
+.architecture-card li + li {
+  margin-top: var(--s1);
+}
+@media (max-width: 640px) {
+  .diagram-shell { padding: var(--s2); }
+  .architecture-cards { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
 <div class="page-wrap">
-  <div class="page-header">
+  <header class="page-header">
     <a href="../index.html" class="back-link">
-      <i data-lucide="arrow-left" style="width:16px;height:16px"></i> Dashboard
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 18-6-6 6-6"/><path d="M9 12h10"/></svg>
+      Dashboard
     </a>
-    <h1 class="page-title"><i data-lucide="map"></i> Hermes Agent Map</h1>
-  </div>
-  <div class="page-body" id="page-body"></div>
-  <div class="page-footer">built with ❤️ by e11i</div>
+    <h1 class="page-title">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="6" height="6" x="9" y="2" rx="1"/><rect width="6" height="6" x="2" y="16" rx="1"/><rect width="6" height="6" x="16" y="16" rx="1"/><path d="M12 8v4m-7 4v-2h14v2"/></svg>
+      System Architecture
+    </h1>
+  </header>
+
+  <main class="page-body" id="main-content">
+    <p class="architecture-intro">
+      How your Hermes setup receives requests, reasons with models and tools, stores context, runs automations, and publishes results.
+    </p>
+
+    <div class="diagram-shell">
+      <svg class="architecture-diagram" viewBox="0 0 1180 800" role="img" aria-labelledby="architecture-title architecture-description">
+        <title id="architecture-title">Hermes system architecture</title>
+        <desc id="architecture-description">Requests enter through desktop, Discord, or scheduled jobs. The Hermes gateway and session router pass them to the agent runtime. The runtime uses models, tools, MCP servers, skills, memory, and subagents. Results return to chat, files, integrations, and the dashboard publish pipeline.</desc>
+        <defs>
+          <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+            <path d="M32 0H0V32" fill="none" stroke="#23313b" stroke-width="1" opacity=".5"/>
+          </pattern>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+            <path d="M0 0L10 5L0 10Z" fill="#5de4d4"/>
+          </marker>
+          <marker id="arrow-muted" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+            <path d="M0 0L10 5L0 10Z" fill="#7c8b95"/>
+          </marker>
+        </defs>
+
+        <rect x="1" y="1" width="1178" height="798" rx="16" fill="#0a0e12" stroke="#26333c"/>
+        <rect x="1" y="1" width="1178" height="798" rx="16" fill="url(#grid)"/>
+
+        <text class="lane-title" x="40" y="48">User interfaces</text>
+        <text class="lane-title" x="330" y="48">Agent runtime</text>
+        <text class="lane-title" x="840" y="48">State and delivery</text>
+
+        <!-- Connections render behind nodes -->
+        <path d="M250 125H300" fill="none" stroke="#5de4d4" stroke-width="2" marker-end="url(#arrow)"/>
+        <path d="M250 235H300" fill="none" stroke="#5de4d4" stroke-width="2" marker-end="url(#arrow)"/>
+        <path d="M250 345H275Q300 345 300 320" fill="none" stroke="#5de4d4" stroke-width="2" marker-end="url(#arrow)"/>
+        <path d="M440 165V205" fill="none" stroke="#5de4d4" stroke-width="2" marker-end="url(#arrow)"/>
+        <path d="M580 310H635" fill="none" stroke="#5de4d4" stroke-width="2" marker-end="url(#arrow)"/>
+        <path d="M580 310V475H635" fill="none" stroke="#5de4d4" stroke-width="2" marker-end="url(#arrow)"/>
+        <path d="M440 415V455" fill="none" stroke="#7c8b95" stroke-width="2" marker-end="url(#arrow-muted)"/>
+        <path d="M790 282H830" fill="none" stroke="#5de4d4" stroke-width="2" marker-end="url(#arrow)"/>
+        <path d="M790 515H830" fill="none" stroke="#5de4d4" stroke-width="2" marker-end="url(#arrow)"/>
+        <path d="M580 555H610V665H830" fill="none" stroke="#7c8b95" stroke-width="2" marker-end="url(#arrow-muted)"/>
+        <path d="M970 570V610" fill="none" stroke="#5de4d4" stroke-width="2" marker-end="url(#arrow)"/>
+        <path d="M830 690H740V640H580" fill="none" stroke="#7c8b95" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#arrow-muted)"/>
+
+        <text class="flow-label" x="256" y="113">message</text>
+        <text class="flow-label" x="590" y="298">reason</text>
+        <text class="flow-label" x="592" y="463">act</text>
+        <text class="flow-label" x="798" y="270">read / write</text>
+        <text class="flow-label" x="798" y="503">deliver</text>
+
+        <!-- User interfaces -->
+        <g>
+          <rect x="40" y="80" width="210" height="90" rx="10" fill="#0d2630" stroke="#5de4d4" stroke-width="2"/>
+          <text class="node-title" x="60" y="112">Hermes Desktop</text>
+          <text class="node-copy" x="60" y="138">Chat, preview, terminal</text>
+          <text class="node-meta mono" x="60" y="157">macOS app</text>
+        </g>
+        <g>
+          <rect x="40" y="190" width="210" height="90" rx="10" fill="#10253a" stroke="#65b8ff" stroke-width="2"/>
+          <text class="node-title" x="60" y="222">Discord</text>
+          <text class="node-copy" x="60" y="248">Messages and delivery</text>
+          <text class="node-meta mono" x="60" y="267">gateway channel</text>
+        </g>
+        <g>
+          <rect x="40" y="300" width="210" height="90" rx="10" fill="#132a27" stroke="#65d6bd" stroke-width="2"/>
+          <text class="node-title" x="60" y="332">Cron scheduler</text>
+          <text class="node-copy" x="60" y="358">Recurring autonomous jobs</text>
+          <text class="node-meta mono" x="60" y="377">fresh sessions</text>
+        </g>
+        <g>
+          <rect x="40" y="455" width="210" height="115" rx="10" fill="#151d24" stroke="#7c8b95" stroke-width="2"/>
+          <text class="node-title" x="60" y="487">External inputs</text>
+          <text class="node-copy" x="60" y="514">Web · files · repos</text>
+          <text class="node-copy" x="60" y="538">Google · Figma · APIs</text>
+          <text class="node-meta mono" x="60" y="558">retrieved by tools</text>
+        </g>
+
+        <!-- Agent runtime -->
+        <rect x="290" y="65" width="520" height="690" rx="14" fill="#0c1519" stroke="#35515b" stroke-width="1.5" stroke-dasharray="8 6"/>
+        <text class="node-meta mono" x="310" y="92">HERMES PROCESS · LOCAL MAC</text>
+
+        <g>
+          <rect x="320" y="105" width="240" height="60" rx="9" fill="#102a31" stroke="#5de4d4" stroke-width="2"/>
+          <text class="node-title" x="340" y="132">Gateway + session router</text>
+          <text class="node-copy" x="340" y="153">Platform context and history</text>
+        </g>
+        <g>
+          <rect x="320" y="205" width="260" height="210" rx="11" fill="#0d2630" stroke="#5de4d4" stroke-width="2.5"/>
+          <text class="node-title" x="345" y="238">Agent loop</text>
+          <text class="node-copy" x="345" y="268">1. Build system context</text>
+          <text class="node-copy" x="345" y="294">2. Ask model what to do</text>
+          <text class="node-copy" x="345" y="320">3. Dispatch tool calls</text>
+          <text class="node-copy" x="345" y="346">4. Verify real results</text>
+          <text class="node-copy" x="345" y="372">5. Return final response</text>
+          <text class="node-meta mono" x="345" y="398">max 60 turns · compression on</text>
+        </g>
+        <g>
+          <rect x="635" y="205" width="155" height="155" rx="10" fill="#17213a" stroke="#8fa9ff" stroke-width="2"/>
+          <text class="node-title" x="655" y="238">Model layer</text>
+          <text class="node-copy" x="655" y="268">Primary: Codex</text>
+          <text class="node-copy" x="655" y="294">Simple: GPT-5.4</text>
+          <text class="node-copy" x="655" y="320">Fallbacks: cloud</text>
+          <text class="node-copy" x="655" y="342">and local Ollama</text>
+        </g>
+        <g>
+          <rect x="320" y="455" width="260" height="200" rx="10" fill="#122822" stroke="#65d6bd" stroke-width="2"/>
+          <text class="node-title" x="345" y="488">Context layer</text>
+          <text class="node-copy" x="345" y="518">SOUL + system rules</text>
+          <text class="node-copy" x="345" y="544">User profile + memory</text>
+          <text class="node-copy" x="345" y="570">Relevant skills</text>
+          <text class="node-copy" x="345" y="596">Session history</text>
+          <text class="node-meta mono" x="345" y="632">prompt assembled per request</text>
+        </g>
+        <g>
+          <rect x="635" y="400" width="155" height="230" rx="10" fill="#182238" stroke="#9db0ff" stroke-width="2"/>
+          <text class="node-title" x="655" y="433">Action layer</text>
+          <text class="node-copy" x="655" y="463">Built-in tools</text>
+          <text class="node-copy" x="655" y="489">MCP servers</text>
+          <text class="node-copy" x="655" y="515">Subagents</text>
+          <text class="node-copy" x="655" y="541">Terminal + files</text>
+          <text class="node-copy" x="655" y="567">Browser + desktop</text>
+          <text class="node-meta mono" x="655" y="608">approval checks</text>
+        </g>
+
+        <!-- State and delivery -->
+        <g>
+          <rect x="830" y="205" width="300" height="155" rx="10" fill="#17213a" stroke="#8fa9ff" stroke-width="2"/>
+          <text class="node-title" x="855" y="238">Persistent state</text>
+          <text class="node-copy" x="855" y="268">USER.md · MEMORY.md · skills</text>
+          <text class="node-copy" x="855" y="294">Sessions · config · credentials</text>
+          <text class="node-copy" x="855" y="320">Tasks · projects · resources</text>
+          <text class="node-meta mono" x="855" y="344">~/.hermes/</text>
+        </g>
+        <g>
+          <rect x="830" y="410" width="300" height="160" rx="10" fill="#102a31" stroke="#5de4d4" stroke-width="2"/>
+          <text class="node-title" x="855" y="443">Outputs and integrations</text>
+          <text class="node-copy" x="855" y="473">Chat replies · code · reports</text>
+          <text class="node-copy" x="855" y="499">Discord · Google · GitHub</text>
+          <text class="node-copy" x="855" y="525">Figma · Vercel · browser</text>
+          <text class="node-meta mono" x="855" y="550">verified before reporting</text>
+        </g>
+        <g>
+          <rect x="830" y="610" width="300" height="125" rx="10" fill="#132a27" stroke="#65d6bd" stroke-width="2"/>
+          <text class="node-title" x="855" y="643">Dashboard publish pipeline</text>
+          <text class="node-copy" x="855" y="672">validate → refresh → commit → push</text>
+          <text class="node-copy" x="855" y="698">Static dashboard on GitHub Pages</text>
+          <text class="node-meta mono" x="855" y="720">publish.sh</text>
+        </g>
+      </svg>
+    </div>
+    <p class="diagram-note">Scroll sideways on a small screen. Lines show the main request and data paths; dashed lines show background synchronization.</p>
+
+    <section class="architecture-cards" aria-label="Architecture details">
+      <article class="architecture-card">
+        <h2><span class="card-marker"></span>Request lifecycle</h2>
+        <ol>
+          <li>A message or schedule creates a session request.</li>
+          <li>The runtime builds context from rules, memory, skills, and history.</li>
+          <li>The model selects actions; Hermes runs and verifies tools.</li>
+          <li>The result returns to the originating interface.</li>
+        </ol>
+      </article>
+      <article class="architecture-card">
+        <h2><span class="card-marker"></span>Model routing</h2>
+        <ul>
+          <li>Primary: GPT-5.6 via OpenAI Codex.</li>
+          <li>Short requests may use GPT-5.4.</li>
+          <li>Fallbacks use OpenRouter, then local Ollama.</li>
+          <li>Local vision uses Ollama.</li>
+        </ul>
+      </article>
+      <article class="architecture-card">
+        <h2><span class="card-marker"></span>Data boundaries</h2>
+        <ul>
+          <li>Operational state lives under <code>~/.hermes/</code>.</li>
+          <li>Secrets stay outside the public dashboard.</li>
+          <li>The dashboard receives generated, redacted data.</li>
+          <li>GitHub Pages serves the static website.</li>
+        </ul>
+      </article>
+    </section>
+  </main>
+
+  <footer class="page-footer">built with ❤️ by e11i</footer>
 </div>
-<script src="utils.js"></script>
-<script src="../data.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const d = window.__DASHBOARD_DATA__;
-  const body = document.getElementById('page-body');
-  let html = '';
-
-  html += '<div class="section-head"><i data-lucide="sparkles"></i> Big-picture view</div>';
-  html += '<div class="cfg-row"><span class="cfg-key">What this is</span><span class="cfg-val">A visual map of Hermes: inputs, brain, storage, automations, and outputs.</span></div>';
-
-  html += '<div class="canvas-wrap"><div class="canvas">';
-  html += '<div class="lane"><div class="lane-label">Inputs</div>';
-  html += '<div class="node"><h3>Elli</h3><p>Chat, tasks, ideas, dashboard feedback, project direction.</p></div>';
-  html += '<div class="node"><h3>External inputs</h3><p>Web pages, repos, docs, files, Obsidian notes, Google data, Discord messages.</p></div>';
-  html += '</div>';
-  html += '<div class="arrow-col">→</div>';
-
-  html += '<div class="lane"><div class="lane-label">Agent Runtime</div>';
-  html += '<div class="node"><h3>Hermes core</h3><p>Main agent loop with tools, memory, planning, coding, browser, and automation.</p><ul><li>responds to chat</li><li>uses tools</li><li>updates files</li></ul></div>';
-  html += '<div class="node"><h3>Skills</h3><p>Reusable procedures loaded for special jobs.</p></div>';
-  html += '<div class="node"><h3>Subagents</h3><p>Parallel workers for coding, research, and review.</p></div>';
-  html += '</div>';
-  html += '<div class="arrow-col">→</div>';
-
-  html += '<div class="lane"><div class="lane-label">State & Storage</div>';
-  html += '<div class="node"><h3>Memory</h3><p>USER.md, MEMORY.md, detail files, learnings.</p></div>';
-  html += '<div class="node"><h3>Project files</h3><p>Repos, plans, tasks, project notes, config files.</p></div>';
-  html += '<div class="node"><h3>Dashboard data</h3><p>tasks.json, projects.json, resources.json, commands.json, data.js.</p></div>';
-  html += '</div>';
-  html += '<div class="arrow-col">→</div>';
-
-  html += '<div class="lane"><div class="lane-label">Automation & Delivery</div>';
-  html += '<div class="node"><h3>Cron & routines</h3><p>Scheduled jobs, reminders, memory cleanup, reports.</p></div>';
-  html += '<div class="node"><h3>Gateway & integrations</h3><p>Discord, Google, MCP tools, browser, GitHub, shell.</p></div>';
-  html += '<div class="node"><h3>Dashboard publish loop</h3><p>validate_dashboard.py → refresh.sh → publish.sh → GitHub Pages.</p></div>';
-  html += '</div>';
-  html += '<div class="arrow-col">→</div>';
-
-  html += '<div class="lane"><div class="lane-label">Outputs</div>';
-  html += '<div class="node"><h3>Chat replies</h3><p>Answers, plans, summaries, coding help.</p></div>';
-  html += '<div class="node"><h3>Dashboard</h3><p>Visual source of truth for projects, tasks, memory, setup, and internals.</p></div>';
-  html += '<div class="node"><h3>Artifacts</h3><p>Code changes, reports, notes, reviews, tasks, and published pages.</p></div>';
-  html += '</div>';
-  html += '</div></div>';
-
-  html += '<div class="section-head"><i data-lucide="boxes"></i> Important clusters</div>';
-  html += '<div class="mini-grid">';
-  html += '<div class="mini-card"><strong>Dashboard</strong><span>Visual layer on top of Hermes state. Not the source of truth — a view over it.</span></div>';
-  html += '<div class="mini-card"><strong>Memory</strong><span>Long-lived preferences, rules, and environment details.</span></div>';
-  html += '<div class="mini-card"><strong>Projects</strong><span>Where ideas turn into plans, tasks, repos, and implementation.</span></div>';
-  html += '<div class="mini-card"><strong>Skills</strong><span>Reusable playbooks that reduce repeated steering.</span></div>';
-  html += '<div class="mini-card"><strong>Automations</strong><span>Routines that keep things moving without manual babysitting.</span></div>';
-  html += '<div class="mini-card"><strong>Integrations</strong><span>Discord, Google, MCP, browser, terminal, and GitHub.</span></div>';
-  html += '</div>';
-
-  body.innerHTML = html;
-  if (typeof lucide !== 'undefined') lucide.createIcons();
-});
-</script>
 </body>
 </html>

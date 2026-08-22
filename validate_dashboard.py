@@ -54,7 +54,11 @@ must('dashboard_files' in internals_page, 'Dashboard Internals page must read da
 must('Visual Flow Map' in internals_page or 'Visual map' in internals_page or 'flowmap' in internals_page, 'Dashboard Internals page must include the visual flow map section')
 must('file-overlay' in internals_page, 'Dashboard Internals page must include clickable file modal overlay')
 must('agent_map.html' in internals_page, 'Dashboard Internals page must link to the full visual agent map')
-must('Big-picture view' in agent_map_page, 'Agent map page must include the big-picture visual overview')
+must('pages/agent_map.html' in index_text, 'index.html must link directly to the System Architecture page')
+must('System Architecture' in agent_map_page, 'Agent map page must be titled System Architecture')
+must('architecture-diagram' in agent_map_page, 'System Architecture page must include the architecture diagram')
+must('User interfaces' in agent_map_page and 'Agent runtime' in agent_map_page and 'State and delivery' in agent_map_page,
+     'System Architecture page must show interfaces, runtime, and state/delivery layers')
 
 try:
     commands = json.loads(commands_text)
