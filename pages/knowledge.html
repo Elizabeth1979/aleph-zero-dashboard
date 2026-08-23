@@ -153,6 +153,7 @@
 .modal-body { padding: var(--s5); color: var(--text); line-height: 1.65; }
 .detail-section + .detail-section { margin-block-start: var(--s5); }
 .detail-section h2 { margin-block-end: var(--s2); color: var(--accent); font-size: 1rem; }
+.detail-section h3 { margin-block: var(--s3) var(--s2); color: var(--text); font-size: var(--fs-sm); }
 .detail-section ul { padding-inline-start: 1.25rem; }
 .source-links { display: flex; flex-wrap: wrap; gap: var(--s2); }
 .source-link {
@@ -290,6 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
       sourceLanguage: resource.source_language || 'en',
       biasNote: resource.bias_note || '',
       blogAngle: resource.blog_angle || '',
+      youngReader: resource.young_reader || null,
       content: '',
     })),
     ...reports.map(report => ({
@@ -307,6 +309,7 @@ document.addEventListener('DOMContentLoaded', () => {
       sourceLanguage: report.source_language || 'en',
       biasNote: report.bias_note || '',
       blogAngle: report.blog_angle || '',
+      youngReader: report.young_reader || null,
       content: report.content || '',
     })),
     ...project001.map(insight => ({
@@ -324,6 +327,7 @@ document.addEventListener('DOMContentLoaded', () => {
       sourceLanguage: insight.source_language || 'en',
       biasNote: insight.bias_note || '',
       blogAngle: insight.blog_angle || '',
+      youngReader: insight.young_reader || null,
       content: '',
     })),
   ];
@@ -395,11 +399,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const sourceMeta = item.sourceText
       ? `<p>${esc(item.sourceText)}</p><p>Source language: ${esc(item.sourceLanguage)}</p>`
       : `<p>Source language: ${esc(item.sourceLanguage)}</p>`;
+    const young = item.youngReader;
+    const youngReaderHtml = young
+      ? `<p>${esc(young.summary || '')}</p>`
+        + (young.key_points?.length
+          ? `<h3>Key ideas</h3><ul>${young.key_points.map(point => `<li>${esc(point)}</li>`).join('')}</ul>`
+          : '')
+      : '';
+    const activitiesHtml = young?.activities?.length
+      ? `<ul>${young.activities.map(activity => `<li>${esc(activity)}</li>`).join('')}</ul>`
+      : '';
+    const qualityHtml = young
+      ? `<p><strong>Verdict:</strong> ${esc(young.verdict || '')}</p>`
+        + `<p><strong>Target:</strong> Grades ${esc(young.target_grades || '')}</p>`
+        + `<p><strong>Measured reading grade:</strong> ${esc(young.reading_grade ?? 'Not measured')}</p>`
+        + `<p>${esc(young.quality_note || '')}</p>`
+      : '';
 
     modalBody.innerHTML = [
-      detailSection('Summary', summaryHtml),
-      detailSection('Key points', pointsHtml),
+      detailSection('Standard Summary', summaryHtml),
+      detailSection('Standard Key Points', pointsHtml),
       detailSection('Why it matters / takeaway', `<p>${esc(item.takeaway || 'No separate takeaway recorded.')}</p>`),
+      detailSection('Young Reader Version', youngReaderHtml),
+      detailSection('Try It Yourself', activitiesHtml),
+      detailSection('Young Reader Quality Review', qualityHtml),
       detailSection('Sources', sourceMeta + linksHtml),
       detailSection('Bias / reliability note', `<p>${esc(item.biasNote || 'No separate bias or reliability note recorded.')}</p>`),
       detailSection('Blog / story angle', `<p>${esc(item.blogAngle || 'No separate blog or story angle recorded.')}</p>`),

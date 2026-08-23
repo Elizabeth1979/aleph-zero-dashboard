@@ -62,6 +62,10 @@ must(re.search(r'<button[^>]+aria-pressed=', knowledge_page) is not None,
      'Knowledge subject filters must use buttons with aria-pressed')
 must('Blog material' in knowledge_page and 'To explore' in knowledge_page,
      'Knowledge page must expose All, Blog material, and To explore views')
+must('Young Reader Version' in knowledge_page and 'Try It Yourself' in knowledge_page and 'Young Reader Quality Review' in knowledge_page,
+     'Knowledge details must render parallel young-reader content, activities, and quality review')
+must('youngReader' in knowledge_page,
+     'Knowledge normalization must preserve young_reader data')
 must('sourceId' in knowledge_page and 'itemsBySourceId.get(card.dataset.sourceId)' in knowledge_page,
      'Knowledge items must preserve stable source identity for modal lookup')
 must('...resources.map(resource =>' in knowledge_page,
@@ -84,6 +88,8 @@ must('project-001-badge' not in index_text and 'project-001-preview' not in inde
      'Unused Project 001 home badge and preview code must be removed')
 must('Dashboard → Knowledge' in workflows_page and 'subject' in workflows_page and 'tags' in workflows_page,
      'Saving Resources workflow must point to Knowledge and describe subject/tag classification')
+must('Young Reader' in workflows_page and 'actionable' in workflows_page,
+     'Saving Resources workflow must describe young-reader quality and actionable activities')
 must('project_001_insights:' in refresh_text, 'refresh.sh must export Project 001 insights into data.js')
 must('project_001_insights' in project_001_page, 'Project 001 page must read project_001_insights from data.js')
 must('<main' in project_001_page and 'skip-link' in project_001_page,
@@ -178,6 +184,20 @@ try:
          'Basic Economics must preserve its original Hebrew source title')
     must(bool(basic_economics.get('takeaway')) and bool(basic_economics.get('bias_note')) and bool(basic_economics.get('blog_angle')),
          'Basic Economics must include takeaway, bias note, and blog angle')
+    young_reader = basic_economics.get('young_reader') or {}
+    must(young_reader.get('verdict') in {'Ready', 'Adaptable', 'Not recommended'},
+         'Basic Economics must include a valid young-reader suitability verdict')
+    must(young_reader.get('target_grades') == '7–9',
+         'Basic Economics young-reader target must be grades 7–9')
+    must(bool(young_reader.get('summary')) and bool(young_reader.get('key_points')),
+         'Basic Economics must include a parallel young-reader summary and key points')
+    must(isinstance(young_reader.get('activities'), list) and bool(young_reader.get('activities')),
+         'Basic Economics must include actionable young-reader activities')
+    reading_grade = young_reader.get('reading_grade')
+    must(isinstance(reading_grade, (int, float)) and 7 <= reading_grade <= 9,
+         'Basic Economics young-reader reading grade must be measured between 7 and 9')
+    must(bool(young_reader.get('quality_note')),
+         'Basic Economics must explain its young-reader suitability decision')
 except Exception as e:
     errors.append(f'resources.json is invalid JSON: {e}')
 

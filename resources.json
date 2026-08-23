@@ -225,6 +225,25 @@
     "source_title": "יסודות הכלכלה — מבוא לתומס סואל",
     "bias_note": "The video presents a pro-market interpretation of Thomas Sowell’s work, not a neutral survey of economic consensus.",
     "blog_angle": "Why good intentions are not enough—and how incentives and unintended consequences shape policies and products.",
-    "takeaway": "Economic rules shape everyday choices, so judging incentives and real outcomes helps people evaluate policies more carefully."
+    "takeaway": "Economic rules shape everyday choices, so judging incentives and real outcomes helps people evaluate policies more carefully.",
+    "young_reader": {
+      "verdict": "Adaptable",
+      "target_grades": "7–9",
+      "summary": "Economics studies decisions about limited resources such as money, time, materials, and work. People cannot have everything at once. Imagine you have 50 shekels and two free hours. You can buy a game, save the money, study, or meet a friend, but you cannot do all of them at the same time. Scarcity means that money, time, and other useful things are limited. An opportunity cost is what you give up when you make a choice. Incentives are rewards or costs that can change what people decide to do. These ideas can help us ask better questions about school rules, prices, and government plans. We should look at what a rule was meant to do and what happened after people reacted to it. A result that no one planned is called an unintended consequence. The video explains these ideas from a pro-market point of view. Other economists may agree with some parts and disagree with others, so readers should compare more than one source.",
+      "key_points": [
+        "Scarcity means useful resources such as money and time are limited.",
+        "An opportunity cost is the best thing you give up when you choose something else.",
+        "Incentives are rewards or costs that can influence behavior.",
+        "Rules can create unintended consequences—results that nobody planned.",
+        "The source uses a pro-market viewpoint, so readers should compare it with other economic perspectives."
+      ],
+      "activities": [
+        "Choice log: write down three choices you make today and what you give up with each choice.",
+        "Incentive map: choose one school rule. List its reward or cost, the behavior it encourages, and one result nobody may have planned.",
+        "Compare sources: find another introduction to opportunity cost. Write one point both sources agree on and one point they explain differently."
+      ],
+      "reading_grade": 7.2,
+      "quality_note": "Adaptable for grades 7–9. The economic concepts are useful, but the original lesson is politically opinionated. This version adds concrete examples, defines key terms, labels the pro-market viewpoint, and asks readers to compare another source."
+    }
   }
 ]
