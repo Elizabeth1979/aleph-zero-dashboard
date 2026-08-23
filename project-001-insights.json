@@ -15,7 +15,13 @@
     ],
     "takeaway": "Ask ‘effective for which mission?’ before accepting any ranking.",
     "source": "Project 001 email: המרגלים הטובים בעולם נחשפים? נו באמת...",
-    "links": []
+    "links": [],
+    "subject": "Intelligence & Security",
+    "tags": [
+      "Politics",
+      "Decision-making"
+    ],
+    "source_language": "he"
   },
   {
     "id": "digital-footprint",
@@ -48,7 +54,13 @@
         "label": "WhatsMyName",
         "url": "https://whatsmyname.app/"
       }
-    ]
+    ],
+    "subject": "Intelligence & Security",
+    "tags": [
+      "Technology",
+      "Media literacy"
+    ],
+    "source_language": "he"
   },
   {
     "id": "decisions",
@@ -63,7 +75,13 @@
     ],
     "takeaway": "Facts, active listening, and an exit plan reduce reactive decisions.",
     "source": "Project 001 email: השיעור שאיש מודיעין מבצעי יכול ללמד אותנו על קבלת החלטות",
-    "links": []
+    "links": [],
+    "subject": "Self-Improvement",
+    "tags": [
+      "Decision-making",
+      "Psychology"
+    ],
+    "source_language": "he"
   },
   {
     "id": "security-doctrine",
@@ -88,7 +106,13 @@
         "label": "Spotify",
         "url": "https://open.spotify.com/episode/3RH7MkD1gwF2U9SukAaBly"
       }
-    ]
+    ],
+    "subject": "Intelligence & Security",
+    "tags": [
+      "Politics",
+      "History"
+    ],
+    "source_language": "he"
   },
   {
     "id": "behavior-patterns",
@@ -103,7 +127,13 @@
     ],
     "takeaway": "Observe repeated behavior, but leave room for context and change.",
     "source": "Project 001 email: הדבר היחיד שלא משתנה אצלכם כשכל העולם קורס",
-    "links": []
+    "links": [],
+    "subject": "Self-Improvement",
+    "tags": [
+      "Psychology",
+      "Decision-making"
+    ],
+    "source_language": "he"
   },
   {
     "id": "influence",
@@ -119,7 +149,13 @@
     ],
     "takeaway": "Use situational design to improve clarity, never to remove another person’s agency.",
     "source": "Project 001 emails: תפסיקו להשפיע על אנשים and חלק ב׳",
-    "links": []
+    "links": [],
+    "subject": "Self-Improvement",
+    "tags": [
+      "Psychology",
+      "Decision-making"
+    ],
+    "source_language": "he"
   },
   {
     "id": "intelligence-history",
@@ -144,7 +180,12 @@
         "label": "Spotify",
         "url": "https://open.spotify.com/episode/1ghAOOgxhdTBPWhLqYzLwu"
       }
-    ]
+    ],
+    "subject": "History",
+    "tags": [
+      "History"
+    ],
+    "source_language": "he"
   },
   {
     "id": "media-verification",
@@ -160,6 +201,12 @@
     ],
     "takeaway": "Slow down claims designed to create urgency, anger, or fear.",
     "source": "Project 001 email: איך לשרוד מול שטיפת המוח בתקשורת?",
-    "links": []
+    "links": [],
+    "subject": "Politics",
+    "tags": [
+      "Media literacy",
+      "Politics"
+    ],
+    "source_language": "he"
   }
 ]

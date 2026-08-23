@@ -522,15 +522,6 @@
       <div class="card-preview" id="reports-preview"></div>
     </a>
 
-    <a href="pages/project-001.html" class="card">
-      <div class="card-h">
-        <i data-lucide="scan-search"></i>
-        <h2>001 Insights</h2>
-        <span class="badge" id="project-001-badge">0</span>
-      </div>
-      <div class="card-desc">Useful intelligence ideas without the marketing</div>
-      <div class="card-preview" id="project-001-preview"></div>
-    </a>
 
   </div>
 
@@ -771,26 +762,29 @@ function loadCards() {
   const a11yCount = portfolio.filter(r => r.category === 'a11y').length;
   document.getElementById('portfolio-preview').textContent = a11yCount + ' accessibility · ' + (portfolio.length - a11yCount) + ' other';
 
-  // Reports
+  // Knowledge
   const reports = d.reports || [];
   const resources = d.resources || [];
-  document.getElementById('reports-badge').textContent = reports.length + resources.length;
-  if (reports.length) {
-    const allItems = [...reports.map(r => ({ title: r.title || r.file, date: r.date })), ...resources.map(r => ({ title: r.title, date: r.added }))];
-    allItems.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
-    if (allItems.length) document.getElementById('reports-preview').textContent = allItems[0].title;
-  } else if (resources.length) {
-    const sorted = [...resources].sort((a, b) => (b.added || '').localeCompare(a.added || ''));
-    document.getElementById('reports-preview').textContent = sorted[0].title;
-  }
-
-  // Project 001 insights
+  const visibleReports = reports.filter(report => report.type === 'research' && (report.title || report.file));
+  const visibleResources = resources.filter(resource => resource.title);
   const project001 = (d.project_001_insights || []).filter(item => item.title);
-  document.getElementById('project-001-badge').textContent = project001.length;
-  const project001Preview = document.getElementById('project-001-preview');
-  if (project001Preview) {
-    project001Preview.textContent = project001.length ? project001[0].title : 'No insights yet';
+  const knowledgeItems = [...visibleReports, ...visibleResources, ...project001];
+  function inferKnowledgeSubject(item) {
+    if (item.subject) return item.subject;
+    const text = `${item.title || ''} ${item.file || ''} ${item.preview || ''}`.toLowerCase();
+    if (/accessib|a11y|wcag|screen reader/.test(text)) return 'Accessibility';
+    if (/artificial intelligence|\bai\b|agent|model|llm/.test(text)) return 'AI';
+    if (/neuroscience|brain|cognitive/.test(text)) return 'Neuroscience';
+    if (/security|intelligence|osint|surveillance/.test(text)) return 'Intelligence & Security';
+    if (/econom/.test(text)) return 'Economics';
+    if (/histor/.test(text)) return 'History';
+    if (/politic|government|election/.test(text)) return 'Politics';
+    if (/technolog|software|web|css|code/.test(text)) return 'Technology';
+    return 'Uncategorized';
   }
+  const subjectCount = new Set(knowledgeItems.map(inferKnowledgeSubject)).size;
+  document.getElementById('reports-badge').textContent = knowledgeItems.length;
+  document.getElementById('reports-preview').textContent = `${knowledgeItems.length} items across ${subjectCount} subjects`;
 
   // SOUL.md preview
   const soulEl = document.getElementById('soul-preview');

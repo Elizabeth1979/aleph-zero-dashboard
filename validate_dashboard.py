@@ -32,7 +32,9 @@ checklist_text = read_text(DASH / 'dashboard_checklist.json')
 zshrc_text = read_text(ZSHRC)
 project_001_page = read_text(DASH / 'pages' / 'project-001.html')
 project_001_data_text = read_text(DASH / 'project-001-insights.json')
+resources_data_text = read_text(DASH / 'resources.json')
 knowledge_page = read_text(DASH / 'pages' / 'knowledge.html')
+workflows_page = read_text(DASH / 'pages' / 'workflows.html')
 manifest_text = read_text(DASH / 'manifest.webmanifest')
 service_worker_text = read_text(DASH / 'service-worker.js')
 pwa_text = read_text(DASH / 'pwa.js')
@@ -43,13 +45,45 @@ index_text = read_text(DASH / 'index.html')
 must('knowledge.html' in index_text, 'index.html must link to knowledge.html')
 must((DASH / 'pages' / 'project-001.html').exists(), 'project-001.html is missing')
 must((DASH / 'project-001-insights.json').exists(), 'project-001-insights.json is missing')
-must('pages/project-001.html' in index_text, 'index.html must link to Project 001 Insights')
-must("const visibleResources = resources.filter(r => r.title);" in knowledge_page,
-     'Knowledge page must derive visible resources before its empty-state check')
-must("if (!reports.length && !visibleResources.length)" in knowledge_page,
-     'Knowledge page must not hide resources when reports are empty')
-must("resources.forEach((r, i) =>" in knowledge_page,
-     'Knowledge resource cards must preserve source indices for modal lookup')
+must('pages/project-001.html' not in index_text,
+     'index.html must not link to the separate Project 001 Insights page')
+
+APPROVED_SUBJECTS = [
+    'Economics', 'History', 'Self-Improvement', 'AI',
+    'Intelligence & Security', 'Politics', 'Neuroscience',
+    'Accessibility', 'Technology', 'Uncategorized',
+]
+for subject in APPROVED_SUBJECTS:
+    must(subject in knowledge_page,
+         f'Knowledge page must expose approved subject filter: {subject}')
+must('project_001_insights' in knowledge_page,
+     'Knowledge page must read Project 001 insights')
+must(re.search(r'<button[^>]+aria-pressed=', knowledge_page) is not None,
+     'Knowledge subject filters must use buttons with aria-pressed')
+must('Blog material' in knowledge_page and 'To explore' in knowledge_page,
+     'Knowledge page must expose All, Blog material, and To explore views')
+must('sourceId' in knowledge_page and 'itemsBySourceId.get(card.dataset.sourceId)' in knowledge_page,
+     'Knowledge items must preserve stable source identity for modal lookup')
+must('...resources.map(resource =>' in knowledge_page,
+     'Knowledge page must render resources independently of research reports')
+must('min-height: 44px' in knowledge_page,
+     'Knowledge filter buttons must have minimum 44px targets')
+must('id="report-modal" aria-hidden="true" hidden' in knowledge_page,
+     'Closed Knowledge modal must be removed from keyboard navigation')
+must('.modal-overlay[hidden] { display: none; }' in knowledge_page,
+     'Knowledge modal hidden state must override its flex display')
+must('.modal-body { padding: var(--s5); overflow-y: auto;' not in knowledge_page,
+     'Knowledge modal must not use nested scrolling')
+must('const knowledgeItems = [...visibleReports, ...visibleResources, ...project001];' in index_text,
+     'Knowledge home badge must count visible reports, resources, and Project 001 insights')
+must('subjectCount' in index_text and 'subjects' in index_text,
+     'Knowledge home preview must report item and subject counts')
+must('inferKnowledgeSubject' in index_text,
+     'Knowledge home subject coverage must classify metadata-less vault reports')
+must('project-001-badge' not in index_text and 'project-001-preview' not in index_text,
+     'Unused Project 001 home badge and preview code must be removed')
+must('Dashboard → Knowledge' in workflows_page and 'subject' in workflows_page and 'tags' in workflows_page,
+     'Saving Resources workflow must point to Knowledge and describe subject/tag classification')
 must('project_001_insights:' in refresh_text, 'refresh.sh must export Project 001 insights into data.js')
 must('project_001_insights' in project_001_page, 'Project 001 page must read project_001_insights from data.js')
 must('<main' in project_001_page and 'skip-link' in project_001_page,
@@ -128,12 +162,38 @@ except Exception as e:
     errors.append(f'dashboard_checklist.json is invalid JSON: {e}')
 
 try:
+    resources_data = json.loads(resources_data_text)
+    resources = [item for item in resources_data if item.get('title')]
+    must(bool(resources), 'resources.json must contain at least one visible resource')
+    for item in resources:
+        title = item.get('title', '?')
+        must(item.get('subject') in APPROVED_SUBJECTS,
+             f'Resource has missing or unapproved subject: {title}')
+        must(isinstance(item.get('tags'), list),
+             f'Resource tags must be a list: {title}')
+        must(item.get('source_language') in {'en', 'he'},
+             f'Resource has unsupported source_language: {title}')
+    basic_economics = next((item for item in resources if item.get('id') == '10'), {})
+    must(bool(basic_economics.get('source_title')),
+         'Basic Economics must preserve its original Hebrew source title')
+    must(bool(basic_economics.get('takeaway')) and bool(basic_economics.get('bias_note')) and bool(basic_economics.get('blog_angle')),
+         'Basic Economics must include takeaway, bias note, and blog angle')
+except Exception as e:
+    errors.append(f'resources.json is invalid JSON: {e}')
+
+try:
     project_001_data = json.loads(project_001_data_text)
     insights = [item for item in project_001_data if item.get('title')]
     must(bool(insights), 'project-001-insights.json must contain at least one insight')
     for item in insights:
         must(bool(item.get('summary')), f"Project 001 insight is missing summary: {item.get('title', '?')}")
         must(bool(item.get('points')), f"Project 001 insight is missing points: {item.get('title', '?')}")
+        must(item.get('subject') in APPROVED_SUBJECTS,
+             f"Project 001 insight has missing or unapproved subject: {item.get('title', '?')}")
+        must(isinstance(item.get('tags'), list),
+             f"Project 001 insight tags must be a list: {item.get('title', '?')}")
+        must(item.get('source_language') in {'en', 'he'},
+             f"Project 001 insight has unsupported source_language: {item.get('title', '?')}")
 except Exception as e:
     errors.append(f'project-001-insights.json is invalid JSON: {e}')
 

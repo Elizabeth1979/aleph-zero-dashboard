@@ -16,7 +16,12 @@
       "Match model to task for cost savings — revisit when Hermes adds channel routing",
       "Weekly bookmark inbox channel that auto-enriches links — inspired our Resources system"
     ],
-    "added": "2026-04-03"
+    "added": "2026-04-03",
+    "subject": "AI",
+    "tags": [
+      "Technology"
+    ],
+    "source_language": "en"
   },
   {
     "id": "2",
@@ -29,7 +34,13 @@
     "takeaways": [
       "Not relevant — Codex CLI only, we use Claude Code + Hermes"
     ],
-    "added": "2026-04-03"
+    "added": "2026-04-03",
+    "subject": "AI",
+    "tags": [
+      "Technology",
+      "Reference"
+    ],
+    "source_language": "en"
   },
   {
     "id": "3",
@@ -47,7 +58,13 @@
       "Frustration detection with tiered response — DONE: added to behavior.md",
       "Semantic memory merging catches contradictions — DONE: nightly cron now checks for contradictions"
     ],
-    "added": "2026-04-03"
+    "added": "2026-04-03",
+    "subject": "AI",
+    "tags": [
+      "Technology",
+      "Reference"
+    ],
+    "source_language": "en"
   },
   {
     "id": "4",
@@ -65,7 +82,12 @@
       "Agent type system (explore/plan/verify/guide) with constrained tools — interesting for future multi-agent work",
       "Released a skill to evaluate agentic harnesses — TODO: could run against our Hermes setup for fun"
     ],
-    "added": "2026-04-03"
+    "added": "2026-04-03",
+    "subject": "AI",
+    "tags": [
+      "Technology"
+    ],
+    "source_language": "en"
   },
   {
     "id": "5",
@@ -82,7 +104,13 @@
       "Auto-gitignored — won't bloat your repo",
       "Could be useful for our web dev work when using newer framework features"
     ],
-    "added": "2026-04-04"
+    "added": "2026-04-04",
+    "subject": "Technology",
+    "tags": [
+      "AI",
+      "Reference"
+    ],
+    "source_language": "en"
   },
   {
     "id": "6",
@@ -98,7 +126,12 @@
       "Mid-tones are still a weak spot for the WCAG 2 algorithm",
       "No JS or Sass hacks needed anymore"
     ],
-    "added": "2026-04-07"
+    "added": "2026-04-07",
+    "subject": "Accessibility",
+    "tags": [
+      "Technology"
+    ],
+    "source_language": "en"
   },
   {
     "id": "7",
@@ -114,7 +147,12 @@
       "Style queries not in Firefox yet but are Interop 2026 — landing soon",
       "Always validate tinted colors with WCAG or APCA checker"
     ],
-    "added": "2026-04-07"
+    "added": "2026-04-07",
+    "subject": "Accessibility",
+    "tags": [
+      "Technology"
+    ],
+    "source_language": "en"
   },
   {
     "id": "8",
@@ -130,7 +168,12 @@
       "Same branch cannot be checked out in two worktrees simultaneously",
       "Useful for reviewing PRs, hotfixes, or running parallel AI agents on the same repo"
     ],
-    "added": "2026-04-07"
+    "added": "2026-04-07",
+    "subject": "Technology",
+    "tags": [
+      "Reference"
+    ],
+    "source_language": "en"
   },
   {
     "id": "9",
@@ -147,26 +190,41 @@
       "Results stored as flat files — no UI needed for a minimal system",
       "Load handling via multiple test runner instances in parallel"
     ],
-    "added": "2026-04-08"
+    "added": "2026-04-08",
+    "subject": "Technology",
+    "tags": [
+      "Reference"
+    ],
+    "source_language": "en"
   },
   {
     "id": "10",
-    "title": "יסודות הכלכלה — מבוא לתומס סואל",
+    "title": "Basic Economics — An Introduction to Thomas Sowell",
     "url": "https://www.youtube.com/watch?v=W59aEnn4smI",
     "type": "video",
     "category": "blog-material",
-    "status": "processed",
-    "note": "שיעור מבוא בעברית המבוסס על Basic Economics של תומס סואל. הוא מציג כלכלה כחקר הבחירות תחת מחסור, ומדגיש תמריצים, עלויות חלופיות והערכת מדיניות לפי תוצאותיה ולא לפי כוונותיה. זהו פירוש ליברלי־שוק של הספר, לא סקירה ניטרלית של הקונצנזוס הכלכלי.",
+    "status": "Processed",
+    "note": "An English-first summary of a Hebrew introductory lesson based on Thomas Sowell’s Basic Economics. It presents economics as the study of choices under scarcity and emphasizes incentives, opportunity costs, and judging policy by results rather than intentions. This is a market-liberal interpretation of the book, not a neutral survey of economic consensus.",
     "takeaways": [
-      "כלכלה אינה רק כסף, בנקים או בורסה; היא עוסקת בהקצאת משאבים מוגבלים שיש להם שימושים חלופיים.",
-      "כל בחירה כרוכה בוויתור: זמן, כסף, תשומת לב ואנרגיה שמוקדשים לדבר אחד אינם זמינים לדבר אחר.",
-      "כדי להעריך מדיניות צריך לבדוק את התמריצים שהיא יוצרת ואת התוצאות בפועל, לא רק את הכוונות שהובילו אליה.",
-      "אנשים מגיבים לעלויות ולתגמולים. מערכות שמתעלמות מכך עלולות לייצר תוצאות הפוכות מהמטרה המוצהרת.",
-      "מחסור הוא מצב קבוע גם בחברות עשירות; שפע יחסי אינו מבטל את הצורך לבחור ולתעדף.",
-      "הדוגמה של מילטון פרידמן: אחריות וזהירות פוחתות כשאדם מוציא כסף של אחרים על אנשים אחרים — בסיס לביקורת על הוצאות ממשלתיות.",
-      "הסרטון מציג עמדה אידיאולוגית פרו־שוק. לבלוג עתידי כדאי להשוות את טענותיו גם לכלכלנים ממסורות אחרות.",
-      "זווית אפשרית לבלוג: למה כוונות טובות אינן מספיקות — כיצד תמריצים ותוצאות לא צפויות מעצבים מדיניות ומוצרים."
+      "Economics is not only about money, banks, or markets; it studies how limited resources with alternative uses are allocated.",
+      "Every choice has an opportunity cost: time, money, attention, and energy used for one thing cannot be used for another.",
+      "To evaluate policy, examine the incentives it creates and its actual results, not only the intentions behind it.",
+      "People respond to costs and rewards, so systems that ignore incentives can produce outcomes opposite to their stated goal.",
+      "Scarcity remains even in wealthy societies; relative abundance does not remove the need to choose and prioritize.",
+      "The lesson uses Milton Friedman’s example to argue that care and accountability may fall when people spend others’ money on others.",
+      "The video presents a pro-market ideological position. A future blog post should compare its claims with economists from other traditions.",
+      "Blog angle: why good intentions are not enough—and how incentives and unintended consequences shape policies and products."
     ],
-    "added": "2026-08-23"
+    "added": "2026-08-23",
+    "subject": "Economics",
+    "tags": [
+      "Blog material",
+      "Children"
+    ],
+    "source_language": "he",
+    "source_title": "יסודות הכלכלה — מבוא לתומס סואל",
+    "bias_note": "The video presents a pro-market interpretation of Thomas Sowell’s work, not a neutral survey of economic consensus.",
+    "blog_angle": "Why good intentions are not enough—and how incentives and unintended consequences shape policies and products.",
+    "takeaway": "Economic rules shape everyday choices, so judging incentives and real outcomes helps people evaluate policies more carefully."
   }
 ]

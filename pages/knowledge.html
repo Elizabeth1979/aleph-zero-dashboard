@@ -12,207 +12,165 @@
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <link rel="stylesheet" href="shared.css">
 <style>
-/* --- Reports card grid + modal --- */
-.section-label {
-  font-size: 1.1em;
-  font-weight: 600;
-  color: var(--text, #e2e8f0);
-  opacity: 0.7;
-  margin: 28px 0 12px;
-  letter-spacing: 0.02em;
+.skip-link {
+  position: fixed;
+  inset-block-start: .5rem;
+  inset-inline-start: .5rem;
+  padding: .75rem 1rem;
+  background: var(--accent);
+  color: var(--bg);
+  border-radius: var(--r1);
+  transform: translateY(-150%);
 }
-.section-label:first-child { margin-top: 0; }
+.skip-link:focus { transform: translateY(0); }
+.back-link, .filter-button, .modal-close, .source-link { min-height: 44px; }
 
+.filter-section { margin-block-end: var(--s4); }
+.filter-label {
+  margin-block-end: var(--s2);
+  color: var(--text-2);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+.filter-bar { display: flex; flex-wrap: wrap; gap: var(--s2); }
+.filter-button {
+  padding: .55rem .8rem;
+  color: var(--text-2);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--pill);
+  font: inherit;
+  cursor: pointer;
+}
+.filter-button[aria-pressed="true"] {
+  color: var(--bg);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.filter-button:hover { border-color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.library-summary {
+  margin-block: var(--s5) var(--s3);
+  color: var(--text-2);
+  font-size: var(--fs-sm);
+}
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-bottom: 8px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s4);
 }
-@media (max-width: 960px) { .card-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 600px) { .card-grid { grid-template-columns: 1fr; } }
-
 .report-card {
-  background: var(--card-bg, #1e293b);
-  border: 1px solid var(--border, #334155);
-  border-radius: 12px;
-  height: 220px;
+  width: 100%;
+  min-height: 220px;
+  padding: 0;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
+  text-align: start;
+  color: inherit;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  font: inherit;
   cursor: pointer;
-  overflow: hidden;
-  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
-  position: relative;
+  transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease;
 }
 .report-card:hover {
   transform: translateY(-2px);
-  border-color: var(--accent, #818cf8);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  border-color: var(--accent);
+  box-shadow: 0 4px 16px rgba(0,0,0,.25);
 }
-
-.card-accent {
-  height: 4px;
-  flex-shrink: 0;
-}
-.card-accent.research { background: #14b8a6; }
-.card-accent.resource { background: #14b8a6; }
-
-.card-body {
-  padding: 14px 16px 12px;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-height: 0;
-}
-
-.card-icon-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 8px;
-}
-.card-icon-row i { color: var(--text-muted, #94a3b8); }
-
+.card-accent { height: 4px; flex-shrink: 0; background: #14b8a6; }
+.card-body { padding: var(--s4); display: flex; flex-direction: column; flex: 1; }
+.card-meta { display: flex; flex-wrap: wrap; gap: var(--s2); margin-block-end: var(--s3); }
 .type-badge {
-  font-size: 0.72em;
+  padding: .2rem .55rem;
+  border-radius: var(--pill);
+  color: #14b8a6;
+  background: rgba(20,184,166,.15);
+  font-size: var(--fs-xs);
   font-weight: 600;
-  padding: 2px 9px;
-  border-radius: 8px;
-  letter-spacing: 0.02em;
 }
-.type-badge.research { background: rgba(20,184,166,0.15); color: #14b8a6; }
-.type-badge.resource { background: rgba(20,184,166,0.15); color: #14b8a6; }
-
-.card-title {
-  font-weight: 700;
-  font-size: 0.97em;
-  color: var(--text, #e2e8f0);
-  line-height: 1.35;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  margin-bottom: 2px;
-}
-.resource-link {
-  color: inherit;
-  text-decoration: none;
-}
-.report-card:hover .resource-link {
-  text-decoration: underline;
-}
-
-.card-date {
-  font-size: 0.78em;
-  color: var(--text-muted, #94a3b8);
-  margin-bottom: 6px;
-}
-
+.status-badge { color: var(--text-2); background: var(--bg-inset); }
+.card-title { color: var(--text); font-size: 1rem; font-weight: 700; line-height: 1.35; }
+.card-date { margin-block: .25rem .5rem; color: var(--text-3); font-size: var(--fs-xs); }
 .card-preview {
-  font-size: 0.84em;
-  color: var(--text-muted, #94a3b8);
-  line-height: 1.4;
+  color: var(--text-2);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  flex: 1;
-  min-height: 0;
 }
+.empty { padding: var(--s6); text-align: center; color: var(--text-3); }
 
-.card-pills {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  margin-top: auto;
-  padding-top: 6px;
-}
-.card-pills span {
-  font-size: 0.75em;
-  font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 8px;
-}
-.pill-critical { background: rgba(239,68,68,0.15); color: #ef4444; }
-.pill-medium  { background: rgba(245,158,11,0.15); color: #f59e0b; }
-.pill-low     { background: rgba(34,197,94,0.15);  color: #22c55e; }
-
-/* --- Modal --- */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.7);
-  z-index: 9000;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  padding: var(--s3);
+  overflow-y: auto;
+  background: rgba(0,0,0,.7);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.2s ease;
+  transition: opacity .2s ease;
 }
-.modal-overlay.open {
-  opacity: 1;
-  pointer-events: auto;
-}
-
+.modal-overlay[hidden] { display: none; }
+.modal-overlay.open { opacity: 1; pointer-events: auto; }
 .modal-box {
-  background: var(--card-bg, #1e293b);
-  border: 1px solid var(--border, #334155);
-  border-radius: 14px;
-  width: 92vw;
-  max-width: 800px;
-  max-height: 85vh;
-  display: flex;
-  flex-direction: column;
-  transform: scale(0.95);
-  transition: transform 0.2s ease;
-  overflow: hidden;
+  width: min(800px, 92vw);
+  margin-block: auto;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r3);
+  transform: scale(.96);
+  transition: transform .2s ease;
 }
 .modal-overlay.open .modal-box { transform: scale(1); }
-
 .modal-header {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  padding: 20px 24px 14px;
-  border-bottom: 1px solid var(--border, #334155);
-  flex-shrink: 0;
+  gap: var(--s3);
+  padding: var(--s5);
+  border-bottom: 1px solid var(--border);
 }
 .modal-header-info { flex: 1; min-width: 0; }
-.modal-header-title {
-  font-size: 1.15em;
-  font-weight: 700;
-  color: var(--text, #e2e8f0);
-  margin-bottom: 4px;
-  word-break: break-word;
-}
-.modal-header-meta {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 0.82em;
-  color: var(--text-muted, #94a3b8);
-}
+.modal-header-title { color: var(--text); font-size: 1.15rem; font-weight: 700; }
+.modal-header-meta { display: flex; flex-wrap: wrap; gap: var(--s2); margin-block-start: var(--s2); color: var(--text-3); font-size: var(--fs-xs); }
 .modal-close {
-  background: none;
-  border: none;
-  color: var(--text-muted, #94a3b8);
+  min-width: 44px;
+  padding: .5rem;
+  color: var(--text-2);
+  background: transparent;
+  border: 0;
+  border-radius: var(--r1);
   cursor: pointer;
-  padding: 4px;
-  border-radius: 6px;
-  flex-shrink: 0;
-  transition: color 0.15s;
 }
-.modal-close:hover { color: var(--text, #e2e8f0); }
+.modal-body { padding: var(--s5); color: var(--text); line-height: 1.65; }
+.detail-section + .detail-section { margin-block-start: var(--s5); }
+.detail-section h2 { margin-block-end: var(--s2); color: var(--accent); font-size: 1rem; }
+.detail-section ul { padding-inline-start: 1.25rem; }
+.source-links { display: flex; flex-wrap: wrap; gap: var(--s2); }
+.source-link {
+  display: inline-flex;
+  align-items: center;
+  padding: .5rem .75rem;
+  color: var(--accent);
+  border: 1px solid var(--border);
+  border-radius: var(--r1);
+}
 
-.modal-body {
-  padding: 20px 24px 24px;
-  overflow-y: auto;
-  flex: 1;
-  min-height: 0;
-  color: var(--text, #e2e8f0);
-  font-size: 0.95em;
-  line-height: 1.65;
+@media (max-width: 960px) { .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) {
+  .page-wrap { padding: var(--s4) var(--s3); }
+  .card-grid { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none; transition: none; }
 }
 </style>
 <link rel="manifest" href="../manifest.webmanifest">
@@ -220,32 +178,60 @@
 <link rel="apple-touch-icon" href="../icons/icon-192.png">
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to knowledge</a>
 <div class="page-wrap">
-  <div class="page-header">
+  <header class="page-header">
     <a href="../index.html" class="back-link">
-      <i data-lucide="arrow-left" style="width:16px;height:16px"></i> Dashboard
+      <i data-lucide="arrow-left" aria-hidden="true" style="width:16px;height:16px"></i> Dashboard
     </a>
-    <h1 class="page-title"><i data-lucide="library"></i> Knowledge</h1>
-  </div>
-  <div id="page-body"></div>
+    <h1 class="page-title"><i data-lucide="library" aria-hidden="true"></i> Knowledge</h1>
+  </header>
+  <main id="main-content">
+    <section class="filter-section" aria-labelledby="subject-filter-label">
+      <h2 class="filter-label" id="subject-filter-label">Subject</h2>
+      <div class="filter-bar" id="subject-filters">
+        <button type="button" class="filter-button" data-subject="All" aria-pressed="true">All</button>
+        <button type="button" class="filter-button" data-subject="Economics" aria-pressed="false">Economics</button>
+        <button type="button" class="filter-button" data-subject="History" aria-pressed="false">History</button>
+        <button type="button" class="filter-button" data-subject="Self-Improvement" aria-pressed="false">Self-Improvement</button>
+        <button type="button" class="filter-button" data-subject="AI" aria-pressed="false">AI</button>
+        <button type="button" class="filter-button" data-subject="Intelligence &amp; Security" aria-pressed="false">Intelligence &amp; Security</button>
+        <button type="button" class="filter-button" data-subject="Politics" aria-pressed="false">Politics</button>
+        <button type="button" class="filter-button" data-subject="Neuroscience" aria-pressed="false">Neuroscience</button>
+        <button type="button" class="filter-button" data-subject="Accessibility" aria-pressed="false">Accessibility</button>
+        <button type="button" class="filter-button" data-subject="Technology" aria-pressed="false">Technology</button>
+        <button type="button" class="filter-button" data-subject="Uncategorized" aria-pressed="false">Uncategorized</button>
+      </div>
+    </section>
+    <section class="filter-section" aria-labelledby="view-filter-label">
+      <h2 class="filter-label" id="view-filter-label">View</h2>
+      <div class="filter-bar" id="view-filters">
+        <button type="button" class="filter-button" data-view="All" aria-pressed="true">All</button>
+        <button type="button" class="filter-button" data-view="Blog material" aria-pressed="false">Blog material</button>
+        <button type="button" class="filter-button" data-view="To explore" aria-pressed="false">To explore</button>
+      </div>
+    </section>
+    <p class="library-summary" id="library-summary" aria-live="polite"></p>
+    <div class="card-grid" id="knowledge-grid"></div>
+  </main>
 </div>
 
-<!-- Modal overlay -->
-<div class="modal-overlay" id="report-modal">
-  <div class="modal-box">
+<div class="modal-overlay" id="report-modal" aria-hidden="true" hidden>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-title">
     <div class="modal-header">
       <div class="modal-header-info">
         <div class="modal-header-title" id="modal-title"></div>
         <div class="modal-header-meta">
+          <span id="modal-subject"></span>
+          <span id="modal-status"></span>
           <span id="modal-date"></span>
-          <span class="type-badge" id="modal-badge"></span>
         </div>
       </div>
-      <button class="modal-close" id="modal-close-btn" aria-label="Close">
-        <i data-lucide="x" style="width:20px;height:20px"></i>
+      <button type="button" class="modal-close" id="modal-close-btn" aria-label="Close details">
+        <i data-lucide="x" aria-hidden="true" style="width:20px;height:20px"></i>
       </button>
     </div>
-    <div class="modal-body rendered-md" id="modal-body"></div>
+    <div class="modal-body" id="modal-body"></div>
   </div>
 </div>
 
@@ -253,6 +239,12 @@
 <script src="../data.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+  const APPROVED_SUBJECTS = ['Economics', 'History', 'Self-Improvement', 'AI', 'Intelligence & Security', 'Politics', 'Neuroscience', 'Accessibility', 'Technology', 'Uncategorized'];
+  const d = window.__DASHBOARD_DATA__ || {};
+  const reports = (d.reports || []).filter(report => report.type === 'research');
+  const resources = (d.resources || []).filter(resource => resource.title);
+  const project001 = (d.project_001_insights || []).filter(insight => insight.title);
+
   function stripMd(text) {
     return (text || '')
       .replace(/\*\*(.+?)\*\*/g, '$1')
@@ -263,145 +255,209 @@ document.addEventListener('DOMContentLoaded', () => {
       .trim();
   }
 
-  const d = window.__DASHBOARD_DATA__ || {};
-  const reports = d.reports || [];
-  const resources = d.resources || [];
-  const visibleResources = resources.filter(r => r.title);
-  const el = document.getElementById('page-body');
-
-  if (!reports.length && !visibleResources.length) {
-    el.innerHTML = '<div class="empty">No knowledge saved yet</div>';
-    if (typeof lucide !== 'undefined') lucide.createIcons();
-    return;
+  function inferReportSubject(report) {
+    const text = `${report.title || ''} ${report.file || ''} ${report.preview || ''}`.toLowerCase();
+    if (/accessib|a11y|wcag|screen reader/.test(text)) return 'Accessibility';
+    if (/artificial intelligence|\bai\b|agent|model|llm/.test(text)) return 'AI';
+    if (/neuroscience|brain|cognitive/.test(text)) return 'Neuroscience';
+    if (/security|intelligence|osint|surveillance/.test(text)) return 'Intelligence & Security';
+    if (/econom/.test(text)) return 'Economics';
+    if (/histor/.test(text)) return 'History';
+    if (/politic|government|election/.test(text)) return 'Politics';
+    if (/technolog|software|web|css|code/.test(text)) return 'Technology';
+    return 'Uncategorized';
   }
 
-  const research = reports.filter(r => r.type === 'research');
-
-  function buildCard(r, idx) {
-    const accentCls = 'research';
-    const icon = 'book-open';
-    const badgeLabel = 'Research';
-
-    return '<div class="report-card" data-idx="' + idx + '">'
-      + '<div class="card-accent ' + accentCls + '"></div>'
-      + '<div class="card-body">'
-      + '  <div class="card-icon-row">'
-      + '    <i data-lucide="' + icon + '" style="width:22px;height:22px"></i>'
-      + '    <span class="type-badge ' + accentCls + '">' + badgeLabel + '</span>'
-      + '  </div>'
-      + '  <div class="card-title">' + esc(r.title) + '</div>'
-      + '  <div class="card-date">' + esc(r.date) + '</div>'
-      + '  <div class="card-preview">' + esc(stripMd(r.preview || '')) + '</div>'
-      + '</div></div>';
+  function approvedSubject(subject) {
+    return APPROVED_SUBJECTS.includes(subject) ? subject : 'Uncategorized';
   }
 
-  let html = '';
-  if (research.length) {
-    html += '<div class="section-label">Research</div>';
-    html += '<div class="card-grid">';
-    research.forEach(r => { html += buildCard(r, reports.indexOf(r)); });
-    html += '</div>';
-  }
-  if (visibleResources.length) {
-    const catMeta = { css: { icon: 'code', label: 'CSS' } };
-    html += '<div class="section-label">Resources</div>';
-    html += '<div class="card-grid">';
-    resources.forEach((r, i) => {
-      if (!r.title) return;
-      const titleHtml = r.url
-        ? '<a href="' + esc(r.url) + '" target="_blank" rel="noopener" class="resource-link" onclick="event.stopPropagation()">' + esc(r.title) + '</a>'
-        : esc(r.title);
-      html += '<div class="report-card" data-res-idx="' + i + '">'
-        + '<div class="card-accent resource"></div>'
-        + '<div class="card-body">'
-        + '  <div class="card-icon-row">'
-        + '    <i data-lucide="' + (r.type === 'video' ? 'play-circle' : 'link') + '" style="width:22px;height:22px"></i>'
-        + (r.status ? '    <span class="type-badge resource">' + esc(r.status) + '</span>' : '')
-        + '  </div>'
-        + '  <div class="card-title">' + titleHtml + '</div>'
-        + '  <div class="card-date">' + esc(r.added || '') + '</div>'
-        + '  <div class="card-preview">' + esc(r.note || '') + '</div>'
-        + '</div></div>';
-    });
-    html += '</div>';
-  }
-  el.innerHTML = html;
-  if (typeof lucide !== 'undefined') lucide.createIcons();
+  const items = [
+    ...resources.map(resource => ({
+      sourceId: `resource:${resource.id}`,
+      title: resource.title,
+      subject: approvedSubject(resource.subject),
+      tags: Array.isArray(resource.tags) ? resource.tags : [],
+      status: resource.status || 'New',
+      date: resource.added || '',
+      summary: resource.note || '',
+      keyPoints: resource.takeaways || [],
+      takeaway: resource.takeaway || '',
+      sourceText: resource.source_title || resource.source || '',
+      links: resource.url ? [{ label: 'Open source', url: resource.url }] : [],
+      sourceLanguage: resource.source_language || 'en',
+      biasNote: resource.bias_note || '',
+      blogAngle: resource.blog_angle || '',
+      content: '',
+    })),
+    ...reports.map(report => ({
+      sourceId: `report:${report.file}`,
+      title: report.title || report.file,
+      subject: approvedSubject(report.subject || inferReportSubject(report)),
+      tags: Array.isArray(report.tags) ? report.tags : [],
+      status: report.status || 'Processed',
+      date: report.date || '',
+      summary: stripMd(report.preview || ''),
+      keyPoints: [],
+      takeaway: report.takeaway || '',
+      sourceText: report.file || '',
+      links: Array.isArray(report.links) ? report.links : [],
+      sourceLanguage: report.source_language || 'en',
+      biasNote: report.bias_note || '',
+      blogAngle: report.blog_angle || '',
+      content: report.content || '',
+    })),
+    ...project001.map(insight => ({
+      sourceId: `project-001:${insight.id}`,
+      title: insight.title,
+      subject: approvedSubject(insight.subject),
+      tags: Array.isArray(insight.tags) ? insight.tags : [],
+      status: insight.status || 'Processed',
+      date: insight.date || '',
+      summary: insight.summary || '',
+      keyPoints: insight.points || [],
+      takeaway: insight.takeaway || '',
+      sourceText: insight.source || '',
+      links: insight.links || [],
+      sourceLanguage: insight.source_language || 'en',
+      biasNote: insight.bias_note || '',
+      blogAngle: insight.blog_angle || '',
+      content: '',
+    })),
+  ];
+  const itemsBySourceId = new Map(items.map(item => [item.sourceId, item]));
+  let selectedSubject = 'All';
+  let selectedView = 'All';
+  let lastFocused = null;
 
-  // --- Modal logic ---
-  const overlay = document.getElementById('report-modal');
-  const modalTitle = document.getElementById('modal-title');
-  const modalDate = document.getElementById('modal-date');
-  const modalBadge = document.getElementById('modal-badge');
-  const modalBody = document.getElementById('modal-body');
-  const closeBtn = document.getElementById('modal-close-btn');
+  const grid = document.querySelector('#knowledge-grid');
+  const summary = document.querySelector('#library-summary');
+  const overlay = document.querySelector('#report-modal');
+  const modalTitle = document.querySelector('#modal-title');
+  const modalSubject = document.querySelector('#modal-subject');
+  const modalStatus = document.querySelector('#modal-status');
+  const modalDate = document.querySelector('#modal-date');
+  const modalBody = document.querySelector('#modal-body');
+  const closeButton = document.querySelector('#modal-close-btn');
 
-  function openModal(r) {
-    modalTitle.textContent = r.title;
-    modalDate.textContent = r.date;
-    modalBadge.textContent = 'Research';
-    modalBadge.className = 'type-badge research';
-    modalBody.innerHTML = renderMd(r.content);
+  function matchesView(item) {
+    if (selectedView === 'All') return true;
+    if (selectedView === 'Blog material') return item.tags.includes('Blog material');
+    return item.status.toLowerCase() === 'to explore';
+  }
+
+  function renderCards() {
+    const visible = items.filter(item =>
+      (selectedSubject === 'All' || item.subject === selectedSubject) && matchesView(item)
+    );
+    summary.textContent = `${visible.length} ${visible.length === 1 ? 'item' : 'items'} shown`;
+    if (!visible.length) {
+      grid.innerHTML = '<div class="empty">No knowledge matches these filters</div>';
+      return;
+    }
+    grid.innerHTML = visible.map(item => `
+      <button type="button" class="report-card" data-source-id="${esc(item.sourceId)}" aria-label="Open ${esc(item.title)}">
+        <span class="card-accent"></span>
+        <span class="card-body">
+          <span class="card-meta">
+            <span class="type-badge">${esc(item.subject)}</span>
+            <span class="type-badge status-badge">${esc(item.status)}</span>
+          </span>
+          <span class="card-title">${esc(item.title)}</span>
+          <span class="card-date">${esc(item.date)}</span>
+          <span class="card-preview">${esc(item.summary)}</span>
+        </span>
+      </button>
+    `).join('');
+  }
+
+  function detailSection(title, content) {
+    if (!content) return '';
+    return `<section class="detail-section"><h2>${esc(title)}</h2>${content}</section>`;
+  }
+
+  function openModal(item, trigger) {
+    lastFocused = trigger;
+    modalTitle.textContent = item.title;
+    modalSubject.textContent = item.subject;
+    modalStatus.textContent = item.status;
+    modalDate.textContent = item.date;
+
+    const summaryHtml = item.content ? renderMd(item.content) : `<p>${esc(item.summary)}</p>`;
+    const pointsHtml = item.keyPoints.length
+      ? `<ul>${item.keyPoints.map(point => `<li>${esc(point)}</li>`).join('')}</ul>`
+      : '<p>No separate key points recorded.</p>';
+    const linksHtml = item.links.length
+      ? `<div class="source-links">${item.links.map(link => `<a class="source-link" href="${esc(link.url)}" target="_blank" rel="noopener noreferrer">${esc(link.label || link.url)}</a>`).join('')}</div>`
+      : '<p>No external link recorded.</p>';
+    const sourceMeta = item.sourceText
+      ? `<p>${esc(item.sourceText)}</p><p>Source language: ${esc(item.sourceLanguage)}</p>`
+      : `<p>Source language: ${esc(item.sourceLanguage)}</p>`;
+
+    modalBody.innerHTML = [
+      detailSection('Summary', summaryHtml),
+      detailSection('Key points', pointsHtml),
+      detailSection('Why it matters / takeaway', `<p>${esc(item.takeaway || 'No separate takeaway recorded.')}</p>`),
+      detailSection('Sources', sourceMeta + linksHtml),
+      detailSection('Bias / reliability note', `<p>${esc(item.biasNote || 'No separate bias or reliability note recorded.')}</p>`),
+      detailSection('Blog / story angle', `<p>${esc(item.blogAngle || 'No separate blog or story angle recorded.')}</p>`),
+    ].join('');
+    overlay.removeAttribute('hidden');
     overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    closeButton.focus();
   }
 
   function closeModal() {
     overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden', 'true');
+    overlay.setAttribute('hidden', '');
     document.body.style.overflow = '';
+    if (lastFocused) lastFocused.focus();
   }
 
-  // Card clicks
-  el.addEventListener('click', (e) => {
-    const card = e.target.closest('.report-card');
+  function setupFilterBar(selector, dataKey, onSelect) {
+    const bar = document.querySelector(selector);
+    bar.addEventListener('click', event => {
+      const button = event.target.closest(`button[${dataKey}]`);
+      if (!button) return;
+      bar.querySelectorAll('button').forEach(candidate => candidate.setAttribute('aria-pressed', String(candidate === button)));
+      onSelect(button.getAttribute(dataKey));
+      renderCards();
+    });
+  }
+
+  setupFilterBar('#subject-filters', 'data-subject', value => { selectedSubject = value; });
+  setupFilterBar('#view-filters', 'data-view', value => { selectedView = value; });
+  grid.addEventListener('click', event => {
+    const card = event.target.closest('[data-source-id]');
     if (!card) return;
-    if (card.dataset.resIdx !== undefined) {
-      const ri = parseInt(card.dataset.resIdx, 10);
-      const res = resources[ri];
-      if (res) openResourceModal(res);
-    } else {
-      const idx = parseInt(card.dataset.idx, 10);
-      if (reports[idx]) openModal(reports[idx]);
+    const item = itemsBySourceId.get(card.dataset.sourceId);
+    if (item) openModal(item, card);
+  });
+  closeButton.addEventListener('click', closeModal);
+  overlay.addEventListener('click', event => { if (event.target === overlay) closeModal(); });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+    if (event.key === 'Tab' && overlay.classList.contains('open')) {
+      const focusable = [...overlay.querySelectorAll('button, a[href]')];
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
     }
   });
 
-  // Close handlers
-  closeBtn.addEventListener('click', closeModal);
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) closeModal();
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
-  });
+  renderCards();
+  if (typeof lucide !== 'undefined') lucide.createIcons();
 
-  function openResourceModal(r) {
-    modalTitle.textContent = r.title;
-    modalDate.textContent = r.added || '';
-    modalBadge.textContent = r.status || 'Resource';
-    modalBadge.className = 'type-badge resource';
-    let bodyHtml = '';
-    if (r.url) {
-      bodyHtml += '<p><a href="' + esc(r.url) + '" target="_blank" rel="noopener">' + esc(r.url) + '</a></p>';
-    }
-    if (r.note) {
-      bodyHtml += '<p>' + esc(r.note) + '</p>';
-    }
-    if (r.takeaways && r.takeaways.length) {
-      bodyHtml += '<ul>';
-      r.takeaways.forEach(t => { bodyHtml += '<li>' + esc(t) + '</li>'; });
-      bodyHtml += '</ul>';
-    }
-    modalBody.innerHTML = bodyHtml;
-    overlay.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-
-  // Auto-open modal if ?open=filename in URL
   const params = new URLSearchParams(window.location.search);
   const openFile = params.get('open');
   if (openFile) {
-    const target = reports.find(r => r.file === openFile);
-    if (target) openModal(target);
+    const target = items.find(item => item.sourceId === `report:${openFile}`);
+    if (target) openModal(target, null);
   }
 });
 </script>
