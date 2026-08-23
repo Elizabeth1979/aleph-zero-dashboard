@@ -51,7 +51,7 @@ must('pages/project-001.html' not in index_text,
 APPROVED_SUBJECTS = [
     'Economics', 'History', 'Self-Improvement', 'AI',
     'Intelligence & Security', 'Politics', 'Neuroscience',
-    'Accessibility', 'Technology', 'Uncategorized',
+    'Education', 'Accessibility', 'Technology', 'Uncategorized',
 ]
 for subject in APPROVED_SUBJECTS:
     must(subject in knowledge_page,

@@ -198,6 +198,7 @@
         <button type="button" class="filter-button" data-subject="Intelligence &amp; Security" aria-pressed="false">Intelligence &amp; Security</button>
         <button type="button" class="filter-button" data-subject="Politics" aria-pressed="false">Politics</button>
         <button type="button" class="filter-button" data-subject="Neuroscience" aria-pressed="false">Neuroscience</button>
+        <button type="button" class="filter-button" data-subject="Education" aria-pressed="false">Education</button>
         <button type="button" class="filter-button" data-subject="Accessibility" aria-pressed="false">Accessibility</button>
         <button type="button" class="filter-button" data-subject="Technology" aria-pressed="false">Technology</button>
         <button type="button" class="filter-button" data-subject="Uncategorized" aria-pressed="false">Uncategorized</button>
@@ -239,7 +240,7 @@
 <script src="../data.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const APPROVED_SUBJECTS = ['Economics', 'History', 'Self-Improvement', 'AI', 'Intelligence & Security', 'Politics', 'Neuroscience', 'Accessibility', 'Technology', 'Uncategorized'];
+  const APPROVED_SUBJECTS = ['Economics', 'History', 'Self-Improvement', 'AI', 'Intelligence & Security', 'Politics', 'Neuroscience', 'Education', 'Accessibility', 'Technology', 'Uncategorized'];
   const d = window.__DASHBOARD_DATA__ || {};
   const reports = (d.reports || []).filter(report => report.type === 'research');
   const resources = (d.resources || []).filter(resource => resource.title);
@@ -260,6 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (/accessib|a11y|wcag|screen reader/.test(text)) return 'Accessibility';
     if (/artificial intelligence|\bai\b|agent|model|llm/.test(text)) return 'AI';
     if (/neuroscience|brain|cognitive/.test(text)) return 'Neuroscience';
+    if (/education|school|teaching|learning|student/.test(text)) return 'Education';
     if (/security|intelligence|osint|surveillance/.test(text)) return 'Intelligence & Security';
     if (/econom/.test(text)) return 'Economics';
     if (/histor/.test(text)) return 'History';

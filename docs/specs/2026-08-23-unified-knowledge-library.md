@@ -20,6 +20,7 @@ Every item has exactly one primary subject:
 - Intelligence & Security
 - Politics
 - Neuroscience
+- Education
 - Accessibility
 - Technology
 - Uncategorized
