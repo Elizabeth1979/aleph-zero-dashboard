@@ -175,6 +175,9 @@ TASKS_DATA=$(cat "$DASH/tasks.json" 2>/dev/null || echo "[]")
 # Resources
 RESOURCES_DATA=$(cat "$DASH/resources.json" 2>/dev/null || echo "[]")
 
+# Project 001 insight library
+PROJECT_001_INSIGHTS=$(cat "$DASH/project-001-insights.json" 2>/dev/null || echo "[]")
+
 # Projects
 PROJECTS_DATA=$(cat "$DASH/projects.json" 2>/dev/null || echo "[]")
 
@@ -298,6 +301,7 @@ files = [
   ('tasks.json', 'Dashboard Tasks', 'Task data shown on the dashboard.'),
   ('projects.json', 'Dashboard Projects', 'Project data shown on the dashboard.'),
   ('resources.json', 'Dashboard Resources', 'Saved links and resources shown on the dashboard.'),
+  ('project-001-insights.json', 'Project 001 Insights', 'Structured insight summaries shown on the 001 Insights page.'),
   ('SYSTEM_SETTINGS.md', 'System Settings', 'Machine-level settings used by Hermes.'),
   ('PLAN.md', 'Dashboard Plan', 'Current dashboard plan and purpose.'),
   ('BEST-PRACTICES.md', 'Best Practices', 'Rules and best practices for dashboard code.')
@@ -389,6 +393,7 @@ window.__DASHBOARD_DATA__ = {
   dashboard_files: $DASHBOARD_FILES,
   tasks: $TASKS_DATA,
   resources: $RESOURCES_DATA,
+  project_001_insights: $PROJECT_001_INSIGHTS,
   projects: $PROJECTS_DATA,
   portfolio: $PORTFOLIO_DATA,
   capture_rules: $CAPTURE_RULES,

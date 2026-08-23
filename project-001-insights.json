@@ -1,0 +1,165 @@
+[
+  {
+    "_instructions": "After ANY edit to this file, run: bash ~/.hermes/dashboard/publish.sh"
+  },
+  {
+    "id": "mission-fit",
+    "title": "Judge intelligence agencies by mission",
+    "date": "2026-08-13",
+    "category": "Analysis",
+    "summary": "Universal league tables hide the fact that intelligence services operate under different mandates, risks, and visibility requirements.",
+    "points": [
+      "Start with the agency’s core mission and operating environment.",
+      "Treat public exposure as a question: planned deterrence or damaging disclosure?",
+      "Measure success through mission fit, adaptability, and threat prevention—not publicity."
+    ],
+    "takeaway": "Ask ‘effective for which mission?’ before accepting any ranking.",
+    "source": "Project 001 email: המרגלים הטובים בעולם נחשפים? נו באמת...",
+    "links": []
+  },
+  {
+    "id": "digital-footprint",
+    "title": "Audit your digital footprint",
+    "date": "2026-08-06",
+    "category": "OSINT",
+    "summary": "Old accounts, public posts, breached credentials, and reused usernames combine into a discoverable profile that can affect work and reputation.",
+    "points": [
+      "Review Google My Activity and search your name, usernames, phone number, and email addresses.",
+      "Check breach exposure with Have I Been Pwned.",
+      "Use account-discovery and deletion tools such as Mine, JustDelete.me, and WhatsMyName.",
+      "Delete unused accounts and tighten privacy settings periodically."
+    ],
+    "takeaway": "Run a short personal OSINT audit every few months.",
+    "source": "Project 001 email: נסו בעצמכם ובדקו: איזה מודיעין קיים עליכם?",
+    "links": [
+      {
+        "label": "Google My Activity",
+        "url": "https://myactivity.google.com/"
+      },
+      {
+        "label": "Have I Been Pwned",
+        "url": "https://haveibeenpwned.com/"
+      },
+      {
+        "label": "JustDelete.me",
+        "url": "https://justdelete.me/"
+      },
+      {
+        "label": "WhatsMyName",
+        "url": "https://whatsmyname.app/"
+      }
+    ]
+  },
+  {
+    "id": "decisions",
+    "title": "Make decisions under pressure",
+    "date": "2026-07-30",
+    "category": "Decision-making",
+    "summary": "Operational clarity comes from separating evidence from interpretation, listening without ego, and defining fallback conditions in advance.",
+    "points": [
+      "Write what is known, inferred, and still unknown as separate lists.",
+      "Listen for needs, fears, motives, and omissions instead of preparing the next reply.",
+      "Define an exit condition and fallback plan before entering a risky meeting or project."
+    ],
+    "takeaway": "Facts, active listening, and an exit plan reduce reactive decisions.",
+    "source": "Project 001 email: השיעור שאיש מודיעין מבצעי יכול ללמד אותנו על קבלת החלטות",
+    "links": []
+  },
+  {
+    "id": "security-doctrine",
+    "title": "Israeli security doctrine — Amir Avivi interview",
+    "date": "2026-07-21",
+    "category": "Security",
+    "summary": "The episode argues for greater defense independence and challenges older assumptions about deterrence. These are the guest’s positions, not verified consensus.",
+    "points": [
+      "Conventional deterrence may fail against organizations that glorify death.",
+      "Reliance on foreign munitions can create strategic supply risk.",
+      "Domestic defense production and defensible terrain are presented as core priorities.",
+      "The guest links national security to civic cohesion and historical knowledge."
+    ],
+    "takeaway": "Treat the episode as a strong viewpoint to compare with independent security analysis.",
+    "source": "Project 001 podcast: הצומת with Amir Avivi",
+    "links": [
+      {
+        "label": "YouTube",
+        "url": "https://youtu.be/CUnVXGnOocE"
+      },
+      {
+        "label": "Spotify",
+        "url": "https://open.spotify.com/episode/3RH7MkD1gwF2U9SukAaBly"
+      }
+    ]
+  },
+  {
+    "id": "behavior-patterns",
+    "title": "Recognize behavior under pressure",
+    "date": "2026-07-16",
+    "category": "Behavior",
+    "summary": "The sender distinguishes a changeable method of acting from the deeper motive behind it. Use this as a hypothesis, not a diagnosis.",
+    "points": [
+      "Notice whether pressure makes you attack, withdraw, appease, blame, or freeze.",
+      "Track behavior during difficult moments instead of relying only on promises.",
+      "Interrupt an unhelpful pattern by deliberately choosing a different first response."
+    ],
+    "takeaway": "Observe repeated behavior, but leave room for context and change.",
+    "source": "Project 001 email: הדבר היחיד שלא משתנה אצלכם כשכל העולם קורס",
+    "links": []
+  },
+  {
+    "id": "influence",
+    "title": "Design situations ethically",
+    "date": "2026-07-09",
+    "category": "Communication",
+    "summary": "Context, timing, sequence, and environment shape decisions as much as persuasive wording. The same techniques can support facilitation or become manipulation.",
+    "points": [
+      "Change stale openings to interrupt rehearsed responses.",
+      "Use silence for reflection—not intimidation.",
+      "Sequence difficult topics carefully and make decision rights explicit.",
+      "Avoid confusion or emotional destabilization intended to bypass informed choice."
+    ],
+    "takeaway": "Use situational design to improve clarity, never to remove another person’s agency.",
+    "source": "Project 001 emails: תפסיקו להשפיע על אנשים and חלק ב׳",
+    "links": []
+  },
+  {
+    "id": "intelligence-history",
+    "title": "Persistent patterns in intelligence history",
+    "date": "2026-07-07",
+    "category": "History",
+    "summary": "The podcast traces recurring collection and surveillance patterns from Roman logistics through Venice, French policing, and Russian tracking doctrine.",
+    "points": [
+      "Embedded access and civilian reporting networks predate modern technology.",
+      "Vidocq’s criminal-world knowledge influenced modern French investigation.",
+      "Russian tracking doctrine organized teams around a target from multiple directions.",
+      "The guest argues that AI does not replace observation, improvisation, confidence, or HUMINT."
+    ],
+    "takeaway": "Technology changes the tools faster than it changes the human dynamics of collection.",
+    "source": "Project 001 podcast: הצומת with Ze’ev",
+    "links": [
+      {
+        "label": "YouTube",
+        "url": "https://youtu.be/XneM8CcdoW0"
+      },
+      {
+        "label": "Spotify",
+        "url": "https://open.spotify.com/episode/1ghAOOgxhdTBPWhLqYzLwu"
+      }
+    ]
+  },
+  {
+    "id": "media-verification",
+    "title": "Evaluate emotionally charged media claims",
+    "date": "2026-06-25",
+    "category": "Media literacy",
+    "summary": "The useful part of the email is a verification routine: trace the source, inspect timing, cross-check evidence, and separate facts from framing.",
+    "points": [
+      "Trace the original source rather than stopping at the outlet repeating it.",
+      "Ask why the claim appeared now and which decision or crisis it may affect.",
+      "Compare primary documents, official data, and independent reporting before reacting.",
+      "Ask who benefits, but do not treat that question as proof of conspiracy."
+    ],
+    "takeaway": "Slow down claims designed to create urgency, anger, or fear.",
+    "source": "Project 001 email: איך לשרוד מול שטיפת המוח בתקשורת?",
+    "links": []
+  }
+]

@@ -1,0 +1,291 @@
+<!-- AGENT RULE: Only change what Elli explicitly asks for. No extra improvements, no removing elements, no unsolicited cleanup. Apply changes to ALL instances, not just the first one. -->
+<!-- AGENT: Read BEST-PRACTICES.md before writing HTML/CSS/JS. -->
+<!-- PAGE RULE: Project 001 content is a readable insight library. Keep marketing out, label unverified framing, and keep all useful content visible without nested scrolling. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>001 Insights — Hermes</title>
+<link rel="stylesheet" href="../theme.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<link rel="stylesheet" href="shared.css">
+<link rel="stylesheet" href="../a11y-widget.css">
+<link rel="stylesheet" href="../a11y-tester.css">
+<style>
+  .skip-link {
+    position: fixed;
+    inset-block-start: 0.5rem;
+    inset-inline-start: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: var(--accent);
+    color: var(--bg);
+    border-radius: var(--r1);
+    transform: translateY(-150%);
+  }
+  .skip-link:focus { transform: translateY(0); }
+  .back-link { min-height: 44px; }
+
+  .intro {
+    display: grid;
+    gap: var(--s3);
+    padding: clamp(1rem, 4vw, 1.5rem);
+    margin-bottom: var(--s5);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-inline-start: 3px solid var(--accent);
+    border-radius: var(--r2);
+  }
+  .intro-title {
+    font-size: clamp(1.05rem, 4vw, 1.3rem);
+    font-weight: 600;
+    color: var(--text);
+  }
+  .intro-copy { color: var(--text-2); line-height: 1.65; }
+  .intro-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s2);
+    font-family: var(--mono);
+    font-size: var(--fs-xs);
+    color: var(--accent-dim);
+  }
+
+  .topic-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s2);
+    margin-bottom: var(--s6);
+  }
+  .topic-nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.55rem 0.8rem;
+    color: var(--text-2);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--pill);
+    text-decoration: none;
+    font-size: var(--fs-sm);
+  }
+  .topic-nav a:hover,
+  .topic-nav a:focus-visible {
+    color: var(--accent);
+    border-color: var(--border-hover);
+  }
+
+  .insights-list { display: grid; gap: var(--s5); }
+  .insight {
+    min-width: 0;
+    padding: clamp(1rem, 4vw, 1.6rem);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--r2);
+    scroll-margin-top: var(--s5);
+  }
+  .insight-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--s3);
+    margin-bottom: var(--s3);
+  }
+  .insight-title {
+    font-size: clamp(1.05rem, 4vw, 1.3rem);
+    line-height: 1.35;
+    color: var(--text);
+  }
+  .category {
+    flex-shrink: 0;
+    padding: 0.3rem 0.55rem;
+    background: var(--accent-muted);
+    border-radius: var(--pill);
+    color: var(--accent);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+  }
+  .summary {
+    margin-bottom: var(--s4);
+    color: var(--text-2);
+    font-size: var(--fs-base);
+    line-height: 1.7;
+  }
+  .points {
+    display: grid;
+    gap: var(--s2);
+    padding-inline-start: 1.25rem;
+    margin-bottom: var(--s4);
+    color: var(--text);
+  }
+  .points li { padding-inline-start: 0.2rem; line-height: 1.6; }
+  .takeaway {
+    padding: var(--s3) var(--s4);
+    background: var(--bg-inset);
+    border-inline-start: 2px solid var(--accent-dim);
+    border-radius: var(--r1);
+    color: var(--text-2);
+    line-height: 1.6;
+  }
+  .takeaway strong { color: var(--accent); }
+  .source {
+    margin-top: var(--s4);
+    padding-top: var(--s3);
+    border-top: 1px solid var(--border);
+    color: var(--text-3);
+    font-size: var(--fs-xs);
+    overflow-wrap: anywhere;
+  }
+  .source-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s2);
+    margin-top: var(--s3);
+  }
+  .source-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.5rem 0.75rem;
+    color: var(--accent);
+    border: 1px solid var(--border);
+    border-radius: var(--r1);
+    text-decoration: none;
+  }
+  .source-links a:hover,
+  .source-links a:focus-visible { border-color: var(--accent); }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 600px) {
+    .page-wrap { padding: var(--s4) var(--s3); }
+    .page-header { align-items: flex-start; flex-direction: column; gap: var(--s3); }
+    .insight-head { display: grid; }
+    .category { justify-self: start; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { scroll-behavior: auto; animation: none; transition: none; }
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to insights</a>
+<div class="page-wrap">
+  <header class="page-header">
+    <a href="../index.html" class="back-link">
+      <i data-lucide="arrow-left" aria-hidden="true" style="width:16px;height:16px"></i> Dashboard
+    </a>
+    <h1 class="page-title"><i data-lucide="scan-search" aria-hidden="true"></i> 001 Insights</h1>
+  </header>
+
+  <main class="page-body" id="main-content">
+    <section class="intro" aria-labelledby="intro-title">
+      <h2 class="intro-title" id="intro-title">Useful ideas without the marketing</h2>
+      <p class="intro-copy">Condensed notes from Project 001 emails. Political, historical, psychological, and security claims are shown as the sender’s framing unless independently verified.</p>
+      <div class="intro-meta" id="intro-meta" aria-live="polite"></div>
+    </section>
+
+    <nav class="topic-nav" id="topic-nav" aria-label="Insight topics"></nav>
+    <section class="insights-list" id="insights-list" aria-label="Project 001 insights"></section>
+  </main>
+
+  <footer class="page-footer">built with ❤️ by e11i</footer>
+</div>
+
+<script src="utils.js"></script>
+<script src="../data.js"></script>
+<script src="../a11y-widget.js"></script>
+<script src="../a11y-tester.js"></script>
+<script>
+function appendText(parent, tag, className, text) {
+  const element = document.createElement(tag);
+  if (className) element.className = className;
+  element.textContent = text;
+  parent.appendChild(element);
+  return element;
+}
+
+function renderInsight(item) {
+  const article = document.createElement('article');
+  article.className = 'insight';
+  article.id = item.id;
+  article.setAttribute('aria-labelledby', `${item.id}-title`);
+
+  const head = document.createElement('div');
+  head.className = 'insight-head';
+  const title = appendText(head, 'h2', 'insight-title', item.title);
+  title.id = `${item.id}-title`;
+  appendText(head, 'span', 'category', item.category || 'Insight');
+  article.appendChild(head);
+
+  appendText(article, 'p', 'summary', item.summary);
+
+  const list = document.createElement('ul');
+  list.className = 'points';
+  (item.points || []).forEach(point => appendText(list, 'li', '', point));
+  article.appendChild(list);
+
+  const takeaway = document.createElement('p');
+  takeaway.className = 'takeaway';
+  appendText(takeaway, 'strong', '', 'Bottom line: ');
+  takeaway.appendChild(document.createTextNode(item.takeaway || ''));
+  article.appendChild(takeaway);
+
+  appendText(article, 'p', 'source', `${item.date || ''} · ${item.source || 'Project 001'}`);
+
+  if (item.links && item.links.length) {
+    const links = document.createElement('div');
+    links.className = 'source-links';
+    item.links.forEach(link => {
+      if (!link.url || !link.url.startsWith('https://')) return;
+      const anchor = document.createElement('a');
+      anchor.href = link.url;
+      anchor.target = '_blank';
+      anchor.rel = 'noopener noreferrer';
+      anchor.textContent = link.label;
+      links.appendChild(anchor);
+    });
+    article.appendChild(links);
+  }
+
+  return article;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const data = window.__DASHBOARD_DATA__ || {};
+  const insights = (data.project_001_insights || []).filter(item => item.title);
+  const list = document.querySelector('#insights-list');
+  const nav = document.querySelector('#topic-nav');
+  const meta = document.querySelector('#intro-meta');
+
+  if (!insights.length) {
+    appendText(list, 'p', 'empty', 'No Project 001 insights yet.');
+    meta.textContent = '0 insights';
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+    return;
+  }
+
+  const dates = insights.map(item => item.date).filter(Boolean).sort();
+  meta.textContent = `${insights.length} insights · ${dates[0]} to ${dates[dates.length - 1]}`;
+
+  const fragment = document.createDocumentFragment();
+  insights.forEach(item => {
+    const anchor = document.createElement('a');
+    anchor.href = `#${item.id}`;
+    anchor.textContent = item.category || item.title;
+    nav.appendChild(anchor);
+    fragment.appendChild(renderInsight(item));
+  });
+  list.appendChild(fragment);
+
+  if (typeof lucide !== 'undefined') lucide.createIcons();
+});
+</script>
+</body>
+</html>

@@ -30,11 +30,20 @@ commands_text = read_text(DASH / 'commands.json')
 config_page = read_text(DASH / 'pages' / 'config.html')
 checklist_text = read_text(DASH / 'dashboard_checklist.json')
 zshrc_text = read_text(ZSHRC)
+project_001_page = read_text(DASH / 'pages' / 'project-001.html')
+project_001_data_text = read_text(DASH / 'project-001-insights.json')
 
 must((DASH / 'publish.sh').exists(), 'publish.sh is missing')
 must((DASH / 'pages' / 'knowledge.html').exists(), 'knowledge.html is missing')
 index_text = read_text(DASH / 'index.html')
 must('knowledge.html' in index_text, 'index.html must link to knowledge.html')
+must((DASH / 'pages' / 'project-001.html').exists(), 'project-001.html is missing')
+must((DASH / 'project-001-insights.json').exists(), 'project-001-insights.json is missing')
+must('pages/project-001.html' in index_text, 'index.html must link to Project 001 Insights')
+must('project_001_insights:' in refresh_text, 'refresh.sh must export Project 001 insights into data.js')
+must('project_001_insights' in project_001_page, 'Project 001 page must read project_001_insights from data.js')
+must('<main' in project_001_page and 'skip-link' in project_001_page,
+     'Project 001 page must include a main landmark and skip link')
 must((DASH / 'refresh.sh').exists(), 'refresh.sh is missing')
 must((DASH / 'dashboard_checklist.json').exists(), 'dashboard_checklist.json is missing')
 must((DASH / 'validate_dashboard.py').exists(), 'validate_dashboard.py is missing')
@@ -73,6 +82,16 @@ try:
         must(required in ids, f'dashboard_checklist.json missing required item: {required}')
 except Exception as e:
     errors.append(f'dashboard_checklist.json is invalid JSON: {e}')
+
+try:
+    project_001_data = json.loads(project_001_data_text)
+    insights = [item for item in project_001_data if item.get('title')]
+    must(bool(insights), 'project-001-insights.json must contain at least one insight')
+    for item in insights:
+        must(bool(item.get('summary')), f"Project 001 insight is missing summary: {item.get('title', '?')}")
+        must(bool(item.get('points')), f"Project 001 insight is missing points: {item.get('title', '?')}")
+except Exception as e:
+    errors.append(f'project-001-insights.json is invalid JSON: {e}')
 
 if errors:
     print('DASHBOARD VALIDATION FAILED')

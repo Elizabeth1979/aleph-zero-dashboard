@@ -519,6 +519,16 @@
       <div class="card-preview" id="reports-preview"></div>
     </a>
 
+    <a href="pages/project-001.html" class="card">
+      <div class="card-h">
+        <i data-lucide="scan-search"></i>
+        <h2>001 Insights</h2>
+        <span class="badge" id="project-001-badge">0</span>
+      </div>
+      <div class="card-desc">Useful intelligence ideas without the marketing</div>
+      <div class="card-preview" id="project-001-preview"></div>
+    </a>
+
   </div>
 
   <!-- SECTION: Memory -->
@@ -769,6 +779,14 @@ function loadCards() {
   } else if (resources.length) {
     const sorted = [...resources].sort((a, b) => (b.added || '').localeCompare(a.added || ''));
     document.getElementById('reports-preview').textContent = sorted[0].title;
+  }
+
+  // Project 001 insights
+  const project001 = (d.project_001_insights || []).filter(item => item.title);
+  document.getElementById('project-001-badge').textContent = project001.length;
+  const project001Preview = document.getElementById('project-001-preview');
+  if (project001Preview) {
+    project001Preview.textContent = project001.length ? project001[0].title : 'No insights yet';
   }
 
   // SOUL.md preview
