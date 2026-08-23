@@ -64,6 +64,10 @@ must('Blog material' in knowledge_page and 'To explore' in knowledge_page,
      'Knowledge page must expose All, Blog material, and To explore views')
 must('Young Reader Version' in knowledge_page and 'Try It Yourself' in knowledge_page and 'Young Reader Quality Review' in knowledge_page,
      'Knowledge details must render parallel young-reader content, activities, and quality review')
+must('Evidence Review' in knowledge_page and 'Editorial Rubric' in knowledge_page and 'Editorial Decision' in knowledge_page and 'Required Revisions' in knowledge_page,
+     'Knowledge details must render evidence claims, rubric, decision, and revisions')
+must('evidenceReview' in knowledge_page,
+     'Knowledge normalization must preserve evidence_review data')
 must('youngReader' in knowledge_page,
      'Knowledge normalization must preserve young_reader data')
 must('sourceId' in knowledge_page and 'itemsBySourceId.get(card.dataset.sourceId)' in knowledge_page,
@@ -90,6 +94,8 @@ must('Dashboard → Knowledge' in workflows_page and 'subject' in workflows_page
      'Saving Resources workflow must point to Knowledge and describe subject/tag classification')
 must('Young Reader' in workflows_page and 'actionable' in workflows_page,
      'Saving Resources workflow must describe young-reader quality and actionable activities')
+must('Verified' in workflows_page and 'Viewpoint' in workflows_page and 'citations' in workflows_page and 'Revise' in workflows_page,
+     'Saving Resources workflow must describe evidence labels, citations, and editorial decisions')
 must('project_001_insights:' in refresh_text, 'refresh.sh must export Project 001 insights into data.js')
 must('project_001_insights' in project_001_page, 'Project 001 page must read project_001_insights from data.js')
 must('<main' in project_001_page and 'skip-link' in project_001_page,
@@ -198,6 +204,27 @@ try:
          'Basic Economics young-reader reading grade must be measured between 7 and 9')
     must(bool(young_reader.get('quality_note')),
          'Basic Economics must explain its young-reader suitability decision')
+    evidence_review = basic_economics.get('evidence_review') or {}
+    claims = evidence_review.get('claims') or []
+    must(bool(claims), 'Basic Economics must include checked evidence claims')
+    for claim in claims:
+        must(bool(claim.get('claim')) and claim.get('label') in {'Verified', 'Disputed', 'Viewpoint', 'Needs evidence'},
+             'Every Basic Economics claim must have text and an approved evidence label')
+        must(bool(claim.get('note')), 'Every Basic Economics claim must include an editorial note')
+        citations = claim.get('citations') or []
+        must(bool(citations), 'Every Basic Economics claim must include at least one citation')
+        for citation in citations:
+            must(bool(citation.get('title')) and bool(citation.get('publisher')) and str(citation.get('url', '')).startswith('https://'),
+                 'Every evidence citation must include title, publisher, and an HTTPS URL')
+    rubric = evidence_review.get('rubric') or {}
+    for field in {'source_diversity', 'missing_context', 'bias_framing', 'reading_level', 'child_suitability', 'actionability'}:
+        must(bool(rubric.get(field)), f'Basic Economics evidence rubric missing: {field}')
+    decision = evidence_review.get('decision') or {}
+    must(decision.get('status') in {'Ready', 'Revise', 'Do not publish'},
+         'Basic Economics must include an approved editorial decision')
+    must(bool(decision.get('reason')), 'Basic Economics editorial decision must include a reason')
+    must(isinstance(decision.get('required_revisions'), list) and bool(decision.get('required_revisions')),
+         'Basic Economics editorial decision must include actionable revisions')
 except Exception as e:
     errors.append(f'resources.json is invalid JSON: {e}')
 

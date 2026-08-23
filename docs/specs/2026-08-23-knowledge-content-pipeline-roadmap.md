@@ -1,7 +1,7 @@
 # Knowledge Content Pipeline Roadmap — Design Specification
 
 **Date:** 2026-08-23  
-**Status:** Stage 1 approved; pending implementation
+**Status:** Stage 1 implemented and verified; Stage 2 pending
 
 ## Goal
 

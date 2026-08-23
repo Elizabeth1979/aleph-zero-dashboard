@@ -244,6 +244,113 @@
       ],
       "reading_grade": 7.2,
       "quality_note": "Adaptable for grades 7–9. The economic concepts are useful, but the original lesson is politically opinionated. This version adds concrete examples, defines key terms, labels the pro-market viewpoint, and asks readers to compare another source."
+    },
+    "evidence_review": {
+      "claims": [
+        {
+          "claim": "Scarcity means that people have more wants than the available goods, services, resources, and time can satisfy.",
+          "label": "Verified",
+          "note": "This is a standard introductory definition of scarcity in economics.",
+          "citations": [
+            {
+              "source_id": 1,
+              "title": "What Is Economics, and Why Is It Important?",
+              "publisher": "OpenStax, Rice University",
+              "url": "https://openstax.org/books/principles-economics-3e/pages/1-1-what-is-economics-and-why-is-it-important",
+              "published": "2022-12-14",
+              "evidence": "Scarcity means that human wants for goods, services and resources exceed what is available."
+            }
+          ]
+        },
+        {
+          "claim": "Opportunity cost is the value of the next best alternative that is given up when a choice is made.",
+          "label": "Verified",
+          "note": "This matches the standard textbook definition and is appropriate for the young-reader explanation.",
+          "citations": [
+            {
+              "source_id": 2,
+              "title": "How Individuals Make Choices Based on Their Budget Constraint",
+              "publisher": "OpenStax, Rice University",
+              "url": "https://openstax.org/books/principles-economics-3e/pages/2-1-how-individuals-make-choices-based-on-their-budget-constraint",
+              "published": "2022-12-14",
+              "evidence": "In short, opportunity cost is the value of the next best alternative."
+            }
+          ]
+        },
+        {
+          "claim": "Changes in rewards, costs, prices, or other incentives can influence how people behave.",
+          "label": "Verified",
+          "note": "Microeconomics studies these responses, but the direction and size of an effect depend on the people and situation.",
+          "citations": [
+            {
+              "source_id": 3,
+              "title": "Microeconomic and Macroeconomic Matters",
+              "publisher": "OpenStax, Rice University",
+              "url": "https://openstax.org/books/principles-finance/pages/1-6-microeconomic-and-macroeconomic-matters",
+              "published": "2022-03-24",
+              "evidence": "Microeconomics helps us understand incentives and behavior, consumer choices and consumption, and supply and demand."
+            }
+          ]
+        },
+        {
+          "claim": "Milton Friedman’s four-ways framework says people are least careful when spending someone else’s money on someone else.",
+          "label": "Viewpoint",
+          "note": "The citation verifies that Friedman presented this framework. It does not by itself prove that the framework predicts every public-spending decision.",
+          "citations": [
+            {
+              "source_id": 4,
+              "title": "Milton Friedman — The Four Ways to Spend Money",
+              "publisher": "Free To Choose Network",
+              "url": "https://www.youtube.com/watch?v=XsRk9RThGt0",
+              "published": "2012-07-31",
+              "evidence": "So there are four ways in which you can spend money."
+            }
+          ]
+        },
+        {
+          "claim": "Private organizations are always more efficient than public organizations.",
+          "label": "Disputed",
+          "note": "The evidence does not support an absolute rule. Outcomes vary across sectors and countries, and competition, regulation, market structure, and incentives can matter as much as ownership.",
+          "citations": [
+            {
+              "source_id": 5,
+              "title": "Privatisation in Sub-Saharan Africa: Where Do We Stand?",
+              "publisher": "OECD Development Centre",
+              "url": "https://www.oecd.org/content/dam/oecd/en/publications/reports/2005/12/privatisation_g17a1a15/246802423384.pdf",
+              "published": "2005-10",
+              "evidence": "In the competitive manufacturing and tradable services sectors, efficiency gains, defined as improved performance of the company, have been generally achieved with wide variations in performance across firms and countries."
+            },
+            {
+              "source_id": 6,
+              "title": "Is Privatization Necessary?",
+              "publisher": "World Bank",
+              "url": "https://documents1.worldbank.org/curated/en/651121468766245760/pdf/16951-Replacement-file-007NELLI.pdf",
+              "published": "1994-05",
+              "evidence": "Neoclassical economic theory suggests that the relationship between ownership and performance is tenuous; efficiency is seen mainly as a function of market and incentive structures."
+            }
+          ]
+        }
+      ],
+      "rubric": {
+        "source_diversity": "The original lesson represents a strong market-liberal viewpoint. The review adds an open textbook, OECD evidence, and a World Bank analysis, but a future article should also include a contemporary source representing another economic tradition.",
+        "missing_context": "The source moves from useful basic concepts to broad claims about government, socialism, and private efficiency. Those conclusions need sector-specific evidence and competing explanations.",
+        "bias_framing": "Scarcity, opportunity cost, and incentives are standard concepts. Friedman’s spending framework and blanket public/private efficiency claims must remain labeled as viewpoints or disputed claims.",
+        "reading_level": "The standard summary measures grade 15.5. The parallel Young Reader version measures grade 7.2 and defines its key terms.",
+        "child_suitability": "The foundational concepts are suitable for grades 7–9 after adaptation. The full source is not recommended as a neutral children’s lesson because it mixes instruction with political advocacy.",
+        "actionability": "The item includes a choice log, an incentive map, and a compare-sources activity. The comparison activity should use one of the cited textbook or institutional sources."
+      },
+      "decision": {
+        "status": "Revise",
+        "reason": "The core economic concepts are accurate and useful, but a publishable article needs clearer separation between textbook concepts and ideological conclusions, plus stronger source balance.",
+        "required_revisions": [
+          "Add inline citations to the definitions of scarcity, opportunity cost, and incentives.",
+          "Present Friedman’s four-ways framework as his argument, not as a proven universal law.",
+          "Replace any claim that private organizations are always more efficient with a sector-specific explanation of ownership, competition, regulation, and incentives.",
+          "Add one credible contemporary source from a different economic perspective before publication.",
+          "Keep the original video link and explain that it is the source being summarized, not the sole authority for the article."
+        ]
+      },
+      "reviewed_at": "2026-08-23"
     }
   }
 ]

@@ -155,6 +155,19 @@
 .detail-section h2 { margin-block-end: var(--s2); color: var(--accent); font-size: 1rem; }
 .detail-section h3 { margin-block: var(--s3) var(--s2); color: var(--text); font-size: var(--fs-sm); }
 .detail-section ul { padding-inline-start: 1.25rem; }
+.evidence-claims { display: grid; gap: var(--s4); }
+.evidence-claim { padding: var(--s4); background: var(--bg-inset); border: 1px solid var(--border); border-radius: var(--r2); }
+.claim-head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--s3); }
+.claim-label { flex-shrink: 0; padding: .2rem .55rem; border-radius: var(--pill); font-size: var(--fs-xs); font-weight: 700; }
+.claim-verified { color: var(--accent); background: var(--accent-muted); }
+.claim-disputed { color: #fbbf24; background: rgba(251,191,36,.12); }
+.claim-viewpoint { color: #c4b5fd; background: rgba(196,181,253,.12); }
+.claim-needs-evidence { color: var(--text-2); background: var(--bg-card); }
+.citation-list { display: grid; gap: var(--s2); margin-block-start: var(--s3); }
+.citation-list a { overflow-wrap: anywhere; color: var(--accent); }
+.rubric-list { display: grid; grid-template-columns: minmax(150px, .35fr) 1fr; gap: var(--s3); }
+.rubric-list dt { color: var(--accent); font-weight: 700; }
+.rubric-list dd { margin: 0; color: var(--text-2); }
 .source-links { display: flex; flex-wrap: wrap; gap: var(--s2); }
 .source-link {
   display: inline-flex;
@@ -169,6 +182,10 @@
 @media (max-width: 600px) {
   .page-wrap { padding: var(--s4) var(--s3); }
   .card-grid { grid-template-columns: 1fr; }
+  .claim-head { display: grid; }
+  .claim-label { justify-self: start; }
+  .rubric-list { grid-template-columns: 1fr; gap: var(--s2); }
+  .rubric-list dd { margin-block-end: var(--s3); }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none; transition: none; }
@@ -292,6 +309,7 @@ document.addEventListener('DOMContentLoaded', () => {
       biasNote: resource.bias_note || '',
       blogAngle: resource.blog_angle || '',
       youngReader: resource.young_reader || null,
+      evidenceReview: resource.evidence_review || null,
       content: '',
     })),
     ...reports.map(report => ({
@@ -310,6 +328,7 @@ document.addEventListener('DOMContentLoaded', () => {
       biasNote: report.bias_note || '',
       blogAngle: report.blog_angle || '',
       youngReader: report.young_reader || null,
+      evidenceReview: report.evidence_review || null,
       content: report.content || '',
     })),
     ...project001.map(insight => ({
@@ -328,6 +347,7 @@ document.addEventListener('DOMContentLoaded', () => {
       biasNote: insight.bias_note || '',
       blogAngle: insight.blog_angle || '',
       youngReader: insight.young_reader || null,
+      evidenceReview: insight.evidence_review || null,
       content: '',
     })),
   ];
@@ -415,6 +435,41 @@ document.addEventListener('DOMContentLoaded', () => {
         + `<p><strong>Measured reading grade:</strong> ${esc(young.reading_grade ?? 'Not measured')}</p>`
         + `<p>${esc(young.quality_note || '')}</p>`
       : '';
+    const evidence = item.evidenceReview;
+    const claimClass = label => `claim-${String(label || '').toLowerCase().replace(/\s+/g, '-')}`;
+    const claimsHtml = evidence?.claims?.length
+      ? `<div class="evidence-claims">${evidence.claims.map(claim => {
+          const citations = (claim.citations || []).map(citation =>
+            `<li><a href="${esc(citation.url)}" target="_blank" rel="noopener noreferrer">${esc(citation.title)}</a>`
+              + ` — ${esc(citation.publisher || '')}${citation.published ? ` (${esc(citation.published)})` : ''}</li>`
+          ).join('');
+          return `<article class="evidence-claim">`
+            + `<div class="claim-head"><h3>${esc(claim.claim || '')}</h3><span class="claim-label ${claimClass(claim.label)}">${esc(claim.label || '')}</span></div>`
+            + `<p>${esc(claim.note || '')}</p>`
+            + (citations ? `<ul class="citation-list">${citations}</ul>` : '')
+            + `</article>`;
+        }).join('')}</div>`
+      : '';
+    const rubricLabels = {
+      source_diversity: 'Source diversity',
+      missing_context: 'Missing context',
+      bias_framing: 'Bias and framing',
+      reading_level: 'Reading level',
+      child_suitability: 'Child suitability',
+      actionability: 'Actionability',
+    };
+    const rubricHtml = evidence?.rubric
+      ? `<dl class="rubric-list">${Object.entries(rubricLabels).map(([key, label]) =>
+          evidence.rubric[key] ? `<dt>${esc(label)}</dt><dd>${esc(evidence.rubric[key])}</dd>` : ''
+        ).join('')}</dl>`
+      : '';
+    const decision = evidence?.decision;
+    const decisionHtml = decision
+      ? `<p><strong>Decision:</strong> ${esc(decision.status || '')}</p><p>${esc(decision.reason || '')}</p>`
+      : '';
+    const revisionsHtml = decision?.required_revisions?.length
+      ? `<ul>${decision.required_revisions.map(revision => `<li>${esc(revision)}</li>`).join('')}</ul>`
+      : '';
 
     modalBody.innerHTML = [
       detailSection('Standard Summary', summaryHtml),
@@ -423,6 +478,10 @@ document.addEventListener('DOMContentLoaded', () => {
       detailSection('Young Reader Version', youngReaderHtml),
       detailSection('Try It Yourself', activitiesHtml),
       detailSection('Young Reader Quality Review', qualityHtml),
+      detailSection('Evidence Review', claimsHtml),
+      detailSection('Editorial Rubric', rubricHtml),
+      detailSection('Editorial Decision', decisionHtml),
+      detailSection('Required Revisions', revisionsHtml),
       detailSection('Sources', sourceMeta + linksHtml),
       detailSection('Bias / reliability note', `<p>${esc(item.biasNote || 'No separate bias or reliability note recorded.')}</p>`),
       detailSection('Blog / story angle', `<p>${esc(item.blogAngle || 'No separate blog or story angle recorded.')}</p>`),
