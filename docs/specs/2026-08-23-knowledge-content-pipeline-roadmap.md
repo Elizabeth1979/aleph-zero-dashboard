@@ -108,9 +108,14 @@ After Stage 1 is approved in production:
 
 - generate a structured draft from a Ready or revised item
 - keep citations attached to claims
-- include standard and young-reader variants
+- use simple language with key ideas, FAQs, a self-check, and actionable activities
+- include standard and young-reader variants where useful
+- link clearly to every original source
+- show a visible “AI-generated and human-reviewed” disclosure on every article
 - require Elli’s approval before anything is published externally
 - track draft state separately from Knowledge status
+
+Every draft also receives a rights record covering source license or terms, attribution requirements, quotation limits, image/media reuse, and whether permission is needed. Drafts use original wording, avoid reproducing transcripts, and use only short necessary quotations unless the source license or owner grants broader reuse. The blog is public and may be monetized later, so the workflow must use the conservative commercial-use interpretation rather than assuming non-commercial exceptions.
 
 ## Stage 3 — Child Learning Experience
 
@@ -122,6 +127,10 @@ After the draft pipeline works:
 - misconception check
 - “what another viewpoint says” section when relevant
 - visual/story prompt that teaches rather than decorates
+
+Add optional reader Q&A after the static learning content works. The first local model candidate is `mlc-ai/Qwen2.5-0.5B-Instruct-q4f16_1-MLC`, whose model artifacts are approximately 290 MB and whose base model uses Apache 2.0. It runs in the browser through WebLLM/WebGPU and is cached after an explicit optional download; the total download and runtime footprint must stay below 1 GB.
+
+The assistant answers from the current article and its cited sources by default. Readers may explicitly expand a question to the curated Knowledge library. Retrieved sections—not the model’s general memory—supply the answer context. Every answer links to the relevant article section or source, says when support is missing, and never invents a citation. Static FAQs remain available when the model is not downloaded or the device lacks WebGPU support.
 
 ## Stage 4 — Resource Inbox Automation
 
