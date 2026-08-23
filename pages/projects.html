@@ -310,6 +310,9 @@
   .research-link { display: inline-flex; align-items: center; gap: 4px; font-size: var(--fs-xs); color: var(--accent); text-decoration: none; background: rgba(93,228,212,0.08); padding: 2px 8px; border-radius: 10px; border: 1px solid rgba(93,228,212,0.2); }
   .research-link:hover { background: rgba(93,228,212,0.15); }
 </style>
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#0b0e11">
+<link rel="apple-touch-icon" href="../icons/icon-192.png">
 </head>
 <body>
 <div class="page-wrap">
@@ -477,5 +480,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (typeof lucide !== 'undefined') lucide.createIcons();
 });
 </script>
+<script src="../pwa.js" defer></script>
 </body>
 </html>

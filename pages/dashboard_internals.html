@@ -50,6 +50,9 @@ canvas#flowmap { display:block; cursor:default; }
 .prompt-modal-body pre.code-block { background:rgba(0,0,0,.3); padding:var(--s3); border-radius:var(--r1); overflow-x:auto; margin:0; }
 .prompt-modal-body code { font-family:var(--mono); font-size:.9em; }
 </style>
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#0b0e11">
+<link rel="apple-touch-icon" href="../icons/icon-192.png">
 </head>
 <body>
 <div class="page-wrap">
@@ -340,5 +343,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (typeof lucide !== 'undefined') lucide.createIcons();
 });
 </script>
+<script src="../pwa.js" defer></script>
 </body>
 </html>

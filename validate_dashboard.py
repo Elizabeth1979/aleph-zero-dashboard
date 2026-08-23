@@ -32,6 +32,9 @@ checklist_text = read_text(DASH / 'dashboard_checklist.json')
 zshrc_text = read_text(ZSHRC)
 project_001_page = read_text(DASH / 'pages' / 'project-001.html')
 project_001_data_text = read_text(DASH / 'project-001-insights.json')
+manifest_text = read_text(DASH / 'manifest.webmanifest')
+service_worker_text = read_text(DASH / 'service-worker.js')
+pwa_text = read_text(DASH / 'pwa.js')
 
 must((DASH / 'publish.sh').exists(), 'publish.sh is missing')
 must((DASH / 'pages' / 'knowledge.html').exists(), 'knowledge.html is missing')
@@ -47,6 +50,40 @@ must('<main' in project_001_page and 'skip-link' in project_001_page,
 must((DASH / 'refresh.sh').exists(), 'refresh.sh is missing')
 must((DASH / 'dashboard_checklist.json').exists(), 'dashboard_checklist.json is missing')
 must((DASH / 'validate_dashboard.py').exists(), 'validate_dashboard.py is missing')
+
+# Android-installable Progressive Web App wiring.
+must((DASH / 'manifest.webmanifest').exists(), 'manifest.webmanifest is missing')
+must((DASH / 'service-worker.js').exists(), 'service-worker.js is missing')
+must((DASH / 'pwa.js').exists(), 'pwa.js is missing')
+must((DASH / 'icons' / 'icon-192.png').exists(), '192px PWA icon is missing')
+must((DASH / 'icons' / 'icon-512.png').exists(), '512px PWA icon is missing')
+must('rel="manifest" href="manifest.webmanifest"' in index_text,
+     'index.html must link to the web app manifest')
+must('src="pwa.js"' in index_text, 'index.html must load pwa.js')
+must('serviceWorker.register' in pwa_text, 'pwa.js must register the service worker')
+must('fetch(request)' in service_worker_text and 'caches.match(request)' in service_worker_text,
+     'service-worker.js must use the network first with an offline cache fallback')
+
+try:
+    manifest = json.loads(manifest_text)
+    must(manifest.get('display') == 'standalone', 'manifest display must be standalone')
+    must(manifest.get('start_url') == './', 'manifest start_url must be ./ for GitHub Pages')
+    must(manifest.get('scope') == './', 'manifest scope must be ./ for GitHub Pages')
+    icon_sizes = {icon.get('sizes') for icon in manifest.get('icons', [])}
+    must({'192x192', '512x512'} <= icon_sizes,
+         'manifest must include 192x192 and 512x512 icons')
+except Exception as e:
+    errors.append(f'manifest.webmanifest is invalid JSON: {e}')
+
+for html_path in [DASH / 'index.html', *sorted((DASH / 'pages').glob('*.html'))]:
+    html = read_text(html_path)
+    prefix = '' if html_path.parent == DASH else '../'
+    must(f'rel="manifest" href="{prefix}manifest.webmanifest"' in html,
+         f'{html_path.name} must link to the web app manifest')
+    must(f'src="{prefix}pwa.js"' in html,
+         f'{html_path.name} must register PWA support')
+    must('name="theme-color" content="#0b0e11"' in html,
+         f'{html_path.name} must set the Android theme color')
 
 must('validate_dashboard.py' in publish_text, 'publish.sh must run validate_dashboard.py')
 must('bash ~/.hermes/dashboard/publish.sh' in refresh_text, 'refresh.sh must point to publish.sh as canonical publish path')
