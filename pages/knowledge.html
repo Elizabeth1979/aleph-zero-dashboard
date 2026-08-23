@@ -265,16 +265,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const d = window.__DASHBOARD_DATA__ || {};
   const reports = d.reports || [];
+  const resources = d.resources || [];
+  const visibleResources = resources.filter(r => r.title);
   const el = document.getElementById('page-body');
 
-  if (!reports.length) {
-    el.innerHTML = '<div class="empty">No reports yet</div>';
+  if (!reports.length && !visibleResources.length) {
+    el.innerHTML = '<div class="empty">No knowledge saved yet</div>';
     if (typeof lucide !== 'undefined') lucide.createIcons();
     return;
   }
 
   const research = reports.filter(r => r.type === 'research');
-  const resources = d.resources || [];
 
   function buildCard(r, idx) {
     const accentCls = 'research';
@@ -301,11 +302,12 @@ document.addEventListener('DOMContentLoaded', () => {
     research.forEach(r => { html += buildCard(r, reports.indexOf(r)); });
     html += '</div>';
   }
-  if (resources.length) {
+  if (visibleResources.length) {
     const catMeta = { css: { icon: 'code', label: 'CSS' } };
     html += '<div class="section-label">Resources</div>';
     html += '<div class="card-grid">';
-    resources.filter(r => r.title).forEach((r, i) => {
+    resources.forEach((r, i) => {
+      if (!r.title) return;
       const titleHtml = r.url
         ? '<a href="' + esc(r.url) + '" target="_blank" rel="noopener" class="resource-link" onclick="event.stopPropagation()">' + esc(r.title) + '</a>'
         : esc(r.title);

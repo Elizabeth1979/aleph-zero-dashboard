@@ -32,6 +32,7 @@ checklist_text = read_text(DASH / 'dashboard_checklist.json')
 zshrc_text = read_text(ZSHRC)
 project_001_page = read_text(DASH / 'pages' / 'project-001.html')
 project_001_data_text = read_text(DASH / 'project-001-insights.json')
+knowledge_page = read_text(DASH / 'pages' / 'knowledge.html')
 manifest_text = read_text(DASH / 'manifest.webmanifest')
 service_worker_text = read_text(DASH / 'service-worker.js')
 pwa_text = read_text(DASH / 'pwa.js')
@@ -43,6 +44,12 @@ must('knowledge.html' in index_text, 'index.html must link to knowledge.html')
 must((DASH / 'pages' / 'project-001.html').exists(), 'project-001.html is missing')
 must((DASH / 'project-001-insights.json').exists(), 'project-001-insights.json is missing')
 must('pages/project-001.html' in index_text, 'index.html must link to Project 001 Insights')
+must("const visibleResources = resources.filter(r => r.title);" in knowledge_page,
+     'Knowledge page must derive visible resources before its empty-state check')
+must("if (!reports.length && !visibleResources.length)" in knowledge_page,
+     'Knowledge page must not hide resources when reports are empty')
+must("resources.forEach((r, i) =>" in knowledge_page,
+     'Knowledge resource cards must preserve source indices for modal lookup')
 must('project_001_insights:' in refresh_text, 'refresh.sh must export Project 001 insights into data.js')
 must('project_001_insights' in project_001_page, 'Project 001 page must read project_001_insights from data.js')
 must('<main' in project_001_page and 'skip-link' in project_001_page,
