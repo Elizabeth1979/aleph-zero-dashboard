@@ -77,18 +77,22 @@
     "id": 34,
     "task": "Connect home agent to work dashboard",
     "added": "2026-04-08",
-    "tags": ["Work"],
+    "tags": [
+      "Work"
+    ],
     "urgent": false,
     "description": "Figure out what I want the agent to do when triggered from my work dashboard. Once clear, set up Tailscale so home and work computers can talk privately."
   },
   {
     "id": 35,
-    "task": "Talk to boss about 2-week vacation Oct 24 – Nov 5",
+    "task": "Talk to boss about 2-week vacation Oct 24 \u2013 Nov 5",
     "added": "2026-04-08",
-    "tags": ["Private"],
+    "tags": [
+      "Private"
+    ],
     "urgent": true,
     "scope": "private",
-    "description": "Ask for 2 weeks off Oct 24 (Thu) – Nov 5 (Thu). Found El Al tickets to LAX for the family — need approval before booking."
+    "description": "Ask for 2 weeks off Oct 24 (Thu) \u2013 Nov 5 (Thu). Found El Al tickets to LAX for the family \u2014 need approval before booking."
   },
   {
     "id": 33,
@@ -99,5 +103,13 @@
       "Work"
     ],
     "urgent": false
+  },
+  {
+    "id": 36,
+    "task": "Pay Bamba's annual dog licence fee and confirm Toffi's payment with mother-in-law",
+    "added": "2026-08-23",
+    "urgent": true,
+    "done": false,
+    "category": "Private"
   }
 ]
