@@ -26,16 +26,6 @@
     "description": "Buy while in the USA during the 24 October\u20135 November trip."
   },
   {
-    "id": 33,
-    "task": "Manual reviews",
-    "added": "2026-04-06",
-    "due": "2026-04-07",
-    "tags": [
-      "Work"
-    ],
-    "urgent": false
-  },
-  {
     "id": 36,
     "task": "Pay Bamba's annual dog licence fee and confirm Toffi's payment with mother-in-law",
     "added": "2026-08-23",
