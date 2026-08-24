@@ -26,15 +26,6 @@
     "description": "Buy while in the USA during the 24 October\u20135 November trip."
   },
   {
-    "id": 29,
-    "task": "Move Slack into Knowledge Base",
-    "added": "2026-04-05",
-    "tags": [
-      "Work"
-    ],
-    "urgent": false
-  },
-  {
     "id": 31,
     "task": "Prepare Q&A about accessibility",
     "added": "2026-04-05",
