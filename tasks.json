@@ -12,7 +12,7 @@
     ],
     "urgent": false,
     "scope": "private",
-    "description": "Owes two years back. Payment site was down last time \u2014 try again."
+    "description": "Owes two years back. Payment site was down last time — try again."
   },
   {
     "id": 5,
@@ -23,14 +23,16 @@
     ],
     "urgent": false,
     "due": "2026-10-25",
-    "description": "Buy while in the USA during the 24 October\u20135 November trip."
+    "description": "Buy while in the USA during the 24 October–5 November trip."
   },
   {
     "id": 36,
     "task": "Pay Bamba's annual dog licence fee and confirm Toffi's payment with mother-in-law",
     "added": "2026-08-23",
     "urgent": true,
-    "done": false,
-    "category": "Private"
+    "due": "2026-08-31",
+    "tags": [
+      "Private"
+    ]
   }
 ]
