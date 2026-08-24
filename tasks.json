@@ -26,16 +26,6 @@
     "description": "Buy while in the USA during the 24 October\u20135 November trip."
   },
   {
-    "id": 34,
-    "task": "Connect home agent to work dashboard",
-    "added": "2026-04-08",
-    "tags": [
-      "Work"
-    ],
-    "urgent": false,
-    "description": "Figure out what I want the agent to do when triggered from my work dashboard. Once clear, set up Tailscale so home and work computers can talk privately."
-  },
-  {
     "id": 35,
     "task": "Talk to boss about 2-week vacation Oct 24 \u2013 Nov 5",
     "added": "2026-04-08",
