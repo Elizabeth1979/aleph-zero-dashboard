@@ -23,7 +23,7 @@
   transform: translateY(-150%);
 }
 .skip-link:focus { transform: translateY(0); }
-.back-link, .filter-button, .modal-close, .source-link { min-height: 44px; }
+.back-link, .filter-button, .modal-close, .source-link, .read-aloud-button, .read-aloud-speed { min-height: 44px; }
 
 .filter-section { margin-block-end: var(--s4); }
 .filter-label {
@@ -141,6 +141,32 @@
 .modal-header-info { flex: 1; min-width: 0; }
 .modal-header-title { color: var(--text); font-size: 1.15rem; font-weight: 700; }
 .modal-header-meta { display: flex; flex-wrap: wrap; gap: var(--s2); margin-block-start: var(--s2); color: var(--text-3); font-size: var(--fs-xs); }
+.read-aloud-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s2);
+  margin-block-start: var(--s3);
+}
+.read-aloud-button, .read-aloud-speed {
+  padding: .55rem .75rem;
+  color: var(--text);
+  background: var(--bg-inset);
+  border: 1px solid var(--border);
+  border-radius: var(--r1);
+  font: inherit;
+}
+.read-aloud-button {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  cursor: pointer;
+}
+.read-aloud-button:first-child { color: var(--bg); background: var(--accent); border-color: var(--accent); }
+.read-aloud-button:disabled, .read-aloud-speed:disabled { opacity: .55; cursor: not-allowed; }
+.read-aloud-button svg { width: 17px; height: 17px; }
+.read-aloud-speed-label { display: inline-flex; align-items: center; gap: .4rem; color: var(--text-2); font-size: var(--fs-sm); }
+.read-aloud-status { flex-basis: 100%; min-height: 1.25rem; color: var(--text-3); font-size: var(--fs-xs); }
 .modal-close {
   min-width: 44px;
   padding: .5rem;
@@ -267,6 +293,25 @@
           <span id="modal-status"></span>
           <span id="modal-date"></span>
         </div>
+        <div class="read-aloud-toolbar">
+          <button type="button" class="read-aloud-button" id="read-aloud-toggle">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.5 8.5a5 5 0 0 1 0 7"></path><path d="M19 5a10 10 0 0 1 0 14"></path></svg>
+            <span id="read-aloud-label">Read aloud</span>
+          </button>
+          <button type="button" class="read-aloud-button" id="read-aloud-stop" disabled>
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" stroke="none"><rect x="6" y="6" width="12" height="12" rx="1"></rect></svg>
+            Stop
+          </button>
+          <label class="read-aloud-speed-label" for="read-aloud-speed">Speed
+            <select class="read-aloud-speed" id="read-aloud-speed">
+              <option value="0.75">0.75×</option>
+              <option value="1" selected>1×</option>
+              <option value="1.25">1.25×</option>
+              <option value="1.5">1.5×</option>
+            </select>
+          </label>
+          <span class="read-aloud-status" id="read-aloud-status" role="status" aria-live="polite"></span>
+        </div>
       </div>
       <button type="button" class="modal-close" id="modal-close-btn" aria-label="Close details">
         <i data-lucide="x" aria-hidden="true" style="width:20px;height:20px"></i>
@@ -277,6 +322,7 @@
 </div>
 
 <script src="utils.js?v=5"></script>
+<script src="read-aloud.js"></script>
 <script src="../data.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -390,6 +436,37 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalDate = document.querySelector('#modal-date');
   const modalBody = document.querySelector('#modal-body');
   const closeButton = document.querySelector('#modal-close-btn');
+  const readAloudToggle = document.querySelector('#read-aloud-toggle');
+  const readAloudLabel = document.querySelector('#read-aloud-label');
+  const readAloudStop = document.querySelector('#read-aloud-stop');
+  const readAloudSpeed = document.querySelector('#read-aloud-speed');
+  const readAloudStatus = document.querySelector('#read-aloud-status');
+  const readAloudSupported = Boolean(window.speechSynthesis && window.SpeechSynthesisUtterance && window.ReadAloud);
+  let readableArticleText = '';
+  let readableArticleLanguage = 'en';
+  let reader = null;
+
+  function updateReadAloudState(state) {
+    const isSpeaking = state.status === 'speaking';
+    const isPaused = state.status === 'paused';
+    readAloudLabel.textContent = isSpeaking ? 'Pause' : (isPaused ? 'Resume' : 'Read aloud');
+    readAloudStop.disabled = !isSpeaking && !isPaused;
+    readAloudSpeed.disabled = isSpeaking || isPaused;
+    readAloudStatus.textContent = state.message || '';
+  }
+
+  if (readAloudSupported) {
+    reader = window.ReadAloud.createReadAloudController({
+      synthesis: window.speechSynthesis,
+      Utterance: window.SpeechSynthesisUtterance,
+      onStateChange: updateReadAloudState,
+    });
+  } else {
+    readAloudToggle.disabled = true;
+    readAloudStop.disabled = true;
+    readAloudSpeed.disabled = true;
+    readAloudStatus.textContent = 'Read aloud is unavailable on this device.';
+  }
 
   function matchesView(item) {
     if (selectedView === 'All') return true;
@@ -578,6 +655,14 @@ document.addEventListener('DOMContentLoaded', () => {
       detailSection('Bias / reliability note', `<p>${esc(item.biasNote || 'No separate bias or reliability note recorded.')}</p>`),
       detailSection('Blog / story angle', `<p>${esc(item.blogAngle || 'No separate blog or story angle recorded.')}</p>`),
     ].join('');
+    if (reader?.getStatus() !== 'idle') reader.stop();
+    const readableArticle = modalBody.querySelector('.draft-article') || modalBody.querySelector('.detail-section');
+    readableArticleText = readableArticle?.innerText.trim() || '';
+    readableArticleLanguage = item.sourceLanguage || 'en';
+    readAloudToggle.disabled = !readAloudSupported || !readableArticleText;
+    readAloudStatus.textContent = !readAloudSupported
+      ? 'Read aloud is unavailable on this device.'
+      : (readableArticleText ? '' : 'There is no article text to read.');
     overlay.removeAttribute('hidden');
     overlay.classList.add('open');
     overlay.setAttribute('aria-hidden', 'false');
@@ -586,6 +671,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function closeModal() {
+    if (reader?.getStatus() !== 'idle') reader.stop();
     overlay.classList.remove('open');
     overlay.setAttribute('aria-hidden', 'true');
     overlay.setAttribute('hidden', '');
@@ -613,6 +699,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (item) openModal(item, card);
   });
   closeButton.addEventListener('click', closeModal);
+  readAloudToggle.addEventListener('click', () => {
+    if (!reader) return;
+    const status = reader.getStatus();
+    if (status === 'speaking') reader.pause();
+    else if (status === 'paused') reader.resume();
+    else reader.read(readableArticleText, {
+      language: readableArticleLanguage,
+      rate: Number(readAloudSpeed.value),
+    });
+  });
+  readAloudStop.addEventListener('click', () => reader?.stop());
   overlay.addEventListener('click', event => { if (event.target === overlay) closeModal(); });
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape' && overlay.classList.contains('open')) closeModal();

@@ -34,6 +34,7 @@ project_001_page = read_text(DASH / 'pages' / 'project-001.html')
 project_001_data_text = read_text(DASH / 'project-001-insights.json')
 resources_data_text = read_text(DASH / 'resources.json')
 knowledge_page = read_text(DASH / 'pages' / 'knowledge.html')
+read_aloud_text = read_text(DASH / 'pages' / 'read-aloud.js')
 workflows_page = read_text(DASH / 'pages' / 'workflows.html')
 manifest_text = read_text(DASH / 'manifest.webmanifest')
 service_worker_text = read_text(DASH / 'service-worker.js')
@@ -92,6 +93,16 @@ must('.modal-overlay[hidden] { display: none; }' in knowledge_page,
      'Knowledge modal hidden state must override its flex display')
 must('.modal-body { padding: var(--s5); overflow-y: auto;' not in knowledge_page,
      'Knowledge modal must not use nested scrolling')
+must((DASH / 'pages' / 'read-aloud.js').exists(),
+     'Knowledge read-aloud controller is missing')
+must('src="read-aloud.js"' in knowledge_page and 'id="read-aloud-toggle"' in knowledge_page,
+     'Knowledge articles must load and expose native read-aloud controls')
+must('id="read-aloud-status" role="status" aria-live="polite"' in knowledge_page,
+     'Knowledge read-aloud status must be announced accessibly')
+must('item.sourceLanguage' in knowledge_page and 'normalizeLanguage' in read_aloud_text,
+     'Knowledge read-aloud must select a voice language from article metadata')
+must('synthesis.pause()' in read_aloud_text and 'synthesis.resume()' in read_aloud_text and 'synthesis.cancel()' in read_aloud_text,
+     'Knowledge read-aloud must support pause, resume, and stop')
 must('const knowledgeItems = [...visibleReports, ...visibleResources, ...project001];' in index_text,
      'Knowledge home badge must count visible reports, resources, and Project 001 insights')
 must('subjectCount' in index_text and 'subjects' in index_text,
