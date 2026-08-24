@@ -12,7 +12,7 @@
     ],
     "urgent": false,
     "scope": "private",
-    "description": "Owes two years back. Payment site was down last time — try again."
+    "description": "Owes two years back. Payment site was down last time \u2014 try again."
   },
   {
     "id": 5,
@@ -23,17 +23,7 @@
     ],
     "urgent": false,
     "due": "2026-10-25",
-    "description": "Buy while in the USA during the 24 October–5 November trip."
-  },
-  {
-    "id": 32,
-    "task": "Decide VPS migration architecture for Hermes",
-    "added": "2026-04-06",
-    "urgent": false,
-    "tags": [
-      "Work"
-    ],
-    "description": "Think through whether Hermes should move to the Hostinger VPS as the source of truth. Decide: (1) keep Mac vs VPS as the real storage for config.yaml, .env, memory, sessions, cron, and dashboard files; (2) privacy model for secrets, memory, and OAuth tokens on VPS; (3) whether dashboard stays local/private or is published in sanitized form only; (4) security hardening needed before going live: SSH keys only, firewall/UFW, fail2ban, dedicated hermes user, minimal exposed ports, backups; (5) migration plan from current Mac-hosted setup and what happens to OpenClaw. Continue tomorrow before making changes."
+    "description": "Buy while in the USA during the 24 October\u20135 November trip."
   },
   {
     "id": 34,
@@ -47,14 +37,14 @@
   },
   {
     "id": 35,
-    "task": "Talk to boss about 2-week vacation Oct 24 – Nov 5",
+    "task": "Talk to boss about 2-week vacation Oct 24 \u2013 Nov 5",
     "added": "2026-04-08",
     "tags": [
       "Private"
     ],
     "urgent": true,
     "scope": "private",
-    "description": "Ask for 2 weeks off Oct 24 (Thu) – Nov 5 (Thu). Found El Al tickets to LAX for the family — need approval before booking."
+    "description": "Ask for 2 weeks off Oct 24 (Thu) \u2013 Nov 5 (Thu). Found El Al tickets to LAX for the family \u2014 need approval before booking."
   },
   {
     "id": 33,
