@@ -354,7 +354,7 @@
     },
     "blog_draft": {
       "state": "Ready for review",
-      "title": "Scarcity, Choices, and Incentives: A Simple Guide to Basic Economics",
+      "title": "Why We Can’t Have Everything: A Simple Guide to Scarcity, Choices, and Incentives",
       "audience": "General readers; suitable from grades 7–9",
       "disclosure": "AI-generated draft · human review pending · not approved for publication.",
       "introduction": "Economics starts with a simple problem: people have many goals, but limited time, money, materials, and energy. This does not mean every decision is only about money. It means choices have trade-offs. Learning to notice those trade-offs can help us judge personal decisions, school rules, business plans, and public policy more carefully.",
@@ -378,7 +378,7 @@
           ]
         },
         {
-          "text": "Claims that public or private organizations are always more efficient are too broad; ownership, competition, regulation, information, and incentives all matter.",
+          "text": "Neither public nor private organizations are always more efficient. Results also depend on competition, regulation, information, and incentives.",
           "citations": [
             "5",
             "6",
@@ -391,7 +391,7 @@
           "heading": "Every choice uses limited resources",
           "paragraphs": [
             {
-              "text": "Imagine you have 50 shekels and two free hours. You could buy something, save the money, study, exercise, or meet a friend. You cannot do every option at the same time. Economists call this limit scarcity.",
+              "text": "Imagine you have 50 shekels and two free hours. You could buy something, save the money, study, exercise, or meet a friend. You cannot use the same 50 shekels and two hours for every option. Economists call this limit scarcity.",
               "citations": [
                 "1"
               ]
@@ -408,13 +408,13 @@
           "heading": "Incentives change the choices people face",
           "paragraphs": [
             {
-              "text": "An incentive is a reward, cost, rule, or signal that can affect a decision. A discount may encourage buying. A late fee may encourage paying on time. A school rule may change behavior in a way its designers expected—or in a way they did not expect.",
+              "text": "An incentive is a reward, cost, or signal that can affect a decision. A rule can create incentives. A discount may encourage buying, while a late fee may encourage paying on time. A school rule may change behavior in an expected or unexpected way.",
               "citations": [
                 "3"
               ]
             },
             {
-              "text": "Incentives do not control everyone like a switch. People have different needs, values, and options. A useful check is to ask which behavior the rule encourages and how different people might react.",
+              "text": "Incentives do not make everyone respond the same way. People have different needs, values, and options. Ask which behavior the rule encourages and how different people might react.",
               "citations": [
                 "3"
               ]
@@ -422,10 +422,40 @@
           ]
         },
         {
-          "heading": "A famous argument is still an argument",
+          "heading": "Friedman’s four ways to spend money",
           "paragraphs": [
             {
-              "text": "Milton Friedman described four ways people can spend money. He argued that people may be least careful when spending someone else’s money on someone else. This is a useful question about accountability, but it is a viewpoint—not a law that proves every government program will waste money.",
+              "text": "Milton Friedman described four ways people can spend money.",
+              "citations": [
+                "4"
+              ]
+            },
+            {
+              "text": "1. Your money on yourself: you care about both the price and what you receive.",
+              "citations": [
+                "4"
+              ]
+            },
+            {
+              "text": "2. Your money on someone else: you care about the price, but you may know less about what the other person values.",
+              "citations": [
+                "4"
+              ]
+            },
+            {
+              "text": "3. Someone else’s money on yourself: you care about what you receive, but you have less reason to limit the price.",
+              "citations": [
+                "4"
+              ]
+            },
+            {
+              "text": "4. Someone else’s money on someone else: Friedman argued that you have less reason to monitor either the price or the result.",
+              "citations": [
+                "4"
+              ]
+            },
+            {
+              "text": "This framework can help us ask questions about accountability, but it is a viewpoint—not proof that every government program wastes money.",
               "citations": [
                 "4"
               ]
@@ -634,5 +664,100 @@
         "2"
       ]
     }
+  },
+  {
+    "title": "The Disability Dongle: Design for barriers, not applause",
+    "url": "https://sightlessscribbles.com/posts/disability-dongle/",
+    "type": "article",
+    "category": "accessibility",
+    "status": "Processed",
+    "note": "Blind writer Robert Kingett argues that flashy disability technology often serves the nondisabled gaze while ordinary infrastructure and accessible code remain broken. A forceful lived-experience viewpoint: define the barrier with disabled people, then prefer reliable environmental and semantic fixes over expensive individual workarounds.",
+    "takeaways": [
+      "Start with the actual barrier, not a preferred technology.",
+      "Include disabled people in defining the problem and judging whether the result works.",
+      "Prefer ramps, semantic HTML, accurate labels, and robust infrastructure over performative prototypes.",
+      "Context: an intentionally provocative first-person essay, not a neutral research study."
+    ],
+    "added": "2026-08-24",
+    "subject": "Accessibility",
+    "tags": [
+      "Design",
+      "Disability-led",
+      "Reference"
+    ],
+    "source_language": "en",
+    "id": "11"
+  },
+  {
+    "title": "What Can't I Press? — Keyboard shortcut conflict checker",
+    "url": "https://github.com/ericwbailey/what-cant-i-press",
+    "type": "article",
+    "category": "accessibility",
+    "status": "Processed",
+    "note": "Open-source macOS and Windows utility for checking proposed keyboard shortcuts against operating-system, application, and screen-reader commands. Useful before shipping shortcut-heavy interfaces; its scan is a starting point, not proof that a key is conflict-free.",
+    "takeaways": [
+      "Check shortcuts against VoiceOver, NVDA, JAWS, Narrator, Orca, OS, and application commands.",
+      "Single-letter shortcuts can override essential screen-reader navigation.",
+      "The project says scans stay on-device and no telemetry is collected.",
+      "Limitations: cannot detect every shortcut; the macOS build is unsigned and requests Accessibility permission."
+    ],
+    "added": "2026-08-24",
+    "subject": "Accessibility",
+    "tags": [
+      "Keyboard",
+      "Testing",
+      "Tool",
+      "Reference"
+    ],
+    "source_language": "en",
+    "id": "12"
+  },
+  {
+    "title": "The Difference Between a Button and a Link",
+    "url": "https://unplannedobsolescence.com/blog/buttons-vs-links/",
+    "type": "article",
+    "category": "accessibility",
+    "status": "Processed",
+    "note": "A clearer semantic rule than 'links navigate, buttons act': links represent destinations users can copy, bookmark, share, or open elsewhere; buttons perform operations bound to the current context. Styling or role attributes cannot fully repair the wrong native element.",
+    "takeaways": [
+      "Use a link for an independently usable destination.",
+      "Use a button for a fixed-context operation such as save, cancel, delete, submit, or opening a modal.",
+      "A button may cause navigation; the decisive question is whether the target should be independently opened, copied, or bookmarked.",
+      "Context: the article also advocates a proposed HTML Button Actions feature; its proposed action/method syntax is not a current implementation rule."
+    ],
+    "added": "2026-08-24",
+    "subject": "Accessibility",
+    "tags": [
+      "HTML",
+      "Semantics",
+      "Development",
+      "Reference"
+    ],
+    "source_language": "en",
+    "id": "13"
+  },
+  {
+    "title": "Mapping Revised Section 508/255 to WCAG 2.2",
+    "url": "https://rightbadcode.com/ict-standards-wcag22-mapping/",
+    "type": "article",
+    "category": "accessibility",
+    "status": "Processed",
+    "note": "Reference mapping showing that the revised US Section 508/255 ICT rules incorporate WCAG 2.0 A/AA, while many protections added in WCAG 2.1 and 2.2 are outside that incorporated subset. Engineering should target WCAG 2.2 AA and map back to the applicable legal requirement.",
+    "takeaways": [
+      "Section 508 incorporation and WCAG 2.2 conformance are related but not identical claims.",
+      "Newer criteria include reflow, non-text contrast, focus not obscured, dragging alternatives, target size, redundant entry, and accessible authentication.",
+      "Use WCAG 2.2 AA as the product baseline even where the legal rule references an older subset.",
+      "Context: practical secondary mapping, not legal advice; verify compliance decisions against the US Access Board and W3C sources."
+    ],
+    "added": "2026-08-24",
+    "subject": "Accessibility",
+    "tags": [
+      "WCAG",
+      "Section 508",
+      "Policy",
+      "Reference"
+    ],
+    "source_language": "en",
+    "id": "14"
   }
 ]
