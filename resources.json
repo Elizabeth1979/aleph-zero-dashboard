@@ -351,6 +351,288 @@
         ]
       },
       "reviewed_at": "2026-08-23"
+    },
+    "blog_draft": {
+      "state": "Ready for review",
+      "title": "Scarcity, Choices, and Incentives: A Simple Guide to Basic Economics",
+      "audience": "General readers; suitable from grades 7–9",
+      "disclosure": "AI-generated draft · human review pending · not approved for publication.",
+      "introduction": "Economics starts with a simple problem: people have many goals, but limited time, money, materials, and energy. This does not mean every decision is only about money. It means choices have trade-offs. Learning to notice those trade-offs can help us judge personal decisions, school rules, business plans, and public policy more carefully.",
+      "key_ideas": [
+        {
+          "text": "Scarcity means our wants can exceed the time, goods, services, and resources available.",
+          "citations": [
+            "1"
+          ]
+        },
+        {
+          "text": "Opportunity cost is the value of the best alternative we give up when we choose.",
+          "citations": [
+            "2"
+          ]
+        },
+        {
+          "text": "Incentives can influence behavior, but their effects depend on the people and situation.",
+          "citations": [
+            "3"
+          ]
+        },
+        {
+          "text": "Claims that public or private organizations are always more efficient are too broad; ownership, competition, regulation, information, and incentives all matter.",
+          "citations": [
+            "5",
+            "6",
+            "7"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "heading": "Every choice uses limited resources",
+          "paragraphs": [
+            {
+              "text": "Imagine you have 50 shekels and two free hours. You could buy something, save the money, study, exercise, or meet a friend. You cannot do every option at the same time. Economists call this limit scarcity.",
+              "citations": [
+                "1"
+              ]
+            },
+            {
+              "text": "When you choose one option, you give up another. The best alternative you did not choose is your opportunity cost. The idea applies to time and attention as well as money.",
+              "citations": [
+                "2"
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Incentives change the choices people face",
+          "paragraphs": [
+            {
+              "text": "An incentive is a reward, cost, rule, or signal that can affect a decision. A discount may encourage buying. A late fee may encourage paying on time. A school rule may change behavior in a way its designers expected—or in a way they did not expect.",
+              "citations": [
+                "3"
+              ]
+            },
+            {
+              "text": "Incentives do not control everyone like a switch. People have different needs, values, and options. A useful check is to ask which behavior the rule encourages and how different people might react.",
+              "citations": [
+                "3"
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "A famous argument is still an argument",
+          "paragraphs": [
+            {
+              "text": "Milton Friedman described four ways people can spend money. He argued that people may be least careful when spending someone else’s money on someone else. This is a useful question about accountability, but it is a viewpoint—not a law that proves every government program will waste money.",
+              "citations": [
+                "4"
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Markets and governments can both solve problems—and both can fail",
+          "paragraphs": [
+            {
+              "text": "Private ownership alone does not guarantee good results. Research on privatization finds wide differences across firms, sectors, and countries. Competition and the rules around an organization can matter as much as whether it is publicly or privately owned.",
+              "citations": [
+                "5",
+                "6"
+              ]
+            },
+            {
+              "text": "Markets can also leave costs on people who were not part of a deal, such as pollution affecting nearby residents. Public policy can respond with taxes, subsidies, or regulation. Those responses must also be checked for cost, fairness, and unintended effects.",
+              "citations": [
+                "7"
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "Judge systems by evidence, not slogans",
+          "paragraphs": [
+            {
+              "text": "Good intentions matter, but they are not enough to predict results. Ask what the goal is, which incentives change, who gains or loses, what evidence exists, and what happened in similar cases. Avoid claims that one type of organization is always best.",
+              "citations": [
+                "3",
+                "6",
+                "7"
+              ]
+            }
+          ]
+        }
+      ],
+      "young_reader_variant": {
+        "summary": "Economics studies choices made with limited resources. Scarcity means we cannot do or have everything at once. Opportunity cost is the best option we give up. Incentives are rewards, costs, or rules that can change behavior. These ideas help us ask better questions, but they do not prove that one political or economic system is always right.",
+        "key_points": [
+          "Name the limited resource.",
+          "Find the best option given up.",
+          "Notice the reward, cost, or rule.",
+          "Check what happened—not only what was intended.",
+          "Compare more than one viewpoint."
+        ]
+      },
+      "faqs": [
+        {
+          "question": "Is scarcity the same as poverty?",
+          "answer": "No. Poverty means a person lacks enough resources for important needs. Scarcity is broader: even wealthy people and countries have limited time and resources, so they must choose.",
+          "citations": [
+            "1"
+          ]
+        },
+        {
+          "question": "Is opportunity cost always money?",
+          "answer": "No. It can be time, attention, rest, or another activity. It is the value of the best alternative you did not choose.",
+          "citations": [
+            "2"
+          ]
+        },
+        {
+          "question": "Do incentives make everyone behave the same way?",
+          "answer": "No. Incentives can influence behavior, but people respond differently because their needs, values, and choices differ.",
+          "citations": [
+            "3"
+          ]
+        },
+        {
+          "question": "Are private organizations always more efficient than public ones?",
+          "answer": "No. Evidence shows mixed results. Competition, regulation, market structure, information, and incentives can matter as much as ownership.",
+          "citations": [
+            "5",
+            "6",
+            "7"
+          ]
+        }
+      ],
+      "self_check": [
+        {
+          "question": "You spend your free hour studying instead of gaming. What is the opportunity cost?",
+          "answer": "The value of gaming—the best alternative you gave up.",
+          "citations": [
+            "2"
+          ]
+        },
+        {
+          "question": "A shop gives a discount for reusable cups. What idea is it using?",
+          "answer": "An incentive: the discount changes the cost of a choice and may influence behavior.",
+          "citations": [
+            "3"
+          ]
+        },
+        {
+          "question": "Why is “private is always better” a weak economic claim?",
+          "answer": "Because results vary by sector and situation. Ownership is only one factor; competition, regulation, information, and incentives also matter.",
+          "citations": [
+            "5",
+            "6",
+            "7"
+          ]
+        }
+      ],
+      "activities": [
+        "Choice log: record three choices today. For each one, name the limited resource and the best alternative you gave up.",
+        "Incentive map: choose one school, work, or household rule. Write its goal, the behavior it rewards or discourages, and one possible unintended result.",
+        "Claim check: when someone says a system is “always” better, list the evidence and missing context you would need before accepting the claim."
+      ],
+      "sources": [
+        {
+          "id": "0",
+          "role": "Original source",
+          "title": "יסודות הכלכלה: להבין איך המנוע של הכלכלה העולמית עובד, מעבר לכסף, בנקים וגרפים",
+          "publisher": "YouTube",
+          "url": "https://www.youtube.com/watch?v=W59aEnn4smI"
+        },
+        {
+          "id": "1",
+          "role": "Evidence",
+          "title": "What Is Economics, and Why Is It Important?",
+          "publisher": "OpenStax, Rice University",
+          "url": "https://openstax.org/books/principles-economics-3e/pages/1-1-what-is-economics-and-why-is-it-important",
+          "evidence": "Scarcity means that human wants for goods, services and resources exceed what is available."
+        },
+        {
+          "id": "2",
+          "role": "Evidence",
+          "title": "How Individuals Make Choices Based on Their Budget Constraint",
+          "publisher": "OpenStax, Rice University",
+          "url": "https://openstax.org/books/principles-economics-3e/pages/2-1-how-individuals-make-choices-based-on-their-budget-constraint",
+          "evidence": "In short, opportunity cost is the value of the next best alternative."
+        },
+        {
+          "id": "3",
+          "role": "Evidence",
+          "title": "Microeconomic and Macroeconomic Matters",
+          "publisher": "OpenStax, Rice University",
+          "url": "https://openstax.org/books/principles-finance/pages/1-6-microeconomic-and-macroeconomic-matters",
+          "evidence": "Microeconomics helps us understand incentives and behavior, consumer choices and consumption, and supply and demand."
+        },
+        {
+          "id": "4",
+          "role": "Viewpoint source",
+          "title": "Milton Friedman — The Four Ways to Spend Money",
+          "publisher": "Free To Choose Network",
+          "url": "https://www.youtube.com/watch?v=XsRk9RThGt0",
+          "evidence": "So there are four ways in which you can spend money."
+        },
+        {
+          "id": "5",
+          "role": "Evidence",
+          "title": "Privatisation in Sub-Saharan Africa: Where Do We Stand?",
+          "publisher": "OECD Development Centre",
+          "url": "https://www.oecd.org/content/dam/oecd/en/publications/reports/2005/12/privatisation_g17a1a15/246802423384.pdf",
+          "evidence": "In the competitive manufacturing and tradable services sectors, efficiency gains, defined as improved performance of the company, have been generally achieved with wide variations in performance across firms and countries."
+        },
+        {
+          "id": "6",
+          "role": "Evidence",
+          "title": "Is Privatization Necessary?",
+          "publisher": "World Bank",
+          "url": "https://documents1.worldbank.org/curated/en/651121468766245760/pdf/16951-Replacement-file-007NELLI.pdf",
+          "evidence": "Neoclassical economic theory suggests that the relationship between ownership and performance is tenuous; efficiency is seen mainly as a function of market and incentive structures."
+        },
+        {
+          "id": "7",
+          "role": "Balancing source",
+          "title": "Markets, efficiency, and public policy",
+          "publisher": "CORE Econ",
+          "url": "https://books.core-econ.org/the-economy-v1/book/text/12.html",
+          "evidence": "Policies can address market failures by inducing actors to internalize these effects, for example by subsidizing a firm’s R&D when it may benefit other firms, or by imposing taxes that raise the price of goods whose production or use is environmentally destructive."
+        }
+      ],
+      "rights": {
+        "use_context": "Public; commercial use possible",
+        "source_license": "The original video did not display a Creative Commons reuse notice in the accessible page view. Treat it as Standard YouTube License unless the rights holder confirms otherwise.",
+        "attribution": "Name and link the original video as the work being discussed. Keep visible links for every evidence source.",
+        "quotation_limits": "This draft uses no direct quotations. If quotations are added, use only short necessary excerpts after editorial and legal review.",
+        "media_reuse": "Do not copy the transcript, thumbnail, stills, audio, or video. Link to the source or use the official YouTube embed only.",
+        "permission_needed": "Obtain permission before reproducing protected transcript text or media beyond what applicable law clearly permits. Original paraphrase and links still require final editorial review.",
+        "review_status": "Conservative internal rights review complete; final editorial or legal review required before publication.",
+        "reference_links": [
+          {
+            "title": "License types on YouTube",
+            "url": "https://support.google.com/youtube/answer/2797468?hl=en"
+          },
+          {
+            "title": "YouTube Terms of Service",
+            "url": "https://www.youtube.com/static?template=terms"
+          }
+        ]
+      },
+      "direct_quote_word_count": 0,
+      "publication": {
+        "human_approval_required": true,
+        "approved": false,
+        "external_status": "Blocked",
+        "approval_note": "Elli must review and approve this draft before it is published outside the private dashboard."
+      },
+      "created_at": "2026-08-24",
+      "reading_grade": 8.7,
+      "introduction_citations": [
+        "1",
+        "2"
+      ]
     }
   }
 ]

@@ -70,6 +70,14 @@ must('evidenceReview' in knowledge_page,
      'Knowledge normalization must preserve evidence_review data')
 must('youngReader' in knowledge_page,
      'Knowledge normalization must preserve young_reader data')
+must('blogDraft' in knowledge_page,
+     'Knowledge normalization must preserve blog_draft data')
+for section in {'Blog Draft', 'Draft Status', 'Key Ideas', 'Frequently Asked Questions', 'Check Your Understanding', 'Rights & Reuse', 'Publication Approval'}:
+    must(section in knowledge_page, f'Knowledge details must render the Stage 2 section: {section}')
+must('Draft reading grade' in knowledge_page,
+     'Knowledge details must show the measured blog-draft reading grade')
+must('renderCitedText' in knowledge_page,
+     'Knowledge details must attach citations to each source-bearing sentence')
 must('sourceId' in knowledge_page and 'itemsBySourceId.get(card.dataset.sourceId)' in knowledge_page,
      'Knowledge items must preserve stable source identity for modal lookup')
 must('...resources.map(resource =>' in knowledge_page,
@@ -96,6 +104,8 @@ must('Young Reader' in workflows_page and 'actionable' in workflows_page,
      'Saving Resources workflow must describe young-reader quality and actionable activities')
 must('Verified' in workflows_page and 'Viewpoint' in workflows_page and 'citations' in workflows_page and 'Revise' in workflows_page,
      'Saving Resources workflow must describe evidence labels, citations, and editorial decisions')
+must('blog draft' in workflows_page and 'AI-generated' in workflows_page and 'rights review' in workflows_page and 'approval' in workflows_page,
+     'Saving Resources workflow must describe Stage 2 drafting, rights, disclosure, and approval')
 must('project_001_insights:' in refresh_text, 'refresh.sh must export Project 001 insights into data.js')
 must('project_001_insights' in project_001_page, 'Project 001 page must read project_001_insights from data.js')
 must('<main' in project_001_page and 'skip-link' in project_001_page,
@@ -225,6 +235,58 @@ try:
     must(bool(decision.get('reason')), 'Basic Economics editorial decision must include a reason')
     must(isinstance(decision.get('required_revisions'), list) and bool(decision.get('required_revisions')),
          'Basic Economics editorial decision must include actionable revisions')
+    blog_draft = basic_economics.get('blog_draft') or {}
+    must(blog_draft.get('state') in {'Draft', 'Needs revisions', 'Ready for review', 'Approved'},
+         'Basic Economics must track blog draft state separately from Knowledge status')
+    must(bool(blog_draft.get('title')) and bool(blog_draft.get('introduction')),
+         'Basic Economics blog draft must include a title and introduction')
+    must(bool(blog_draft.get('introduction_citations')),
+         'Basic Economics blog draft introduction must retain citations')
+    draft_reading_grade = blog_draft.get('reading_grade')
+    must(isinstance(draft_reading_grade, (int, float)) and 7 <= draft_reading_grade <= 9,
+         'Basic Economics blog draft reading grade must be measured between 7 and 9')
+    disclosure = blog_draft.get('disclosure', '')
+    must('AI-generated' in disclosure and 'human review' in disclosure,
+         'Every blog draft must visibly disclose AI generation and human review state')
+    publication = blog_draft.get('publication') or {}
+    must(publication.get('human_approval_required') is True and publication.get('approved') is False,
+         'External publication must remain blocked until Elli approves the draft')
+    must(publication.get('external_status') == 'Blocked',
+         'Unapproved blog drafts must have an explicit blocked external-publication state')
+    sources = blog_draft.get('sources') or []
+    must(any(source.get('role') == 'Original source' and source.get('url') == basic_economics.get('url') for source in sources),
+         'Basic Economics blog draft must link clearly to its original video')
+    source_ids = {source.get('id') for source in sources}
+    must(all(source.get('title') and str(source.get('url', '')).startswith('https://') for source in sources),
+         'Every blog draft source must include a title and HTTPS URL')
+    must(all(source.get('role') == 'Original source' or source.get('evidence') for source in sources),
+         'Every non-original blog draft source must retain a verbatim evidence quote')
+    key_ideas = blog_draft.get('key_ideas') or []
+    sections = blog_draft.get('sections') or []
+    must(bool(key_ideas) and bool(sections),
+         'Basic Economics blog draft must include key ideas and article sections')
+    cited_blocks = key_ideas + [paragraph for section in sections for paragraph in (section.get('paragraphs') or [])]
+    must(all(block.get('text') and block.get('citations') for block in cited_blocks),
+         'Every key idea and article paragraph must keep citations attached')
+    must(all(set(block.get('citations') or []).issubset(source_ids) for block in cited_blocks),
+         'Blog draft citations must resolve to registered draft sources')
+    must(all(len(block.get('citations') or []) <= 3 for block in cited_blocks),
+         'No blog draft sentence block may cite more than three sources')
+    faqs = blog_draft.get('faqs') or []
+    self_check = blog_draft.get('self_check') or []
+    must(bool(faqs) and bool(self_check) and bool(blog_draft.get('activities')),
+         'Basic Economics blog draft must include FAQs, a self-check, and activities')
+    must(all(item.get('question') and item.get('answer') and item.get('citations') for item in faqs + self_check),
+         'Every FAQ and self-check answer must retain citations')
+    must(all(set(item.get('citations') or []).issubset(source_ids) for item in faqs + self_check),
+         'FAQ and self-check citations must resolve to registered draft sources')
+    rights = blog_draft.get('rights') or {}
+    for field in {'use_context', 'source_license', 'attribution', 'quotation_limits', 'media_reuse', 'permission_needed', 'review_status'}:
+        must(bool(rights.get(field)), f'Basic Economics rights record missing: {field}')
+    must(rights.get('use_context') == 'Public; commercial use possible',
+         'Rights review must use the conservative possible-commercial-use interpretation')
+    must(blog_draft.get('direct_quote_word_count') == 0,
+         'The pilot draft must use original wording and no direct quotations')
 except Exception as e:
     errors.append(f'resources.json is invalid JSON: {e}')
 

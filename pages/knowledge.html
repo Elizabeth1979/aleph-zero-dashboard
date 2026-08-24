@@ -177,6 +177,26 @@
   border: 1px solid var(--border);
   border-radius: var(--r1);
 }
+.draft-disclosure, .publication-lock {
+  padding: var(--s3);
+  color: var(--text-2);
+  background: var(--bg-inset);
+  border-inline-start: 3px solid var(--accent);
+  border-radius: var(--r1);
+}
+.draft-article { display: grid; gap: var(--s4); }
+.draft-article > h3 { margin-block: 0; font-size: 1.1rem; }
+.draft-section { padding-block-start: var(--s2); }
+.draft-section p { color: var(--text-2); }
+.inline-citations { display: inline-flex; gap: .2rem; margin-inline-start: .25rem; }
+.inline-citations a { color: var(--accent); font-size: var(--fs-xs); font-weight: 700; }
+.faq-list, .self-check-list { display: grid; gap: var(--s3); }
+.faq-item, .self-check-item { padding: var(--s3); background: var(--bg-inset); border-radius: var(--r1); }
+.faq-item h3 { margin-block-start: 0; }
+.self-check-item summary { min-height: 44px; color: var(--text); font-weight: 600; cursor: pointer; }
+.rights-list { display: grid; grid-template-columns: minmax(150px, .35fr) 1fr; gap: var(--s3); }
+.rights-list dt { color: var(--accent); font-weight: 700; }
+.rights-list dd { margin: 0; color: var(--text-2); }
 
 @media (max-width: 960px) { .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 600px) {
@@ -186,6 +206,8 @@
   .claim-label { justify-self: start; }
   .rubric-list { grid-template-columns: 1fr; gap: var(--s2); }
   .rubric-list dd { margin-block-end: var(--s3); }
+  .rights-list { grid-template-columns: 1fr; gap: var(--s2); }
+  .rights-list dd { margin-block-end: var(--s3); }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none; transition: none; }
@@ -310,6 +332,7 @@ document.addEventListener('DOMContentLoaded', () => {
       blogAngle: resource.blog_angle || '',
       youngReader: resource.young_reader || null,
       evidenceReview: resource.evidence_review || null,
+      blogDraft: resource.blog_draft || null,
       content: '',
     })),
     ...reports.map(report => ({
@@ -329,6 +352,7 @@ document.addEventListener('DOMContentLoaded', () => {
       blogAngle: report.blog_angle || '',
       youngReader: report.young_reader || null,
       evidenceReview: report.evidence_review || null,
+      blogDraft: report.blog_draft || null,
       content: report.content || '',
     })),
     ...project001.map(insight => ({
@@ -348,6 +372,7 @@ document.addEventListener('DOMContentLoaded', () => {
       blogAngle: insight.blog_angle || '',
       youngReader: insight.young_reader || null,
       evidenceReview: insight.evidence_review || null,
+      blogDraft: insight.blog_draft || null,
       content: '',
     })),
   ];
@@ -470,6 +495,67 @@ document.addEventListener('DOMContentLoaded', () => {
     const revisionsHtml = decision?.required_revisions?.length
       ? `<ul>${decision.required_revisions.map(revision => `<li>${esc(revision)}</li>`).join('')}</ul>`
       : '';
+    const draft = item.blogDraft;
+    const draftSources = new Map((draft?.sources || []).map(source => [String(source.id), source]));
+    const renderDraftCitations = ids => {
+      const links = (ids || []).map(id => {
+        const source = draftSources.get(String(id));
+        return source ? `<a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer" aria-label="Source ${esc(id)}: ${esc(source.title)}">[${esc(id)}]</a>` : '';
+      }).join('');
+      return links ? `<span class="inline-citations">${links}</span>` : '';
+    };
+    const renderCitedText = (text, ids) => {
+      const sentences = String(text || '').match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [];
+      return sentences.map(sentence => `${esc(sentence.trim())}${renderDraftCitations(ids)}`).join(' ');
+    };
+    const draftStatusHtml = draft
+      ? `<p><strong>Draft state:</strong> ${esc(draft.state || '')}</p><p><strong>Audience:</strong> ${esc(draft.audience || '')}</p>`
+        + `<p><strong>Draft reading grade:</strong> ${esc(draft.reading_grade ?? 'Not measured')}</p>`
+        + `<p class="draft-disclosure">${esc(draft.disclosure || '')}</p>`
+      : '';
+    const articleHtml = draft
+      ? `<article class="draft-article"><h3>${esc(draft.title || '')}</h3><p>${renderCitedText(draft.introduction, draft.introduction_citations)}</p>`
+        + (draft.sections || []).map(section => `<section class="draft-section"><h3>${esc(section.heading || '')}</h3>`
+          + (section.paragraphs || []).map(paragraph => `<p>${renderCitedText(paragraph.text, paragraph.citations)}</p>`).join('')
+          + `</section>`).join('') + `</article>`
+      : '';
+    const draftIdeasHtml = draft?.key_ideas?.length
+      ? `<ul>${draft.key_ideas.map(idea => `<li>${renderCitedText(idea.text, idea.citations)}</li>`).join('')}</ul>`
+      : '';
+    const youngDraft = draft?.young_reader_variant;
+    const youngDraftHtml = youngDraft
+      ? `<p>${esc(youngDraft.summary || '')}</p>`
+        + (youngDraft.key_points?.length ? `<ul>${youngDraft.key_points.map(point => `<li>${esc(point)}</li>`).join('')}</ul>` : '')
+      : '';
+    const faqHtml = draft?.faqs?.length
+      ? `<div class="faq-list">${draft.faqs.map(faq => `<article class="faq-item"><h3>${esc(faq.question || '')}</h3><p>${renderCitedText(faq.answer, faq.citations)}</p></article>`).join('')}</div>`
+      : '';
+    const selfCheckHtml = draft?.self_check?.length
+      ? `<div class="self-check-list">${draft.self_check.map(check => `<details class="self-check-item"><summary>${esc(check.question || '')}</summary><p>${renderCitedText(check.answer, check.citations)}</p></details>`).join('')}</div>`
+      : '';
+    const draftActivitiesHtml = draft?.activities?.length
+      ? `<ul>${draft.activities.map(activity => `<li>${esc(activity)}</li>`).join('')}</ul>`
+      : '';
+    const draftSourcesHtml = draft?.sources?.length
+      ? `<ol class="citation-list">${draft.sources.map(source => `<li><a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">${esc(source.title)}</a> — ${esc(source.publisher || '')} · ${esc(source.role || '')}</li>`).join('')}</ol>`
+      : '';
+    const rightsLabels = {
+      use_context: 'Use context',
+      source_license: 'Source license',
+      attribution: 'Attribution',
+      quotation_limits: 'Quotation limits',
+      media_reuse: 'Image / media reuse',
+      permission_needed: 'Permission needed',
+      review_status: 'Review status',
+    };
+    const rights = draft?.rights;
+    const rightsHtml = rights
+      ? `<dl class="rights-list">${Object.entries(rightsLabels).map(([key, label]) => `<dt>${esc(label)}</dt><dd>${esc(rights[key] || '')}</dd>`).join('')}</dl>`
+        + (rights.reference_links?.length ? `<div class="source-links">${rights.reference_links.map(link => `<a class="source-link" href="${esc(link.url)}" target="_blank" rel="noopener noreferrer">${esc(link.title)}</a>`).join('')}</div>` : '')
+      : '';
+    const publicationHtml = draft?.publication
+      ? `<div class="publication-lock"><p><strong>External publication:</strong> ${esc(draft.publication.external_status || '')}</p><p>${esc(draft.publication.approval_note || '')}</p></div>`
+      : '';
 
     modalBody.innerHTML = [
       detailSection('Standard Summary', summaryHtml),
@@ -482,6 +568,16 @@ document.addEventListener('DOMContentLoaded', () => {
       detailSection('Editorial Rubric', rubricHtml),
       detailSection('Editorial Decision', decisionHtml),
       detailSection('Required Revisions', revisionsHtml),
+      detailSection('Draft Status', draftStatusHtml),
+      detailSection('Blog Draft', articleHtml),
+      detailSection('Key Ideas', draftIdeasHtml),
+      detailSection('Young Reader Draft', youngDraftHtml),
+      detailSection('Frequently Asked Questions', faqHtml),
+      detailSection('Check Your Understanding', selfCheckHtml),
+      detailSection('Activities', draftActivitiesHtml),
+      detailSection('Draft Sources', draftSourcesHtml),
+      detailSection('Rights & Reuse', rightsHtml),
+      detailSection('Publication Approval', publicationHtml),
       detailSection('Sources', sourceMeta + linksHtml),
       detailSection('Bias / reliability note', `<p>${esc(item.biasNote || 'No separate bias or reliability note recorded.')}</p>`),
       detailSection('Blog / story angle', `<p>${esc(item.blogAngle || 'No separate blog or story angle recorded.')}</p>`),

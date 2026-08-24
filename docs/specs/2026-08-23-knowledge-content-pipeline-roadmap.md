@@ -1,7 +1,7 @@
 # Knowledge Content Pipeline Roadmap — Design Specification
 
 **Date:** 2026-08-23  
-**Status:** Stage 1 implemented and verified; Stage 2 pending
+**Status:** Stages 1–2 implemented and verified; Stage 3 pending
 
 ## Goal
 
@@ -144,6 +144,6 @@ After quality and publishing rules are stable:
 - do not create publishable content until the quality review is complete
 - notify Elli only when a decision or approval is needed
 
-## Scope for the Next Implementation
+## Current Implementation State
 
-Implement Stage 1 only, using Basic Economics as the pilot. Do not begin the blog, learning, or inbox stages in the same change.
+Stages 1 and 2 use Basic Economics as the pilot. The evidence review and private blog draft are implemented; external publication remains blocked until Elli approves the draft. Do not begin the child learning experience or inbox automation in the same change.
