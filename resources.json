@@ -237,11 +237,6 @@
         "Rules can create unintended consequences—results that nobody planned.",
         "The source uses a pro-market viewpoint, so readers should compare it with other economic perspectives."
       ],
-      "activities": [
-        "Choice log: write down three choices you make today and what you give up with each choice.",
-        "Incentive map: choose one school rule. List its reward or cost, the behavior it encourages, and one result nobody may have planned.",
-        "Compare sources: find another introduction to opportunity cost. Write one point both sources agree on and one point they explain differently."
-      ],
       "reading_grade": 7.2,
       "quality_note": "Adaptable for grades 7–9. The economic concepts are useful, but the original lesson is politically opinionated. This version adds concrete examples, defines key terms, labels the pro-market viewpoint, and asks readers to compare another source."
     },
@@ -353,10 +348,10 @@
       "reviewed_at": "2026-08-23"
     },
     "blog_draft": {
-      "state": "Ready for review",
+      "state": "Approved",
       "title": "Why We Can’t Have Everything: A Simple Guide to Scarcity, Choices, and Incentives",
       "audience": "General readers; suitable from grades 7–9",
-      "disclosure": "AI-generated draft · human review pending · not approved for publication.",
+      "disclosure": "AI-generated and human-reviewed. Sources and reuse rights were checked. Not yet published.",
       "introduction": "Economics starts with a simple problem: people have many goals, but limited time, money, materials, and energy. This does not mean every decision is only about money. It means choices have trade-offs. Learning to notice those trade-offs can help us judge personal decisions, school rules, business plans, and public policy more carefully.",
       "key_ideas": [
         {
@@ -431,25 +426,25 @@
               ]
             },
             {
-              "text": "1. Your money on yourself: you care about both the price and what you receive.",
+              "text": "1) Your money on yourself: you care about both the price and what you receive.",
               "citations": [
                 "4"
               ]
             },
             {
-              "text": "2. Your money on someone else: you care about the price, but you may know less about what the other person values.",
+              "text": "2) Your money on someone else: you care about the price, but you may know less about what the other person values.",
               "citations": [
                 "4"
               ]
             },
             {
-              "text": "3. Someone else’s money on yourself: you care about what you receive, but you have less reason to limit the price.",
+              "text": "3) Someone else’s money on yourself: you care about what you receive, but you have less reason to limit the price.",
               "citations": [
                 "4"
               ]
             },
             {
-              "text": "4. Someone else’s money on someone else: Friedman argued that you have less reason to monitor either the price or the result.",
+              "text": "4) Someone else’s money on someone else: Friedman argued that you have less reason to monitor either the price or the result.",
               "citations": [
                 "4"
               ]
@@ -466,7 +461,7 @@
           "heading": "Markets and governments can both solve problems—and both can fail",
           "paragraphs": [
             {
-              "text": "Private ownership alone does not guarantee good results. Research on privatization finds wide differences across firms, sectors, and countries. Competition and the rules around an organization can matter as much as whether it is publicly or privately owned.",
+              "text": "Private ownership alone does not guarantee good results. Research on privatization finds wide differences across firms, sectors, and countries. Competition, regulation, available information, and incentives can matter as much as ownership.",
               "citations": [
                 "5",
                 "6"
@@ -495,11 +490,11 @@
         }
       ],
       "young_reader_variant": {
-        "summary": "Economics studies choices made with limited resources. Scarcity means we cannot do or have everything at once. Opportunity cost is the best option we give up. Incentives are rewards, costs, or rules that can change behavior. These ideas help us ask better questions, but they do not prove that one political or economic system is always right.",
+        "summary": "Economics studies choices made with limited resources. Scarcity means we cannot do or have everything at once. Opportunity cost is the best option we give up. Incentives are rewards, costs, or signals that can change behavior. These ideas help us ask better questions, but they do not prove that one political or economic system is always right.",
         "key_points": [
           "Name the limited resource.",
           "Find the best option given up.",
-          "Notice the reward, cost, or rule.",
+          "Notice the reward, cost, or signal.",
           "Check what happened—not only what was intended.",
           "Compare more than one viewpoint."
         ]
@@ -539,7 +534,7 @@
       "self_check": [
         {
           "question": "You spend your free hour studying instead of gaming. What is the opportunity cost?",
-          "answer": "The value of gaming—the best alternative you gave up.",
+          "answer": "The gaming time and enjoyment you gave up. Gaming was the best alternative you did not choose.",
           "citations": [
             "2"
           ]
@@ -560,11 +555,6 @@
             "7"
           ]
         }
-      ],
-      "activities": [
-        "Choice log: record three choices today. For each one, name the limited resource and the best alternative you gave up.",
-        "Incentive map: choose one school, work, or household rule. Write its goal, the behavior it rewards or discourages, and one possible unintended result.",
-        "Claim check: when someone says a system is “always” better, list the evidence and missing context you would need before accepting the claim."
       ],
       "sources": [
         {
@@ -638,7 +628,7 @@
         "quotation_limits": "This draft uses no direct quotations. If quotations are added, use only short necessary excerpts after editorial and legal review.",
         "media_reuse": "Do not copy the transcript, thumbnail, stills, audio, or video. Link to the source or use the official YouTube embed only.",
         "permission_needed": "Obtain permission before reproducing protected transcript text or media beyond what applicable law clearly permits. Original paraphrase and links still require final editorial review.",
-        "review_status": "Conservative internal rights review complete; final editorial or legal review required before publication.",
+        "review_status": "Human editorial review complete; final legal review is still required before public or commercial publication.",
         "reference_links": [
           {
             "title": "License types on YouTube",
@@ -655,14 +645,19 @@
         "human_approval_required": true,
         "approved": false,
         "external_status": "Blocked",
-        "approval_note": "Elli must review and approve this draft before it is published outside the private dashboard."
+        "approval_note": "Elli approved the article content. Public release remains blocked and requires separate approval."
       },
       "created_at": "2026-08-24",
-      "reading_grade": 8.7,
+      "reading_grade": 8.5,
       "introduction_citations": [
         "1",
         "2"
-      ]
+      ],
+      "human_review": {
+        "status": "Approved",
+        "reviewed_by": "Elli",
+        "reviewed_at": "2026-08-24"
+      }
     }
   },
   {

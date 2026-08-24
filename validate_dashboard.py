@@ -78,6 +78,8 @@ must('Draft reading grade' in knowledge_page,
      'Knowledge details must show the measured blog-draft reading grade')
 must('renderCitedText' in knowledge_page,
      'Knowledge details must attach citations to each source-bearing sentence')
+must('draftActivitiesHtml' not in knowledge_page,
+     'Stage 2 blog drafts must not render learning activities reserved for Stage 3')
 must('sourceId' in knowledge_page and 'itemsBySourceId.get(card.dataset.sourceId)' in knowledge_page,
      'Knowledge items must preserve stable source identity for modal lookup')
 must('...resources.map(resource =>' in knowledge_page,
@@ -100,8 +102,8 @@ must('project-001-badge' not in index_text and 'project-001-preview' not in inde
      'Unused Project 001 home badge and preview code must be removed')
 must('Dashboard → Knowledge' in workflows_page and 'subject' in workflows_page and 'tags' in workflows_page,
      'Saving Resources workflow must point to Knowledge and describe subject/tag classification')
-must('Young Reader' in workflows_page and 'actionable' in workflows_page,
-     'Saving Resources workflow must describe young-reader quality and actionable activities')
+must('Young Reader' in workflows_page and 'activities are deferred to Stage 3' in workflows_page,
+     'Saving Resources workflow must describe young-reader quality and defer activities to Stage 3')
 must('Verified' in workflows_page and 'Viewpoint' in workflows_page and 'citations' in workflows_page and 'Revise' in workflows_page,
      'Saving Resources workflow must describe evidence labels, citations, and editorial decisions')
 must('blog draft' in workflows_page and 'AI-generated' in workflows_page and 'rights review' in workflows_page and 'approval' in workflows_page,
@@ -207,8 +209,8 @@ try:
          'Basic Economics young-reader target must be grades 7–9')
     must(bool(young_reader.get('summary')) and bool(young_reader.get('key_points')),
          'Basic Economics must include a parallel young-reader summary and key points')
-    must(isinstance(young_reader.get('activities'), list) and bool(young_reader.get('activities')),
-         'Basic Economics must include actionable young-reader activities')
+    must(not young_reader.get('activities'),
+         'Basic Economics learning activities must remain deferred to Stage 3')
     reading_grade = young_reader.get('reading_grade')
     must(isinstance(reading_grade, (int, float)) and 7 <= reading_grade <= 9,
          'Basic Economics young-reader reading grade must be measured between 7 and 9')
@@ -236,8 +238,8 @@ try:
     must(isinstance(decision.get('required_revisions'), list) and bool(decision.get('required_revisions')),
          'Basic Economics editorial decision must include actionable revisions')
     blog_draft = basic_economics.get('blog_draft') or {}
-    must(blog_draft.get('state') in {'Draft', 'Needs revisions', 'Ready for review', 'Approved'},
-         'Basic Economics must track blog draft state separately from Knowledge status')
+    must(blog_draft.get('state') == 'Approved',
+         'Basic Economics reviewed blog draft must record its approved state separately from Knowledge status')
     must(bool(blog_draft.get('title')) and bool(blog_draft.get('introduction')),
          'Basic Economics blog draft must include a title and introduction')
     must(bool(blog_draft.get('introduction_citations')),
@@ -246,8 +248,11 @@ try:
     must(isinstance(draft_reading_grade, (int, float)) and 7 <= draft_reading_grade <= 9,
          'Basic Economics blog draft reading grade must be measured between 7 and 9')
     disclosure = blog_draft.get('disclosure', '')
-    must('AI-generated' in disclosure and 'human review' in disclosure,
-         'Every blog draft must visibly disclose AI generation and human review state')
+    must('AI-generated and human-reviewed' in disclosure and 'Not yet published' in disclosure,
+         'The approved draft must disclose AI generation, completed human review, and unpublished state')
+    human_review = blog_draft.get('human_review') or {}
+    must(human_review.get('status') == 'Approved' and human_review.get('reviewed_by') == 'Elli' and bool(human_review.get('reviewed_at')),
+         'The approved blog draft must retain Elli’s human review record')
     publication = blog_draft.get('publication') or {}
     must(publication.get('human_approval_required') is True and publication.get('approved') is False,
          'External publication must remain blocked until Elli approves the draft')
@@ -272,10 +277,16 @@ try:
          'Blog draft citations must resolve to registered draft sources')
     must(all(len(block.get('citations') or []) <= 3 for block in cited_blocks),
          'No blog draft sentence block may cite more than three sources')
+    friedman_section = next((section for section in sections if section.get('heading') == 'Friedman’s four ways to spend money'), {})
+    friedman_text = [paragraph.get('text', '') for paragraph in friedman_section.get('paragraphs', [])]
+    must(all(any(text.startswith(f'{number}) ') for text in friedman_text) for number in range(1, 5)),
+         'Friedman’s four spending cases must use citation-safe numbered labels')
     faqs = blog_draft.get('faqs') or []
     self_check = blog_draft.get('self_check') or []
-    must(bool(faqs) and bool(self_check) and bool(blog_draft.get('activities')),
-         'Basic Economics blog draft must include FAQs, a self-check, and activities')
+    must(bool(faqs) and bool(self_check),
+         'Basic Economics blog draft must include FAQs and a self-check')
+    must('activities' not in blog_draft,
+         'Stage 2 blog drafts must leave learning activities to Stage 3')
     must(all(item.get('question') and item.get('answer') and item.get('citations') for item in faqs + self_check),
          'Every FAQ and self-check answer must retain citations')
     must(all(set(item.get('citations') or []).issubset(source_ids) for item in faqs + self_check),

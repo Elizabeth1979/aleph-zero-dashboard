@@ -86,7 +86,7 @@ Keep one Knowledge card per resource. In the item detail view, add:
 4. Editorial Decision
 5. Required Revisions
 
-The existing Standard Summary, Young Reader Version, activities, source notes, and blog angle remain.
+The existing Standard Summary, Young Reader Version, source notes, and blog angle remain. Learning activities are deferred to Stage 3.
 
 ### Basic Economics pilot
 
@@ -108,7 +108,7 @@ After Stage 1 is approved in production:
 
 - generate a structured draft from a Ready or revised item
 - keep citations attached to claims
-- use simple language with key ideas, FAQs, a self-check, and actionable activities
+- use simple language with key ideas, FAQs, and a self-check
 - include standard and young-reader variants where useful
 - link clearly to every original source
 - show a visible “AI-generated and human-reviewed” disclosure on every article

@@ -533,9 +533,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const selfCheckHtml = draft?.self_check?.length
       ? `<div class="self-check-list">${draft.self_check.map(check => `<details class="self-check-item"><summary>${esc(check.question || '')}</summary><p>${renderCitedText(check.answer, check.citations)}</p></details>`).join('')}</div>`
       : '';
-    const draftActivitiesHtml = draft?.activities?.length
-      ? `<ul>${draft.activities.map(activity => `<li>${esc(activity)}</li>`).join('')}</ul>`
-      : '';
     const draftSourcesHtml = draft?.sources?.length
       ? `<ol class="citation-list">${draft.sources.map(source => `<li><a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">${esc(source.title)}</a> — ${esc(source.publisher || '')} · ${esc(source.role || '')}</li>`).join('')}</ol>`
       : '';
@@ -574,7 +571,6 @@ document.addEventListener('DOMContentLoaded', () => {
       detailSection('Young Reader Draft', youngDraftHtml),
       detailSection('Frequently Asked Questions', faqHtml),
       detailSection('Check Your Understanding', selfCheckHtml),
-      detailSection('Activities', draftActivitiesHtml),
       detailSection('Draft Sources', draftSourcesHtml),
       detailSection('Rights & Reuse', rightsHtml),
       detailSection('Publication Approval', publicationHtml),
