@@ -1,0 +1,14 @@
+[
+  {
+    "_instructions": "After ANY edit to this file, run: bash ~/.hermes/dashboard/publish.sh"
+  },
+  {
+    "id": 31,
+    "task": "Prepare Q&A about accessibility",
+    "added": "2026-04-05",
+    "tags": [
+      "Work"
+    ],
+    "description": "Questions and answers about accessibility for the knowledge base."
+  }
+]

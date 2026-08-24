@@ -12,7 +12,7 @@
     ],
     "urgent": false,
     "scope": "private",
-    "description": "Owes two years back. Payment site was down last time \u2014 try again."
+    "description": "Owes two years back. Payment site was down last time — try again."
   },
   {
     "id": 5,
@@ -23,18 +23,7 @@
     ],
     "urgent": false,
     "due": "2026-10-25",
-    "description": "Buy while in the USA during the 24 October\u20135 November trip."
-  },
-  {
-    "id": 31,
-    "task": "Prepare Q&A about accessibility",
-    "added": "2026-04-05",
-    "tags": [
-      "Work"
-    ],
-    "urgent": false,
-    "scope": "work",
-    "description": "Questions and answers about accessibility for the knowledge base."
+    "description": "Buy while in the USA during the 24 October–5 November trip."
   },
   {
     "id": 32,
@@ -58,14 +47,14 @@
   },
   {
     "id": 35,
-    "task": "Talk to boss about 2-week vacation Oct 24 \u2013 Nov 5",
+    "task": "Talk to boss about 2-week vacation Oct 24 – Nov 5",
     "added": "2026-04-08",
     "tags": [
       "Private"
     ],
     "urgent": true,
     "scope": "private",
-    "description": "Ask for 2 weeks off Oct 24 (Thu) \u2013 Nov 5 (Thu). Found El Al tickets to LAX for the family \u2014 need approval before booking."
+    "description": "Ask for 2 weeks off Oct 24 (Thu) – Nov 5 (Thu). Found El Al tickets to LAX for the family — need approval before booking."
   },
   {
     "id": 33,
