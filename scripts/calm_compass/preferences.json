@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "weights": {
+    "deep": 1.0,
+    "postponement": 1.0,
+    "quick": 1.0,
+    "recent_project": 1.0
+  },
+  "explicit_corrections": {},
+  "ring_order": [
+    "today",
+    "my_world",
+    "setup"
+  ],
+  "ring_labels": {
+    "today": "Today",
+    "my_world": "Your world",
+    "setup": "Hermes setup"
+  }
+}

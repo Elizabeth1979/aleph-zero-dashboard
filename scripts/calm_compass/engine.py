@@ -332,3 +332,121 @@ def detect_anomalies(snapshot: Record, now: datetime) -> List[Record]:
                 )
             )
     return anomalies
+
+
+CANONICAL_RING_ORDER = ["today", "my_world", "setup"]
+CANONICAL_RING_LABELS = {
+    "today": "Today",
+    "my_world": "Your world",
+    "setup": "Hermes setup",
+}
+_ALLOWED_WEIGHTS = {"quick", "deep", "recent_project", "postponement"}
+_STOP_WORDS = {"a", "an", "for", "please", "reply", "the", "to", "with"}
+
+
+def _tags(record: Record) -> set:
+    tag_value = record.get("tags")
+    values = tag_value if isinstance(tag_value, list) else []
+    return {_normalized_text(value) for value in values if _normalized_text(value)}
+
+
+def _words(value: Any) -> set:
+    normalized = "".join(character if character.isalnum() else " " for character in str(value or "").casefold())
+    return {word for word in normalized.split() if word not in _STOP_WORDS}
+
+
+def _strong_title_match(task: Record, email: Record) -> bool:
+    task_words = _words(task.get("title"))
+    email_words = _words(email.get("action") or email.get("title"))
+    return len(task_words) >= 3 and len(task_words & email_words) / len(task_words) >= 0.75
+
+
+def find_connections(
+    tasks: Iterable[Record], resources: Iterable[Record], emails: Iterable[Record]
+) -> List[Record]:
+    task_records = list(tasks)
+    resource_records = list(resources)
+    email_records = list(emails)
+    connections: List[Record] = []
+    for task in task_records:
+        task_tags = _tags(task)
+        for resource in resource_records:
+            shared = sorted(task_tags & _tags(resource))
+            if not shared:
+                continue
+            tag = shared[0]
+            task_id = str(task.get("id", ""))
+            resource_id = str(resource.get("id", ""))
+            reason = "Shared tag: " + tag
+            connections.append(
+                {
+                    "kind": "resource_task",
+                    "from_id": resource_id,
+                    "to_id": task_id,
+                    "reason": reason,
+                    "evidence": [
+                        {"source": "tasks", "id": task_id, "reason": reason},
+                        {"source": "resources", "id": resource_id, "reason": reason},
+                    ],
+                }
+            )
+
+    for email in email_records:
+        explicit_task_id = str(email.get("task_id", ""))
+        for task in task_records:
+            task_id = str(task.get("id", ""))
+            explicit = bool(explicit_task_id) and explicit_task_id == task_id
+            if not explicit and not _strong_title_match(task, email):
+                continue
+            email_id = str(email.get("id", ""))
+            reason = "Explicit task identifier" if explicit else "Strong normalized title match"
+            connections.append(
+                {
+                    "kind": "email_task",
+                    "from_id": email_id,
+                    "to_id": task_id,
+                    "reason": reason,
+                    "evidence": [
+                        {"source": "emails", "id": email_id, "reason": reason},
+                        {"source": "tasks", "id": task_id, "reason": reason},
+                    ],
+                }
+            )
+            break
+    return connections
+
+
+def update_preferences(
+    current: Record,
+    learned_updates: Record,
+    explicit_corrections: Optional[Record] = None,
+) -> Record:
+    weight_value = current.get("weights")
+    current_weights: Record = weight_value if isinstance(weight_value, dict) else {}
+    explicit_value = current.get("explicit_corrections")
+    current_explicit: Record = explicit_value if isinstance(explicit_value, dict) else {}
+    corrections: Dict[str, float] = {
+        str(key): float(value)
+        for key, value in current_explicit.items()
+        if key in _ALLOWED_WEIGHTS and isinstance(value, (int, float))
+    }
+    if explicit_corrections:
+        for key, value in explicit_corrections.items():
+            if key in _ALLOWED_WEIGHTS and isinstance(value, (int, float)):
+                corrections[key] = float(value)
+
+    keys = _ALLOWED_WEIGHTS & (set(current_weights) | set(learned_updates) | set(corrections))
+    weights: Dict[str, float] = {}
+    for key in sorted(keys):
+        base = float(current_weights.get(key, 1.0))
+        change = learned_updates.get(key, 0.0)
+        if isinstance(change, (int, float)):
+            base += max(-0.1, min(0.1, float(change)))
+        weights[key] = float(corrections.get(key, round(base, 10)))
+
+    return {
+        "weights": weights,
+        "explicit_corrections": corrections,
+        "ring_order": list(CANONICAL_RING_ORDER),
+        "ring_labels": dict(CANONICAL_RING_LABELS),
+    }
