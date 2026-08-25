@@ -1,0 +1,10 @@
+[
+  {"_instructions": "Never expose this entry"},
+  {
+    "id": "mail-1",
+    "sender": "Accountant",
+    "action": "Reply with the annual statement",
+    "deadline": "2026-08-27T07:00:00Z",
+    "body": "Private bank details"
+  }
+]

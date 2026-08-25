@@ -1,0 +1,6 @@
+{
+  "scheduler_active": false,
+  "jobs": [
+    {"id": "paused-mac-copy", "name": "Morning Brief mirror", "enabled": false, "last_status": "ok"}
+  ]
+}

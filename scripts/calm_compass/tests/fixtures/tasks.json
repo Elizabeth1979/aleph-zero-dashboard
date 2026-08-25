@@ -1,0 +1,13 @@
+[
+  {"_instructions": "Never expose this entry"},
+  {
+    "id": "task-1",
+    "task": "Reply to accountant",
+    "due": "2026-08-25T21:30:00Z",
+    "urgent": true,
+    "description": "Send the requested document.",
+    "tags": ["Company"],
+    "private_note": "not for dashboard",
+    "scope": "private"
+  }
+]
