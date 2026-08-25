@@ -199,3 +199,136 @@ def diff_snapshots(previous: Record, current: Record, limit: int = 20) -> List[R
             changes.append(_change("automation_recovered", automation, "Automation recovered", "positive"))
 
     return changes[: max(0, limit)]
+
+
+def _parse_datetime(value: Any) -> Optional[datetime]:
+    if not isinstance(value, str) or not value:
+        return None
+    try:
+        return datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+
+
+def _anomaly(kind: str, title: str, summary: str, source_id: str) -> Record:
+    return {
+        "kind": kind,
+        "title": title,
+        "summary": summary,
+        "source_id": source_id,
+        "impact": "attention",
+    }
+
+
+def _normalized_text(value: Any) -> str:
+    return " ".join(str(value or "").casefold().split())
+
+
+def _record_list(value: Any) -> List[Record]:
+    if not isinstance(value, list):
+        return []
+    return [item for item in value if isinstance(item, dict)]
+
+
+def detect_anomalies(snapshot: Record, now: datetime) -> List[Record]:
+    anomalies: List[Record] = []
+    system_value = snapshot.get("system")
+    system: Record = system_value if isinstance(system_value, dict) else {}
+    if system.get("vps_scheduler_active") is True and system.get("mac_scheduler_active") is True:
+        anomalies.append(
+            _anomaly(
+                "scheduler_ownership",
+                "Scheduler ownership conflict",
+                "VPS and Mac schedulers are both active",
+                "scheduler",
+            )
+        )
+
+    for field, kind, title in (
+        ("sync_at", "stale_sync", "Synchronization is stale"),
+        ("snapshot_at", "stale_snapshot", "Dashboard snapshot is stale"),
+    ):
+        timestamp = _parse_datetime(system.get(field))
+        if timestamp is not None and (now - timestamp).total_seconds() > 24 * 60 * 60:
+            anomalies.append(_anomaly(kind, title, "Last successful update is over 24 hours old", field))
+
+    for automation in _record_list(snapshot.get("automations")):
+        error_at = _parse_datetime(automation.get("last_error_at"))
+        success_at = _parse_datetime(automation.get("last_success_at"))
+        unresolved_error = automation.get("last_status") == "error" and (
+            success_at is None or error_at is None or success_at <= error_at
+        )
+        if unresolved_error:
+            anomalies.append(
+                _anomaly(
+                    "automation_failure",
+                    str(automation.get("title", "Automation failed")),
+                    "Latest automation result is an unresolved error",
+                    str(automation.get("id", "")),
+                )
+            )
+
+    reminders = _record_list(snapshot.get("reminders"))
+    reminder_keys: Dict[Tuple[str, str], str] = {}
+    for reminder in reminders:
+        key = (_normalized_text(reminder.get("title")), str(reminder.get("due") or ""))
+        if key in reminder_keys:
+            anomalies.append(
+                _anomaly(
+                    "duplicate_reminder",
+                    str(reminder.get("title", "Duplicate reminder")),
+                    "Another reminder has the same title and due date",
+                    str(reminder.get("id", "")),
+                )
+            )
+        else:
+            reminder_keys[key] = str(reminder.get("id", ""))
+
+    tasks = _record_list(snapshot.get("tasks"))
+    urgent_tasks = [item for item in tasks if item.get("urgent") is True]
+    if len(urgent_tasks) > 3:
+        anomalies.append(
+            _anomaly(
+                "urgent_overload",
+                "Too many urgent tasks",
+                str(len(urgent_tasks)) + " tasks are marked urgent",
+                "tasks",
+            )
+        )
+    for task in tasks:
+        dates = task.get("dates") if isinstance(task.get("dates"), list) else []
+        normalized_dates = {str(value) for value in dates if value}
+        if len(normalized_dates) > 1:
+            anomalies.append(
+                _anomaly(
+                    "conflicting_dates",
+                    str(task.get("title", "Conflicting dates")),
+                    "The same task has conflicting dates",
+                    str(task.get("id", "")),
+                )
+            )
+
+    for commitment in _record_list(snapshot.get("commitments")):
+        if not _normalized_text(commitment.get("next_action")):
+            anomalies.append(
+                _anomaly(
+                    "missing_next_action",
+                    str(commitment.get("title", "Commitment needs a next action")),
+                    "Open commitment has no next action",
+                    str(commitment.get("id", "")),
+                )
+            )
+
+    source_freshness = snapshot.get("source_freshness")
+    freshness_records = source_freshness if isinstance(source_freshness, dict) else {}
+    for source, freshness in freshness_records.items():
+        if isinstance(freshness, dict) and freshness.get("reason") == "missing":
+            anomalies.append(
+                _anomaly(
+                    "missing_source",
+                    "Source file is missing",
+                    "A configured source file could not be read",
+                    str(source),
+                )
+            )
+    return anomalies
