@@ -3,6 +3,7 @@ const assert = require('node:assert/strict');
 
 const {
   createReadAloudController,
+  detectTextLanguage,
   normalizeLanguage,
   splitIntoChunks,
 } = require('../pages/read-aloud.js');
@@ -43,6 +44,17 @@ test('normalizeLanguage selects suitable English and Hebrew device voices', () =
   assert.equal(normalizeLanguage('he-IL'), 'he-IL');
   assert.equal(normalizeLanguage('en'), 'en-US');
   assert.equal(normalizeLanguage('en-GB'), 'en-GB');
+});
+
+test('detectTextLanguage uses displayed text instead of the original source language', () => {
+  assert.equal(
+    detectTextLanguage('This English blog was adapted from a Hebrew source.', 'he'),
+    'en-US',
+  );
+  assert.equal(
+    detectTextLanguage('זהו מאמר בעברית שנוצר ממקור באנגלית.', 'en'),
+    'he-IL',
+  );
 });
 
 test('read starts speech with the selected language and speed', () => {

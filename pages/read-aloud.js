@@ -12,6 +12,20 @@
     return value || 'en-US';
   }
 
+  function detectTextLanguage(text, fallbackLanguage = 'en') {
+    const value = String(text || '');
+    const hebrewLetters = (value.match(/[\u0590-\u05ff]/g) || []).length;
+    const latinLetters = (value.match(/[A-Za-z]/g) || []).length;
+
+    if (hebrewLetters > latinLetters) return 'he-IL';
+    if (latinLetters > hebrewLetters) {
+      return /^en(?:-|$)/i.test(fallbackLanguage)
+        ? normalizeLanguage(fallbackLanguage)
+        : 'en-US';
+    }
+    return normalizeLanguage(fallbackLanguage);
+  }
+
   function splitLongSegment(segment, maxLength) {
     const words = segment.trim().split(/\s+/).filter(Boolean);
     const chunks = [];
@@ -122,7 +136,7 @@
       synthesis.cancel();
       chunks = splitIntoChunks(text, maxChunkLength);
       chunkIndex = 0;
-      language = normalizeLanguage(settings.language);
+      language = detectTextLanguage(text, settings.language);
       rate = Number(settings.rate) || 1;
 
       if (!chunks.length) {
@@ -163,6 +177,7 @@
 
   return {
     createReadAloudController,
+    detectTextLanguage,
     normalizeLanguage,
     splitIntoChunks,
   };
