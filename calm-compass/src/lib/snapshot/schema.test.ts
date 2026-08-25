@@ -1,7 +1,12 @@
-import "@testing-library/jest-dom/vitest";
 import { execFileSync } from "node:child_process";
-import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import {
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
+import { tmpdir } from "node:os";
+import { join, resolve } from "node:path";
 import validFixture from "../../../private/dashboard-snapshot.example.json";
 import { DashboardSnapshotSchema } from "./schema";
 
@@ -24,6 +29,40 @@ it("rejects raw email bodies and credential-shaped fields", () => {
   expect(() =>
     DashboardSnapshotSchema.parse({ ...validFixture, oauth_token: "secret" }),
   ).toThrow();
+});
+
+it("rejects unsupported deadlines in the exported JSON Schema", () => {
+  const invalid = structuredClone(validFixture);
+  invalid.focus.due = "2026-09-01";
+  invalid.focus.evidence = [];
+  const temporaryDirectory = mkdtempSync(join(tmpdir(), "calm-compass-schema-"));
+  const invalidPath = join(temporaryDirectory, "invalid.json");
+  writeFileSync(invalidPath, JSON.stringify(invalid), "utf8");
+
+  try {
+    expect(() =>
+      execFileSync(
+        "python3",
+        [
+          "-c",
+          [
+            "import json, sys",
+            "import jsonschema",
+            "with open(sys.argv[1], encoding='utf-8') as instance_file:",
+            "    instance = json.load(instance_file)",
+            "with open(sys.argv[2], encoding='utf-8') as schema_file:",
+            "    schema = json.load(schema_file)",
+            "jsonschema.validate(instance, schema)",
+          ].join("\n"),
+          invalidPath,
+          resolve("schema/dashboard-snapshot.schema.json"),
+        ],
+        { stdio: "pipe" },
+      ),
+    ).toThrow();
+  } finally {
+    rmSync(temporaryDirectory, { recursive: true, force: true });
+  }
 });
 
 it("keeps the generated JSON Schema stable", () => {

@@ -8,27 +8,33 @@ const EvidenceSchema = z
   })
   .strict();
 
-const ActionSchema = z
-  .object({
-    id: z.string().min(1),
-    title: z.string().min(1),
-    due: z.iso.date().nullable(),
-    timingReason: z.string().min(1).nullable(),
-    effort: z.enum(["quick", "medium", "deep"]),
-    why: z.string().min(1),
-    evidence: z.array(EvidenceSchema),
-  })
-  .strict();
+const ActionShape = {
+  id: z.string().min(1),
+  title: z.string().min(1),
+  due: z.iso.date().nullable(),
+  timingReason: z.string().min(1).nullable(),
+  effort: z.enum(["quick", "medium", "deep"]),
+  why: z.string().min(1),
+  evidence: z.array(EvidenceSchema),
+};
 
-const FocusSchema = ActionSchema.superRefine((focus, context) => {
-  if (focus.due !== null && focus.evidence.length === 0) {
-    context.addIssue({
-      code: "custom",
-      message: "A focus deadline requires source evidence.",
-      path: ["evidence"],
-    });
-  }
-});
+const ActionSchema = z.object(ActionShape).strict();
+
+const FocusSchema = z.union([
+  z
+    .object({
+      ...ActionShape,
+      due: z.iso.date(),
+      evidence: z.array(EvidenceSchema).min(1),
+    })
+    .strict(),
+  z
+    .object({
+      ...ActionShape,
+      due: z.null(),
+    })
+    .strict(),
+]);
 
 const SourceFreshnessSchema = z
   .object({
