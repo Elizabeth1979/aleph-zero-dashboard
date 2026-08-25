@@ -1,0 +1,44 @@
+:root {
+  color-scheme: light;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f4fbfb;
+  color: #123f46;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+}
+
+main {
+  min-height: 100vh;
+  display: grid;
+  place-content: center;
+  padding: 2rem;
+  text-align: left;
+}
+
+h1,
+p {
+  margin-block: 0 0.75rem;
+}
+
+h1 {
+  font-size: clamp(2rem, 7vw, 4rem);
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.eyebrow {
+  color: #176a73;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
