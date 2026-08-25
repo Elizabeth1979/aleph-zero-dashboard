@@ -1,0 +1,143 @@
+{
+  "version": "1",
+  "generatedAt": "2026-08-25T06:30:00.000Z",
+  "fallbackMode": "deterministic",
+  "sourceFreshness": [
+    {
+      "source": "tasks",
+      "checkedAt": "2026-08-25T06:29:00.000Z",
+      "status": "fresh"
+    }
+  ],
+  "focus": {
+    "id": "task-1",
+    "title": "Review the Calm Compass contract",
+    "due": "2026-08-25",
+    "timingReason": "Due today",
+    "effort": "medium",
+    "why": "It unblocks the private dashboard pipeline.",
+    "evidence": [
+      {
+        "source": "tasks",
+        "id": "task-1",
+        "reason": "The task is due today."
+      }
+    ]
+  },
+  "quickWin": {
+    "id": "task-2",
+    "title": "Check one saved resource",
+    "due": null,
+    "timingReason": "About 10 minutes",
+    "effort": "quick",
+    "why": "It is actionable and short.",
+    "evidence": [
+      {
+        "source": "resources",
+        "id": "resource-1",
+        "reason": "The resource is waiting for review."
+      }
+    ]
+  },
+  "continueItem": {
+    "id": "project-1",
+    "title": "Continue Calm Compass",
+    "due": null,
+    "timingReason": "Recently active",
+    "effort": "deep",
+    "why": "This was the latest meaningful project work.",
+    "evidence": [
+      {
+        "source": "projects",
+        "id": "project-1",
+        "reason": "The project was updated most recently."
+      }
+    ]
+  },
+  "changes": [
+    {
+      "kind": "task-added",
+      "title": "New dashboard contract task",
+      "summary": "A contract review task was added.",
+      "sourceId": "task-1",
+      "impact": "attention"
+    }
+  ],
+  "connections": [
+    {
+      "id": "connection-1",
+      "title": "Contract and implementation plan",
+      "reason": "Both belong to Calm Compass.",
+      "sourceIds": ["task-1", "project-1"],
+      "evidence": [
+        {
+          "source": "tasks",
+          "id": "task-1",
+          "reason": "Shared project identifier."
+        },
+        {
+          "source": "projects",
+          "id": "project-1",
+          "reason": "Shared project identifier."
+        }
+      ]
+    }
+  ],
+  "anomalies": [],
+  "uncertainty": [],
+  "rings": [
+    {
+      "id": "today",
+      "label": "Today",
+      "nodes": [
+        {
+          "id": "to-dos",
+          "label": "To-dos",
+          "status": "attention",
+          "count": 1,
+          "summary": "One item needs attention.",
+          "evidence": [
+            {
+              "source": "tasks",
+              "id": "task-1",
+              "reason": "The task is due today."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "world",
+      "label": "Your world",
+      "nodes": [
+        {
+          "id": "projects",
+          "label": "Projects",
+          "status": "clear",
+          "count": 1,
+          "summary": "One active project.",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "setup",
+      "label": "Hermes setup",
+      "nodes": [
+        {
+          "id": "automations",
+          "label": "Automations",
+          "status": "clear",
+          "count": 0,
+          "summary": "Clear",
+          "evidence": []
+        }
+      ]
+    }
+  ],
+  "personalizationSummary": {
+    "active": false,
+    "summary": "No ranking preferences applied.",
+    "appliedPreferences": []
+  }
+}

@@ -9,6 +9,10 @@
 /coverage/
 /playwright-report/
 /test-results/
+*.tsbuildinfo
+
+# atomic snapshot writer scratch files
+/private/*.tmp
 
 # local environment
 .env*
