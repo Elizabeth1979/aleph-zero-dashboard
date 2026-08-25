@@ -91,6 +91,24 @@ class CollectSourcesTests(unittest.TestCase):
         self.assertEqual(result.tasks[0].due, "2026-08-26T00:30:00+03:00")
         self.assertEqual(result.emails[0].deadline, "2026-08-27T10:00:00+03:00")
 
+    def test_parseable_non_list_source_is_marked_stale(self):
+        (self.root / "tasks.json").write_text('{"tasks": []}', encoding="utf-8")
+        result = self.collect()
+        self.assertEqual(result.tasks, [])
+        self.assertEqual(result.source_freshness["tasks"].status, "stale")
+        self.assertEqual(result.source_freshness["tasks"].reason, "invalid_structure")
+
+    def test_null_tags_and_cron_jobs_do_not_crash_collection(self):
+        (self.root / "tasks.json").write_text(
+            '[{"id": "t1", "task": "Safe task", "tags": null}]', encoding="utf-8"
+        )
+        self.vps_cron.write_text('{"scheduler_active": true, "jobs": null}', encoding="utf-8")
+        self.mac_cron.write_text('{"scheduler_active": false, "jobs": null}', encoding="utf-8")
+        result = self.collect()
+        self.assertEqual(result.tasks[0].tags, [])
+        self.assertEqual(result.cron.jobs, [])
+        self.assertEqual(result.source_freshness["cron_vps"].reason, "invalid_structure")
+
 
 if __name__ == "__main__":
     unittest.main()

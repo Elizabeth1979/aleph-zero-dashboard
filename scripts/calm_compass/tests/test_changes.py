@@ -20,7 +20,7 @@ class SnapshotChangeTests(unittest.TestCase):
     def test_reports_new_task(self):
         changes = diff_snapshots(snapshot(), snapshot(tasks=[{"id": "t1", "title": "New task", "status": "open"}]))
         self.assertEqual(changes[0]["kind"], "task_new")
-        self.assertEqual(changes[0]["source_id"], "t1")
+        self.assertEqual(changes[0]["sourceId"], "t1")
 
     def test_reports_completed_task(self):
         previous = snapshot(tasks=[{"id": "t1", "title": "Finish report", "status": "open"}])
@@ -48,6 +48,7 @@ class SnapshotChangeTests(unittest.TestCase):
         failed = snapshot(automations=[{"id": "cron1", "title": "Morning Brief", "status": "error"}])
         self.assertEqual(diff_snapshots(healthy, failed)[0]["kind"], "automation_failed")
         self.assertEqual(diff_snapshots(failed, healthy)[0]["kind"], "automation_recovered")
+        self.assertEqual(diff_snapshots(failed, healthy)[0]["impact"], "resolved")
 
     def test_omits_unchanged_counts_and_generated_timestamps(self):
         previous = snapshot(counts={"tasks": 3})

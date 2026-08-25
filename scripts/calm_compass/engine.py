@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import date, datetime, timezone
 from typing import Any, Dict, Iterable, List, Optional, Tuple
 
 
@@ -32,17 +32,22 @@ def _focus_score(candidate: Record, today: date) -> Tuple[int, date, str]:
     return tier, due or date.max, str(candidate.get("id", ""))
 
 
-def _focus_reason(candidate: Record, today: date) -> Tuple[str, str]:
+def _focus_reason(candidate: Record, today: date) -> Tuple[Optional[str], str]:
     due = _due_date(candidate.get("due"))
     if due is not None and due < today:
-        return "Overdue", "high"
+        return "Overdue", "Overdue"
     if due == today:
-        return "Due today", "high"
+        return "Due today", "Due today"
     if due is not None and 0 < (due - today).days <= 7:
-        return "Due within 7 days", "high"
+        return "Due within 7 days", "Due within 7 days"
     if candidate.get("urgent") is True:
-        return "Explicitly marked urgent", "high"
-    return "Open task", "normal"
+        return "Explicitly marked urgent", "Explicitly marked urgent"
+    return None, "Open task"
+
+
+def _due_value(value: Any) -> Optional[str]:
+    parsed = _due_date(value)
+    return parsed.isoformat() if parsed is not None else None
 
 
 def rank_focus(candidates: Iterable[Record], now: datetime) -> Record:
@@ -52,23 +57,23 @@ def rank_focus(candidates: Iterable[Record], now: datetime) -> Record:
             "id": "nothing-needs-attention",
             "title": "Nothing needs attention",
             "due": None,
+            "timingReason": None,
             "effort": "quick",
             "why": "No open actionable work was found.",
-            "priority": "normal",
             "evidence": [],
         }
     selected = min(available, key=lambda item: _focus_score(item, now.date()))
-    reason, priority = _focus_reason(selected, now.date())
+    timing_reason, why = _focus_reason(selected, now.date())
     source = str(selected.get("source", "tasks"))
     identifier = str(selected.get("id", ""))
     return {
         "id": identifier,
         "title": str(selected.get("title", "")),
-        "due": selected.get("due"),
+        "due": _due_value(selected.get("due")),
+        "timingReason": timing_reason,
         "effort": str(selected.get("effort", "medium")),
-        "why": reason,
-        "priority": priority,
-        "evidence": [{"source": source, "id": identifier, "reason": reason}],
+        "why": why,
+        "evidence": [{"source": source, "id": identifier, "reason": why}],
     }
 
 
@@ -94,7 +99,8 @@ def choose_quick_win(candidates: Iterable[Record], focus_id: str) -> Optional[Re
     return {
         "id": identifier,
         "title": str(selected.get("title", "")),
-        "due": selected.get("due"),
+        "due": _due_value(selected.get("due")),
+        "timingReason": "About 5–15 minutes",
         "effort": "quick",
         "why": "Short actionable work",
         "evidence": [
@@ -119,16 +125,23 @@ def choose_continue(
     ]
     if not choices:
         return None
-    selected = max(
-        choices,
-        key=lambda item: (str(item.get("worked_at", "")), str(item.get("id", ""))),
-    )
+    def activity_key(item: Record) -> Tuple[float, str]:
+        parsed = _parse_datetime(item.get("worked_at"))
+        if parsed is None:
+            return float("-inf"), str(item.get("id", ""))
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=timezone.utc)
+        return parsed.timestamp(), str(item.get("id", ""))
+
+    selected = max(choices, key=activity_key)
     identifier = str(selected.get("id", ""))
     return {
         "id": identifier,
-        "project_id": str(selected.get("project_id")),
         "title": str(selected.get("title", "")),
-        "worked_at": selected.get("worked_at"),
+        "due": None,
+        "timingReason": "Recently active",
+        "effort": str(selected.get("effort", "deep")),
+        "why": "This was the latest meaningful project work.",
         "evidence": [
             {
                 "source": "recent_activity",
@@ -154,7 +167,7 @@ def _change(kind: str, record: Record, summary: str, impact: str) -> Record:
         "kind": kind,
         "title": str(record.get("title", "")),
         "summary": summary,
-        "source_id": str(record.get("id", "")),
+        "sourceId": str(record.get("id", "")),
         "impact": impact,
     }
 
@@ -169,7 +182,7 @@ def diff_snapshots(previous: Record, current: Record, limit: int = 20) -> List[R
             changes.append(_change("task_new", task, "New open task", "attention"))
             continue
         if before.get("status") != "completed" and task.get("status") == "completed":
-            changes.append(_change("task_completed", task, "Task completed", "positive"))
+            changes.append(_change("task_completed", task, "Task completed", "resolved"))
         if before.get("due_soon") is not True and task.get("due_soon") is True:
             changes.append(
                 _change("deadline_due_soon", task, "Deadline entered the due-soon window", "attention")
@@ -178,13 +191,13 @@ def diff_snapshots(previous: Record, current: Record, limit: int = 20) -> List[R
     previous_resources = _index(previous.get("resources"))
     for identifier, resource in _index(current.get("resources")).items():
         if identifier not in previous_resources:
-            changes.append(_change("resource_new", resource, "New saved resource", "informational"))
+            changes.append(_change("resource_new", resource, "New saved resource", "quiet"))
 
     previous_projects = _index(previous.get("projects"))
     for identifier, project in _index(current.get("projects")).items():
         before = previous_projects.get(identifier)
         if before is not None and before.get("blocked") is True and project.get("blocked") is False:
-            changes.append(_change("project_unblocked", project, "Project is no longer blocked", "positive"))
+            changes.append(_change("project_unblocked", project, "Project is no longer blocked", "resolved"))
 
     previous_automations = _index(previous.get("automations"))
     for identifier, automation in _index(current.get("automations")).items():
@@ -196,7 +209,7 @@ def diff_snapshots(previous: Record, current: Record, limit: int = 20) -> List[R
         if old_status != "error" and new_status == "error":
             changes.append(_change("automation_failed", automation, "Automation failed", "attention"))
         elif old_status == "error" and new_status == "ok":
-            changes.append(_change("automation_recovered", automation, "Automation recovered", "positive"))
+            changes.append(_change("automation_recovered", automation, "Automation recovered", "resolved"))
 
     return changes[: max(0, limit)]
 
@@ -212,11 +225,17 @@ def _parse_datetime(value: Any) -> Optional[datetime]:
 
 def _anomaly(kind: str, title: str, summary: str, source_id: str) -> Record:
     return {
-        "kind": kind,
+        "id": f"{kind}:{source_id}",
         "title": title,
         "summary": summary,
-        "source_id": source_id,
-        "impact": "attention",
+        "severity": "warning",
+        "evidence": [
+            {
+                "source": "context_engine",
+                "id": source_id,
+                "reason": summary,
+            }
+        ],
     }
 
 
@@ -249,6 +268,8 @@ def detect_anomalies(snapshot: Record, now: datetime) -> List[Record]:
         ("snapshot_at", "stale_snapshot", "Dashboard snapshot is stale"),
     ):
         timestamp = _parse_datetime(system.get(field))
+        if timestamp is not None and timestamp.tzinfo is None:
+            timestamp = timestamp.replace(tzinfo=now.tzinfo)
         if timestamp is not None and (now - timestamp).total_seconds() > 24 * 60 * 60:
             anomalies.append(_anomaly(kind, title, "Last successful update is over 24 hours old", field))
 
@@ -334,10 +355,10 @@ def detect_anomalies(snapshot: Record, now: datetime) -> List[Record]:
     return anomalies
 
 
-CANONICAL_RING_ORDER = ["today", "my_world", "setup"]
+CANONICAL_RING_ORDER = ["today", "world", "setup"]
 CANONICAL_RING_LABELS = {
     "today": "Today",
-    "my_world": "Your world",
+    "world": "Your world",
     "setup": "Hermes setup",
 }
 _ALLOWED_WEIGHTS = {"quick", "deep", "recent_project", "postponement"}
@@ -380,10 +401,10 @@ def find_connections(
             reason = "Shared tag: " + tag
             connections.append(
                 {
-                    "kind": "resource_task",
-                    "from_id": resource_id,
-                    "to_id": task_id,
+                    "id": f"resource-task:{resource_id}:{task_id}",
+                    "title": f"{resource.get('title', 'Resource')} → {task.get('title', 'Task')}",
                     "reason": reason,
+                    "sourceIds": [resource_id, task_id],
                     "evidence": [
                         {"source": "tasks", "id": task_id, "reason": reason},
                         {"source": "resources", "id": resource_id, "reason": reason},
@@ -396,16 +417,18 @@ def find_connections(
         for task in task_records:
             task_id = str(task.get("id", ""))
             explicit = bool(explicit_task_id) and explicit_task_id == task_id
+            if explicit_task_id and not explicit:
+                continue
             if not explicit and not _strong_title_match(task, email):
                 continue
             email_id = str(email.get("id", ""))
             reason = "Explicit task identifier" if explicit else "Strong normalized title match"
             connections.append(
                 {
-                    "kind": "email_task",
-                    "from_id": email_id,
-                    "to_id": task_id,
+                    "id": f"email-task:{email_id}:{task_id}",
+                    "title": f"Email → {task.get('title', 'Task')}",
                     "reason": reason,
+                    "sourceIds": [email_id, task_id],
                     "evidence": [
                         {"source": "emails", "id": email_id, "reason": reason},
                         {"source": "tasks", "id": task_id, "reason": reason},

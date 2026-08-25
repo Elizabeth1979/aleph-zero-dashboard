@@ -35,6 +35,7 @@ class PreferenceTests(unittest.TestCase):
         )
         self.assertEqual(result["ring_order"], CANONICAL_RING_ORDER)
         self.assertEqual(result["ring_labels"], CANONICAL_RING_LABELS)
+        self.assertEqual(result["ring_order"], ["today", "world", "setup"])
 
     def test_preference_update_does_not_mutate_input(self):
         current = {"weights": {"quick": 1.0}, "explicit_corrections": {}}

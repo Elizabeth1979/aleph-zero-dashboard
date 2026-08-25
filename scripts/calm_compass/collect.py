@@ -48,6 +48,12 @@ def _records(value: Any) -> List[Dict[str, Any]]:
     return [item for item in value if isinstance(item, dict) and "_instructions" not in item]
 
 
+def _string_list(value: Any) -> List[str]:
+    if not isinstance(value, list):
+        return []
+    return [item for item in value if isinstance(item, str)]
+
+
 def _freshness(error: Optional[str], now: datetime) -> SourceFreshness:
     return SourceFreshness(
         status="fresh" if error is None else "stale",
@@ -67,6 +73,8 @@ def collect_sources(
     freshness = {}
     for name in ("tasks", "emails", "projects", "resources"):
         value, error = _read_json(source_dir / (name + ".json"))
+        if error is None and not isinstance(value, list):
+            error = "invalid_structure"
         loaded[name] = _records(value)
         freshness[name] = _freshness(error, now)
 
@@ -77,7 +85,7 @@ def collect_sources(
             due=_normalize_date(item.get("due")),
             urgent=item.get("urgent") is True,
             description=item.get("description") if isinstance(item.get("description"), str) else None,
-            tags=[str(tag) for tag in item.get("tags", []) if isinstance(tag, str)],
+            tags=_string_list(item.get("tags")),
         )
         for item in loaded["tasks"]
         if item.get("id") is not None and (item.get("title") or item.get("task"))
@@ -98,7 +106,7 @@ def collect_sources(
             title=str(item.get("name") or item.get("title") or ""),
             status=str(item.get("status", "unknown")),
             description=item.get("description") if isinstance(item.get("description"), str) else None,
-            tags=[str(tag) for tag in item.get("tags", []) if isinstance(tag, str)],
+            tags=_string_list(item.get("tags")),
         )
         for item in loaded["projects"]
         if item.get("id") is not None and (item.get("name") or item.get("title"))
@@ -109,7 +117,7 @@ def collect_sources(
             title=str(item.get("title", "")),
             status=str(item.get("status", "unknown")),
             added=_normalize_date(item.get("added")),
-            tags=[str(tag) for tag in item.get("tags", []) if isinstance(tag, str)],
+            tags=_string_list(item.get("tags")),
         )
         for item in loaded["resources"]
         if item.get("id") is not None and item.get("title")
@@ -117,8 +125,18 @@ def collect_sources(
 
     vps_data, vps_error = _read_json(Path(vps_cron_path))
     mac_data, mac_error = _read_json(Path(mac_cron_path))
+    if vps_error is None and (
+        not isinstance(vps_data, dict) or not isinstance(vps_data.get("jobs"), list)
+    ):
+        vps_error = "invalid_structure"
+    if mac_error is None and (
+        not isinstance(mac_data, dict) or not isinstance(mac_data.get("jobs"), list)
+    ):
+        mac_error = "invalid_structure"
     vps_data = vps_data if isinstance(vps_data, dict) else {}
     mac_data = mac_data if isinstance(mac_data, dict) else {}
+    vps_jobs = vps_data.get("jobs") if isinstance(vps_data.get("jobs"), list) else []
+    mac_job_records = mac_data.get("jobs") if isinstance(mac_data.get("jobs"), list) else []
     jobs = [
         CronJob(
             id=str(item.get("id", "")),
@@ -127,10 +145,10 @@ def collect_sources(
             last_status=item.get("last_status") if isinstance(item.get("last_status"), str) else None,
             last_run=_normalize_date(item.get("last_run")),
         )
-        for item in vps_data.get("jobs", [])
+        for item in vps_jobs
         if isinstance(item, dict) and item.get("id") is not None
     ]
-    mac_jobs = [item for item in mac_data.get("jobs", []) if isinstance(item, dict)]
+    mac_jobs = [item for item in mac_job_records if isinstance(item, dict)]
     cron = CronSummary(
         vps_scheduler_active=vps_data.get("scheduler_active") is True,
         mac_mirror_paused=mac_data.get("scheduler_active") is not True

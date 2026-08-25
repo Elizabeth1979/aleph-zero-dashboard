@@ -44,7 +44,7 @@ class FocusRankingTests(unittest.TestCase):
 
     def test_future_due_date_does_not_create_urgency(self):
         result = rank_focus([candidate("future", "2026-10-30")], NOW)
-        self.assertEqual(result["priority"], "normal")
+        self.assertIsNone(result["timingReason"])
         self.assertNotIn("urgent", result["why"].lower())
 
     def test_missing_due_date_remains_missing(self):
@@ -68,7 +68,17 @@ class FocusRankingTests(unittest.TestCase):
         ]
         result = choose_continue(activity, focus_id="other")
         self.assertEqual(result["id"], "latest")
+        self.assertIsNone(result["due"])
+        self.assertEqual(result["timingReason"], "Recently active")
+        self.assertEqual(result["effort"], "deep")
         self.assertEqual(result["evidence"], [{"source": "recent_activity", "id": "latest", "reason": "Most recent meaningful project work"}])
+
+    def test_continue_uses_actual_instants_instead_of_timestamp_text_order(self):
+        activity = [
+            {"id": "earlier", "project_id": "alpha", "title": "Earlier", "meaningful": True, "worked_at": "2026-08-25T10:00:00+03:00"},
+            {"id": "later", "project_id": "beta", "title": "Later", "meaningful": True, "worked_at": "2026-08-25T08:30:00+00:00"},
+        ]
+        self.assertEqual(choose_continue(activity, focus_id="other")["id"], "later")
 
     def test_empty_inputs_return_calm_fallback(self):
         result = rank_focus([], NOW)
