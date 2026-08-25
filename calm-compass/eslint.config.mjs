@@ -33,6 +33,7 @@ export default defineConfig([
   {
     files: ["**/*.{ts,tsx}"],
     rules: {
+      "no-undef": "off",
       "no-unused-vars": "off",
     },
   },
