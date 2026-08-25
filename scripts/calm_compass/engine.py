@@ -137,3 +137,65 @@ def choose_continue(
             }
         ],
     }
+
+
+def _index(records: Any) -> Dict[str, Record]:
+    if not isinstance(records, list):
+        return {}
+    return {
+        str(record.get("id")): record
+        for record in records
+        if isinstance(record, dict) and record.get("id") is not None
+    }
+
+
+def _change(kind: str, record: Record, summary: str, impact: str) -> Record:
+    return {
+        "kind": kind,
+        "title": str(record.get("title", "")),
+        "summary": summary,
+        "source_id": str(record.get("id", "")),
+        "impact": impact,
+    }
+
+
+def diff_snapshots(previous: Record, current: Record, limit: int = 20) -> List[Record]:
+    changes: List[Record] = []
+    previous_tasks = _index(previous.get("tasks"))
+    current_tasks = _index(current.get("tasks"))
+    for identifier, task in current_tasks.items():
+        before = previous_tasks.get(identifier)
+        if before is None:
+            changes.append(_change("task_new", task, "New open task", "attention"))
+            continue
+        if before.get("status") != "completed" and task.get("status") == "completed":
+            changes.append(_change("task_completed", task, "Task completed", "positive"))
+        if before.get("due_soon") is not True and task.get("due_soon") is True:
+            changes.append(
+                _change("deadline_due_soon", task, "Deadline entered the due-soon window", "attention")
+            )
+
+    previous_resources = _index(previous.get("resources"))
+    for identifier, resource in _index(current.get("resources")).items():
+        if identifier not in previous_resources:
+            changes.append(_change("resource_new", resource, "New saved resource", "informational"))
+
+    previous_projects = _index(previous.get("projects"))
+    for identifier, project in _index(current.get("projects")).items():
+        before = previous_projects.get(identifier)
+        if before is not None and before.get("blocked") is True and project.get("blocked") is False:
+            changes.append(_change("project_unblocked", project, "Project is no longer blocked", "positive"))
+
+    previous_automations = _index(previous.get("automations"))
+    for identifier, automation in _index(current.get("automations")).items():
+        before = previous_automations.get(identifier)
+        if before is None:
+            continue
+        old_status = before.get("status")
+        new_status = automation.get("status")
+        if old_status != "error" and new_status == "error":
+            changes.append(_change("automation_failed", automation, "Automation failed", "attention"))
+        elif old_status == "error" and new_status == "ok":
+            changes.append(_change("automation_recovered", automation, "Automation recovered", "positive"))
+
+    return changes[: max(0, limit)]
