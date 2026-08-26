@@ -1,0 +1,17 @@
+{
+  "focus": {
+    "id": "task-1",
+    "title": "Review the contract first",
+    "due": "2026-08-25",
+    "timingReason": "Do this before other dashboard work",
+    "effort": "medium",
+    "why": "This is the clearest blocker for the private dashboard.",
+    "evidence": [
+      {
+        "source": "tasks",
+        "id": "task-1",
+        "reason": "The cited task is due today."
+      }
+    ]
+  }
+}

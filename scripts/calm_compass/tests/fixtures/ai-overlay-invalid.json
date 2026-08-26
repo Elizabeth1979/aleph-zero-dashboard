@@ -1,0 +1,17 @@
+{
+  "focus": {
+    "id": "task-1",
+    "title": "Review the contract first",
+    "due": "2026-09-30",
+    "timingReason": "A model invented this date",
+    "effort": "medium",
+    "why": "Invalid model output must not replace source facts.",
+    "evidence": [
+      {
+        "source": "tasks",
+        "id": "made-up-task",
+        "reason": "This evidence does not exist."
+      }
+    ]
+  }
+}
