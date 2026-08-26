@@ -40,5 +40,14 @@
     "task": "Test Mila transcription with a Hebrew or English file from Google Drive",
     "added": "2026-08-25",
     "urgent": false
+  },
+  {
+    "id": 38,
+    "task": "Enable billing for the dedicated hermes-free Gemini project and set a ₪10 monthly spend cap",
+    "added": "2026-08-26",
+    "tags": [
+      "Private"
+    ],
+    "urgent": false
   }
 ]
