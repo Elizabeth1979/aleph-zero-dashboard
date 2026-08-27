@@ -38,7 +38,7 @@ export function Compass() {
       <div className={styles.toolbar}>
         <div>
           <p className={styles.kicker}>Private dashboard</p>
-          <h1>Elli’s Calm Compass</h1>
+          <h1 className={styles.title}>Elli’s Calm Compass</h1>
         </div>
         <button className={styles.fitAll} type="button" onClick={() => setSelectedLabel(null)}>
           Fit all

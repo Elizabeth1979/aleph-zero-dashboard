@@ -1,7 +1,11 @@
+.page {
+  display: block;
+  padding: 0;
+}
+
 .compass {
   width: min(100%, 1100px);
   height: 100vh;
-  min-height: 620px;
   margin: 0 auto;
   padding: 1rem;
   color: #123f46;
@@ -25,6 +29,12 @@
   text-transform: uppercase;
 }
 
+.title {
+  margin: 0;
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+
 .fitAll {
   min-width: 5.5rem;
   min-height: 2.75rem;
@@ -41,7 +51,6 @@
   display: block;
   width: 100%;
   height: calc(100vh - 5.25rem);
-  min-height: 540px;
   max-height: 860px;
   overflow: visible;
 }
@@ -88,7 +97,7 @@
 
 .nodeText {
   fill: #123f46;
-  font-size: 14px;
+  font-size: 25px;
   font-weight: 700;
   pointer-events: none;
   text-anchor: middle;
@@ -96,7 +105,7 @@
 
 .nodeValue {
   fill: #176a73;
-  font-size: 14px;
+  font-size: 25px;
   pointer-events: none;
   text-anchor: middle;
 }
@@ -109,14 +118,14 @@
 
 .centreLabel {
   fill: #ffffff;
-  font-size: 18px;
+  font-size: 25px;
   font-weight: 700;
   text-anchor: middle;
 }
 
 .centreText {
   fill: #c6f6f0;
-  font-size: 14px;
+  font-size: 25px;
   text-anchor: middle;
 }
 
