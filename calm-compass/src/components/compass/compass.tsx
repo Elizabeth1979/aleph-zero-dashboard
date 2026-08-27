@@ -1,9 +1,10 @@
 "use client";
 
-import { type KeyboardEvent } from "react";
+import { type KeyboardEvent, useState } from "react";
 import { useCompassState } from "../../hooks/use-compass-state";
 import { DetailSheet } from "./detail-sheet";
-import { calculateCompassLayout } from "./geometry";
+import { calculateCompassLayout, RING_DEFINITIONS, type CompassRingDefinition } from "./geometry";
+import { LayerTabs } from "./layer-tabs";
 import styles from "./compass.module.css";
 
 const VIEW_BOX = { width: 900, height: 900 };
@@ -48,6 +49,7 @@ function nodeClassName(label: string): string {
 
 export function Compass() {
   const { selectedLabel, select, close } = useCompassState();
+  const [selectedLayer, setSelectedLayer] = useState<CompassRingDefinition["label"]>("Today");
   const layout = calculateCompassLayout(VIEW_BOX);
 
   function selectFromKeyboard(event: KeyboardEvent<SVGGElement>, label: string) {
@@ -69,9 +71,16 @@ export function Compass() {
           Fit all
         </button>
       </div>
+      <LayerTabs
+        className={styles.layerTabs}
+        layers={RING_DEFINITIONS.map((ring) => ring.label)}
+        selectedLayer={selectedLayer}
+        onSelect={setSelectedLayer}
+      />
       <h2 className={styles.screenReaderOnly}>Start here</h2>
       <svg
         className={styles.canvas}
+        data-selected-layer={selectedLayer}
         viewBox={`0 0 ${VIEW_BOX.width} ${VIEW_BOX.height}`}
         role="img"
         aria-labelledby="compass-title compass-description"
@@ -82,6 +91,7 @@ export function Compass() {
           <circle
             key={ring.label}
             className={ringClassName(ring.label)}
+            data-layer={ring.label}
             cx={layout.centre.x}
             cy={layout.centre.y}
             r={ring.radius}
@@ -107,6 +117,7 @@ export function Compass() {
               <g
                 key={node.label}
                 className={nodeClassName(ring.label)}
+                data-layer={ring.label}
                 transform={`translate(${node.x} ${node.y})`}
                 role="button"
                 tabIndex={0}
