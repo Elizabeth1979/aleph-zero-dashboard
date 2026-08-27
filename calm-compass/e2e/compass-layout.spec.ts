@@ -20,6 +20,57 @@ async function boxesFor(locator: Locator): Promise<Box[]> {
   );
 }
 
+async function expectOpenDetailLayout(page: import("@playwright/test").Page) {
+  const compass = page.getByRole("region", { name: "Elli’s Calm Compass" });
+  const canvas = page.getByRole("img", { name: "Elli’s Calm Compass" });
+  const detail = page.getByRole("complementary", { name: "To-dos" });
+  const labels = canvas.locator('g[role="button"] > text:first-of-type');
+
+  await expect(detail).toBeVisible();
+  await expect(detail.getByRole("heading", { name: "To-dos" })).toBeVisible();
+  await expect(detail.getByText("Why this is recommended")).toBeVisible();
+  await expect(detail.getByText("Continue", { exact: true })).toBeVisible();
+  await expect(labels).toHaveCount(20);
+
+  const viewport = page.viewportSize();
+  const canvasBox = await canvas.boundingBox();
+  const detailBox = await detail.boundingBox();
+  expect(viewport).not.toBeNull();
+  expect(canvasBox).not.toBeNull();
+  expect(detailBox).not.toBeNull();
+  expect(canvasBox!.x + canvasBox!.width).toBeLessThanOrEqual(detailBox!.x);
+  expect(detailBox!.x + detailBox!.width).toBeLessThanOrEqual(viewport!.width);
+  expect(detailBox!.y + detailBox!.height).toBeLessThanOrEqual(viewport!.height);
+  expect(await detail.evaluate((element) => getComputedStyle(element).textAlign)).toBe("left");
+
+  const labelFontSizes = await labels.evaluateAll((elements) =>
+    elements.map((element) => Number.parseFloat(getComputedStyle(element).fontSize)),
+  );
+  expect(Math.min(...labelFontSizes)).toBeGreaterThanOrEqual(14);
+
+  const labelBoxes = await boxesFor(labels);
+  for (const box of labelBoxes) {
+    expect(box.x).toBeGreaterThanOrEqual(0);
+    expect(box.y).toBeGreaterThanOrEqual(0);
+    expect(box.x + box.width).toBeLessThanOrEqual(viewport!.width);
+    expect(box.y + box.height).toBeLessThanOrEqual(viewport!.height);
+  }
+
+  for (let left = 0; left < labelBoxes.length; left += 1) {
+    for (let right = left + 1; right < labelBoxes.length; right += 1) {
+      expect(overlaps(labelBoxes[left], labelBoxes[right]), `labels ${left} and ${right} overlap`).toBe(false);
+    }
+  }
+
+  const overflow = await page.evaluate(() => ({
+    pageWidth: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    pageHeight: document.documentElement.scrollHeight - document.documentElement.clientHeight,
+  }));
+  expect(overflow).toEqual({ pageWidth: 0, pageHeight: 0 });
+
+  await expect(compass.locator("nextjs-portal")).toHaveCount(0);
+}
+
 test.describe("Calm Compass visual layout", () => {
   test.use({ viewport: { width: 1366, height: 600 } });
 
@@ -95,4 +146,17 @@ test.describe("Calm Compass visual layout", () => {
     expect(documentOverflow.width).toBe(0);
     expect(documentOverflow.height).toBe(0);
   });
+});
+
+test.describe("Calm Compass open detail layout", () => {
+  for (const viewport of [
+    { width: 1512, height: 772 },
+    { width: 1366, height: 600 },
+  ]) {
+    test(`keeps the compass and details usable at ${viewport.width}x${viewport.height}`, async ({ page }) => {
+      await page.setViewportSize(viewport);
+      await page.goto("/sign-in/test-compass?compass=To-dos");
+      await expectOpenDetailLayout(page);
+    });
+  }
 });
