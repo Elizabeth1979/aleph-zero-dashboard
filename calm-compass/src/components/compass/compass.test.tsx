@@ -100,4 +100,13 @@ describe("Compass", () => {
 
     expect(todo).toHaveAttribute("aria-pressed", "false");
   });
+
+  it("opens an explanation sheet when a node is selected", () => {
+    render(<Compass />);
+
+    fireEvent.click(screen.getByRole("button", { name: /To-dos/i }));
+
+    expect(screen.getByRole("heading", { level: 2, name: "To-dos" })).toBeVisible();
+    expect(screen.getByRole("button", { name: "Close details" })).toBeVisible();
+  });
 });

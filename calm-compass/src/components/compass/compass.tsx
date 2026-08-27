@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, type KeyboardEvent } from "react";
+import { type KeyboardEvent } from "react";
+import { useCompassState } from "../../hooks/use-compass-state";
+import { DetailSheet } from "./detail-sheet";
 import { calculateCompassLayout } from "./geometry";
 import styles from "./compass.module.css";
 
@@ -45,24 +47,25 @@ function nodeClassName(label: string): string {
 }
 
 export function Compass() {
-  const [selectedLabel, setSelectedLabel] = useState<string | null>(null);
+  const { selectedLabel, select, close } = useCompassState();
   const layout = calculateCompassLayout(VIEW_BOX);
 
   function selectFromKeyboard(event: KeyboardEvent<SVGGElement>, label: string) {
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
-      setSelectedLabel(label);
+      select(label);
     }
   }
 
   return (
-    <section className={styles.compass} aria-label="Elli’s Calm Compass">
-      <div className={styles.toolbar}>
+    <section className={`${styles.compass} ${selectedLabel ? styles.compassWithDetail : ""}`} aria-label="Elli’s Calm Compass">
+      <div className={styles.compassContent}>
+        <div className={styles.toolbar}>
         <div>
           <p className={styles.kicker}>Private dashboard</p>
           <h1 className={styles.title}>Elli’s Calm Compass</h1>
         </div>
-        <button className={styles.fitAll} type="button" onClick={() => setSelectedLabel(null)}>
+        <button className={styles.fitAll} type="button" onClick={close}>
           Fit all
         </button>
       </div>
@@ -109,7 +112,7 @@ export function Compass() {
                 tabIndex={0}
                 aria-label={`${node.label}: ${node.value}`}
                 aria-pressed={selected}
-                onClick={() => setSelectedLabel(node.label)}
+                onClick={() => select(node.label)}
                 onKeyDown={(event) => selectFromKeyboard(event, node.label)}
               >
                 <circle className={styles.nodeCircle} r={node.radius} />
@@ -130,6 +133,8 @@ export function Compass() {
           }),
         )}
       </svg>
+      </div>
+      {selectedLabel ? <DetailSheet selectedLabel={selectedLabel} onClose={close} /> : null}
     </section>
   );
 }
