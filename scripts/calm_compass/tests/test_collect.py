@@ -79,12 +79,12 @@ class CollectSourcesTests(unittest.TestCase):
         self.assertNotIn("body", json.dumps(email.to_dict()))
         self.assertNotIn("bank details", json.dumps(email.to_dict()))
 
-    def test_cron_uses_canonical_vps_store_and_only_reports_mac_pause_state(self):
+    def test_cron_uses_canonical_mac_store_and_only_reports_vps_pause_state(self):
         cron = self.collect().cron
         self.assertEqual([job.id for job in cron.jobs], ["morning-brief"])
-        self.assertTrue(cron.vps_scheduler_active)
-        self.assertTrue(cron.mac_mirror_paused)
-        self.assertNotEqual(cron.jobs[0].id, "paused-mac-copy")
+        self.assertTrue(cron.mac_scheduler_active)
+        self.assertTrue(cron.vps_mirror_paused)
+        self.assertNotEqual(cron.jobs[0].id, "paused-vps-copy")
 
     def test_dates_normalize_to_asia_jerusalem(self):
         result = self.collect()
@@ -102,8 +102,8 @@ class CollectSourcesTests(unittest.TestCase):
         (self.root / "tasks.json").write_text(
             '[{"id": "t1", "task": "Safe task", "tags": null}]', encoding="utf-8"
         )
-        self.vps_cron.write_text('{"scheduler_active": true, "jobs": null}', encoding="utf-8")
-        self.mac_cron.write_text('{"scheduler_active": false, "jobs": null}', encoding="utf-8")
+        self.vps_cron.write_text('{"scheduler_active": false, "jobs": null}', encoding="utf-8")
+        self.mac_cron.write_text('{"scheduler_active": true, "jobs": null}', encoding="utf-8")
         result = self.collect()
         self.assertEqual(result.tasks[0].tags, [])
         self.assertEqual(result.cron.jobs, [])

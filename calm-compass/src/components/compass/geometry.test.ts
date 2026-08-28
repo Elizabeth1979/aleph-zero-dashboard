@@ -35,6 +35,14 @@ describe("calculateCompassLayout", () => {
     }
   });
 
+  it("describes the Mac as primary without presenting the VPS as active", () => {
+    const setup = RING_DEFINITIONS.find((ring) => ring.label === "Setup");
+    const gateway = setup?.nodes.find((node) => node.label === "Gateway");
+
+    expect(gateway?.value).toBe("Mac primary");
+    expect(setup?.nodes.map((node) => node.value).join(" ")).not.toMatch(/VPS/i);
+  });
+
   it("preserves the centre at the middle of the viewBox", () => {
     expect(calculateCompassLayout(viewBox).centre).toEqual({ x: 450, y: 450 });
   });

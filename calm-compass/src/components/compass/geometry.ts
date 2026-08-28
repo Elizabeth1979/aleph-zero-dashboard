@@ -70,7 +70,7 @@ export const RING_DEFINITIONS: readonly CompassRingDefinition[] = [
       { label: "Memory", value: "Synchronization" },
       { label: "Integrations", value: "Connected services" },
       { label: "Skills", value: "Reusable workflows" },
-      { label: "Gateway", value: "Mac and VPS status" },
+      { label: "Gateway", value: "Mac primary" },
       { label: "Private access", value: "Protected" },
     ],
   },

@@ -1,6 +1,6 @@
 {
-  "scheduler_active": false,
+  "scheduler_active": true,
   "jobs": [
-    {"id": "paused-mac-copy", "name": "Morning Brief mirror", "enabled": false, "last_status": "ok"}
+    {"id": "morning-brief", "name": "Morning Brief", "enabled": true, "last_status": "ok", "last_run": "2026-08-25T05:00:00Z"}
   ]
 }

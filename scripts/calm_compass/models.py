@@ -54,8 +54,8 @@ class CronJob(DictModel):
 
 @dataclass(frozen=True)
 class CronSummary(DictModel):
-    vps_scheduler_active: bool
-    mac_mirror_paused: bool
+    mac_scheduler_active: bool
+    vps_mirror_paused: bool
     jobs: List[CronJob] = field(default_factory=list)
 
 

@@ -11,8 +11,8 @@ NOW = datetime(2026, 8, 25, 12, tzinfo=ZoneInfo("Asia/Jerusalem"))
 def healthy_snapshot(**overrides):
     value = {
         "system": {
-            "vps_scheduler_active": True,
-            "mac_scheduler_active": False,
+            "vps_scheduler_active": False,
+            "mac_scheduler_active": True,
             "sync_at": "2026-08-25T10:00:00+03:00",
             "snapshot_at": "2026-08-25T10:00:00+03:00",
         },
@@ -30,12 +30,12 @@ class AnomalyDetectionTests(unittest.TestCase):
     def kinds(items):
         return [item["id"].split(":", 1)[0] for item in items]
 
-    def test_vps_active_and_mac_paused_is_healthy(self):
+    def test_mac_active_and_vps_paused_is_healthy(self):
         self.assertEqual(detect_anomalies(healthy_snapshot(), NOW), [])
 
     def test_both_schedulers_enabled_is_an_ownership_anomaly(self):
         data = healthy_snapshot()
-        data["system"]["mac_scheduler_active"] = True
+        data["system"]["vps_scheduler_active"] = True
         kinds = self.kinds(detect_anomalies(data, NOW))
         self.assertIn("scheduler_ownership", kinds)
 

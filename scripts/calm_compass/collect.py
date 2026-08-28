@@ -135,8 +135,10 @@ def collect_sources(
         mac_error = "invalid_structure"
     vps_data = vps_data if isinstance(vps_data, dict) else {}
     mac_data = mac_data if isinstance(mac_data, dict) else {}
-    vps_jobs = vps_data.get("jobs") if isinstance(vps_data.get("jobs"), list) else []
-    mac_job_records = mac_data.get("jobs") if isinstance(mac_data.get("jobs"), list) else []
+    vps_job_value = vps_data.get("jobs")
+    mac_job_value = mac_data.get("jobs")
+    vps_job_records = vps_job_value if isinstance(vps_job_value, list) else []
+    mac_job_records = mac_job_value if isinstance(mac_job_value, list) else []
     jobs = [
         CronJob(
             id=str(item.get("id", "")),
@@ -145,14 +147,14 @@ def collect_sources(
             last_status=item.get("last_status") if isinstance(item.get("last_status"), str) else None,
             last_run=_normalize_date(item.get("last_run")),
         )
-        for item in vps_jobs
+        for item in mac_job_records
         if isinstance(item, dict) and item.get("id") is not None
     ]
-    mac_jobs = [item for item in mac_job_records if isinstance(item, dict)]
+    vps_jobs = [item for item in vps_job_records if isinstance(item, dict)]
     cron = CronSummary(
-        vps_scheduler_active=vps_data.get("scheduler_active") is True,
-        mac_mirror_paused=mac_data.get("scheduler_active") is not True
-        and not any(job.get("enabled") is True for job in mac_jobs),
+        mac_scheduler_active=mac_data.get("scheduler_active") is True,
+        vps_mirror_paused=vps_data.get("scheduler_active") is not True
+        and not any(job.get("enabled") is True for job in vps_jobs),
         jobs=jobs,
     )
     freshness["cron_vps"] = _freshness(vps_error, now)
