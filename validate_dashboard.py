@@ -36,14 +36,34 @@ resources_data_text = read_text(DASH / 'resources.json')
 knowledge_page = read_text(DASH / 'pages' / 'knowledge.html')
 read_aloud_text = read_text(DASH / 'pages' / 'read-aloud.js')
 workflows_page = read_text(DASH / 'pages' / 'workflows.html')
+customizations_page = read_text(DASH / 'pages' / 'customizations.html')
+customizations_data_text = read_text(DASH / 'customizations.json')
 manifest_text = read_text(DASH / 'manifest.webmanifest')
 service_worker_text = read_text(DASH / 'service-worker.js')
 pwa_text = read_text(DASH / 'pwa.js')
 
 must((DASH / 'publish.sh').exists(), 'publish.sh is missing')
 must((DASH / 'pages' / 'knowledge.html').exists(), 'knowledge.html is missing')
+must((DASH / 'pages' / 'customizations.html').exists(), 'customizations.html is missing')
+must((DASH / 'customizations.json').exists(), 'customizations.json is missing')
 index_text = read_text(DASH / 'index.html')
 must('knowledge.html' in index_text, 'index.html must link to knowledge.html')
+must('pages/customizations.html' in index_text, 'index.html must link to customizations.html')
+must('customizations:' in refresh_text, 'refresh.sh must export customizations into data.js')
+must('d.customizations' in customizations_page, 'Custom Setup page must read customizations from data.js')
+must('../a11y-widget.css' in customizations_page and '../a11y-widget.js' in customizations_page,
+     'Custom Setup page must include the shared accessibility experience widget')
+must('../a11y-tester.css' in customizations_page and '../a11y-tester.js' in customizations_page,
+     'Custom Setup page must include the shared accessibility audit panel')
+try:
+    customizations = json.loads(customizations_data_text)
+    visible_customizations = [item for item in customizations if item.get('title')]
+    must(bool(visible_customizations), 'customizations.json must contain visible entries')
+    for item in visible_customizations:
+        must(all(item.get(key) for key in ('id', 'title', 'category', 'summary', 'status')),
+             f"Customization {item.get('id', '<missing id>')} is missing required fields")
+except Exception as e:
+    errors.append(f'customizations.json is invalid JSON: {e}')
 must((DASH / 'pages' / 'project-001.html').exists(), 'project-001.html is missing')
 must((DASH / 'project-001-insights.json').exists(), 'project-001-insights.json is missing')
 must('pages/project-001.html' not in index_text,

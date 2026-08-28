@@ -87,7 +87,7 @@ Stable nodes:
 - Built-in memory and synchronization
 - Integrations
 - Skills
-- Mac gateway and VPS scheduler health
+- Mac gateway and Mac scheduler health
 - Private access status
 
 These are sanitized summaries. Detailed configuration remains in Hermes Desktop.
@@ -255,14 +255,14 @@ If the AI call fails or returns invalid data:
 
 - Google Calendar
 - Gmail action-item triage
-- VPS cron execution/delivery state
-- Mac gateway and VPS scheduler state
+- Mac cron execution/delivery state
+- Mac gateway and scheduler state
 - One-way synchronization state
 - Kanban board state
 
 ### 6.3 Snapshot generation
 
-The existing VPS Morning Brief reasoning run is extended to produce both:
+The existing Mac Morning Brief reasoning run is extended to produce both:
 
 1. The concise Discord morning message
 2. A validated private dashboard snapshot
@@ -293,7 +293,7 @@ When dashboard-owned data changes later in the day, the deterministic snapshot i
 
 ### 7.3 Publishing
 
-The VPS can update the validated private snapshot in the private GitHub repository and trigger Vercel deployment. The existing publish scripts must pull before writing to avoid Mac/VPS divergence.
+The Mac updates the validated private snapshot in the private GitHub repository and triggers Vercel deployment. The publish script must pull before writing to avoid divergence.
 
 No new database is required in version one. Snapshot history is a bounded JSON file retaining enough prior state for `What changed` and personalization evidence.
 

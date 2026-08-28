@@ -12,6 +12,12 @@
 
 **Reference sketch:** `sketches/calm-compass/index.html`
 
+## Current architecture correction — 2026-08-28
+
+- The Mac is the canonical interactive gateway, cron scheduler, dashboard data owner, and snapshot publisher.
+- VPS cron jobs are paused and its scheduler is inactive. The VPS is optional standby/backup infrastructure, not a primary dashboard source.
+- Any older task text below that says the VPS owns cron or publishing is superseded by this correction.
+
 ---
 
 ## Architecture map
@@ -1210,7 +1216,7 @@ Every implementation card must:
 - [ ] Desktop full canvas fits one viewport.
 - [ ] Android labels are readable at 360/390/412px.
 - [ ] Keyboard and screen-reader alternatives are equivalent.
-- [ ] Mac cron copies remain paused; VPS remains canonical.
+- [ ] Mac remains canonical for cron and snapshot publishing; no inactive VPS job is presented as primary.
 - [ ] Current production dashboard remains until explicit cutover.
 - [ ] Full tests, lint, build, E2E, Python tests, legacy validator, and diff check pass.
 - [ ] Reviewer evidence is stored on the Kanban cards and in the acceptance report.

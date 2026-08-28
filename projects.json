@@ -187,138 +187,78 @@
   },
   {
     "id": "dashboard-rebuild",
-    "name": "Dashboard Rebuild",
+    "name": "Calm Compass Dashboard",
     "status": "in_progress",
-    "description": "Rebuild the Hermes dashboard from scratch using React + a vetted accessible design system. Goal: component-based architecture so all pages share the same templates, header, layout \u2014 no more 24 separate HTML files.",
+    "description": "Private AI-first dashboard replacement. One clear next action, a complete personal-system map, and a quiet Setup layer. The legacy public dashboard stays live until explicit cutover approval.",
     "category": "infrastructure",
     "research": [
       "A11y Engineering Toolkit Research.md"
     ],
-    "progress": 0,
-    "features": [],
+    "progress": 68,
+    "features": [
+      "Isolated Next.js 16 + React 19 application with unit, lint, build, and browser test runners",
+      "Strict private snapshot contract shared by TypeScript and Python",
+      "Curated Context Engine for focus, quick wins, changes, connections, anomalies, and cautious preferences",
+      "Google authentication restricted to Elli with private server-only snapshot loading",
+      "Privacy regression tests that block snapshot data from public files and client bundles",
+      "Validated AI focus overlay integrated with the existing morning workflow",
+      "Change-gated daytime refresh to avoid unnecessary model calls",
+      "Accessible desktop concentric map with stable Today, Your world, and Setup layers",
+      "Explanation sheet with browser-state restoration",
+      "Android layer tabs and responsive detail layout"
+    ],
     "milestones": [],
     "tasks": [
       {
-        "task": "Research phase: Research accessible design systems: Shopify Polaris, Radix UI, Adobe Spectrum, Carbon \u2014 compare a11y compliance, theming, React support",
-        "difficulty": "easy",
-        "impact": "high"
-      },
-      {
-        "task": "Research phase: Research Storybook \u2014 evaluate if useful for this project scope",
-        "difficulty": "easy",
-        "impact": "low"
-      },
-      {
-        "task": "Research phase: Decide: React + Vite (static, GitHub Pages) vs Next.js (needs Vercel/server)",
-        "difficulty": "easy",
-        "impact": "high"
-      },
-      {
-        "task": "Research phase: Define teal/sea color palette as design tokens to map onto chosen system",
+        "task": "Add a screen-reader list alternative and reduced-motion behavior",
         "difficulty": "medium",
-        "impact": "high"
+        "impact": "high",
+        "description": "Provide the same map content as a hierarchical list and remove transitions when reduced motion is requested."
       },
       {
-        "task": "Research phase: Document current pages inventory: list all pages, their data sources, and component needs",
+        "task": "Add contextual Discord handoff",
         "difficulty": "easy",
-        "impact": "medium"
+        "impact": "medium",
+        "description": "Let a detail view copy a useful question and open the correct Discord destination without executing actions in the dashboard."
       },
       {
-        "task": "Architecture & setup: Create separate dev branch or repo (e.g. hermes-dashboard-v2) \u2014 keep v1 in production",
-        "difficulty": "easy",
-        "impact": "high"
-      },
-      {
-        "task": "Architecture & setup: Set up React + Vite project with chosen design system",
+        "task": "Connect Custom Setup inventory to the Setup layer",
         "difficulty": "medium",
-        "impact": "high"
+        "impact": "high",
+        "description": "Use customizations.json so the new map remembers tools, workflows, data storage, and infrastructure without hardcoded duplicate lists."
       },
       {
-        "task": "Architecture & setup: Define shared component library: PageLayout, Header, Card, StatusBadge, CodeBlock, Table",
+        "task": "Configure the private Vercel deployment",
         "difficulty": "medium",
-        "impact": "high"
+        "impact": "high",
+        "description": "Deploy the authenticated Next.js app without exposing the legacy site or private snapshot."
       },
       {
-        "task": "Architecture & setup: Define routing structure (React Router or file-based)",
-        "difficulty": "easy",
-        "impact": "medium"
+        "task": "Wire safe snapshot publishing from the Mac",
+        "difficulty": "medium",
+        "impact": "high",
+        "description": "Mac is the canonical scheduler and data owner. Publish validated private snapshots without treating the inactive VPS scheduler as primary."
       },
       {
-        "task": "Architecture & setup: Set up data layer: how data.js feeds React components (context, props, or store)",
+        "task": "Run complete migration acceptance",
         "difficulty": "hard",
-        "impact": "high"
+        "impact": "high",
+        "description": "Verify privacy, real data, deterministic fallback, desktop, Android, keyboard, zoom, and source freshness end to end."
       },
       {
-        "task": "Build core components: Build Header component (logo, status dots, restart button) \u2014 shared across all pages",
-        "difficulty": "medium",
-        "impact": "high"
-      },
-      {
-        "task": "Build core components: Build PageLayout component (header + page title + body + footer)",
-        "difficulty": "medium",
-        "impact": "high"
-      },
-      {
-        "task": "Build core components: Build Card component matching current bento grid cards",
-        "difficulty": "medium",
-        "impact": "medium"
-      },
-      {
-        "task": "Build core components: Build RenderedMarkdown component (replaces renderMd() util)",
+        "task": "Cut over only after Elli approves",
         "difficulty": "easy",
-        "impact": "medium"
+        "impact": "high",
+        "description": "Keep the current dashboard live until the replacement passes acceptance and Elli explicitly approves the new canonical link."
       },
       {
-        "task": "Build core components: Build CodeBlock component (replaces raw-box)",
-        "difficulty": "easy",
-        "impact": "medium"
-      },
-      {
-        "task": "Migrate pages: Migrate index.html (home/bento grid)",
-        "difficulty": "hard",
-        "impact": "high"
-      },
-      {
-        "task": "Migrate pages: Migrate tasks.html",
+        "task": "Remove non-essential code while tests stay green",
         "difficulty": "medium",
-        "impact": "medium"
-      },
-      {
-        "task": "Migrate pages: Migrate projects.html",
-        "difficulty": "medium",
-        "impact": "medium"
-      },
-      {
-        "task": "Migrate pages: Migrate cron.html",
-        "difficulty": "medium",
-        "impact": "medium"
-      },
-      {
-        "task": "Migrate pages: Migrate all remaining pages (skills, memory, sessions, etc.)",
-        "difficulty": "hard",
-        "impact": "medium"
-      },
-      {
-        "task": "QA & launch: Accessibility audit on rebuilt dashboard (axe, keyboard nav, contrast)",
-        "difficulty": "medium",
-        "impact": "high"
-      },
-      {
-        "task": "QA & launch: Mobile responsiveness check on all pages",
-        "difficulty": "easy",
-        "impact": "high"
-      },
-      {
-        "task": "QA & launch: Deploy v2 to GitHub Pages (separate URL or replace v1)",
-        "difficulty": "medium",
-        "impact": "high"
-      },
-      {
-        "task": "QA & launch: Decommission v1 once v2 is stable",
-        "difficulty": "easy",
-        "impact": "medium"
+        "impact": "medium",
+        "description": "Final simplification pass after acceptance; archive rather than destroy the legacy dashboard."
       }
-    ]
+    ],
+    "repo": "~/.hermes/dashboard/.worktrees/calm-compass"
   },
   {
     "id": "a11y-toolkit",

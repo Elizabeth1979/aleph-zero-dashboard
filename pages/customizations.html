@@ -1,0 +1,93 @@
+<!-- AGENT RULE: Custom Setup is the single user-facing inventory of Elli-specific tools, workflows, data systems, and infrastructure. Keep entries concise and sourced from customizations.json. -->
+<!-- AGENT: Read BEST-PRACTICES.md before writing HTML/CSS/JS. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>Custom Setup — Hermes</title>
+<link rel="stylesheet" href="../theme.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<link rel="stylesheet" href="shared.css">
+<link rel="stylesheet" href="../a11y-widget.css">
+<link rel="stylesheet" href="../a11y-tester.css">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#0b0e11">
+<link rel="apple-touch-icon" href="../icons/icon-192.png">
+<style>
+  .setup-intro { color: var(--text-2); font-size: var(--fs-sm); line-height: 1.65; margin: 0 0 var(--s5); max-width: 760px; }
+  .setup-section { margin-top: var(--s6); }
+  .setup-heading { display:flex; align-items:center; gap:var(--s2); color:var(--text-2); font-size:var(--fs-sm); font-weight:600; text-transform:uppercase; letter-spacing:.06em; border-bottom:1px solid var(--border); padding-bottom:var(--s2); margin-bottom:var(--s3); }
+  .setup-heading svg { width:16px; height:16px; color:var(--accent); }
+  .setup-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--s3); }
+  .setup-card { min-width:0; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--r2); padding:var(--s4); }
+  .setup-card-head { display:flex; align-items:flex-start; gap:var(--s3); margin-bottom:var(--s2); }
+  .setup-title { flex:1; min-width:0; color:var(--text); font-size:var(--fs-lg); font-weight:600; line-height:1.35; }
+  .setup-status { flex-shrink:0; color:var(--accent); background:var(--accent-muted); border-radius:var(--pill); padding:3px 9px; font-size:var(--fs-xs); font-weight:600; }
+  .setup-summary { color:var(--text-2); font-size:var(--fs-sm); line-height:1.6; margin:0; }
+  .setup-details { color:var(--text-3); font-size:var(--fs-sm); line-height:1.55; margin:var(--s3) 0 0; padding-left:20px; }
+  .setup-details li + li { margin-top:4px; }
+  .setup-location { display:block; color:var(--accent-dim); font:500 var(--fs-xs)/1.5 var(--mono); overflow-wrap:anywhere; margin-top:var(--s3); }
+  @media (max-width:700px) { .setup-grid { grid-template-columns:1fr; } .setup-card { padding:var(--s3); } }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<div class="page-wrap">
+  <header class="page-header">
+    <a href="../index.html" class="back-link"><i data-lucide="arrow-left" aria-hidden="true"></i> Dashboard</a>
+    <h1 class="page-title"><i data-lucide="blocks" aria-hidden="true"></i> Custom Setup</h1>
+  </header>
+  <main class="page-body" id="main-content">
+    <p class="setup-intro">A permanent record of the tools, workflows, data systems, and infrastructure customized for Elli. This page explains what exists, why it exists, and where it lives.</p>
+    <div id="setup-content"></div>
+  </main>
+  <div class="page-footer">built with ❤️ by e11i</div>
+</div>
+<script src="utils.js"></script>
+<script src="../data.js"></script>
+<script>
+const CATEGORY_ICONS = {
+  'Data & knowledge': 'database',
+  'Workflows': 'route',
+  'Tools': 'wrench',
+  'Infrastructure': 'server',
+  'Configuration': 'sliders-horizontal',
+  'Dashboard': 'layout-dashboard'
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  const d = window.__DASHBOARD_DATA__ || {};
+  const items = (d.customizations || []).filter(item => item && item.title);
+  const content = document.getElementById('setup-content');
+  if (!items.length) {
+    content.innerHTML = '<div class="empty">No custom setup entries yet.</div>';
+    return;
+  }
+  const categories = [...new Set(items.map(item => item.category))];
+  content.innerHTML = categories.map(category => {
+    const cards = items.filter(item => item.category === category).map(item => `
+      <article class="setup-card">
+        <div class="setup-card-head">
+          <h2 class="setup-title">${esc(item.title)}</h2>
+          <span class="setup-status">${esc(item.status)}</span>
+        </div>
+        <p class="setup-summary">${esc(item.summary)}</p>
+        ${(item.details || []).length ? `<ul class="setup-details">${item.details.map(detail => `<li>${esc(detail)}</li>`).join('')}</ul>` : ''}
+        ${item.location ? `<code class="setup-location">${esc(item.location)}</code>` : ''}
+      </article>`).join('');
+    return `<section class="setup-section" aria-labelledby="setup-${esc(category.toLowerCase().replace(/[^a-z0-9]+/g, '-'))}">
+      <h2 class="setup-heading" id="setup-${esc(category.toLowerCase().replace(/[^a-z0-9]+/g, '-'))}"><i data-lucide="${CATEGORY_ICONS[category] || 'blocks'}" aria-hidden="true"></i>${esc(category)}</h2>
+      <div class="setup-grid">${cards}</div>
+    </section>`;
+  }).join('');
+  if (typeof lucide !== 'undefined') lucide.createIcons();
+});
+</script>
+<script src="../a11y-widget.js"></script>
+<script src="../a11y-tester.js"></script>
+<script src="../pwa.js" defer></script>
+</body>
+</html>

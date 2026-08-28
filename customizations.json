@@ -1,0 +1,164 @@
+[
+  {
+    "_instructions": "After ANY edit to this file, run: bash ~/.hermes/dashboard/publish.sh"
+  },
+  {
+    "id": "hermes-wiki",
+    "title": "Hermes Wiki",
+    "category": "Data & knowledge",
+    "status": "Active",
+    "summary": "Local Obsidian knowledge system where reviewed information accumulates instead of disappearing in chat history.",
+    "details": [
+      "Raw/ preserves source material without edits",
+      "Sources/ stores reviewed summaries",
+      "Topic pages hold accumulated knowledge",
+      "SCHEMA.md defines ingest, query, and lint rules"
+    ],
+    "location": "~/elli-vault/Hermes Wiki"
+  },
+  {
+    "id": "hermes-memory",
+    "title": "Hermes memory index",
+    "category": "Data & knowledge",
+    "status": "Active",
+    "summary": "Small always-loaded memory indexes point to focused detail files that are opened only when relevant.",
+    "details": [
+      "User preferences and stable facts stay compact",
+      "Detailed notes live in ~/.hermes/memory/",
+      "Temporary task progress stays out of permanent memory"
+    ],
+    "location": "~/.hermes/memories + ~/.hermes/memory"
+  },
+  {
+    "id": "content-knowledge-pipeline",
+    "title": "Content knowledge pipeline",
+    "category": "Workflows",
+    "status": "Active",
+    "summary": "Turns videos, articles, and papers into reviewed source notes, reusable takeaways, and optional blog material.",
+    "details": [
+      "Original source is inspected first",
+      "Claims remain attributed",
+      "Dashboard publication requires an explicit request",
+      "The Hermes Wiki is the default local destination"
+    ],
+    "location": "content-knowledge-pipeline skill"
+  },
+  {
+    "id": "youtube-transcripts",
+    "title": "YouTube transcript extraction",
+    "category": "Tools",
+    "status": "Active",
+    "summary": "Fetches captions and timestamps for video summaries, including Hebrew caption fallback.",
+    "details": [
+      "Uses youtube-transcript-api first",
+      "Uses yt-dlp caption extraction when the standard transcript endpoint fails",
+      "Auto-generated captions are not treated as exact quotations"
+    ],
+    "location": "youtube-content skill"
+  },
+  {
+    "id": "dashboard-publish-loop",
+    "title": "Dashboard publish and validation loop",
+    "category": "Workflows",
+    "status": "Active",
+    "summary": "One command validates the dashboard, refreshes its data, validates again, commits, and publishes.",
+    "details": [
+      "publish.sh is the only canonical publish path",
+      "validate_dashboard.py catches missing links and data wiring",
+      "Dashboard changes are not reported complete until the live result is verified"
+    ],
+    "location": "~/.hermes/dashboard/publish.sh"
+  },
+  {
+    "id": "custom-skills",
+    "title": "Custom skills library",
+    "category": "Workflows",
+    "status": "Active",
+    "summary": "Reusable procedures record how Elli's recurring work should be performed and verified.",
+    "details": [
+      "Custom skills are marked in their YAML frontmatter",
+      "They appear automatically on the dashboard Skills page",
+      "Skills are updated when a workflow or command changes"
+    ],
+    "location": "~/.hermes/skills"
+  },
+  {
+    "id": "a11y-experience-widget",
+    "title": "Accessibility experience widget",
+    "category": "Tools",
+    "status": "Active",
+    "summary": "Dashboard control panel for contrast, font, text size, motion, focus, spacing, reading guide, cursor, and color-vision modes.",
+    "details": [
+      "Preferences persist in the browser",
+      "Designed for the person using the page",
+      "Kept separate from accessibility testing tools"
+    ],
+    "location": "~/.hermes/dashboard/a11y-widget.js"
+  },
+  {
+    "id": "a11y-audit-panel",
+    "title": "Accessibility audit panel",
+    "category": "Tools",
+    "status": "Active",
+    "summary": "Visual inspection tools for headings, landmarks, alternative text, labels, hidden content, focus, tab order, ARIA, forms, and contrast.",
+    "details": [
+      "Designed for QA and accessibility review",
+      "Runs directly in the dashboard page",
+      "Planned as a reusable A11y Toolkit module"
+    ],
+    "location": "~/.hermes/dashboard/a11y-tester.js"
+  },
+  {
+    "id": "discord-gateway",
+    "title": "Discord Hermes gateway",
+    "category": "Infrastructure",
+    "status": "Active",
+    "summary": "Runs Hermes as a macOS background service so Discord messages reach the same local agent and tools.",
+    "details": [
+      "Managed by launchd",
+      "Restarts automatically after a crash",
+      "Discord remains the main command surface"
+    ],
+    "location": "~/Library/LaunchAgents/ai.hermes.gateway.plist"
+  },
+  {
+    "id": "gateway-health",
+    "title": "Gateway health service",
+    "category": "Infrastructure",
+    "status": "Active",
+    "summary": "Small local service exposes gateway status and recovery controls without putting them into the public static dashboard.",
+    "details": [
+      "Runs as a macOS LaunchAgent",
+      "Keeps local health controls separate from public data",
+      "Supports status and restart endpoints"
+    ],
+    "location": "~/.hermes/scripts/gateway_health.py"
+  },
+  {
+    "id": "model-routing",
+    "title": "Model routing and fallbacks",
+    "category": "Configuration",
+    "status": "Active",
+    "summary": "Codex is the default; supporting tasks and failures use configured cloud or local fallback paths without switching to Anthropic unless requested.",
+    "details": [
+      "Primary model and provider are explicit",
+      "Fallback order is documented",
+      "Privacy, price, and reliability are considered before routing changes"
+    ],
+    "location": "~/.hermes/config.yaml"
+  },
+  {
+    "id": "calm-compass",
+    "title": "Calm Compass dashboard replacement",
+    "category": "Dashboard",
+    "status": "Building",
+    "summary": "Private AI-first dashboard replacement with one recommended next action and three stable rings: Today, Your world, and Setup.",
+    "details": [
+      "The old public dashboard remains live until explicit cutover approval",
+      "The replacement uses Google authentication and server-only private snapshots",
+      "Desktop and Android map layouts are implemented",
+      "Final accessibility, deployment, and acceptance work remains"
+    ],
+    "location": "feature/ai-first-calm-compass"
+  }
+]

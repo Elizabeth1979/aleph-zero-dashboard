@@ -648,6 +648,16 @@
       <div class="card-preview" id="skill-preview"></div>
     </a>
 
+    <a href="pages/customizations.html" class="card">
+      <div class="card-h">
+        <i data-lucide="blocks"></i>
+        <h2>Custom Setup</h2>
+        <span class="badge" id="customizations-badge">0</span>
+      </div>
+      <div class="card-desc">Tools, workflows, data systems, and infrastructure we customized</div>
+      <div class="card-preview" id="customizations-preview"></div>
+    </a>
+
     <a href="pages/system.html" class="card">
       <div class="card-h">
         <i data-lucide="laptop"></i>
@@ -748,6 +758,12 @@ function loadCards() {
   document.getElementById('skill-badge').textContent = skills.length;
   const cats = [...new Set(skills.map(s => s.category))];
   document.getElementById('skill-preview').textContent = cats.length + ' categories';
+
+  // Custom setup inventory
+  const customizations = (d.customizations || []).filter(item => item.title);
+  document.getElementById('customizations-badge').textContent = customizations.length;
+  const customizationCategories = [...new Set(customizations.map(item => item.category))];
+  document.getElementById('customizations-preview').textContent = customizationCategories.length + ' categories';
 
   // Projects
   const projects = (d.projects || []).filter(p => p.status !== 'done');
