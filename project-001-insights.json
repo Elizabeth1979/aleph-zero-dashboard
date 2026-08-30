@@ -208,5 +208,33 @@
       "Politics"
     ],
     "source_language": "he"
+  },
+  {
+    "id": "classified-tech-commercialization",
+    "title": "Question why formerly restricted technology becomes commercial",
+    "date": "2026-08-27",
+    "category": "Security",
+    "summary": "Project 001 frames civilian AI and data-analysis markets as downstream from classified capabilities. The email offers a useful hypothesis for scrutiny, not independently verified evidence about specific programs.",
+    "points": [
+      "Project 001 argues that governments may release technology after newer systems have replaced its strategic advantage.",
+      "Project 001 also argues that mass adoption can turn civilian users into data sources for OSINT and automated analysis.",
+      "The email says private intelligence, legal, investigation, and insurance firms increasingly use data fusion, network analysis, and virtual HUMINT.",
+      "Evaluate each claim separately: identify named systems, dates, procurement records, patents, or credible reporting before accepting a secret-to-commercial origin story."
+    ],
+    "takeaway": "Treat claims about classified origins as hypotheses; ask what evidence would distinguish deliberate release from ordinary research and market diffusion.",
+    "source": "Project 001 email: מה גרם לטכנולוגיה סודית להפוך למסחרית?",
+    "links": [
+      {
+        "label": "Project 001",
+        "url": "https://oo1.co.il/"
+      }
+    ],
+    "subject": "Intelligence & Security",
+    "tags": [
+      "OSINT",
+      "Technology",
+      "Media literacy"
+    ],
+    "source_language": "he"
   }
 ]
