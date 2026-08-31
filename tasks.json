@@ -15,17 +15,6 @@
     "description": "Owes two years back. Payment site was down last time — try again."
   },
   {
-    "id": 5,
-    "task": "Buy noise-reducing earbuds/headphones for misophonia",
-    "added": "2026-04-04",
-    "tags": [
-      "Buy"
-    ],
-    "urgent": false,
-    "due": "2026-10-25",
-    "description": "Buy while in the USA during the 24 October–5 November trip."
-  },
-  {
     "id": 37,
     "task": "Test Mila transcription with a Hebrew or English file from Google Drive",
     "added": "2026-08-25",
