@@ -26,16 +26,6 @@
     "description": "Buy while in the USA during the 24 October–5 November trip."
   },
   {
-    "id": 36,
-    "task": "Pay Bamba's annual dog licence fee and confirm Toffi's payment with mother-in-law",
-    "added": "2026-08-23",
-    "urgent": true,
-    "due": "2026-08-31",
-    "tags": [
-      "Private"
-    ]
-  },
-  {
     "id": 37,
     "task": "Test Mila transcription with a Hebrew or English file from Google Drive",
     "added": "2026-08-25",
