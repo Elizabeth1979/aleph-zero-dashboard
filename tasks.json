@@ -48,5 +48,306 @@
       "Private"
     ],
     "urgent": true
+  },
+  {
+    "id": 41,
+    "task": "לדבר עם שקה!",
+    "added": "2026-09-02",
+    "urgent": false
+  },
+  {
+    "id": 42,
+    "task": "השקעה בנדלן יקנעם",
+    "added": "2026-09-02",
+    "urgent": false,
+    "description": "https://gemini.google.com/share/85155f5f341a"
+  },
+  {
+    "id": 43,
+    "task": "Time management course",
+    "added": "2026-09-02",
+    "urgent": false,
+    "description": "https://www.drshirleyhershko.com/time-managment"
+  },
+  {
+    "id": 44,
+    "task": "Payments",
+    "added": "2026-09-02",
+    "due": "2026-10-01",
+    "tags": [
+      "Waiting"
+    ],
+    "urgent": false
+  },
+  {
+    "id": 45,
+    "task": "לסיים סיבוס!!",
+    "added": "2026-09-02",
+    "due": "2026-09-19",
+    "tags": [
+      "Waiting"
+    ],
+    "urgent": false
+  },
+  {
+    "id": 46,
+    "task": "סיור לילה במדבריום",
+    "added": "2026-09-02",
+    "tags": [
+      "Kids"
+    ],
+    "urgent": false
+  },
+  {
+    "id": 47,
+    "task": "מוזאון לתרבות הפלישתים",
+    "added": "2026-09-02",
+    "tags": [
+      "Kids"
+    ],
+    "urgent": false
+  },
+  {
+    "id": 48,
+    "task": "גבינה צהובה נעם",
+    "added": "2026-09-02",
+    "tags": [
+      "Food"
+    ],
+    "urgent": false
+  },
+  {
+    "id": 49,
+    "task": "פרמזן",
+    "added": "2026-09-02",
+    "tags": [
+      "Food"
+    ],
+    "urgent": false
+  },
+  {
+    "id": 50,
+    "task": "מגבות נייר",
+    "added": "2026-09-02",
+    "tags": [
+      "Not food"
+    ],
+    "urgent": false
+  },
+  {
+    "id": 51,
+    "task": "Calmer אוזניים לריכוז",
+    "added": "2026-09-02",
+    "tags": [
+      "Buy"
+    ],
+    "urgent": false
+  },
+  {
+    "id": 52,
+    "task": "מקלדת עברית",
+    "added": "2026-09-02",
+    "tags": [
+      "Buy"
+    ],
+    "urgent": false
+  },
+  {
+    "id": 53,
+    "task": "iPad keyboard",
+    "added": "2026-09-02",
+    "tags": [
+      "Buy"
+    ],
+    "urgent": false
+  },
+  {
+    "id": 54,
+    "task": "Dad life story",
+    "added": "2026-09-02",
+    "tags": [
+      "Projects"
+    ],
+    "urgent": false
+  },
+  {
+    "id": 55,
+    "task": "Grandma storybook",
+    "added": "2026-09-02",
+    "tags": [
+      "Projects"
+    ],
+    "urgent": false
+  },
+  {
+    "id": 56,
+    "task": "Raw audio file to structured notes",
+    "added": "2026-09-02",
+    "tags": [
+      "Projects"
+    ],
+    "urgent": false
+  },
+  {
+    "id": 57,
+    "task": "Accessibility statement generator",
+    "added": "2026-09-02",
+    "tags": [
+      "Projects"
+    ],
+    "urgent": false
+  },
+  {
+    "id": 58,
+    "task": "הוצאות בית 2025 לקלוד",
+    "added": "2026-09-02",
+    "tags": [
+      "Projects"
+    ],
+    "urgent": false
+  },
+  {
+    "id": 59,
+    "task": "Create a product for kids with Erez PRD",
+    "added": "2026-09-02",
+    "tags": [
+      "Projects"
+    ],
+    "urgent": false
+  },
+  {
+    "id": 60,
+    "task": "Transcript with speakers",
+    "added": "2026-09-02",
+    "tags": [
+      "Projects"
+    ],
+    "urgent": false
+  },
+  {
+    "id": 61,
+    "task": "Add the new woman",
+    "added": "2026-09-02",
+    "tags": [
+      "Projects"
+    ],
+    "urgent": false
+  },
+  {
+    "id": 62,
+    "task": "Develop a tool for Yad Sarah",
+    "added": "2026-09-02",
+    "tags": [
+      "Projects"
+    ],
+    "urgent": false
+  },
+  {
+    "id": 63,
+    "task": "Pictures",
+    "added": "2026-09-02",
+    "tags": [
+      "Projects"
+    ],
+    "urgent": false
+  },
+  {
+    "id": 64,
+    "task": "Daily voice notes diary with gemma private embeddings",
+    "added": "2026-09-02",
+    "tags": [
+      "Projects"
+    ],
+    "urgent": false
+  },
+  {
+    "id": 65,
+    "task": "Easy budget tool activated with voice",
+    "added": "2026-09-02",
+    "tags": [
+      "Projects"
+    ],
+    "urgent": false
+  },
+  {
+    "id": 66,
+    "task": "Meetings summarizer for ops",
+    "added": "2026-09-02",
+    "tags": [
+      "Projects"
+    ],
+    "urgent": false
+  },
+  {
+    "id": 67,
+    "task": "Arabic tutor",
+    "added": "2026-09-02",
+    "tags": [
+      "Projects"
+    ],
+    "urgent": false
+  },
+  {
+    "id": 68,
+    "task": "Positive memory bank",
+    "added": "2026-09-02",
+    "tags": [
+      "Projects"
+    ],
+    "urgent": false
+  },
+  {
+    "id": 69,
+    "task": "What to eat 🤯- every day lottery",
+    "added": "2026-09-02",
+    "tags": [
+      "Projects"
+    ],
+    "urgent": false
+  },
+  {
+    "id": 70,
+    "task": "Voice agent with Google ADK",
+    "added": "2026-09-02",
+    "tags": [
+      "Projects"
+    ],
+    "urgent": false
+  },
+  {
+    "id": 71,
+    "task": "Voice control extension",
+    "added": "2026-09-02",
+    "tags": [
+      "Projects"
+    ],
+    "urgent": false
+  },
+  {
+    "id": 72,
+    "task": "A reader for kids in Hebrew",
+    "added": "2026-09-02",
+    "tags": [
+      "Projects"
+    ],
+    "urgent": false
+  },
+  {
+    "id": 73,
+    "task": "סיפור לוידאו עם אודיו לערוץ יוטיוב",
+    "added": "2026-09-02",
+    "tags": [
+      "Projects"
+    ],
+    "urgent": false
+  },
+  {
+    "id": 74,
+    "task": "כלי חינמי ללמד ילדים על חומר הלימוד",
+    "added": "2026-09-02",
+    "tags": [
+      "Projects"
+    ],
+    "urgent": false
   }
 ]
