@@ -302,6 +302,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const mon = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()];
     return mon + ' ' + d.getDate();
   }
+
+  // Order each section by the nearest due date; undated tasks stay after dated tasks.
+  function sortByDue(items) {
+    return [...items].sort((a, b) => {
+      if (a.due && b.due) return a.due.localeCompare(b.due);
+      if (a.due) return -1;
+      if (b.due) return 1;
+      return 0;
+    });
+  }
+
   function renderItem(t) {
     const cls = 'task-item';
     const due = t.due ? `<span class="due-tag">Due ${fmtDue(t.due)}</span>` : '';
@@ -328,9 +339,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const prefixes = projects.map(p => p.task_prefix).filter(Boolean);
   const nonProject = tasks.filter(t => !prefixes.some(px => t.task.startsWith(px)));
 
-  // Urgent vs everything else — flat list, no category sections
-  const urgent = nonProject.filter(t => t.urgent);
-  const rest = nonProject.filter(t => !t.urgent);
+  // Urgent vs everything else — each section ordered by nearest due date
+  const urgent = sortByDue(nonProject.filter(t => t.urgent));
+  const rest = sortByDue(nonProject.filter(t => !t.urgent));
 
   // Collect all unique tags for filter bar
   const allTags = new Set();
