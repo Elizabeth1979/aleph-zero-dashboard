@@ -139,6 +139,13 @@ must('Verified' in workflows_page and 'Viewpoint' in workflows_page and 'citatio
      'Saving Resources workflow must describe evidence labels, citations, and editorial decisions')
 must('blog draft' in workflows_page and 'AI-generated' in workflows_page and 'rights review' in workflows_page and 'approval' in workflows_page,
      'Saving Resources workflow must describe Stage 2 drafting, rights, disclosure, and approval')
+task_tracking_match = re.search(r"\{\s*id: 'task-tracking',(?P<body>.*?)\n\s*\},", workflows_page, re.S)
+task_tracking_workflow = task_tracking_match.group('body') if task_tracking_match else ''
+task_tracking_terms = ('Daily AI Task Copilot', 'English', 'morning', 'on demand', 'Low energy', 'Normal', 'Focused',
+                       'one task at a time', 'Done', 'Help me start', 'Do it for me', 'Later', 'Remove',
+                       'safe internal work', 'automatically', 'external actions', 'approval')
+must(all(term in task_tracking_workflow for term in task_tracking_terms),
+     'Task Tracking workflow must fully describe the AI Task Copilot')
 must('project_001_insights:' in refresh_text, 'refresh.sh must export Project 001 insights into data.js')
 must('project_001_insights' in project_001_page, 'Project 001 page must read project_001_insights from data.js')
 must('<main' in project_001_page and 'skip-link' in project_001_page,
